@@ -1,0 +1,160 @@
+.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+    padding: 1em 1em 1em 4em;
+    margin-bottom: 10px;
+    background: #f5f5f5 5px center/3em no-repeat;
+}
+.rmdcaution {
+    background-image: url("../images/caution.png");
+}
+.rmdimportant {
+    background-image: url("../images/important.png");
+}
+.rmdnote {
+    background-image: url("../images/note.png");
+}
+.rmdtip {
+    background-image: url("../images/tip.png");
+}
+.rmdwarning {
+    background-image: url("../images/warning.png");
+}
+p.caption {
+    color: #777;
+    margin-top: 10px;
+}
+
+p code {
+    white-space: inherit;
+}
+pre {
+    word-break: normal;
+    word-wrap: normal;
+}
+pre code {
+    white-space: inherit;
+}
+p.flushright {
+    text-align: right;
+}
+blockquote > p:last-child {
+    text-align: right;
+}
+blockquote > p:first-child {
+    text-align: inherit;
+}
+.header-section-number {
+    padding-right: .2em;
+    font-weight: 300;
+}
+.level1 .header-section-number {
+    display: inline-block;
+    //  border-bottom: 3px solid;
+}
+.level1 h1 {
+    border-bottom: 1px solid;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+h1.title {
+    font-weight: 700;
+}
+.book .book-body .page-wrapper .page-inner section.normal strong {
+    font-weight: 500;
+}
+
+
+
+.exercise {
+	background: #f9fcf9;
+	border-left: 10px solid #cdc;
+	margin: 1.5em 0 1.5em -10px;
+	padding: 0.5em 10px;
+	
+}
+
+.exercise h1 {
+	font-size: 30%
+	}
+
+
+.example {
+	background: #f9fcf9;
+	border-left: 10px solid rgba(91, 183, 87, 0.5);
+	margin: 1.5em 0 1.5em 0em;
+	padding: 0.5em 10px;
+}
+
+.example .example {
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+.exercise .exercise {
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+
+table.transparent {
+	margin: 0 !important;
+}
+
+.transparent tr 
+{
+	background-color: transparent !important;
+	border: none  !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.transparent td
+{
+	background-color: transparent  !important;
+	border: none  !important;
+	text-align: center !important;
+	padding: 0 0.1em !important;
+	margin: 0 !important;
+	color: #777 !important;
+	line-height: 1.2 !important;
+	font-size: 80%;
+}
+
+.figure .figure {
+	line-height: 1 !important;
+}
+
+.figure .figure span {
+	display:none;
+	}
+
+
+
+.goingfurther {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	
+	background-color: rgba(1, 105, 174, 0.01);
+	background-image:
+		linear-gradient(rgba(1, 105, 174, 0.05) 1px, transparent 1px),
+		linear-gradient(rgba(1, 105, 174, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(1, 105, 174, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(1, 105, 174, 0.1) 1px, transparent 1px);
+	background-size: 0.4em 0.4em, 2em 2em, 0.4em 0.4em, 2em 2em, 2em 2em;
+	padding: 1em;
+	border-left: 10px solid rgba(1, 105, 174, 0.2);
+}
+
+.goingfurther:before {
+    color: rgba(1, 105, 174, 1);
+	border-bottom: 3px solid rgba(1, 105, 174, 0.5);
+    font-weight: 600;
+    content: "Going Further (non examinable material):";
+    position: relative;
+    left: -0.7em;
+    top: -1em;
+}
