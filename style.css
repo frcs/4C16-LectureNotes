@@ -158,3 +158,5 @@ table.transparent {
     left: -0.7em;
     top: -1em;
 }
+
+.cols {display: flex;   align-items: center;}

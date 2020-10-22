@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Recurrent Neural Networks | Deep Learning and its Applications</title>
+  <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Recurrent Neural Networks | Deep Learning and its Applications" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
+  <meta name="github-repo" content="frcs/4c16book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Recurrent Neural Networks | Deep Learning and its Applications" />
+  
+  <meta name="twitter:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
+  
+
+<meta name="author" content="François Pitié" />
+
+
+<meta name="date" content="2020-10-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="advances-in-network-architectures.html"/>
+
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">4C16: Deep Learning and its Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Module Descriptor</a></li>
+<li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-and-machine-learning"><i class="fa fa-check"></i>Deep Learning and Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-successes"><i class="fa fa-check"></i>Deep Learning Successes</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-classification"><i class="fa fa-check"></i>Image Classification</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scene-understanding"><i class="fa fa-check"></i>Scene Understanding</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-captioning"><i class="fa fa-check"></i>Image Captioning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#machine-translation"><i class="fa fa-check"></i>Machine Translation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#game-playing"><i class="fa fa-check"></i>Game Playing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reasons-of-a-success"><i class="fa fa-check"></i>Reasons of a Success</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#democratisation"><i class="fa fa-check"></i>Democratisation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#global-reach"><i class="fa fa-check"></i>Global Reach</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#impact"><i class="fa fa-check"></i>Impact</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html"><i class="fa fa-check"></i><b>1</b> Linear Regression/Least Squares</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#model-and-notations"><i class="fa fa-check"></i><b>1.1</b> Model and Notations</a></li>
+<li class="chapter" data-level="1.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#optimisation"><i class="fa fa-check"></i><b>1.2</b> Optimisation</a></li>
+<li class="chapter" data-level="1.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#least-squares-in-practice"><i class="fa fa-check"></i><b>1.3</b> Least Squares in Practice</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#a-simple-affine-example"><i class="fa fa-check"></i><b>1.3.1</b> A Simple Affine Example</a></li>
+<li class="chapter" data-level="1.3.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#transforming-the-input-features"><i class="fa fa-check"></i><b>1.3.2</b> Transforming The Input Features</a></li>
+<li class="chapter" data-level="1.3.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#polynomial-fitting"><i class="fa fa-check"></i><b>1.3.3</b> Polynomial Fitting</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#underfitting"><i class="fa fa-check"></i><b>1.4</b> Underfitting</a></li>
+<li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
+<li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
+<li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
+<li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>1.9</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>2</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#introductory-example"><i class="fa fa-check"></i><b>2.1</b> Introductory Example</a></li>
+<li class="chapter" data-level="2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#linear-approximation"><i class="fa fa-check"></i><b>2.2</b> Linear Approximation</a></li>
+<li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
+<li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
+<li class="chapter" data-level="2.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
+<li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
+<li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="2.10" data-path="logistic-regression.html"><a href="logistic-regression.html#softmax-optimisation"><i class="fa fa-check"></i><b>2.10</b> Softmax Optimisation</a></li>
+<li class="chapter" data-level="2.11" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>2.11</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="know-your-classics.html"><a href="know-your-classics.html"><i class="fa fa-check"></i><b>3</b> Know your Classics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="know-your-classics.html"><a href="know-your-classics.html#k-nearest-neighbours"><i class="fa fa-check"></i><b>3.1</b> k-nearest neighbours</a></li>
+<li class="chapter" data-level="3.2" data-path="know-your-classics.html"><a href="know-your-classics.html#decision-trees"><i class="fa fa-check"></i><b>3.2</b> Decision Trees</a></li>
+<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#svm"><i class="fa fa-check"></i><b>3.3</b> SVM</a></li>
+<li class="chapter" data-level="3.4" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>3.4</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html"><i class="fa fa-check"></i><b>5</b> Feedforward Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#what-is-a-feed-forward-neural-network"><i class="fa fa-check"></i><b>5.1</b> What is a (Feed Forward) Neural Network?</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#a-graph-of-differentiable-operations"><i class="fa fa-check"></i><b>5.1.1</b> A Graph of Differentiable Operations</a></li>
+<li class="chapter" data-level="5.1.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#units-and-artificial-neurons"><i class="fa fa-check"></i><b>5.1.2</b> Units and Artificial Neurons</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#biological-neurons"><i class="fa fa-check"></i><b>5.2</b> Biological Neurons</a></li>
+<li class="chapter" data-level="5.3" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#deep-neural-networks"><i class="fa fa-check"></i><b>5.3</b> Deep Neural Networks</a></li>
+<li class="chapter" data-level="5.4" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#universal-approximation-theorem"><i class="fa fa-check"></i><b>5.4</b> Universal Approximation Theorem</a></li>
+<li class="chapter" data-level="5.5" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>5.5</b> Example</a></li>
+<li class="chapter" data-level="5.6" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#training"><i class="fa fa-check"></i><b>5.6</b> Training</a></li>
+<li class="chapter" data-level="5.7" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagation"><i class="fa fa-check"></i><b>5.7</b> Back-Propagation</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#vanishing-gradients"><i class="fa fa-check"></i><b>5.7.1</b> Vanishing Gradients</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a></li>
+<li class="chapter" data-level="5.9" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#constraints-and-regularisers"><i class="fa fa-check"></i><b>5.9</b> Constraints and Regularisers</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l2-regularisation"><i class="fa fa-check"></i><b>5.9.1</b> L2 regularisation</a></li>
+<li class="chapter" data-level="5.9.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l1-regularisation"><i class="fa fa-check"></i><b>5.9.2</b> L1 regularisation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#dropout-noise"><i class="fa fa-check"></i><b>5.10</b> Dropout &amp; Noise</a></li>
+<li class="chapter" data-level="5.11" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#monitoring"><i class="fa fa-check"></i><b>5.11</b> Monitoring</a></li>
+<li class="chapter" data-level="5.12" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>5.12</b> Take Away</a></li>
+<li class="chapter" data-level="5.13" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#useful-resources"><i class="fa fa-check"></i><b>5.13</b> Useful Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html"><i class="fa fa-check"></i><b>6</b> Convolutional Neural Networks</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#convolution-filters"><i class="fa fa-check"></i><b>6.1</b> Convolution Filters</a></li>
+<li class="chapter" data-level="6.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#padding"><i class="fa fa-check"></i><b>6.2</b> Padding</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-picture-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Picture Size</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#stride"><i class="fa fa-check"></i><b>6.3.1</b> Stride</a></li>
+<li class="chapter" data-level="6.3.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#max-pooling"><i class="fa fa-check"></i><b>6.3.2</b> Max Pooling</a></li>
+<li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-1"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.4</b> Architecture Design</a></li>
+<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.5</b> Example: VGG16</a></li>
+<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.6</b> Visualisation</a></li>
+<li class="chapter" data-level="6.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>6.7</b> Take Away</a></li>
+<li class="chapter" data-level="6.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#useful-resources"><i class="fa fa-check"></i><b>6.8</b> Useful Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html"><i class="fa fa-check"></i><b>7</b> Advances in Network Architectures</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#transfer-learning"><i class="fa fa-check"></i><b>7.1</b> Transfer Learning</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#re-using-pre-trained-networks"><i class="fa fa-check"></i><b>7.1.1</b> Re-Using Pre-Trained Networks</a></li>
+<li class="chapter" data-level="7.1.2" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#domain-adaption-and-vanishing-gradients"><i class="fa fa-check"></i><b>7.1.2</b> Domain Adaption and Vanishing Gradients</a></li>
+<li class="chapter" data-level="7.1.3" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#normalisation-layers"><i class="fa fa-check"></i><b>7.1.3</b> Normalisation Layers</a></li>
+<li class="chapter" data-level="7.1.4" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#batch-normalisation"><i class="fa fa-check"></i><b>7.1.4</b> Batch Normalisation</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#going-deeper"><i class="fa fa-check"></i><b>7.2</b> Going Deeper</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#googlenet-inception"><i class="fa fa-check"></i><b>7.2.1</b> GoogLeNet: Inception</a></li>
+<li class="chapter" data-level="7.2.2" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#resnet-residual-network"><i class="fa fa-check"></i><b>7.2.2</b> ResNet: Residual Network</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#generative-adversarial-networks-gan"><i class="fa fa-check"></i><b>7.3</b> Generative Adversarial Networks (GAN)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html"><i class="fa fa-check"></i><b>8</b> Recurrent Neural Networks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#a-feed-forward-network-rolled-out-over-time"><i class="fa fa-check"></i><b>8.1</b> A Feed Forward Network Rolled Out Over Time</a></li>
+<li class="chapter" data-level="8.2" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#application-example-character-level-language-modelling"><i class="fa fa-check"></i><b>8.2</b> Application Example: Character-Level Language Modelling</a></li>
+<li class="chapter" data-level="8.3" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#training-back-propagation-through-time"><i class="fa fa-check"></i><b>8.3</b> Training: Back-Propagation Through Time</a></li>
+<li class="chapter" data-level="8.4" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#dealing-with-long-sequences"><i class="fa fa-check"></i><b>8.4</b> Dealing with Long Sequences</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#lstm"><i class="fa fa-check"></i><b>8.4.1</b> LSTM</a></li>
+<li class="chapter" data-level="8.4.2" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#gru"><i class="fa fa-check"></i><b>8.4.2</b> GRU</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#application-image-caption-generator"><i class="fa fa-check"></i><b>8.5</b> Application: Image Caption Generator</a></li>
+<li class="chapter" data-level="8.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>8.6</b> Take Away</a></li>
+<li class="chapter" data-level="8.7" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#useful-resources"><i class="fa fa-check"></i><b>8.7</b> Useful Resources</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://frcs.github.io/EE4C16" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Deep Learning and its Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="recurrent-neural-networks" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Recurrent Neural Networks</h1>
+<p>Recurrent Neural Networks (RNN) are special type of neural
+architectures designed to be used on <strong>sequential data</strong>.</p>
+<div id="a-feed-forward-network-rolled-out-over-time" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> A Feed Forward Network Rolled Out Over Time</h2>
+<p>Sequential data can be found in any time series such as audio signal,
+stock market prices, vehicle trajectory but also in natural language
+processing (text). In fact, RNNs have been particularly successful
+with Machine Translation tasks.</p>
+<div class="figure"><span id="fig:rnn-def"></span>
+<img src="figures/rnn-rec-def.svg" alt="Recurrent Neural Network." width="70%" />
+<p class="caption">
+Figure 8.1: Recurrent Neural Network.
+</p>
+</div>
+<p>Recurrent Networks define a recursive evaluation of a function. The
+input stream feeds a context layer (denoted by <span class="math inline">\(h\)</span> in the
+diagram). The context layer then re-use the previously computed
+context values to compute the output values.</p>
+<p>The best analogy in signal processing would be to say that if
+convolutional layers where similar to FIR filters, RNNs are similar to
+IIR filters.</p>
+<p>The RNN can be unfolded to produce a classic feedforward neural net.</p>
+<div class="figure"><span id="fig:rnn-def-unrolled"></span>
+<img src="figures/rnn-rec-def-unrolled.svg" alt="RNN, unrolled." width="60%" />
+<p class="caption">
+Figure 8.2: RNN, unrolled.
+</p>
+</div>
+<p>A key aspect of RNNs is that the network parameters <span class="math inline">\(w\)</span> are shared
+across all the iterations. That is <span class="math inline">\(w\)</span> is fixed in time.</p>
+<div class="figure"><span id="fig:rnn-ctx"></span>
+<img src="figures/rnn-ctx-layer.svg" alt="In a RNN, the Hidden Layer is simply a fully connected layer." width="100%" />
+<p class="caption">
+Figure 8.3: In a RNN, the Hidden Layer is simply a fully connected layer.
+</p>
+</div>
+<p>In its simplest form, the inner structure of the hidden layer block is
+simply a dense layer of neurons with <span class="math inline">\(\mathrm{tanh}\)</span> activation. This
+is called a <strong>simple RNN architecture</strong> or <strong>Elman network</strong>.</p>
+<p>We usually take a <span class="math inline">\(\mathrm{tanh}\)</span> activation as it can produce
+positive or negative values, allowing for increases and decreases of
+the state values. Also <span class="math inline">\(\mathrm{tanh}\)</span> bounds the state values between
+-1 and 1, and thus avoids a potential explosion of the state values.</p>
+<p>The equations for this network are as follows:</p>
+<p><span class="math display">\[ \begin{aligned}{\bf h}_{t}&amp;=\tanh({\bf W}_{h}{\bf x}_{t}+{\bf U}_{h}{\bf h}_{t-1}+{\bf b}_{h})\\{\bf y}_{t}&amp;=\sigma _{y}({\bf W}_{y}{\bf h}_{t}+{\bf b}_{y})
+  \end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\({\bf x}\)</span> is the input vector, <span class="math inline">\({\bf h}\)</span> the vector of the
+hidden layer states, <span class="math inline">\({\bf x}\)</span> is the output vector, <span class="math inline">\(\sigma_y\)</span> is the
+output’s activation function, <span class="math inline">\({\bf W}_{h}\)</span> and <span class="math inline">\({\bf b}_h\)</span> the matrix
+stacking the parameters for <span class="math inline">\(h\)</span>, <span class="math inline">\({\bf U}_{h}\)</span> the matrix stacking the
+feedback parameters for <span class="math inline">\(h\)</span> and <span class="math inline">\({\bf W}_{y}\)</span> and <span class="math inline">\({\bf b}_y\)</span> the
+matrix and vector stacking the parameters for the output.</p>
+<p>The parameters <span class="math inline">\({\bf W}_{h}\)</span>, <span class="math inline">\({\bf W}_{y}\)</span>, <span class="math inline">\({\bf b}_{h}\)</span>, <span class="math inline">\({\bf b}_{y}\)</span> are shared by all input vectors <span class="math inline">\({x}_t\)</span>.</p>
+<p>In Keras, we can define a simple RNN layer as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="recurrent-neural-networks.html#cb8-1" aria-hidden="true"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
+<span id="cb8-2"><a href="recurrent-neural-networks.html#cb8-2" aria-hidden="true"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>})(<span class="bu">input</span>)</span>
+<span id="cb8-3"><a href="recurrent-neural-networks.html#cb8-3" aria-hidden="true"></a>output <span class="op">=</span> Dense(osize, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
+<div class="figure"><span id="fig:rnn-2"></span>
+<img src="figures/rnn-2.svg" alt="RNN, unrolled." width="60%" />
+<p class="caption">
+Figure 8.4: RNN, unrolled.
+</p>
+</div>
+<p>Note that we can choose to produce a single output for the entire
+sequence instead of an output at each timestamp. In Keras, this would
+be defined as:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="recurrent-neural-networks.html#cb9-1" aria-hidden="true"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
+<span id="cb9-2"><a href="recurrent-neural-networks.html#cb9-2" aria-hidden="true"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
+<span id="cb9-3"><a href="recurrent-neural-networks.html#cb9-3" aria-hidden="true"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
+<div class="figure"><span id="fig:rnn-1"></span>
+<img src="figures/rnn-1.svg" alt="RNN, unrolled." width="60%" />
+<p class="caption">
+Figure 8.5: RNN, unrolled.
+</p>
+</div>
+<p>And we can stack multiple RNN layers. For instance:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="recurrent-neural-networks.html#cb10-1" aria-hidden="true"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
+<span id="cb10-2"><a href="recurrent-neural-networks.html#cb10-2" aria-hidden="true"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
+<span id="cb10-3"><a href="recurrent-neural-networks.html#cb10-3" aria-hidden="true"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
+<span id="cb10-4"><a href="recurrent-neural-networks.html#cb10-4" aria-hidden="true"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(k)</span></code></pre></div>
+<div class="figure"><span id="fig:rnn-3"></span>
+<img src="figures/rnn-3.svg" alt="RNN, unrolled." width="60%" />
+<p class="caption">
+Figure 8.6: RNN, unrolled.
+</p>
+</div>
+</div>
+<div id="application-example-character-level-language-modelling" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Application Example: Character-Level Language Modelling</h2>
+<p>In the next slide is presented an example application of RNNs where we
+try to predict next character given a sequence of previous
+characters. The idea is to give the RNN a large corpus of text to
+train on and try to model the text inner dynamics (a bit similar to
+the idea of Word2Vec).</p>
+<p><em>Training</em>. We start from a character one-hot encoding. Each input
+of the RNNs is a character from the sequence. The RNN then is used for
+a {} task: we try to classify the output of the
+sequence <span class="math inline">\({\bf x}_1,\cdots,{\bf x}_{n-1}\)</span> as the next character <span class="math inline">\({\bf y}={\bf x}_{n}\)</span>.</p>
+<p>Since we are using cross-entropy and softmax, the network returns back
+the vector of probability distribution for the next character.</p>
+<div class="figure"><span id="fig:rnn-4"></span>
+<img src="figures/rnn-4.svg" alt="RNN, unrolled." width="80%" />
+<p class="caption">
+Figure 8.7: RNN, unrolled.
+</p>
+</div>
+<p>We are training for a classification task: can you predict the next
+character based on the previous characters?</p>
+<p>Once we have trained the RNN, we can then generate whole sentences,
+one character at a time. We achieve this by providing an initial
+sentence fragment, or seed. Then we can use our RNN to predict the
+probability distribution of the next character. To generate the next
+character, we simply sample the next character based from these
+probabilities. This character is then appended to the sentence and the
+process is repeated.</p>
+<p>Diagram of the text generation process is illustrated in the next
+slide.</p>
+<div class="figure"><span id="fig:rnn-5"></span>
+<img src="figures/rnn-5.svg" alt="RNN, unrolled." width="80%" />
+<p class="caption">
+Figure 8.8: RNN, unrolled.
+</p>
+</div>
+<p>This fun application is taken from this seminal blog post by Karpathy:</p>
+<blockquote>
+<p><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/\#fun-with-rnns" class="uri">http://karpathy.github.io/2015/05/21/rnn-effectiveness/\#fun-with-rnns</a></p>
+</blockquote>
+<p>Check this link for results and more insight about the RNN!</p>
+</div>
+<div id="training-back-propagation-through-time" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Training: Back-Propagation Through Time</h2>
+<p>To train a RNN, we can unroll the network to expand it into a standard
+feedforward network and then apply back-propagation as per usual.</p>
+<p>This process is called <strong>Back-Propagation Through Time
+(BPTT)</strong>.</p>
+<p>Note that the unrolled network can grow very large and might be hard
+to fit into the GPU memory. Also, the process is very sequential in
+nature and it is thus difficult to avail of parallelism.</p>
+<p>Sometimes, a strategy to speed up learning is to split the sequence
+into chunks and train apply BPTT on these truncated parts. This
+process is called <strong>Truncated Back-Propagation Through Time</strong>.</p>
+Example of unrolling the RNN with BPTT
+<div class="figure"><span id="fig:rnn-8"></span>
+<img src="figures/rnn-8.svg" alt="RNN, unrolled." width="80%" />
+<p class="caption">
+Figure 8.9: RNN, unrolled.
+</p>
+</div>
+<p>It is possible to split the sequence into chunks.</p>
+<div class="figure"><span id="fig:rnn-9"></span>
+<img src="figures/rnn-9.svg" alt="RNN, unrolled." width="80%" />
+<p class="caption">
+Figure 8.10: RNN, unrolled.
+</p>
+</div>
+<p>and train each chunk separately (truncated BPTT)</p>
+<div class="figure"><span id="fig:rnn-10"></span>
+<img src="figures/rnn-10.svg" alt="RNN, unrolled." width="80%" />
+<p class="caption">
+Figure 8.11: RNN, unrolled.
+</p>
+</div>
+</div>
+<div id="dealing-with-long-sequences" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Dealing with Long Sequences</h2>
+<p>When unrolled, recurrent networks can grow very deep. As with any deep
+network, the main problem with using gradient descent is then that the
+error gradients can vanish (or explode) exponentially
+quickly. Therefore we rarely use the Simple RNN layer architecture as
+they are very difficult to train. Instead, we usually resort to two
+alternative RNN layer architectures: LSTM and GRU.</p>
+<div id="lstm" class="section level3" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> LSTM</h3>
+<p><strong>LSTM</strong> (Long Short-Term Memory) was specifically proposed in 1997 by
+Sepp Hochreiter and Jürgen Schmidhuber to deal with the exploding and
+vanishing gradient problem. LSTM blocks are a special type of network
+that is used for the recurrent hidden layer. LSTM block can be used as
+a direct replacement for the dense layer structure of simple RNNs.</p>
+<p>After 2014, major technology companies including Google, Apple, and
+Microsoft started using LSTM in their speech recognition or Machine
+Translation products.</p>
+<blockquote>
+<p>S. Hochreiter and J. Schmidhuber (1997). “Long short-term memory”. [<a href="https://goo.gl/hhBNRE" class="uri">https://goo.gl/hhBNRE</a>]</p>
+</blockquote>
+<blockquote>
+<p>Keras: <a href="https://keras.io/layers/recurrent/#lstm" class="uri">https://keras.io/layers/recurrent/#lstm</a></p>
+</blockquote>
+<blockquote>
+<p>See also Brandon’s Rohrer’s video: [<a href="https://youtu.be/WCUNPb-5EYI" class="uri">https://youtu.be/WCUNPb-5EYI</a>]</p>
+</blockquote>
+<blockquote>
+<p>and colah’s blog [<a href="https://goo.gl/uc7gbn" class="uri">https://goo.gl/uc7gbn</a>]</p>
+</blockquote>
+<div class="figure"><span id="fig:rnn-lstm"></span>
+<img src="figures/LSTM.svg" alt="Architecture of LSTM Cell. (Figure by François Deloche)." width="80%" />
+<p class="caption">
+Figure 8.12: Architecture of LSTM Cell. (Figure by François Deloche).
+</p>
+</div>
+</div>
+<div id="gru" class="section level3" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> GRU</h3>
+<p><strong>GRU</strong> (Gated Recurrent Units) were introduced in 2014 as a simpler
+alternative to the LSTM block. Their performance is reported to be
+similar to the one of LSTM (maybe slightly better on smaller problems
+and slightly worse on bigger problems). As they have fewer parameters
+than LSTM, GRUs are quite a bit faster to train.</p>
+<blockquote>
+<p>J. Chung, C. Gulcehre, K. Cho and Y. Bengio (2014). “Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling”. [<a href="https://arxiv.org/abs/1412.3555" class="uri">https://arxiv.org/abs/1412.3555</a>]</p>
+</blockquote>
+<blockquote>
+<p>Keras: <a href="https://keras.io/layers/recurrent/\#gru" class="uri">https://keras.io/layers/recurrent/\#gru</a></p>
+</blockquote>
+<div class="figure"><span id="fig:rnn-gru"></span>
+<img src="figures/GRU.svg" alt="Architecture of Gated Recurrent Cell. (Figure by François Deloche)." width="80%" />
+<p class="caption">
+Figure 8.13: Architecture of Gated Recurrent Cell. (Figure by François Deloche).
+</p>
+</div>
+</div>
+</div>
+<div id="application-image-caption-generator" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Application: Image Caption Generator</h2>
+<p>A nice application showing how to merge picture and text processing is
+<strong>Image Caption Generator</strong>, which aims at automatically generating
+text that describes a picture.</p>
+<blockquote>
+<p>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A neural image caption generator’’ [<a href="https://arxiv.org/abs/1411.4555" class="uri">https://arxiv.org/abs/1411.4555</a>]</p>
+</blockquote>
+<blockquote>
+<p>Google Research Blog at <a href="https://goo.gl/U88bDQ" class="uri">https://goo.gl/U88bDQ</a></p>
+</blockquote>
+<p>We start by building visual features using an off-the-shelf CNN (in
+this case VGG).</p>
+<p><img src="figures/rnn-13.svg" width="80%" /></p>
+<p>We don’t need the classification part so we only used the second to
+last Fully Connected layer.</p>
+<p><img src="figures/rnn-14.svg" width="80%" /></p>
+<p>We then feed this tensor as an input to a RNN that predicts the next word.</p>
+<p><img src="figures/rnn-16.svg" width="80%" /></p>
+<p>We then continue sampling the next word from the predictions till we
+generate the <code>&lt;end&gt;</code> word token</p>
+<p><img src="figures/rnn-17.svg" width="80%" /></p>
+</div>
+<div id="take-away" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Take Away</h2>
+<p>Recurrent Neural Networks (RNN) … LSTM</p>
+<p>XXX</p>
+<p>One critical issue with RNNs/LSTMs is that they are are not suitable
+for transfer learning. It is very difficult to build on pre-trained
+models, as we are doing with CNNs and any application will require
+vast quantity of data and a tricky training.</p>
+<p>Gated recurrent networks (LSTM, GRU) have been the method of choice
+for most of applications based on Language models. Things have
+radically changed in 2017 with the landmark paper on the <strong>Attention
+Mechanism</strong>. Now pretty much any language model relies on the
+Attention and Transformers networks.</p>
+<p>One definite advantage of <em>Attention</em> is that it can be efficiently
+used for transfer learning. Now any language based application can
+take advantage of pre-trained models such as BERT.</p>
+<p>Recurrence prevents parallel computing. Unrolling the RNN can lead to
+potentially very deep networks of arbitrary length. And, as the
+weights are shared across the whole sequence, there is no convenient
+way for parallelisation.</p>
+<blockquote>
+<p>Attention Is All You Need [<a href="https://arxiv.org/abs/1706.03762" class="uri">https://arxiv.org/abs/1706.03762</a>]</p>
+</blockquote>
+<blockquote>
+<p>BERT […]</p>
+</blockquote>
+</div>
+<div id="useful-resources" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Useful Resources</h2>
+
+<div id="refs" class="references hanging-indent">
+<div>
+<p>Cox, D. R. 1958. “The Regression Analysis of Binary Sequences.” <em>Journal of the Royal Statistical Society. Series B (Methodological)</em> 20 (2): 215–42. <a href="http://www.jstor.org/stable/2983890">http://www.jstor.org/stable/2983890</a>.</p>
+</div>
+<div>
+<p>He, Kaiming, Georgia Gkioxari, Piotr Dollár, and Ross B. Girshick. 2017. “Mask R-Cnn.” <em>2017 IEEE International Conference on Computer Vision (ICCV)</em>, 2980–8.</p>
+</div>
+<div>
+<p>Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E Hinton. 2012. “ImageNet Classification with Deep Convolutional Neural Networks.” In <em>Advances in Neural Information Processing Systems 25</em>, edited by F. Pereira, C. J. C. Burges, L. Bottou, and K. Q. Weinberger, 1097–1105. Curran Associates, Inc. <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf</a>.</p>
+</div>
+<div>
+<p>Vinyals, Oriol, Alexander Toshev, Samy Bengio, and Dumitru Erhan. 2015. “Show and Tell: A Neural Image Caption Generator.” In <em>Computer Vision and Pattern Recognition</em>. <a href="http://arxiv.org/abs/1411.4555">http://arxiv.org/abs/1411.4555</a>.</p>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="advances-in-network-architectures.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/09-recurrent-neural-networks.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["4c16.pdf", "4c16.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
