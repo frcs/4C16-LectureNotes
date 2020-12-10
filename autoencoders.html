@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction | Deep Learning and its Applications</title>
+  <title>Chapter 9 AutoEncoders | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Introduction | Deep Learning and its Applications" />
+  <meta property="og:title" content="Chapter 9 AutoEncoders | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="frcs/4c16book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction | Deep Learning and its Applications" />
+  <meta name="twitter:title" content="Chapter 9 AutoEncoders | Deep Learning and its Applications" />
   
   <meta name="twitter:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="prerequisites.html"/>
-<link rel="next" href="linear-regressionleast-squares.html"/>
+<link rel="prev" href="recurrent-neural-networks.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -309,207 +309,300 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
-<div id="deep-learning-and-machine-learning" class="section level2 unnumbered">
-<h2>Deep Learning and Machine Learning</h2>
-<p><strong>Deep Learning</strong> is a particular type of <strong>machine learning</strong> method,
-and is thus part of the broader field of <strong>artificial intelligence</strong>
-(using computers to reason). Deep learning is another name for
-<strong>artificial neural networks</strong>, which are inspired by the structure of
-the neurons in the cerebral cortex.</p>
-<p>The recent quantum leap in machine learning has solely been driven by
-deep learning successes. When you read or hear about AI or machine
-Learning successes in recent years, it really means Deep Learning
-successes.</p>
-<p>Machine Learning can be split into 3 main fields:</p>
-<div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="figures/AI.svg" alt="AI, ML and Deep Learning." width="66%" />
+<div id="autoencoders" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> AutoEncoders</h1>
+<div id="definition" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Definition</h2>
+<p>So far, we have looked at <strong>supervised learning applications</strong>, for
+which the training data <span class="math inline">\({\bf x}\)</span> is associated with ground truth
+labels <span class="math inline">\({\bf y}\)</span>. For most applications, labelling the data is the
+hard part of the problem.</p>
+<p><strong>Autoencoders</strong> are a form of <strong>unsupervised learning</strong>,
+whereby a trivial labelling is proposed by setting out the output
+labels <span class="math inline">\({\bf y}\)</span> to be simply the input <span class="math inline">\({\bf x}\)</span>. Thus autoencoders
+simply try to reconstruct the input as faithfully as possible.</p>
+<p>Autoencoders seem to solve a trivial task and the identity function
+could do the same. However, in autoencoders, we also enforce a
+dimension reduction in some of the layers, hence we try to <em>compress</em>
+the data through a bottleneck.</p>
+<p>Fig. <a href="autoencoders.html#fig:AE-example">9.1</a> shows the example of an autoencoder. The
+input data <span class="math inline">\((x_1,x_2,x_3,x_4)\)</span> is mapped into the compressed hidden
+layer <span class="math inline">\((z_1,z_2)\)</span> and then re-constructed into <span class="math inline">\((\hat{x}_1, \hat{x}_2, \hat{x}_3, \hat {x}_4)\)</span>. The idea is to find a lower dimensional
+representation of the data, where we can explain the whole dataset
+<span class="math inline">\({\bf x}\)</span> with only two latent variables <span class="math inline">\((z_1,z_2)\)</span>.</p>
+<div class="figure"><span id="fig:AE-example"></span>
+<img src="tikz-figures/ae_example.svg" alt="Example of an Auto-Encoder." width="60%" />
 <p class="caption">
-Figure 0.1: AI, ML and Deep Learning.
+Figure 9.1: Example of an Auto-Encoder.
 </p>
 </div>
-<ul>
-<li><p><strong>Supervised Learning</strong>:</p>
-<p>Supervised Learning is by far the most common application in ML (say
-95% of the research papers). We assume that we have collected some
-data (eg. user ). Namely, we collected <span class="math inline">\(p\)</span> features from each of the
-<span class="math inline">\(n\)</span> observations of our dataset (eg. pictures, or user actions on a
-website). For each of these observation feature vectors <span class="math inline">\({\bf x}_i\)</span>,
-we also know the outcome <span class="math inline">\(y_i\)</span> (eg. <span class="math inline">\(y_i=0,1\)</span> depending on whether
-the picture shows a dog or a cat). From this labelled dataset <span class="math inline">\(({\bf x}_i, y_i)\)</span>, we want to estimate the parameters <span class="math inline">\({\bf w}\)</span> of a
-predictive model <span class="math inline">\(f({\bf x}_i, {\bf w})=y_i\)</span>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-2"></span>
-<img src="figures/dogcat.jpg" alt="AI, ML and Deep Learning." width="66%" />
+<p>The autoencoder architecture applies to any kind of neural net, as
+long as there is a bottleneck layer and that the output tries to
+reconstruct the input. The general principle is illustrated in
+Fig. <a href="autoencoders.html#fig:AE-example-generic">9.2</a>.</p>
+<div class="figure"><span id="fig:AE-example-generic"></span>
+<img src="tikz-figures/ae_example_generic.svg" alt="General architecture of an Auto-Encoder." width="70%" />
 <p class="caption">
-Figure 0.2: AI, ML and Deep Learning.
+Figure 9.2: General architecture of an Auto-Encoder.
 </p>
 </div>
-<p>Can we find a model <span class="math inline">\(f({\bf x}_i)=y_i\)</span> to predict the outcome from the
-input features?</p></li>
-<li><p><strong>Unsupervised Learning</strong>:</p>
-<p>What can we learn about a dataset <span class="math inline">\(({\bf x}_i)\)</span> by just looking at it?
-(ie. without any labelled information <span class="math inline">\(y_i\)</span>)</p></li>
-<li><p><strong>Reinforcement Learning</strong>:</p>
-<p>How can an agent interact with its environment (the data) to get maximum
-reward (eg. game playing, robots learning to walk).</p></li>
-</ul>
-<p>Deep Learning has made <em>major</em> breakthroughs in all three fields.</p>
+<p>Typically, for continuous input
+data, you could use a <span class="math inline">\(L_2\)</span> loss as follows:</p>
+<p><span class="math display">\[
+  \text{Loss}\ \boldsymbol{\hat{\textbf{x}}} = \frac{1}{2}
+  \|\boldsymbol{\hat{\textbf{x}}} - \textbf{x} \|^2
+\]</span></p>
+<p>Alternatively you can use cross-entropy if <span class="math inline">\({\bf x}\)</span> is categorical.</p>
 </div>
-<div id="deep-learning-successes" class="section level2 unnumbered">
-<h2>Deep Learning Successes</h2>
-<div id="image-classification" class="section level3 unnumbered">
-<h3>Image Classification</h3>
-<p><strong>Image Recognition</strong> is one of the core applications of Computer Vision.
-ImageNet [www.image-net.org] runs an annual challenge where software programs
-compete to correctly classify and detect objects and scenes in images.</p>
-<div class="figure"><span id="fig:unnamed-chunk-3"></span>
-<img src="figures/imagenet-fig1.png" alt="Image Net." width="80%" />
+<div id="examples" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Examples</h2>
+<p>The following examples consider the MNIST handwritten digit database
+and are taken from the following link:</p>
+<blockquote>
+<p><a href="https://blog.keras.io/building-autoencoders-in-keras.html" class="uri">https://blog.keras.io/building-autoencoders-in-keras.html</a></p>
+</blockquote>
+<p>Here is an example of autoencoder using FC layers:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="autoencoders.html#cb11-1" aria-hidden="true" tabindex="-1"></a>encoding_dim <span class="op">=</span> <span class="dv">32</span>  </span>
+<span id="cb11-2"><a href="autoencoders.html#cb11-2" aria-hidden="true" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
+<span id="cb11-3"><a href="autoencoders.html#cb11-3" aria-hidden="true" tabindex="-1"></a>encoded <span class="op">=</span> Dense(encoding_dim, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(input_img)</span>
+<span id="cb11-4"><a href="autoencoders.html#cb11-4" aria-hidden="true" tabindex="-1"></a>decoded <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(encoded)</span>
+<span id="cb11-5"><a href="autoencoders.html#cb11-5" aria-hidden="true" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span></code></pre></div>
+<p>Here is an example of a convolutional autoencoder:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="autoencoders.html#cb12-1" aria-hidden="true" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
+<span id="cb12-2"><a href="autoencoders.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="autoencoders.html#cb12-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(input_img)</span>
+<span id="cb12-4"><a href="autoencoders.html#cb12-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb12-5"><a href="autoencoders.html#cb12-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb12-6"><a href="autoencoders.html#cb12-6" aria-hidden="true" tabindex="-1"></a>encoded <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb12-7"><a href="autoencoders.html#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="autoencoders.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># at this point the representation is (7, 7, 32)</span></span>
+<span id="cb12-9"><a href="autoencoders.html#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="autoencoders.html#cb12-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(encoded)</span>
+<span id="cb12-11"><a href="autoencoders.html#cb12-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
+<span id="cb12-12"><a href="autoencoders.html#cb12-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb12-13"><a href="autoencoders.html#cb12-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
+<span id="cb12-14"><a href="autoencoders.html#cb12-14" aria-hidden="true" tabindex="-1"></a>decoded <span class="op">=</span> Conv2D(<span class="dv">1</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb12-15"><a href="autoencoders.html#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="autoencoders.html#cb12-16" aria-hidden="true" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span>
+<span id="cb12-17"><a href="autoencoders.html#cb12-17" aria-hidden="true" tabindex="-1"></a>autoencoder.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&#39;adadelta&#39;</span>, loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>)</span></code></pre></div>
+<p>Note that we use <code>UpSampling2D</code> to upsample the tensor in the decoder
+part. This upsampling stage is sometimes called <strong>up-convolution</strong>,
+<strong>deconvolution</strong> or <strong>transposed convolution</strong>. This step upsamples
+the tensor by inserting zeros in-between the input samples. This is
+usually followed by a convolution layer. More on this is discussed in
+the link below.</p>
+<blockquote>
+<p></p>
+</blockquote>
+<p>Just note that the word <em>deconvolution</em> is very unfortunate as the
+term <em>deconvolution</em> is already used in signal processing and refers
+to trying to estimate the input signal/tensor from the output of a
+convolution (eg. trying to recover the original image from an blurred
+image).</p>
+<p>Below are the results of our convolutional autoencoder for the MNIST
+dataset. The input is on top and the reconstructions results on
+bottom.</p>
+<div class="figure"><span id="fig:AE-MNIST-reconstructions"></span>
+<img src="figures/deep_conv_ae_128.png" alt="reconstruction results on MNIST." width="60%" />
 <p class="caption">
-Figure 0.3: Image Net.
+Figure 9.3: reconstruction results on MNIST.
 </p>
 </div>
-<p>The error rate in object recognition for that challenge has massively dropped
-since the introduction of deep neural networks in 2012 <span class="citation">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>. Machines can now do
-better than humans.</p>
-<div class="figure"><span id="fig:ImageNetErrorRates"></span>
-<img src="figures/ImageNet.svg" alt="Error Rates at Image Net." width="80%" />
+<p>The reconstructed results look very similar, as planned. The interest
+of a compressed representation is illustrated below, where the input
+is noisy but the decoder network reconstructs clean images.</p>
+<div class="figure"><span id="fig:AE-Denoised-Digits"></span>
+<img src="figures/denoised_digits.png" alt="reconstruction results on noisy inputs." width="60%" />
 <p class="caption">
-Figure 0.4: Error Rates at Image Net.
+Figure 9.4: reconstruction results on noisy inputs.
 </p>
 </div>
 </div>
-<div id="scene-understanding" class="section level3 unnumbered">
-<h3>Scene Understanding</h3>
-<p>Neural nets are also advancing the state of the art in <strong>Scene Understanding</strong>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-4"></span>
-<img src="figures/MaskRCNN.jpg" alt="Results from Mask R-CNN. [@maskrcnn]" width="80%" />
+<div id="dimension-compression" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Dimension Compression</h2>
+<p>We need however to be mindful that dimensional reduction does not necessarily
+imply information compression. In Fig. <a href="autoencoders.html#fig:AE-mapping-ND-1D-pca">9.5</a> is shown
+an example of what we are looking to do. The mapping from <span class="math inline">\({\bf x}\)</span> into <span class="math inline">\({\bf z}\)</span> comes with a loss of information. In this case, any variation perpendicular
+to the dashed line is discarded as being noise. The reconstruction
+<span class="math inline">\(\boldsymbol{\hat{\textbf{x}}}\)</span> is close but slightly different from <span class="math inline">\({\bf x}\)</span>. The idea here is actually a classic concept in unsupervised learning and is
+actually very similar to something like Principal Component Analysis.</p>
+<div class="figure"><span id="fig:AE-mapping-ND-1D-pca"></span>
+<img src="figures/ae-mapping-ND-1D-pca.svg" alt="Example of a dimension reduction, with information compression." width="100%" />
 <p class="caption">
-Figure 0.5: Results from Mask R-CNN. <span class="citation">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>
+Figure 9.5: Example of a dimension reduction, with information compression.
+</p>
+</div>
+<p>However, as illustrated in Fig. <a href="autoencoders.html#fig:AE-mapping-ND-1D">9.6</a>, there is no
+guarantee that the dimensional compression leads to something meaningful. We
+have here a one-to-one correspondence function that can map any point in the 2D
+space into the 1D space and vice-versa but the resulting latent variables <span class="math inline">\(z_1, z_2\)</span> are of probably not of much interest because the latent space is extremely
+entangled.</p>
+<div class="figure"><span id="fig:AE-mapping-ND-1D"></span>
+<img src="figures/ae-mapping-ND-1D.svg" alt="Example of a dimension reduction, without information compression." width="100%" />
+<p class="caption">
+Figure 9.6: Example of a dimension reduction, without information compression.
+</p>
+</div>
+<p>In practice, convolution networks are fairly smooth and do not create such
+extreme mappings. Still, we have little control over the latent space itself,
+which could end up being skewed and hard to make sense of.</p>
+<p>Let’s see that on an example for MNIST with a 2D latent space with the
+following network:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="autoencoders.html#cb13-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
+<span id="cb13-2"><a href="autoencoders.html#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(inputs)</span>
+<span id="cb13-3"><a href="autoencoders.html#cb13-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> Dense(<span class="dv">2</span>, name<span class="op">=</span><span class="st">&#39;latent_variables&#39;</span>)(x)</span>
+<span id="cb13-4"><a href="autoencoders.html#cb13-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(z)</span>
+<span id="cb13-5"><a href="autoencoders.html#cb13-5" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(x)</span></code></pre></div>
+<p>The bottleneck layer only contains 2 units. Thus the input <span class="math inline">\(28 \times 28\)</span> image
+is mapped into two latent variables <span class="math inline">\(z_1, z_2\)</span>. Fig. <a href="autoencoders.html#fig:AE-mean">9.7</a> shows
+the 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class
+id. Each point <span class="math inline">\((z_1,z_2)\)</span> in the plot represents an image from the training
+set. This particular mapping forms a complex partition of the space. Classes
+clusters are skewed, or broken into different parts, and leaving gaps where
+values of <span class="math inline">\((z_1,z_2)\)</span> do not correspond to any digit.</p>
+<div class="figure"><span id="fig:AE-mean"></span>
+<img src="figures/ae_mean.png" alt="Scatter plot of the MNIST training set in the Latent Space (Encoder)" width="60%" />
+<p class="caption">
+Figure 9.7: Scatter plot of the MNIST training set in the Latent Space (Encoder)
+</p>
+</div>
+<p>Fig. <a href="autoencoders.html#fig:AE-digits-over-latent">9.8</a> shows the decoded images for each
+value of <span class="math inline">\((z_1,z_2)\)</span>. For values of <span class="math inline">\((z_1,z_2)\)</span> outside of the main clusters,
+the reconstructed images become blurred or deformed.</p>
+<div class="figure"><span id="fig:AE-digits-over-latent"></span>
+<img src="figures/ae_digits_over_latent.png" alt="Reconstructions of the latent variables (Decoder)." width="60%" />
+<p class="caption">
+Figure 9.8: Reconstructions of the latent variables (Decoder).
+</p>
+</div>
+<p>The issue with AEs is that we ask the NN to somehow map 784 dimensions into 2,
+without enforcing anything about what the distribution of the latent variables
+should look like. Since the loss is only focused on the reconstruction
+fidelity, the latent space could end up being messy. Instead, what we are really
+looking for is an untangled latent space, where each latent variable has its own
+semantic meaning: eg. for a portrait images, <span class="math inline">\(z_1\)</span> could control the head size,
+<span class="math inline">\(z_2\)</span> the hair colour, <span class="math inline">\(z_3\)</span> the smile, etc. Perfect aligning with the semantic
+labels is however probably unattainable, as semantic labels are not accessible
+at training time. We could, however, at least to constraint the distribution of
+the latent variables to be a bit more reasonable. For instance, by making sure
+that the <span class="math inline">\({\bf z}=0\)</span> is the mean value of the distribution, or by making sure
+that its standard deviation is set to 1. This is exactely what variational auto
+encoders are trying to do.</p>
+</div>
+<div id="variational-auto-encoders-vae" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Variational Auto Encoders (VAE)</h2>
+<p>In <strong>Variational Auto Encoders</strong> (VAEs), we impose a prior on the distribution
+<span class="math inline">\(p({\bf z})\)</span> of the latent vectors <span class="math inline">\({\bf z}=[{ z}_1, \cdots, { z}_n ]^\top\)</span>. The
+prior is that <span class="math inline">\(p({\bf z})\)</span> should be the normal distribution:
+<span class="math display">\[
+  p({\bf z}) = \mathcal{N}(0, Id)
+\]</span>
+which means that the distribution of <span class="math inline">\({\bf z}\)</span> will be smooth and
+compact, without any gap.</p>
+<p>Since we are looking to constrain the distribution <span class="math inline">\(p({\bf z})\)</span> and
+not just the actual values of <span class="math inline">\({\bf z}\)</span>, we now need to manipulate distributions
+rather than data points. As manipulating distributions is a bit tricky and yield
+intractable equations, we will make some approximations along the way and resort
+to a Variational Bayesian framework. In particular, we are going to assume that
+the uncertainty <span class="math inline">\(p({\bf z} | {\bf x})\)</span> follows a Multivariate Gaussian:</p>
+<p><span class="math display">\[
+  p({\bf z} | {\bf x}) = \mathcal{N}(\mu_{{\bf z} | {\bf x}}, \Sigma_{{\bf z} | {\bf x}})
+\]</span></p>
+<p>Recall that <span class="math inline">\(p({\bf z} | {\bf x})\)</span> models the range of values <span class="math inline">\({\bf z}\)</span> that
+could have produced <span class="math inline">\({\bf x}\)</span>. What is expressed by <span class="math inline">\(p({\bf z} | {\bf x})\)</span> is
+thus all the variations that are due by unrelated processes, such as signal
+noise and other distortions.</p>
+<div class="figure"><span id="fig:AE-vae"></span>
+<img src="tikz-figures/ae_variational.svg" alt="VAE architecture." width="80%" />
+<p class="caption">
+Figure 9.9: VAE architecture.
+</p>
+</div>
+<p>The optimisation of the VAE model leads to the approach described in
+Fig. <a href="autoencoders.html#fig:AE-vae">9.9</a>. The exact derivations that lead to this solution go
+beyond the scope of this lecture material and will not be covered here. It is
+nevertheless interesting to look at some of the practical components of this
+architecture:</p>
+<ol style="list-style-type: decimal">
+<li>The encoder network predicts the distribution <span class="math inline">\(p({\bf z}|{\bf x})\)</span>
+by directly predicting its mean and variance <span class="math inline">\(\mu_{{\bf z} | {\bf x}}\)</span>
+and <span class="math inline">\(\Sigma_{{\bf z} | {\bf x}}\)</span>. As we want the distribution of
+<span class="math inline">\(p({\bf z})\)</span> to be normal (ie. <span class="math inline">\(p({\bf z}) = \mathcal{N}(0, Id)\)</span>), we
+define a loss function (<span class="math inline">\(\text{Loss}\ {\bf z}\)</span>), based on the
+Kullback-Leibler divergence, <span class="math inline">\(D_{KL}\)</span>, to measure the difference
+between the predicted distribution and the desired <span class="math inline">\(\mathcal{N}(0, Id)\)</span>:</li>
+</ol>
+<p><span class="math display">\[
+  \text{Loss}\ {\bf z} = D_{KL}( \mathcal{N}(\mu_{z | x},\Sigma_{z |
+          x}),   \mathcal{N}(0,Id) ) = \frac{1}{2} \sum_{k} \Sigma_{k,k} + \mu_k^2
+  -1 -\log(\Sigma_{k,k})
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>We then sample <span class="math inline">\(z \sim p({\bf z}| {\bf x})\)</span>. Sampling is a
+bit tricky because this is apriori not a differentiable step. The
+trick is here to pre-define a random variable <span class="math inline">\(\epsilon \sim \mathcal{N}(0, Id)\)</span> and then simply proceed to generate the sample
+<span class="math inline">\({\bf z}\)</span> as follows:
+<span class="math display">\[
+{\bf z} = \mu_{{\bf z }|{\bf x}} + \Sigma_{{\bf z }|{\bf x}}^{\frac{1}{2}} \epsilon
+\]</span>
+Since <span class="math inline">\(\epsilon\sim \mathcal{N}(0, Id)\)</span>, we are guaranteed that <span class="math inline">\(z \sim p({\bf z}| {\bf x})=\mathcal{N}(\mu_{{\bf z} | {\bf x}},\Sigma_{{\bf z} | {\bf x}})\)</span>.</p></li>
+<li><p>The decoder then reconstructs <span class="math inline">\(\boldsymbol{\hat{\textbf{x}}}\)</span>.
+<span class="math display">\[
+\text{Loss}\ \boldsymbol{\hat{\textbf{x}}} = \frac{1}{2}
+   \|\boldsymbol{\hat{\textbf{x}}} - \textbf{x} \|^2
+\]</span></p></li>
+</ol>
+<p>You can think of the sampling step as a way of working on
+distributions when in fact we are only defining the decoder network as
+an operation on data.</p>
+<p>So it is all a bit complicated, but if you look at Fig. <a href="autoencoders.html#fig:AE-vae-mean">9.10</a>,
+the resulting 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span> is indeed much
+closer to a normal distribution and the class clusters are less skewed than
+compared to AE.</p>
+<div class="figure"><span id="fig:AE-vae-mean"></span>
+<img src="figures/vae_mean.png" alt="2D scatter plot of the latent variable $(z_1,z_2)$, coloured by class id for the Variational Auto Encoder model." width="60%" />
+<p class="caption">
+Figure 9.10: 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class id for the Variational Auto Encoder model.
+</p>
+</div>
+<p>The decoded images associated with each value of <span class="math inline">\((z_1,z_2)\)</span> are shown in
+Fig. @(fig:AE-vae-digits-over-latent). We can see see that ill-formed
+reconstructions now only arise for extreme values of <span class="math inline">\((z_1,z_2)\)</span>.</p>
+<div class="figure"><span id="fig:AE-vae-digits-over-latent"></span>
+<img src="figures/vae_digits_over_latent.png" alt="2D scatter plot of the latent variable $(z_1,z_2)$, coloured by class id for the Variational Auto Encoder model." width="60%" />
+<p class="caption">
+Figure 9.11: 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class id for the Variational Auto Encoder model.
 </p>
 </div>
 </div>
-<div id="image-captioning" class="section level3 unnumbered">
-<h3>Image Captioning</h3>
-<p>By combining image models with language models, we are now able to
-automatically <strong>generate captions</strong> from images.</p>
-<div class="figure"><span id="fig:unnamed-chunk-5"></span>
-<img src="figures/captioning.png" alt="Results of automaated image captioning [@imagecaptioning]. See [Google Reserach blog entry](https://goo.gl/U88bDQ)" width="80%" />
+<div id="multi-tasks-design" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Multi-Tasks Design</h2>
+<p>The Encoder is the key part of the autoencoder architecture. There is however
+only so much that can be achieved with an unsupervised method. Looking at the
+success of pretrained networks such as ResNet or VGG, supervised learning is
+arguably a much more effective way of training encoders.</p>
+<p>An idea, that has gained popularity, is to combine multiple approaches in a
+Multi-Task training strategy. The approach, illustrated in
+Fig. <a href="autoencoders.html#fig:AE-multitask">9.12</a>, is that the same encoder can be shared across a
+multitude of classification tasks that are related to the application at
+hand. The training strategy then simply consists of alternating between the
+various training tasks, for a few mini-batch updates per task.</p>
+<div class="figure"><span id="fig:AE-multitask"></span>
+<img src="tikz-figures/ae_multitasks.svg" alt="Example of a more comprehensive multi-tasks auto-encoder, including a GAN." width="100%" />
 <p class="caption">
-Figure 0.6: Results of automaated image captioning <span class="citation">(<a href="references.html#ref-imagecaptioning" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See <a href="https://goo.gl/U88bDQ">Google Reserach blog entry</a>
+Figure 9.12: Example of a more comprehensive multi-tasks auto-encoder, including a GAN.
 </p>
 </div>
-</div>
-<div id="machine-translation" class="section level3 unnumbered">
-<h3>Machine Translation</h3>
-<p>All major tech companies have changed their <strong>machine translation</strong>
-systems to use Deep Learning.</p>
-<p>Google used to average a yearly 0.4% improvement on their machine
-translation system. Their first attempt at using Deep Learning yielded
-an overnight 7% improvement, more than in an entire lifetime!</p>
-<p>Several years of handcrafted development could not match a single
-initial deep learning implementation.</p>
-<blockquote>
-<p>New York Times, “The Great AI Awakening” <a href="https://goo.gl/DPYp6d">https://goo.gl/DPYp6d</a></p>
-</blockquote>
-<p>In 2014, Skype Translator was announced. It trains and optimises
-<strong>speech recognition</strong>, automatic <strong>machine translation</strong>
-and <strong>speech synthesis</strong> tasks, acting as the glue that holds these
-elements together.</p>
-<blockquote>
-<p><a href="https://www.youtube.com/embed/NhxCg2PA3ZI?start=0">Skype demo</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://goo.gl/eAuPcS">Microsoft blog post</a></p>
-</blockquote>
-</div>
-<div id="game-playing" class="section level3 unnumbered">
-<h3>Game Playing</h3>
-<p>Deep learning has also been introduced in <strong>reinforcement learning</strong> to
-solve complex sequential decision making problems.</p>
-<p>Recent successes include: playing old Atari computer games,
-programming real world Robots and beating humans at Go.</p>
-<p><img src="figures/alphago.jpg" width="80%" /></p>
-<blockquote>
-<p><a href="https://goo.gl/cTcBJa">demo: Robots Learning how to walk</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://goo.gl/3TcCNA">DeepMind</a></p>
-</blockquote>
-</div>
-</div>
-<div id="reasons-of-a-success" class="section level2 unnumbered">
-<h2>Reasons of a Success</h2>
-<p>Neural Networks have been around for decades. But is only now that it surpasses
-all other machine learning techniques.</p>
-<p>Deep Learning is now a <em><strong>disruptive</strong></em> technology that has been unexpectedly
-taking over operations of technology companies around the world.</p>
-<blockquote>
-<p>``The revolution in deep nets has been very profound,
-it definitely surprised me, even though I was sitting right there.’’.</p>
-<p>— Sergey Brin, Google co-founder</p>
-</blockquote>
-<p>Why now?</p>
-<p>Because <strong>Deep Learning does scale</strong>.</p>
-<p><img src="figures/DLvsOthers.svg" width="60%" /></p>
-<p>Neural Nets are the only ML technique whose performance <strong>scales
-efficiently with the training data size</strong>. Other ML popular
-techniques just can’t scale that well.</p>
-<p>The advent of <strong>big databases</strong>, combined with cheaper <strong>computing
-power</strong> (Graphic Cards), meant that Deep Learning could take advantage
-of all this, whilst other techniques stagnated. Instead of using
-thousands of observations, Deep Learning can take advantage of
-billions.</p>
-<p>The tipping point was 2012 in Computer Vision and around 2014 in
-Machine Translation.</p>
-<p>Deep Learning offers a (relatively) simple framework to define and
-parametrise pretty much any kind of numerical method and then optimise
-it over massive databases.</p>
-<p>By adopting an <strong>automated optimisation approach</strong> to tuning
-algorithms, Deep Learning is able to surpass <strong>hand-tailored
-algorithms</strong> of skilled researchers.</p>
-<p>It offers a systematic approach, when before, algorithms took years of
-human efforts to design.</p>
-<div id="democratisation" class="section level3 unnumbered">
-<h3>Democratisation</h3>
-<p>Deep Learning is a (relatively) simple framework. Good programmers
-train state of the art neural nets without having done 10+ years of
-research in the domain. It is an opportunity for start-ups and it has
-become a ubiquitous tool in tech companies.</p>
-</div>
-<div id="global-reach" class="section level3 unnumbered">
-<h3>Global Reach</h3>
-<p>It has been applied successfully to many fields of research, industry
-and society: self-driving cars, image recognition, detecting cancer, speech
-recognition, speech synthesis, machine translation, drug discovery and
-toxicology, customer relationship management, recommendation systems,
-bioinformatics, advertising, controlling lasers, etc.</p>
-</div>
-<div id="impact" class="section level3 unnumbered">
-<h3>Impact</h3>
-<p>Here is a question for you: how long before your future job gets replaced by an algorithm?
-Probably much sooner than you think. You might feel safe if you are an artist…</p>
-<p>… but then again:</p>
-<div class="figure"><span id="fig:unnamed-chunk-8"></span>
-<img src="figures/styletransfer-2.jpeg" alt="automatic style transfer" width="80%" />
-<p class="caption">
-Figure 0.7: automatic style transfer
-</p>
-</div>
-<blockquote>
-<p>A Neural Algorithm of Artistic Style. L. Gatys, A. Ecker,
-M. Bethge. 2015. <a href="https://arxiv.org/abs/1508.06576" class="uri">https://arxiv.org/abs/1508.06576</a></p>
-</blockquote>
-<blockquote>
-<p>Does an AI need to make love to Rembrandt’s girlfriend to make
-art? <a href="https://goo.gl/gi7rWE" class="uri">https://goo.gl/gi7rWE</a></p>
-</blockquote>
-<blockquote>
-<p>Intelligent Machines: AI art is taking on the
-experts. <a href="https://goo.gl/2kfyXd" class="uri">https://goo.gl/2kfyXd</a></p>
-</blockquote>
+<p>For instance, if your application is to generate images of faces, you may want
+to also train your encoder as part of classification networks that aim at
+identifying whether the person has a mustache, wears glasses, is smiling, etc.
+If your encoder can do all this, then it is probably building features that give
+a complete semantic representation of a face. You could even combine the AE
+decoder network with a discriminative network to form a VAE-GAN architecture!</p>
+<p>At the end of the day, what this kind of approach is trying to get is a very
+good semantic feature representation <span class="math inline">\({\bf z}\)</span>, whose distribution, over the
+dataset is simply <span class="math inline">\(p({\bf z}) = \mathcal{N}(0, Id)\)</span>.</p>
 
-</div>
 </div>
 </div>
             </section>
@@ -517,8 +610,8 @@ experts. <a href="https://goo.gl/2kfyXd" class="uri">https://goo.gl/2kfyXd</a></
           </div>
         </div>
       </div>
-<a href="prerequisites.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-regressionleast-squares.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="recurrent-neural-networks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -549,7 +642,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/00-intro.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/10-autoencoders.Rmd",
 "text": "Edit"
 },
 "history": {
