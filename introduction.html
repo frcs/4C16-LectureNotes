@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2020-12-10" />
+<meta name="date" content="2021-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -162,7 +162,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#least-squares-in-practice"><i class="fa fa-check"></i><b>1.3</b> Least Squares in Practice</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#a-simple-affine-example"><i class="fa fa-check"></i><b>1.3.1</b> A Simple Affine Example</a></li>
-<li class="chapter" data-level="1.3.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#transforming-the-input-features"><i class="fa fa-check"></i><b>1.3.2</b> Transforming The Input Features</a></li>
+<li class="chapter" data-level="1.3.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#transforming-the-input-features"><i class="fa fa-check"></i><b>1.3.2</b> Transforming the Input Features</a></li>
 <li class="chapter" data-level="1.3.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#polynomial-fitting"><i class="fa fa-check"></i><b>1.3.3</b> Polynomial Fitting</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#underfitting"><i class="fa fa-check"></i><b>1.4</b> Underfitting</a></li>
@@ -345,33 +345,58 @@ predictive model <span class="math inline">\(f({\bf x}_i, {\bf w})=y_i\)</span>.
 Figure 0.2: AI, ML and Deep Learning.
 </p>
 </div>
-<p>Can we find a model <span class="math inline">\(f({\bf x}_i)=y_i\)</span> to predict the outcome from the
-input features?</p></li>
+<p>The task is thus to find a model to predict the outcome from input features.</p></li>
 <li><p><strong>Unsupervised Learning</strong>:</p>
-<p>What can we learn about a dataset <span class="math inline">\(({\bf x}_i)\)</span> by just looking at it?
-(ie. without any labelled information <span class="math inline">\(y_i\)</span>)</p></li>
+<p>The task is here to learn about a dataset <span class="math inline">\(({\bf x}_i)\)</span> by just looking at it,
+without any labelled information <span class="math inline">\(y_i\)</span>. For instance, a typical application of
+unsupervised learning is to cluster a dataset into smaller groups of
+observations that seem to share similar feature vectors. Hopefully the
+clusters mean something useful that can be exploited afterwards.</p></li>
 <li><p><strong>Reinforcement Learning</strong>:</p>
-<p>How can an agent interact with its environment (the data) to get maximum
-reward (eg. game playing, robots learning to walk).</p></li>
+<p>The task is about teaching an agent how to interact with its environment (the
+data), so as to get maximum reward. Reinforcement Learning is used in
+applications such as game playing, robotics, etc.</p></li>
 </ul>
-<p>Deep Learning has made <em>major</em> breakthroughs in all three fields.</p>
+<p>Deep Learning has made <em>major</em> breakthroughs in all three fields. So much so
+that virtually all research papers in these field rely on neural networks.</p>
 </div>
 <div id="deep-learning-successes" class="section level2 unnumbered">
 <h2>Deep Learning Successes</h2>
+<p>Below are a number of machine learning applications, which have been</p>
 <div id="image-classification" class="section level3 unnumbered">
 <h3>Image Classification</h3>
-<p><strong>Image Recognition</strong> is one of the core applications of Computer Vision.
-ImageNet [www.image-net.org] runs an annual challenge where software programs
-compete to correctly classify and detect objects and scenes in images.</p>
+<p><strong>Image Recognition</strong> is one of the core applications of Computer Vision, and is
+arguably the birthplace of modern Deep Learning. Image recognition used to be a
+particularly challenging task of computer vision. See for instance the 2014
+comic by <em>xkcd</em>:</p>
+<div class="figure">
+<img src="https://imgs.xkcd.com/comics/tasks.png" style="width:30.0%" alt="" />
+<p class="caption"><a href="https://xkcd.com/1425/" class="uri">https://xkcd.com/1425/</a></p>
+</div>
+<p>The generally adopted approach was to compute a collection of, mostly unrelated,
+image features that people found to be useful and then apply the currently most
+popular classification method.</p>
+<p>ImageNet [www.image-net.org] runs an annual challenge where software programs
+compete to correctly classify and detect objects and scenes in images. Up to
+2012, support vector machine (SVM) was the method of choice for classification.</p>
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
 <img src="figures/imagenet-fig1.png" alt="Image Net." width="80%" />
 <p class="caption">
 Figure 0.3: Image Net.
 </p>
 </div>
-<p>The error rate in object recognition for that challenge has massively dropped
-since the introduction of deep neural networks in 2012 <span class="citation">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>. Machines can now do
-better than humans.</p>
+<p>In 2012, it was shown <span class="citation">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> that deep learning models could massively drop
+the object recognition error rate. This paper has caught the attention of the
+image recognition community and beyond. The paper is surprisingly not
+technically revolutionary. Neural Networks had been indeed around for a few
+decades, without attracting too much momentum. This time however, the
+significance of improvement could not be left unnoticed. Since then, all methods
+are based on neural networks, making year on year incremental progress. So much
+so that machines can now do better than humans in this specific task. In 2014,
+Andrej Karparthy manually entered the competition and <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/">obtained a 5% error
+rate</a>). For
+reference, the 2017 winning entry achieved a 2.3% error
+rate.</p>
 <div class="figure"><span id="fig:ImageNetErrorRates"></span>
 <img src="figures/ImageNet.svg" alt="Error Rates at Image Net." width="80%" />
 <p class="caption">
@@ -381,7 +406,11 @@ Figure 0.4: Error Rates at Image Net.
 </div>
 <div id="scene-understanding" class="section level3 unnumbered">
 <h3>Scene Understanding</h3>
-<p>Neural nets are also advancing the state of the art in <strong>Scene Understanding</strong>.</p>
+<p>These new achievements in image recognition have then been brought to nearby
+fields such <strong>Scene Understanding</strong>. The figure below show the semantic
+segmentation results from Mask R-CNN <span class="citation">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>. Each pixel can be
+automatically be associated with a particular class (eg. human, train, car,
+etc.).</p>
 <div class="figure"><span id="fig:unnamed-chunk-4"></span>
 <img src="figures/MaskRCNN.jpg" alt="Results from Mask R-CNN. [@maskrcnn]" width="80%" />
 <p class="caption">
@@ -391,8 +420,8 @@ Figure 0.5: Results from Mask R-CNN. <span class="citation">(<a href="references
 </div>
 <div id="image-captioning" class="section level3 unnumbered">
 <h3>Image Captioning</h3>
-<p>By combining image models with language models, we are now able to
-automatically <strong>generate captions</strong> from images.</p>
+<p>By combining image models with language models, we are now able to automatically
+<strong>generate captions</strong> from images (see Figure below).</p>
 <div class="figure"><span id="fig:unnamed-chunk-5"></span>
 <img src="figures/captioning.png" alt="Results of automaated image captioning [@imagecaptioning]. See [Google Reserach blog entry](https://goo.gl/U88bDQ)" width="80%" />
 <p class="caption">
@@ -402,20 +431,21 @@ Figure 0.6: Results of automaated image captioning <span class="citation">(<a hr
 </div>
 <div id="machine-translation" class="section level3 unnumbered">
 <h3>Machine Translation</h3>
-<p>All major tech companies have changed their <strong>machine translation</strong>
-systems to use Deep Learning.</p>
-<p>Google used to average a yearly 0.4% improvement on their machine
-translation system. Their first attempt at using Deep Learning yielded
-an overnight 7% improvement, more than in an entire lifetime!</p>
+<p>By 2014, the deep learning revolution had spread beyond computer vision and made
+its introduction in natural language processing.</p>
+<p>All major tech companies have rapidly changed their <strong>machine translation</strong>
+systems to use Deep Learning. For instance, Google used to average a yearly
+0.4% improvement on their machine translation system. Their first attempt at
+using Deep Learning yielded an overnight 7% improvement, more than in an entire
+lifetime! (see <a href="https://goo.gl/DPYp6d">here</a>).</p>
 <p>Several years of handcrafted development could not match a single
 initial deep learning implementation.</p>
 <blockquote>
 <p>New York Times, “The Great AI Awakening” <a href="https://goo.gl/DPYp6d">https://goo.gl/DPYp6d</a></p>
 </blockquote>
-<p>In 2014, Skype Translator was announced. It trains and optimises
-<strong>speech recognition</strong>, automatic <strong>machine translation</strong>
-and <strong>speech synthesis</strong> tasks, acting as the glue that holds these
-elements together.</p>
+<p>In 2014, Skype Translator was announced. It trains and optimises <strong>speech
+recognition</strong>, automatic <strong>machine translation</strong> and <strong>speech synthesis</strong> tasks,
+acting as the glue that holds these elements together.</p>
 <blockquote>
 <p><a href="https://www.youtube.com/embed/NhxCg2PA3ZI?start=0">Skype demo</a></p>
 </blockquote>
@@ -427,8 +457,9 @@ elements together.</p>
 <h3>Game Playing</h3>
 <p>Deep learning has also been introduced in <strong>reinforcement learning</strong> to
 solve complex sequential decision making problems.</p>
-<p>Recent successes include: playing old Atari computer games,
-programming real world Robots and beating humans at Go.</p>
+<p>Recent successes include: playing old Atari computer games, programming real
+world Robots and beating humans at Go. One notable event has the victory of
+AlphaGo by DeepMind over the humans.</p>
 <p><img src="figures/alphago.jpg" width="80%" /></p>
 <blockquote>
 <p><a href="https://goo.gl/cTcBJa">demo: Robots Learning how to walk</a></p>
@@ -441,9 +472,10 @@ programming real world Robots and beating humans at Go.</p>
 <div id="reasons-of-a-success" class="section level2 unnumbered">
 <h2>Reasons of a Success</h2>
 <p>Neural Networks have been around for decades. But is only now that it surpasses
-all other machine learning techniques.</p>
-<p>Deep Learning is now a <em><strong>disruptive</strong></em> technology that has been unexpectedly
-taking over operations of technology companies around the world.</p>
+all other machine learning techniques. Deep Learning is now a <em><strong>disruptive</strong></em>
+technology that has been unexpectedly taking over operations of technology
+companies around the world. By the way, the word disruptive is not an
+overstatement.</p>
 <blockquote>
 <p>``The revolution in deep nets has been very profound,
 it definitely surprised me, even though I was sitting right there.’’.</p>
@@ -472,10 +504,10 @@ algorithms</strong> of skilled researchers.</p>
 human efforts to design.</p>
 <div id="democratisation" class="section level3 unnumbered">
 <h3>Democratisation</h3>
-<p>Deep Learning is a (relatively) simple framework. Good programmers
-train state of the art neural nets without having done 10+ years of
-research in the domain. It is an opportunity for start-ups and it has
-become a ubiquitous tool in tech companies.</p>
+<p>Another aspect of the revolutionary aspect of Deep Learning is it is a
+(relatively) simple framework. Good programmers can train state of the art
+neural nets, without having done 10+ years of research in the domain. It is an
+opportunity for start-ups and it has become a ubiquitous tool in tech companies.</p>
 </div>
 <div id="global-reach" class="section level3 unnumbered">
 <h3>Global Reach</h3>

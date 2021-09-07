@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2020-12-10" />
+<meta name="date" content="2021-09-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -162,7 +162,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#least-squares-in-practice"><i class="fa fa-check"></i><b>1.3</b> Least Squares in Practice</a>
 <ul>
 <li class="chapter" data-level="1.3.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#a-simple-affine-example"><i class="fa fa-check"></i><b>1.3.1</b> A Simple Affine Example</a></li>
-<li class="chapter" data-level="1.3.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#transforming-the-input-features"><i class="fa fa-check"></i><b>1.3.2</b> Transforming The Input Features</a></li>
+<li class="chapter" data-level="1.3.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#transforming-the-input-features"><i class="fa fa-check"></i><b>1.3.2</b> Transforming the Input Features</a></li>
 <li class="chapter" data-level="1.3.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#polynomial-fitting"><i class="fa fa-check"></i><b>1.3.3</b> Polynomial Fitting</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#underfitting"><i class="fa fa-check"></i><b>1.4</b> Underfitting</a></li>
@@ -568,7 +568,7 @@ equations using matrix notations.</p>
 \]</span></p>
 </div>
 <div id="transforming-the-input-features" class="section level3" number="1.3.2">
-<h3><span class="header-section-number">1.3.2</span> Transforming The Input Features</h3>
+<h3><span class="header-section-number">1.3.2</span> Transforming the Input Features</h3>
 <p>Although the model for LS must be linear, it doesn’t mean that we can only fit a linear or
 affine curve. Indeed a model will be linear if you can write the model as follows:
 <span class="math display">\[
@@ -668,13 +668,13 @@ polynomial model).</p>
 Figure 1.4: MSE: 7.59e-06
 </p>
 </div>
-<p>Although the error on the observed data is perfect (MSE=7.59e-06), it is
-clear that the predicted model is grossly wrong in-between the observed data.</p>
+<p>Although the error on the observed data is perfect (MSE=7.59e-06), it is clear
+that the model predictions are very poor in-between the observed data.</p>
 <p>This problem is called <strong>overfitting</strong> and is a fundamental
 problem in machine learning.</p>
-<p>It boils down to this: given enough parameters your model will fit
-pretty much anything. But that doesn’t mean your model can generalise
-well to any data outside the data used for training.</p>
+<p>It boils down to this: given enough parameters your model will fit pretty much
+anything. But that doesn’t mean your model can generalise well to data outside
+of the training set.</p>
 <p><strong>How to know if you are overfitting?</strong>. You know that you are
 overfitting when the error is very low on the data used for training
 but quite high on newly predicted data. This is the reason why you
@@ -684,30 +684,26 @@ an objective assessment of your model in the real world, outside of
 the training dataset. You can monitor overfitting by checking if the
 loss on the test set is significantly higher than the loss on the
 training set.</p>
-<p>To avoid overfitting, you may want to consider is to check if the
-chosen model is too complex for the data. If this is the case, you
-could <strong>use a simpler model</strong> and make sure you are not under-fitting.</p>
+<p>To avoid overfitting, you may want to check if the chosen model is too complex
+for the data. If this is the case, you could <strong>use a simpler model</strong> and make
+sure you are not under-fitting.</p>
 <p><em>eg: you are fitting a polynomial of order 9 but the model is in fact
 of order 2</em></p>
-<p>However, most of the times the model is sufficient but you simply
-don’t have enough observations to fit our model. The cure is then to
-<strong>get more data</strong>.</p>
-<p><em>eg. you only use 5 points to fit a polynomial of order 9, you
-need more data.</em></p>
+<p>However, most of the times, the model is fine but you simply don’t have enough
+observations to fit the model. The cure is then to <strong>get more data</strong>.</p>
+<p><em>eg. you only use 5 points to fit a polynomial of order 9: you need more data.</em></p>
 <p>Using plenty of data even allows you to use overly complex models. If
 some features are not useful, you can expect that the corresponding
 estimated weights <span class="math inline">\(w_i\)</span> will shrink to zero. Thus it is OK to fit a
 polynomial of order 9 when the underlying model is actually of order
 2. Just make sure you have plenty of data.</p>
-<p>But what if you can’t get enough data? Well, that sounds like a lame
-excuse, so, go back and get more data. But what if I <em>really</em>,
-<em>really</em> can’t? Then, one last catch-all solution is to use
-<strong>regularisation</strong>.</p>
-<p>Finally, note that overfitting is not a bad thing by itself. Indeed,
-you are expected to perform better on exercises that you’ve already
-worked on many times than on exercises that you’ve never seen before.
-In fact, you should probably aim for some level of overfitting as
-underfitting is probably worse in practice.</p>
+<p>But what if you can’t get enough data? Well, that sounds like a poor excuse, so,
+go back and get more data. But what if I <em>really</em>, <em>really</em> can’t? Then, one
+last catch-all solution is to use <strong>regularisation</strong>.</p>
+<p>Note that overfitting is not a bad thing by itself. Indeed, you are expected to
+perform better on exercises that you’ve already worked on many times than on
+exercises that you’ve never seen before. In fact, you should probably aim for
+some level of overfitting as underfitting is probably worse in practice.</p>
 </div>
 <div id="regularisation" class="section level2" number="1.6">
 <h2><span class="header-section-number">1.6</span> Regularisation</h2>
@@ -730,13 +726,12 @@ that the weights <span class="math inline">\(\mathbf{w}\)</span> are small than 
 <span class="math display">\[
 \mathrm{weight} = \mathrm{height} \times 10^{10} − 10^{20}
 \]</span>
-Even, if both models lead to the same overall prediction error (ie. same MSE).
-Thus, as a default, we should favour weights <span class="math inline">\(\mathbf{w}\)</span> that
-are closer to zero.</p>
-<p>Regularisation is often a necessary evil. It allows you to avoid gross
-errors when predicting samples that are far outside the range of the
-training data. But this comes at the cost of biasing the
-estimation. Thus in practice you want to avoid it.</p>
+Even, if both models lead to the same overall prediction error (ie. same MSE),
+we should favour weights <span class="math inline">\(\mathbf{w}\)</span> that are closer to zero.</p>
+<p>Regularisation is often a necessary evil. It allows you to avoid gross errors
+when predicting samples that are far outside the range of the training data. But
+this comes at the cost of biasing the estimation. Thus in practice you want to
+avoid it.</p>
 <p>Note that adding the Tikhonov regularisation still leads to a direct solution:
 <span class="math display">\[
 \boldsymbol{\hat{\textbf{w}}}=(\mathbf{X}^{\top }\mathbf{X}+\alpha \mathbf{I} )^{-1}\mathbf{X}^{\top }\mathbf {y} 
