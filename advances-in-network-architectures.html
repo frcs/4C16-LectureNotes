@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-07" />
+<meta name="date" content="2021-09-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -218,16 +218,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#training"><i class="fa fa-check"></i><b>5.6</b> Training</a></li>
 <li class="chapter" data-level="5.7" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagation"><i class="fa fa-check"></i><b>5.7</b> Back-Propagation</a>
 <ul>
-<li class="chapter" data-level="5.7.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#vanishing-gradients"><i class="fa fa-check"></i><b>5.7.1</b> Vanishing Gradients</a></li>
+<li class="chapter" data-level="5.7.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#computing-the-gradient"><i class="fa fa-check"></i><b>5.7.1</b> Computing the Gradient</a></li>
+<li class="chapter" data-level="5.7.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#the-chain-rule"><i class="fa fa-check"></i><b>5.7.2</b> The Chain Rule</a></li>
+<li class="chapter" data-level="5.7.3" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagating-with-the-chain-rule"><i class="fa fa-check"></i><b>5.7.3</b> Back-Propagating with the Chain-Rule</a></li>
+<li class="chapter" data-level="5.7.4" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#vanishing-gradients"><i class="fa fa-check"></i><b>5.7.4</b> Vanishing Gradients</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a></li>
+<li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#mini-batch-and-stochastic-gradient-descent"><i class="fa fa-check"></i><b>5.8.1</b> Mini-Batch and Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Adavanced Gradient Descent Optimizers</a></li>
+</ul></li>
 <li class="chapter" data-level="5.9" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#constraints-and-regularisers"><i class="fa fa-check"></i><b>5.9</b> Constraints and Regularisers</a>
 <ul>
 <li class="chapter" data-level="5.9.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l2-regularisation"><i class="fa fa-check"></i><b>5.9.1</b> L2 regularisation</a></li>
 <li class="chapter" data-level="5.9.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l1-regularisation"><i class="fa fa-check"></i><b>5.9.2</b> L1 regularisation</a></li>
 </ul></li>
 <li class="chapter" data-level="5.10" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#dropout-noise"><i class="fa fa-check"></i><b>5.10</b> Dropout &amp; Noise</a></li>
-<li class="chapter" data-level="5.11" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#monitoring"><i class="fa fa-check"></i><b>5.11</b> Monitoring</a></li>
+<li class="chapter" data-level="5.11" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#monitoring-and-training-diagnostics"><i class="fa fa-check"></i><b>5.11</b> Monitoring and Training Diagnostics</a></li>
 <li class="chapter" data-level="5.12" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#take-away-4"><i class="fa fa-check"></i><b>5.12</b> Take Away</a></li>
 <li class="chapter" data-level="5.13" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#useful-resources"><i class="fa fa-check"></i><b>5.13</b> Useful Resources</a></li>
 </ul></li>
@@ -474,7 +481,7 @@ ImageNet) with a top 5 error rate of 6.7% (human error rate is around
 <p>Szegedy et al. “Going Deeper with Convolutions,” \
 CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
 </blockquote>
-<div class="figure"><span id="fig:unnamed-chunk-80"></span>
+<div class="figure"><span id="fig:unnamed-chunk-78"></span>
 <img src="figures/GoogLeNet2.png" alt="GoogLeNet" width="80%" />
 <p class="caption">
 Figure 7.4: GoogLeNet
@@ -486,7 +493,7 @@ sequence of convolution layers, we have a sequence of inception layers
 <p>An inception layer is a sub-network (hence the name inception) that
 produces 4 different types of convolutions filters, which are then
 concatenated (see this video: <a href="https://youtu.be/VxhSouuSZDY" class="uri">https://youtu.be/VxhSouuSZDY</a>).</p>
-<div class="figure"><span id="fig:unnamed-chunk-81"></span>
+<div class="figure"><span id="fig:unnamed-chunk-79"></span>
 <img src="figures/inception-subnetwork.png" alt="GoogLeNet Inception Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.5: GoogLeNet Inception Sub-Network
@@ -508,7 +515,7 @@ Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
 parallel connections between deeper layers and shallower layers. The
 connection is simply done by adding the result of a previous layer to
 the result after 2 convolutions layers:</p>
-<div class="figure"><span id="fig:unnamed-chunk-82"></span>
+<div class="figure"><span id="fig:unnamed-chunk-80"></span>
 <img src="figures/resnet-subnetwork.png" alt="ResNet Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.6: ResNet Sub-Network
@@ -565,7 +572,7 @@ addressing both problem at the same time in a single architecture, we
 can solve for both problems.</p>
 <p>Training GAN networks is particularly slow and difficult but the
 benefits are spectacular. This is a very hot topic of research.</p>
-<div class="figure"><span id="fig:unnamed-chunk-83"></span>
+<div class="figure"><span id="fig:unnamed-chunk-81"></span>
 <img src="figures/GAN-NVIDIA.jpg" alt="Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [https://goo.gl/AgxRhp]" width="100%" />
 <p class="caption">
 Figure 7.8: Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [<a href="https://goo.gl/AgxRhp" class="uri">https://goo.gl/AgxRhp</a>]

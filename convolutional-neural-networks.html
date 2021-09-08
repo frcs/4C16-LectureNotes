@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-07" />
+<meta name="date" content="2021-09-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -218,16 +218,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#training"><i class="fa fa-check"></i><b>5.6</b> Training</a></li>
 <li class="chapter" data-level="5.7" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagation"><i class="fa fa-check"></i><b>5.7</b> Back-Propagation</a>
 <ul>
-<li class="chapter" data-level="5.7.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#vanishing-gradients"><i class="fa fa-check"></i><b>5.7.1</b> Vanishing Gradients</a></li>
+<li class="chapter" data-level="5.7.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#computing-the-gradient"><i class="fa fa-check"></i><b>5.7.1</b> Computing the Gradient</a></li>
+<li class="chapter" data-level="5.7.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#the-chain-rule"><i class="fa fa-check"></i><b>5.7.2</b> The Chain Rule</a></li>
+<li class="chapter" data-level="5.7.3" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagating-with-the-chain-rule"><i class="fa fa-check"></i><b>5.7.3</b> Back-Propagating with the Chain-Rule</a></li>
+<li class="chapter" data-level="5.7.4" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#vanishing-gradients"><i class="fa fa-check"></i><b>5.7.4</b> Vanishing Gradients</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a></li>
+<li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#mini-batch-and-stochastic-gradient-descent"><i class="fa fa-check"></i><b>5.8.1</b> Mini-Batch and Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Adavanced Gradient Descent Optimizers</a></li>
+</ul></li>
 <li class="chapter" data-level="5.9" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#constraints-and-regularisers"><i class="fa fa-check"></i><b>5.9</b> Constraints and Regularisers</a>
 <ul>
 <li class="chapter" data-level="5.9.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l2-regularisation"><i class="fa fa-check"></i><b>5.9.1</b> L2 regularisation</a></li>
 <li class="chapter" data-level="5.9.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l1-regularisation"><i class="fa fa-check"></i><b>5.9.2</b> L1 regularisation</a></li>
 </ul></li>
 <li class="chapter" data-level="5.10" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#dropout-noise"><i class="fa fa-check"></i><b>5.10</b> Dropout &amp; Noise</a></li>
-<li class="chapter" data-level="5.11" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#monitoring"><i class="fa fa-check"></i><b>5.11</b> Monitoring</a></li>
+<li class="chapter" data-level="5.11" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#monitoring-and-training-diagnostics"><i class="fa fa-check"></i><b>5.11</b> Monitoring and Training Diagnostics</a></li>
 <li class="chapter" data-level="5.12" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#take-away-4"><i class="fa fa-check"></i><b>5.12</b> Take Away</a></li>
 <li class="chapter" data-level="5.13" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#useful-resources"><i class="fa fa-check"></i><b>5.13</b> Useful Resources</a></li>
 </ul></li>
@@ -323,7 +330,7 @@ applied on the MNIST dataset.</p>
 <h2><span class="header-section-number">6.1</span> Convolution Filters</h2>
 <p>Recall that in dense layers, every unit in the layer is
 connected to every unit in the adjacent layers:</p>
-<div class="figure"><span id="fig:unnamed-chunk-64"></span>
+<div class="figure"><span id="fig:unnamed-chunk-62"></span>
 <img src="tikz-figures/nn-dag-deep-ml-perceptron.svg" alt="Deep Neural Network in a Multi-Layer Perceptron Layout. " width="79.4%" />
 <p class="caption">
 Figure 6.1: Deep Neural Network in a Multi-Layer Perceptron Layout.
@@ -336,7 +343,7 @@ the input layer will be a multidimensional array, or <strong>tensor</strong>,
 containing <code>width</code> <span class="math inline">\(\times\)</span> <code>height</code> <span class="math inline">\(\times\)</span> 3 input units.</p>
 <p>If the next layer is of the same size, then we have up to <span class="math inline">\(({\tt width}\times {\tt height}\times 3)^2\)</span> weights to train, which can
 become very large very quickly.</p>
-<div class="figure"><span id="fig:unnamed-chunk-65"></span>
+<div class="figure"><span id="fig:unnamed-chunk-63"></span>
 <img src="tikz-figures/cnn-intro1.svg" alt="Dense Layer on Images. " width="79.4%" />
 <p class="caption">
 Figure 6.2: Dense Layer on Images.
@@ -350,7 +357,7 @@ of this.</p>
 <p>This is what is done in <strong>convolutional neural networks</strong>, where the
 units in the next layer are only connected to their neighbours in the
 input layer. In this case the neighbourhood is defined as a <span class="math inline">\(5\times 5\)</span> window.</p>
-<div class="figure"><span id="fig:unnamed-chunk-66"></span>
+<div class="figure"><span id="fig:unnamed-chunk-64"></span>
 <img src="tikz-figures/cnn-intro2.svg" alt="Convolution Network Architecture. " width="79.4%" />
 <p class="caption">
 Figure 6.3: Convolution Network Architecture.
@@ -424,19 +431,19 @@ fraction of what would be required in a dense layer.</p>
 <table class="transparent">
 <tr>
 <td>
-<img src="figures/bird.jpg"/>
+<img src="figures/bird.jpg" />
 </td>
 <td>
-<img src="figures/bird-noresize-block1_conv1-5.jpg"/>
+<img src="figures/bird-noresize-block1_conv1-5.jpg" />
 </td>
 <td>
-<img src="figures/bird-noresize-block1_conv1-10.jpg"/>
+<img src="figures/bird-noresize-block1_conv1-10.jpg" />
 </td>
 <td>
-<img src="figures/bird-noresize-block1_conv1-20.jpg"/>
+<img src="figures/bird-noresize-block1_conv1-20.jpg" />
 </td>
 <td>
-<img src="figures/bird-noresize-block1_conv1-30.jpg"/>
+<img src="figures/bird-noresize-block1_conv1-30.jpg" />
 </td>
 </tr>
 <tr>
@@ -568,7 +575,7 @@ classification:</p>
 as we go deeper, we built more and more features that are increasingly
 more complex.</p>
 <p>Next are presented some of the early landmark convolutional networks.</p>
-<div class="figure"><span id="fig:unnamed-chunk-72"></span>
+<div class="figure"><span id="fig:unnamed-chunk-70"></span>
 <img src="figures/LeNet-5.jpg" alt="LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets." width="80%" />
 <p class="caption">
 Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets.
@@ -578,7 +585,7 @@ Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutiona
 <p>LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998).
 Gradient-based learning applied to document recognition.</p>
 </blockquote>
-<div class="figure"><span id="fig:unnamed-chunk-73"></span>
+<div class="figure"><span id="fig:unnamed-chunk-71"></span>
 <img src="figures/alexnet.jpg" alt="AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution." width="80%" />
 <p class="caption">
 Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution.
@@ -588,7 +595,7 @@ Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of
 <p>Alex Krizhevsky, Ilya Sutskever, Geoffrey E Hinton (2012)
 Imagenet classification with deep convolutional neural networks.</p>
 </blockquote>
-<div class="figure"><span id="fig:unnamed-chunk-74"></span>
+<div class="figure"><span id="fig:unnamed-chunk-72"></span>
 <img src="figures/vgg.jpg" alt="VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition." width="80%" />
 <p class="caption">
 Figure 6.9: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition.
