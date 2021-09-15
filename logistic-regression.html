@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Logistic Regression | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Logistic Regression | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="linear-regressionleast-squares.html"/>
 <link rel="next" href="know-your-classics.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -325,7 +349,7 @@ temperature, ).</p>
 such as: what car type is it? is the person smiling? is a solar flare going to
 happen? In such problems the model depends on <strong>categorical</strong>
 variables.</p>
-<p><strong>Logistic Regression</strong> <span class="citation">(<a href="references.html#ref-cox1958" role="doc-biblioref">Cox 1958</a>)</span>, considers the case of a binary
+<p><strong>Logistic Regression</strong> <span class="citation">(<a href="#ref-cox1958" role="doc-biblioref">Cox 1958</a>)</span>, considers the case of a binary
 variable. That is, the outcome is 0/1 or true/false.</p>
 <p>There is a whole zoo of classifiers out there. Why are we covering
 logistic regression in particular?</p>
@@ -369,7 +393,7 @@ that has studied for 6.2 hours and successfully passed his exam. This
 shouldn’t change the model but the new LS estimate (magenta) has to
 shift to also minimise the large error for this new entry, even so
 there is no real error.</p>
-<div class="figure"><span id="fig:unnamed-chunk-22"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
 <img src="figures/LogistiocRegressionToy-linear2error.svg" alt="Example of a binary class problem." width="60%" />
 <p class="caption">
 Figure 2.1: Example of a binary class problem.
@@ -393,7 +417,7 @@ score</strong>. It is a scalar value. The larger the value of <span class="math 
 <span class="math inline">\(\epsilon\)</span>. Multiple choices are possible for the distribution of
 <span class="math inline">\(\epsilon\)</span>. In <strong>logistic</strong> regression, the error <span class="math inline">\(\epsilon\)</span> is
 assumed to follow a <strong>logistic distribution</strong> and the risk score <span class="math inline">\({\bf x}^{\top} {\bf y}\)</span> is also called the <strong>logit</strong>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-23"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-24"></span>
 <img src="figures/LogisticPDF.svg" alt="probability density function of the logistic distribution" width="60%" />
 <p class="caption">
 Figure 2.2: probability density function of the logistic distribution
@@ -402,7 +426,7 @@ Figure 2.2: probability density function of the logistic distribution
 <p>In <strong>probit</strong> regression, the error <span class="math inline">\(\epsilon\)</span> is assumed to follow a
 <em>normal distribution</em>, the risk score <span class="math inline">\({\bf x}^{\top} {\bf w}\)</span> is also
 called the <strong>probit</strong>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-24"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-25"></span>
 <img src="figures/NormalPDF.svg" alt="probability density function of the normal distribution" width="60%" />
 <p class="caption">
 Figure 2.3: probability density function of the normal distribution
@@ -452,7 +476,7 @@ p(y=0 | {\bf x}) = 1-h_{\bf w}({\bf x})
 \]</span></p>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-26" class="exercise"><strong>Exercise 2.1  </strong></span>show that <span class="math inline">\(p(y=0 | {\bf x}) = h_{\bf w}(-{\bf x})\)</span>
+<span id="exr:unnamed-chunk-27" class="exercise"><strong>Exercise 2.1  </strong></span>show that <span class="math inline">\(p(y=0 | {\bf x}) = h_{\bf w}(-{\bf x})\)</span>
 </div>
 <p>In <strong>linear regression</strong>, the model <span class="math inline">\(h_{\bf w}({\bf x})\)</span> was a direct
 prediction of the outcome:</p>
@@ -577,7 +601,7 @@ algorithm then consists in iterating the following step:</p>
 \]</span></p>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-29" class="exercise"><strong>Exercise 2.2  </strong></span> Given that the derivative of the sigmoid <span class="math inline">\(f\)</span> is
+<span id="exr:unnamed-chunk-30" class="exercise"><strong>Exercise 2.2  </strong></span> Given that the derivative of the sigmoid <span class="math inline">\(f\)</span> is
 <span class="math inline">\(f&#39;(t)=(1-f(t))f(t)\)</span>, show that
 <span class="math display">\[
 \frac{\partial E}{\partial {\bf w}} = \sum_{i=1}^{n}
@@ -685,6 +709,12 @@ called the <strong>Multinomial Logistic Regression</strong>.</p>
 
 </div>
 </div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cox1958" class="csl-entry">
+Cox, D. R. 1958. <span>“The Regression Analysis of Binary Sequences.”</span> <em>Journal of the Royal Statistical Society. Series B (Methodological)</em> 20 (2): 215–42. <a href="http://www.jstor.org/stable/2983890">http://www.jstor.org/stable/2983890</a>.
+</div>
+</div>
             </section>
 
           </div>
@@ -695,7 +725,6 @@ called the <strong>Multinomial Logistic Regression</strong>.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -714,6 +743,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -734,6 +764,10 @@ gitbook.start({
 "text": null
 },
 "download": ["4c16.pdf", "4c16.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

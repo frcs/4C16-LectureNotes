@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Advances in Network Architectures | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Advances in Network Architectures | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="convolutional-neural-networks.html"/>
 <link rel="next" href="recurrent-neural-networks.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -335,7 +359,7 @@ source a thousand images.</p>
 <p>What can you do? You can reuse parts of existing networks.</p>
 <p>Recall the architecture of AlexNet (2012) in
 Fig. <a href="advances-in-network-architectures.html#fig:ch7-alexnet">7.1</a>.</p>
-<div class="figure"><span id="fig:ch7-alexnet"></span>
+<div class="figure"><span style="display:block;" id="fig:ch7-alexnet"></span>
 <img src="figures/alexnet-annotated.png" alt="AlexNet" width="80%" />
 <p class="caption">
 Figure 7.1: AlexNet
@@ -384,7 +408,7 @@ function <span class="math inline">\(f(x_i, w) = \mathrm{tanh}(x_i+w)\)</span>. 
 shown in Fig.<a href="advances-in-network-architectures.html#fig:transfer-learning-vg">7.2</a> are images taken on a
 sunny day. The input values <span class="math inline">\(x_i\)</span> (red dots) are centred about <span class="math inline">\(0\)</span> and
 the estimated <span class="math inline">\(w\)</span> is <span class="math inline">\(\hat{w}=0\)</span>.</p>
-<div class="figure"><span id="fig:transfer-learning-vg"></span>
+<div class="figure"><span style="display:block;" id="fig:transfer-learning-vg"></span>
 <img src="figures/domain-shift-example.svg" alt="Domain Shift Example. " width="80%" />
 <p class="caption">
 Figure 7.2: Domain Shift Example.
@@ -411,7 +435,7 @@ x&#39;_{i} = \frac{x_{i} - \mu_i}{\sigma_i}
 data statistics.</p>
 <p>The samples after normalisation are shown in
 Fig.<a href="advances-in-network-architectures.html#fig:transfer-learning-vg-after-bn">7.3</a>.</p>
-<div class="figure"><span id="fig:transfer-learning-vg-after-bn"></span>
+<div class="figure"><span style="display:block;" id="fig:transfer-learning-vg-after-bn"></span>
 <img src="figures/domain-shift-example-after-BN.svg" alt="Domain Shift After Normalisation. " width="80%" />
 <p class="caption">
 Figure 7.3: Domain Shift After Normalisation.
@@ -481,7 +505,7 @@ ImageNet) with a top 5 error rate of 6.7% (human error rate is around
 <p>Szegedy et al. “Going Deeper with Convolutions,” \
 CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
 </blockquote>
-<div class="figure"><span id="fig:unnamed-chunk-78"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
 <img src="figures/GoogLeNet2.png" alt="GoogLeNet" width="80%" />
 <p class="caption">
 Figure 7.4: GoogLeNet
@@ -493,7 +517,7 @@ sequence of convolution layers, we have a sequence of inception layers
 <p>An inception layer is a sub-network (hence the name inception) that
 produces 4 different types of convolutions filters, which are then
 concatenated (see this video: <a href="https://youtu.be/VxhSouuSZDY" class="uri">https://youtu.be/VxhSouuSZDY</a>).</p>
-<div class="figure"><span id="fig:unnamed-chunk-79"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-80"></span>
 <img src="figures/inception-subnetwork.png" alt="GoogLeNet Inception Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.5: GoogLeNet Inception Sub-Network
@@ -515,7 +539,7 @@ Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
 parallel connections between deeper layers and shallower layers. The
 connection is simply done by adding the result of a previous layer to
 the result after 2 convolutions layers:</p>
-<div class="figure"><span id="fig:unnamed-chunk-80"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-81"></span>
 <img src="figures/resnet-subnetwork.png" alt="ResNet Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.6: ResNet Sub-Network
@@ -552,7 +576,7 @@ Adversarial Network’’ (2014).
 two NN: a <strong>Generator Network</strong>, that is responsible for generating
 fake data, and a <strong>Discriminator Network</strong> that is responsible for
 detecting whether data is fake or real.</p>
-<div class="figure"><span id="fig:gan-architecture"></span>
+<div class="figure"><span style="display:block;" id="fig:gan-architecture"></span>
 <img src="figures/GAN-network.png" alt="GAN Architecture" width="80%" />
 <p class="caption">
 Figure 7.7: GAN Architecture
@@ -572,7 +596,7 @@ addressing both problem at the same time in a single architecture, we
 can solve for both problems.</p>
 <p>Training GAN networks is particularly slow and difficult but the
 benefits are spectacular. This is a very hot topic of research.</p>
-<div class="figure"><span id="fig:unnamed-chunk-81"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-82"></span>
 <img src="figures/GAN-NVIDIA.jpg" alt="Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [https://goo.gl/AgxRhp]" width="100%" />
 <p class="caption">
 Figure 7.8: Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [<a href="https://goo.gl/AgxRhp" class="uri">https://goo.gl/AgxRhp</a>]
@@ -591,7 +615,6 @@ Figure 7.8: Example of GAN generating pictures of fake celebrities (see 2018 ICL
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -610,6 +633,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -630,6 +654,10 @@ gitbook.start({
 "text": null
 },
 "download": ["4c16.pdf", "4c16.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

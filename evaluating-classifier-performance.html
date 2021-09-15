@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="know-your-classics.html"/>
 <link rel="next" href="feedforward-neural-networks.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -322,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 classifiers, Decision Trees, <span class="math inline">\(k\)</span>-NN) but we still haven’t talked about
 their performance.</p>
 <p>Recall some of results for these classifiers:</p>
-<div class="figure"><span id="fig:dataset04"></span>
+<div class="figure"><span style="display:block;" id="fig:dataset04"></span>
 <img src="figures/compare-classifiers-decision-boundary-1.svg" alt="Classification Results for some of the popular classifiers." width="80%" />
 <p class="caption">
 Figure 4.1: Classification Results for some of the popular classifiers.
@@ -517,7 +541,7 @@ really capture the performance of a classifier.</p>
 classifier should perform well on 2 metrics.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-42" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
+<p><span id="exm:unnamed-chunk-43" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
 <table>
 <thead>
 <tr class="header">
@@ -606,7 +630,7 @@ with different performances. We can report the <span class="math inline">\(\math
 FP/(FP+TN) and <span class="math inline">\(\mathrm{TP}\)</span> rate = TP/(TP+FN) for each of the
 different values of <span class="math inline">\(T\)</span> on a graph called the , or R.O.C. curve.</p>
 <p>Here is an example showing the ROC curves for 4 different classifiers.</p>
-<div class="figure"><span id="fig:unnamed-chunk-43"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-44"></span>
 <img src="figures/ROC-1.svg" alt="Receiving Operating Characteristic (ROC) curve." width="80%" />
 <p class="caption">
 Figure 4.2: Receiving Operating Characteristic (ROC) curve.
@@ -617,7 +641,7 @@ A random classifier will have TP rate equal to the FP rate.</p>
 <p>If your ROC curve is below the random classifier diagonal, then you
 are doing something wrong.</p>
 <p>Below are reported a few ROC curves for the earlier problem.</p>
-<div class="figure"><span id="fig:unnamed-chunk-44"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-45"></span>
 <img src="figures/compare-classifiers-ROC.svg" alt="ROC curves for the classifiers of Fig. \protect\@ref(fig:dataset04)" width="80%" />
 <p class="caption">
 Figure 4.3: ROC curves for the classifiers of Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>
@@ -682,7 +706,7 @@ with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \m
  \]</span></p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-45" class="example"><strong>Example 4.2  </strong></span></p>
+<p><span id="exm:unnamed-chunk-46" class="example"><strong>Example 4.2  </strong></span></p>
 <p>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
 <p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>
 <p><span class="math display">\[
@@ -757,7 +781,6 @@ updated and that new metrics will be introduced.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -776,6 +799,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -796,6 +820,10 @@ gitbook.start({
 "text": null
 },
 "download": ["4c16.pdf", "4c16.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

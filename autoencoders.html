@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 AutoEncoders | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 AutoEncoders | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="recurrent-neural-networks.html"/>
 <link rel="next" href="references.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -337,7 +361,7 @@ input data <span class="math inline">\((x_1,x_2,x_3,x_4)\)</span> is mapped into
 layer <span class="math inline">\((z_1,z_2)\)</span> and then re-constructed into <span class="math inline">\((\hat{x}_1, \hat{x}_2, \hat{x}_3, \hat {x}_4)\)</span>. The idea is to find a lower dimensional
 representation of the data, where we can explain the whole dataset
 <span class="math inline">\({\bf x}\)</span> with only two latent variables <span class="math inline">\((z_1,z_2)\)</span>.</p>
-<div class="figure"><span id="fig:AE-example"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-example"></span>
 <img src="tikz-figures/ae_example.svg" alt="Example of an Auto-Encoder." width="60%" />
 <p class="caption">
 Figure 9.1: Example of an Auto-Encoder.
@@ -347,7 +371,7 @@ Figure 9.1: Example of an Auto-Encoder.
 long as there is a bottleneck layer and that the output tries to
 reconstruct the input. The general principle is illustrated in
 Fig. <a href="autoencoders.html#fig:AE-example-generic">9.2</a>.</p>
-<div class="figure"><span id="fig:AE-example-generic"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-example-generic"></span>
 <img src="tikz-figures/ae_example_generic.svg" alt="General architecture of an Auto-Encoder." width="70%" />
 <p class="caption">
 Figure 9.2: General architecture of an Auto-Encoder.
@@ -409,7 +433,7 @@ image).</p>
 <p>Below are the results of our convolutional autoencoder for the MNIST
 dataset. The input is on top and the reconstructions results on
 bottom.</p>
-<div class="figure"><span id="fig:AE-MNIST-reconstructions"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-MNIST-reconstructions"></span>
 <img src="figures/deep_conv_ae_128.png" alt="reconstruction results on MNIST." width="60%" />
 <p class="caption">
 Figure 9.3: reconstruction results on MNIST.
@@ -418,7 +442,7 @@ Figure 9.3: reconstruction results on MNIST.
 <p>The reconstructed results look very similar, as planned. The interest
 of a compressed representation is illustrated below, where the input
 is noisy but the decoder network reconstructs clean images.</p>
-<div class="figure"><span id="fig:AE-Denoised-Digits"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-Denoised-Digits"></span>
 <img src="figures/denoised_digits.png" alt="reconstruction results on noisy inputs." width="60%" />
 <p class="caption">
 Figure 9.4: reconstruction results on noisy inputs.
@@ -433,7 +457,7 @@ an example of what we are looking to do. The mapping from <span class="math inli
 to the dashed line is discarded as being noise. The reconstruction
 <span class="math inline">\(\boldsymbol{\hat{\textbf{x}}}\)</span> is close but slightly different from <span class="math inline">\({\bf x}\)</span>. The idea here is actually a classic concept in unsupervised learning and is
 actually very similar to something like Principal Component Analysis.</p>
-<div class="figure"><span id="fig:AE-mapping-ND-1D-pca"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-mapping-ND-1D-pca"></span>
 <img src="figures/ae-mapping-ND-1D-pca.svg" alt="Example of a dimension reduction, with information compression." width="100%" />
 <p class="caption">
 Figure 9.5: Example of a dimension reduction, with information compression.
@@ -444,7 +468,7 @@ guarantee that the dimensional compression leads to something meaningful. We
 have here a one-to-one correspondence function that can map any point in the 2D
 space into the 1D space and vice-versa but the resulting latent variables <span class="math inline">\(z_1, z_2\)</span> are of probably not of much interest because the latent space is extremely
 entangled.</p>
-<div class="figure"><span id="fig:AE-mapping-ND-1D"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-mapping-ND-1D"></span>
 <img src="figures/ae-mapping-ND-1D.svg" alt="Example of a dimension reduction, without information compression." width="100%" />
 <p class="caption">
 Figure 9.6: Example of a dimension reduction, without information compression.
@@ -467,7 +491,7 @@ id. Each point <span class="math inline">\((z_1,z_2)\)</span> in the plot repres
 set. This particular mapping forms a complex partition of the space. Classes
 clusters are skewed, or broken into different parts, and leaving gaps where
 values of <span class="math inline">\((z_1,z_2)\)</span> do not correspond to any digit.</p>
-<div class="figure"><span id="fig:AE-mean"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-mean"></span>
 <img src="figures/ae_mean.png" alt="Scatter plot of the MNIST training set in the Latent Space (Encoder)" width="60%" />
 <p class="caption">
 Figure 9.7: Scatter plot of the MNIST training set in the Latent Space (Encoder)
@@ -476,7 +500,7 @@ Figure 9.7: Scatter plot of the MNIST training set in the Latent Space (Encoder)
 <p>Fig. <a href="autoencoders.html#fig:AE-digits-over-latent">9.8</a> shows the decoded images for each
 value of <span class="math inline">\((z_1,z_2)\)</span>. For values of <span class="math inline">\((z_1,z_2)\)</span> outside of the main clusters,
 the reconstructed images become blurred or deformed.</p>
-<div class="figure"><span id="fig:AE-digits-over-latent"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-digits-over-latent"></span>
 <img src="figures/ae_digits_over_latent.png" alt="Reconstructions of the latent variables (Decoder)." width="60%" />
 <p class="caption">
 Figure 9.8: Reconstructions of the latent variables (Decoder).
@@ -519,7 +543,7 @@ the uncertainty <span class="math inline">\(p({\bf z} | {\bf x})\)</span> follow
 could have produced <span class="math inline">\({\bf x}\)</span>. What is expressed by <span class="math inline">\(p({\bf z} | {\bf x})\)</span> is
 thus all the variations that are due by unrelated processes, such as signal
 noise and other distortions.</p>
-<div class="figure"><span id="fig:AE-vae"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-vae"></span>
 <img src="tikz-figures/ae_variational.svg" alt="VAE architecture." width="80%" />
 <p class="caption">
 Figure 9.9: VAE architecture.
@@ -566,7 +590,7 @@ an operation on data.</p>
 the resulting 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span> is indeed much
 closer to a normal distribution and the class clusters are less skewed than
 compared to AE.</p>
-<div class="figure"><span id="fig:AE-vae-mean"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-vae-mean"></span>
 <img src="figures/vae_mean.png" alt="2D scatter plot of the latent variable $(z_1,z_2)$, coloured by class id for the Variational Auto Encoder model." width="60%" />
 <p class="caption">
 Figure 9.10: 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class id for the Variational Auto Encoder model.
@@ -575,7 +599,7 @@ Figure 9.10: 2D scatter plot of the latent variable <span class="math inline">\(
 <p>The decoded images associated with each value of <span class="math inline">\((z_1,z_2)\)</span> are shown in
 Fig. @(fig:AE-vae-digits-over-latent). We can see see that ill-formed
 reconstructions now only arise for extreme values of <span class="math inline">\((z_1,z_2)\)</span>.</p>
-<div class="figure"><span id="fig:AE-vae-digits-over-latent"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-vae-digits-over-latent"></span>
 <img src="figures/vae_digits_over_latent.png" alt="2D scatter plot of the latent variable $(z_1,z_2)$, coloured by class id for the Variational Auto Encoder model." width="60%" />
 <p class="caption">
 Figure 9.11: 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class id for the Variational Auto Encoder model.
@@ -594,7 +618,7 @@ Fig. <a href="autoencoders.html#fig:AE-multitask">9.12</a>, is that the same enc
 multitude of classification tasks that are related to the application at
 hand. The training strategy then simply consists of alternating between the
 various training tasks, for a few mini-batch updates per task.</p>
-<div class="figure"><span id="fig:AE-multitask"></span>
+<div class="figure"><span style="display:block;" id="fig:AE-multitask"></span>
 <img src="tikz-figures/ae_multitasks.svg" alt="Example of a more comprehensive multi-tasks auto-encoder, including a GAN." width="100%" />
 <p class="caption">
 Figure 9.12: Example of a more comprehensive multi-tasks auto-encoder, including a GAN.
@@ -622,7 +646,6 @@ dataset is simply <span class="math inline">\(p({\bf z}) = \mathcal{N}(0, Id)\)<
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -641,6 +664,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -661,6 +685,10 @@ gitbook.start({
 "text": null
 },
 "download": ["4c16.pdf", "4c16.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Linear Regression/Least Squares | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Linear Regression/Least Squares | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,9 @@
   
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="logistic-regression.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,15 +51,15 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -117,6 +118,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -332,7 +356,7 @@ orbits of celestial bodies. It is often credited to Carl Friedrich
 <strong>Gauss</strong> (1809) but it was first published by Adrien-Marie
 <strong>Legendre</strong> in 1805. The priority dispute comes from Gauss’s claim to
 have used least squares since 1795.</p>
-<div class="figure"><span id="fig:unnamed-chunk-9"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-9"></span>
 <img src="figures/sur-la-methode-des-moindres-carres-crop.jpg" alt="Legendre (1805), Nouvelles méthodes pour la détermination des orbites des comètes." width="60%" />
 <p class="caption">
 Figure 1.1: Legendre (1805), Nouvelles méthodes pour la détermination des orbites des comètes.
@@ -342,7 +366,7 @@ Figure 1.1: Legendre (1805), Nouvelles méthodes pour la détermination des orbi
 <h2><span class="header-section-number">1.1</span> Model and Notations</h2>
 <p>Let us start with a simple example. We have collected some data
 as shown in the figure below.</p>
-<div class="figure"><span id="fig:unnamed-chunk-10"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-10"></span>
 <img src="figures/polyfit_weight_vs_height_scatter.svg" alt="Example of collected data." width="60%" />
 <p class="caption">
 Figure 1.2: Example of collected data.
@@ -651,7 +675,7 @@ interesting example for ML. Below is a small dataset <span class="math inline">\
 <h2><span class="header-section-number">1.4</span> Underfitting</h2>
 <p>Let’s see what happens when you try to fit the data with a lower model
 order: <span class="math inline">\(y = w_0 + w_1 x\)</span></p>
-<div class="figure"><span id="fig:unnamed-chunk-17"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
 <img src="figures/polyfit1.svg" alt="MSE: 2.02e+02" width="60%" />
 <p class="caption">
 Figure 1.3: MSE: 2.02e+02
@@ -669,7 +693,7 @@ polynomial model).</p>
 <div id="overfitting" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Overfitting</h2>
 <p>Let’s now try a higher model order: <span class="math inline">\(y = w_0 + w_1 x + \cdots + w_9 x^9\)</span></p>
-<div class="figure"><span id="fig:unnamed-chunk-18"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-18"></span>
 <img src="figures/polyfit9.svg" alt="MSE: 7.59e-06" width="60%" />
 <p class="caption">
 Figure 1.4: MSE: 7.59e-06
@@ -704,16 +728,26 @@ some features are not useful, you can expect that the corresponding
 estimated weights <span class="math inline">\(w_i\)</span> will shrink to zero. Thus it is OK to fit a
 polynomial of order 9 when the underlying model is actually of order
 2. Just make sure you have plenty of data.</p>
-<p>But what if you can’t get enough data? Well, that sounds like a poor excuse, so,
-go back and get more data. But what if I <em>really</em>, <em>really</em> can’t? Then, one
-last catch-all solution is to use <strong>regularisation</strong>.</p>
-<p>Note that overfitting is not a bad thing by itself. Indeed, you are expected to
-perform better on exercises that you’ve already worked on many times than on
+<p>In Figure below, we have increased the sampling rate for the dataset and the LS
+estimate is now much closer to the ground-truth, with no overfitting. The
+estimate for the weight <span class="math inline">\(w_9\)</span> corresponding to <span class="math inline">\(x^9\)</span> is <span class="math inline">\(-1.83\times 10^{-8}\)</span> and is
+indeed very small.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<img src="figures/polyfit9-denser.svg" alt="MSE: 7.18e-01" width="60%" />
+<p class="caption">
+Figure 1.5: MSE: 7.18e-01
+</p>
+</div>
+<p>Note also that overfitting in itself is not a bad thing. You are indeed expected
+to perform better on exercises that you’ve already worked on many times than on
 exercises that you’ve never seen before. In fact, you should probably aim for
 some level of overfitting as underfitting is probably worse in practice.</p>
 </div>
 <div id="regularisation" class="section level2" number="1.6">
 <h2><span class="header-section-number">1.6</span> Regularisation</h2>
+<p>But what if you can’t get enough data? Well, that sounds like a poor excuse, so,
+go back and get more data. But what if I <em>really</em>, <em>really</em> can’t? Then, one
+last catch-all solution is to use <strong>regularisation</strong>.</p>
 <p>In Least Squares, a natural regularisation technique is called
 the <strong>Tikhonov regularisation</strong>.</p>
 <p>Instead of minimising <span class="math inline">\(\| \varepsilon \|^2 = \| \mathbf{X} \mathbf {w} -\mathbf {y} \|^{2}\)</span>, we minimise a slightly modified expression:</p>
@@ -832,17 +866,17 @@ observations are noisy. The model is as follows:</p>
 <p>where <span class="math inline">\(\nu\)</span> is the noise process associated with the measurement
 <span class="math inline">\(x\)</span>. Note that the combined prediction error is <span class="math inline">\(\epsilon + w \nu\)</span> now
 depends on the parameter <span class="math inline">\(w\)</span> and this is therefore not a textbook use
-case of Least Squares. As illustrated in Fig.<a href="linear-regressionleast-squares.html#fig:galtontoy">1.5</a>,
+case of Least Squares. As illustrated in Fig.<a href="linear-regressionleast-squares.html#fig:galtontoy">1.6</a>,
 what will happen is that the LS solution <span class="math inline">\(\hat w\)</span> is biased towards
 zero and the slope of the prediction model will be lower than
 expected. Indeed, pulling <span class="math inline">\(w\)</span> towards zero reduces the prediction
 error as it also pulls <span class="math inline">\(w \nu\)</span> towards zero. As you can expect, this a
 rather common situation and this bias can lead to some unexpected
 surprises.</p>
-<div class="figure"><span id="fig:galtontoy"></span>
+<div class="figure"><span style="display:block;" id="fig:galtontoy"></span>
 <img src="figures/GaltonToy-LS.svg" alt="Example of Regression Towards the Mean. In dashed green, the expected relationship ($y=x$). In solid red, the actual LS estimate regression line, showing a bias towards w=0." width="80%" />
 <p class="caption">
-Figure 1.5: Example of Regression Towards the Mean. In dashed green, the expected relationship (<span class="math inline">\(y=x\)</span>). In solid red, the actual LS estimate regression line, showing a bias towards w=0.
+Figure 1.6: Example of Regression Towards the Mean. In dashed green, the expected relationship (<span class="math inline">\(y=x\)</span>). In solid red, the actual LS estimate regression line, showing a bias towards w=0.
 </p>
 </div>
 <p>In fact, this problem is at the origin of the word <strong>Regression</strong>
@@ -921,7 +955,6 @@ to use regularisation.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -940,6 +973,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -960,6 +994,10 @@ gitbook.start({
 "text": null
 },
 "download": ["4c16.pdf", "4c16.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
