@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -704,16 +704,26 @@ some features are not useful, you can expect that the corresponding
 estimated weights <span class="math inline">\(w_i\)</span> will shrink to zero. Thus it is OK to fit a
 polynomial of order 9 when the underlying model is actually of order
 2. Just make sure you have plenty of data.</p>
-<p>But what if you can’t get enough data? Well, that sounds like a poor excuse, so,
-go back and get more data. But what if I <em>really</em>, <em>really</em> can’t? Then, one
-last catch-all solution is to use <strong>regularisation</strong>.</p>
-<p>Note that overfitting is not a bad thing by itself. Indeed, you are expected to
-perform better on exercises that you’ve already worked on many times than on
+<p>In Figure below, we have increased the sampling rate for the dataset and the LS
+estimate is now much closer to the ground-truth, with no overfitting. The
+estimate for the weight <span class="math inline">\(w_9\)</span> corresponding to <span class="math inline">\(x^9\)</span> is <span class="math inline">\(-1.83\times 10^{-8}\)</span> and is
+indeed very small.</p>
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="figures/polyfit9-denser.svg" alt="MSE: 7.18e-01" width="60%" />
+<p class="caption">
+Figure 1.5: MSE: 7.18e-01
+</p>
+</div>
+<p>Note also that overfitting in itself is not a bad thing. You are indeed expected
+to perform better on exercises that you’ve already worked on many times than on
 exercises that you’ve never seen before. In fact, you should probably aim for
 some level of overfitting as underfitting is probably worse in practice.</p>
 </div>
 <div id="regularisation" class="section level2" number="1.6">
 <h2><span class="header-section-number">1.6</span> Regularisation</h2>
+<p>But what if you can’t get enough data? Well, that sounds like a poor excuse, so,
+go back and get more data. But what if I <em>really</em>, <em>really</em> can’t? Then, one
+last catch-all solution is to use <strong>regularisation</strong>.</p>
 <p>In Least Squares, a natural regularisation technique is called
 the <strong>Tikhonov regularisation</strong>.</p>
 <p>Instead of minimising <span class="math inline">\(\| \varepsilon \|^2 = \| \mathbf{X} \mathbf {w} -\mathbf {y} \|^{2}\)</span>, we minimise a slightly modified expression:</p>
@@ -832,7 +842,7 @@ observations are noisy. The model is as follows:</p>
 <p>where <span class="math inline">\(\nu\)</span> is the noise process associated with the measurement
 <span class="math inline">\(x\)</span>. Note that the combined prediction error is <span class="math inline">\(\epsilon + w \nu\)</span> now
 depends on the parameter <span class="math inline">\(w\)</span> and this is therefore not a textbook use
-case of Least Squares. As illustrated in Fig.<a href="linear-regressionleast-squares.html#fig:galtontoy">1.5</a>,
+case of Least Squares. As illustrated in Fig.<a href="linear-regressionleast-squares.html#fig:galtontoy">1.6</a>,
 what will happen is that the LS solution <span class="math inline">\(\hat w\)</span> is biased towards
 zero and the slope of the prediction model will be lower than
 expected. Indeed, pulling <span class="math inline">\(w\)</span> towards zero reduces the prediction
@@ -842,7 +852,7 @@ surprises.</p>
 <div class="figure"><span id="fig:galtontoy"></span>
 <img src="figures/GaltonToy-LS.svg" alt="Example of Regression Towards the Mean. In dashed green, the expected relationship ($y=x$). In solid red, the actual LS estimate regression line, showing a bias towards w=0." width="80%" />
 <p class="caption">
-Figure 1.5: Example of Regression Towards the Mean. In dashed green, the expected relationship (<span class="math inline">\(y=x\)</span>). In solid red, the actual LS estimate regression line, showing a bias towards w=0.
+Figure 1.6: Example of Regression Towards the Mean. In dashed green, the expected relationship (<span class="math inline">\(y=x\)</span>). In solid red, the actual LS estimate regression line, showing a bias towards w=0.
 </p>
 </div>
 <p>In fact, this problem is at the origin of the word <strong>Regression</strong>

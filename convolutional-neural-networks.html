@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -330,7 +330,7 @@ applied on the MNIST dataset.</p>
 <h2><span class="header-section-number">6.1</span> Convolution Filters</h2>
 <p>Recall that in dense layers, every unit in the layer is
 connected to every unit in the adjacent layers:</p>
-<div class="figure"><span id="fig:unnamed-chunk-62"></span>
+<div class="figure"><span id="fig:unnamed-chunk-63"></span>
 <img src="tikz-figures/nn-dag-deep-ml-perceptron.svg" alt="Deep Neural Network in a Multi-Layer Perceptron Layout. " width="79.4%" />
 <p class="caption">
 Figure 6.1: Deep Neural Network in a Multi-Layer Perceptron Layout.
@@ -343,7 +343,7 @@ the input layer will be a multidimensional array, or <strong>tensor</strong>,
 containing <code>width</code> <span class="math inline">\(\times\)</span> <code>height</code> <span class="math inline">\(\times\)</span> 3 input units.</p>
 <p>If the next layer is of the same size, then we have up to <span class="math inline">\(({\tt width}\times {\tt height}\times 3)^2\)</span> weights to train, which can
 become very large very quickly.</p>
-<div class="figure"><span id="fig:unnamed-chunk-63"></span>
+<div class="figure"><span id="fig:unnamed-chunk-64"></span>
 <img src="tikz-figures/cnn-intro1.svg" alt="Dense Layer on Images. " width="79.4%" />
 <p class="caption">
 Figure 6.2: Dense Layer on Images.
@@ -357,7 +357,7 @@ of this.</p>
 <p>This is what is done in <strong>convolutional neural networks</strong>, where the
 units in the next layer are only connected to their neighbours in the
 input layer. In this case the neighbourhood is defined as a <span class="math inline">\(5\times 5\)</span> window.</p>
-<div class="figure"><span id="fig:unnamed-chunk-64"></span>
+<div class="figure"><span id="fig:unnamed-chunk-65"></span>
 <img src="tikz-figures/cnn-intro2.svg" alt="Convolution Network Architecture. " width="79.4%" />
 <p class="caption">
 Figure 6.3: Convolution Network Architecture.
@@ -495,10 +495,10 @@ pixel in both x and y directions are kept.</p>
 <img src="figures/stride-01.svg"/>
 </td>
 <td>
-<img src="figures/stride-01.svg"/>
+<img src="figures/stride-02.svg"/>
 </td>
 <td>
-<img src="figures/stride-01.svg"/>
+<img src="figures/stride-03.svg"/>
 </td>
 </tr>
 <tr>
@@ -575,7 +575,7 @@ classification:</p>
 as we go deeper, we built more and more features that are increasingly
 more complex.</p>
 <p>Next are presented some of the early landmark convolutional networks.</p>
-<div class="figure"><span id="fig:unnamed-chunk-70"></span>
+<div class="figure"><span id="fig:unnamed-chunk-71"></span>
 <img src="figures/LeNet-5.jpg" alt="LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets." width="80%" />
 <p class="caption">
 Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets.
@@ -585,7 +585,7 @@ Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutiona
 <p>LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998).
 Gradient-based learning applied to document recognition.</p>
 </blockquote>
-<div class="figure"><span id="fig:unnamed-chunk-71"></span>
+<div class="figure"><span id="fig:unnamed-chunk-72"></span>
 <img src="figures/alexnet.jpg" alt="AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution." width="80%" />
 <p class="caption">
 Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution.
@@ -595,7 +595,7 @@ Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of
 <p>Alex Krizhevsky, Ilya Sutskever, Geoffrey E Hinton (2012)
 Imagenet classification with deep convolutional neural networks.</p>
 </blockquote>
-<div class="figure"><span id="fig:unnamed-chunk-72"></span>
+<div class="figure"><span id="fig:unnamed-chunk-73"></span>
 <img src="figures/vgg.jpg" alt="VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition." width="80%" />
 <p class="caption">
 Figure 6.9: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition.
