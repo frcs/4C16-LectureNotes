@@ -102,6 +102,7 @@ fig:rnn-9
 fig:rnn-10
 fig:rnn-lstm
 fig:rnn-gru
+fig:rnn-gated-units
 fig:AE-example
 fig:AE-example-generic
 fig:AE-MNIST-reconstructions
@@ -203,6 +204,7 @@ training-back-propagation-through-time
 dealing-with-long-sequences
 lstm
 gru
+gated-units
 application-image-caption-generator
 take-away-6
 limitations-of-rnns-and-the-rise-of-transformers

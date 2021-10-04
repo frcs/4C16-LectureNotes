@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-09-15" />
+<meta name="date" content="2021-10-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -282,6 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.4.1" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#lstm"><i class="fa fa-check"></i><b>8.4.1</b> LSTM</a></li>
 <li class="chapter" data-level="8.4.2" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#gru"><i class="fa fa-check"></i><b>8.4.2</b> GRU</a></li>
+<li class="chapter" data-level="8.4.3" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#gated-units"><i class="fa fa-check"></i><b>8.4.3</b> Gated Units</a></li>
 </ul></li>
 <li class="chapter" data-level="8.5" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#application-image-caption-generator"><i class="fa fa-check"></i><b>8.5</b> Application: Image Caption Generator</a></li>
 <li class="chapter" data-level="8.6" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#take-away-6"><i class="fa fa-check"></i><b>8.6</b> Take Away</a></li>
@@ -539,6 +540,44 @@ Figure 8.13: Architecture of Gated Recurrent Cell. (Figure by François Deloche)
 </p>
 </div>
 </div>
+<div id="gated-units" class="section level3" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> Gated Units</h3>
+<p>Without going too much into the inner workings of GRU and LSTM, we note that
+they make us of gated units, which offer an alternative way for combining
+units. So far, the only way we had to combine two units <span class="math inline">\(u_1\)</span> and <span class="math inline">\(u_2\)</span> was
+through a linear combination <span class="math inline">\(w_1u_1+w_2u_2\)</span>. The gating mechanism proposed
+here offers to do it through a multiplication of both inputs:</p>
+<div class="figure"><span id="fig:rnn-gated-units"></span>
+<img src="figures/rnn-gating-units.svg" alt="gated units." width="40%" />
+<p class="caption">
+Figure 8.14: gated units.
+</p>
+</div>
+<p>Here, the sigmoid <span class="math inline">\(\sigma\)</span> produces a vector of True/False conditions that
+filters out features of <span class="math inline">\(u_2\)</span>, based on another sub-network prediction <span class="math inline">\(u_1\)</span>.</p>
+<p>Remember that feature vectors typically contain non-negative numbers that tell
+you how strong a feature is expressed. For instance, say that you are processing
+text and that <span class="math inline">\(u_2\)</span> predicts the next word probabilities:</p>
+<p><span class="math display">\[
+u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
+  \\ p(\text{bat --- the stick}) = 0.3
+  \\ \vdots \end{bmatrix}
+\]</span></p>
+<p>Maybe there is some ambiguity in the text about the word “bat.” The role of
+<span class="math inline">\(\sigma(u_1)\)</span> would be here to specifically disambiguate this:</p>
+<p><span class="math display">\[
+ \sigma(u_1) = \begin{bmatrix} \vdots \\ 0.96 \\ 0.04
+  \\ \vdots \end{bmatrix}
+\]</span></p>
+<p>Then by multiplying both vectors you can filter out unwanted features:</p>
+<p><span class="math display">\[
+u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
+  \\ p(\text{bat --- the stick}) = 0.3
+  \\ \vdots \end{bmatrix} \; \times \; \sigma(u_1) = \begin{bmatrix} \vdots \\ 0.96 \\ 0.04
+  \\ \vdots \end{bmatrix} =  \begin{bmatrix} \vdots \\ 0.38 \\ 0.01
+  \\ \vdots \end{bmatrix}
+\]</span></p>
+</div>
 </div>
 <div id="application-image-caption-generator" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Application: Image Caption Generator</h2>
@@ -638,7 +677,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/09-recurrent-neural-networks.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-recurrent-neural-networks.Rmd",
 "text": "Edit"
 },
 "history": {
