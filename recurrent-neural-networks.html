@@ -563,13 +563,13 @@ u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
   \\ p(\text{bat --- the stick}) = 0.3
   \\ \vdots \end{bmatrix}
 \]</span></p>
-<p>There is some ambiguity in the text about the word “bat.” The role of
-<span class="math inline">\(\sigma(u_1)\)</span> could be here to specifically disambiguate this:</p>
+<p>Here there is some ambiguity about the meaning of “bat.” The role of the
+prediction <span class="math inline">\(\sigma(u_1)\)</span> could be to specifically disambiguate this:</p>
 <p><span class="math display">\[
  \sigma(u_1) = \begin{bmatrix} \vdots \\ 0.96 \\ 0.04
   \\ \vdots \end{bmatrix}
 \]</span></p>
-<p>Then multiplying both vectors filters out the unwanted features:</p>
+<p>Then multiplying both vectors would filter out the unwanted features:</p>
 <p><span class="math display">\[
 u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
   \\ p(\text{bat --- the stick}) = 0.3
