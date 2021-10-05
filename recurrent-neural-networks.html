@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-10-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -366,12 +366,11 @@ the state values. Also <span class="math inline">\(\mathrm{tanh}\)</span> bounds
 <p><span class="math display">\[ \begin{aligned}{\bf h}_{t}&amp;=\tanh({\bf W}_{h}{\bf x}_{t}+{\bf U}_{h}{\bf h}_{t-1}+{\bf b}_{h})\\{\bf y}_{t}&amp;=\sigma _{y}({\bf W}_{y}{\bf h}_{t}+{\bf b}_{y})
   \end{aligned}
 \]</span></p>
-<p>where <span class="math inline">\({\bf x}\)</span> is the input vector, <span class="math inline">\({\bf h}\)</span> the vector of the
-hidden layer states, <span class="math inline">\({\bf x}\)</span> is the output vector, <span class="math inline">\(\sigma_y\)</span> is the
-output’s activation function, <span class="math inline">\({\bf W}_{h}\)</span> and <span class="math inline">\({\bf b}_h\)</span> the matrix
-stacking the parameters for <span class="math inline">\(h\)</span>, <span class="math inline">\({\bf U}_{h}\)</span> the matrix stacking the
-feedback parameters for <span class="math inline">\(h\)</span> and <span class="math inline">\({\bf W}_{y}\)</span> and <span class="math inline">\({\bf b}_y\)</span> the
-matrix and vector stacking the parameters for the output.</p>
+<p>where <span class="math inline">\({\bf x}\)</span> is the input vector, <span class="math inline">\({\bf h}\)</span> the vector of the hidden layer
+states, <span class="math inline">\({\bf y}\)</span> is the output vector, <span class="math inline">\(\sigma_y\)</span> is the output’s activation
+function, <span class="math inline">\({\bf W}_{h}\)</span> and <span class="math inline">\({\bf b}_h\)</span> the matrix stacking the parameters for
+<span class="math inline">\(h\)</span>, <span class="math inline">\({\bf U}_{h}\)</span> the matrix stacking the feedback parameters for <span class="math inline">\(h\)</span> and <span class="math inline">\({\bf W}_{y}\)</span> and <span class="math inline">\({\bf b}_y\)</span> the matrix and vector stacking the parameters for the
+output.</p>
 <p>The parameters <span class="math inline">\({\bf W}_{h}\)</span>, <span class="math inline">\({\bf W}_{y}\)</span>, <span class="math inline">\({\bf b}_{h}\)</span>, <span class="math inline">\({\bf b}_{y}\)</span> are shared by all input vectors <span class="math inline">\({x}_t\)</span>.</p>
 <p>In Keras, we can define a simple RNN layer as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="recurrent-neural-networks.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
