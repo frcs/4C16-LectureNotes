@@ -408,34 +408,30 @@ Figure 8.6: RNN, unrolled.
 </div>
 <div id="application-example-character-level-language-modelling" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Application Example: Character-Level Language Modelling</h2>
-<p>In the next slide is presented an example application of RNNs where we
-try to predict next character given a sequence of previous
-characters. The idea is to give the RNN a large corpus of text to
-train on and try to model the text inner dynamics (a bit similar to
-the idea of Word2Vec).</p>
-<p><em>Training</em>. We start from a character one-hot encoding. Each input
-of the RNNs is a character from the sequence. The RNN then is used for
-a {} task: we try to classify the output of the
-sequence <span class="math inline">\({\bf x}_1,\cdots,{\bf x}_{n-1}\)</span> as the next character <span class="math inline">\({\bf y}={\bf x}_{n}\)</span>.</p>
-<p>Since we are using cross-entropy and softmax, the network returns back
-the vector of probability distribution for the next character.</p>
+<p>In the next slide is presented an example application of RNNs where we try to
+predict next character given a sequence of previous characters. The idea is to
+give the RNN a large corpus of text to train on and try to model the text inner
+dynamics.</p>
+<p><em>Training</em>. We start from a character one-hot encoding. Each input of the RNNs
+is a character from the sequence. The RNN then is used for a <em>classification</em>
+task: we try to classify the output of the sequence <span class="math inline">\({\bf x}_1,\cdots,{\bf x}_{n-1}\)</span> as the next character <span class="math inline">\({\bf y}={\bf x}_{n}\)</span>.</p>
+<p>Since we are using cross-entropy and softmax, the network returns back the
+vector of probability distribution for the next character.</p>
 <div class="figure"><span id="fig:rnn-4"></span>
 <img src="figures/rnn-4.svg" alt="RNN, unrolled." width="80%" />
 <p class="caption">
 Figure 8.7: RNN, unrolled.
 </p>
 </div>
-<p>We are training for a classification task: can you predict the next
-character based on the previous characters?</p>
-<p>Once we have trained the RNN, we can then generate whole sentences,
-one character at a time. We achieve this by providing an initial
-sentence fragment, or seed. Then we can use our RNN to predict the
-probability distribution of the next character. To generate the next
-character, we simply sample the next character based from these
-probabilities. This character is then appended to the sentence and the
-process is repeated.</p>
-<p>Diagram of the text generation process is illustrated in the next
-slide.</p>
+<p>We are training for a classification task: can you predict the next character
+based on the previous characters?</p>
+<p>Once we have trained the RNN, we can then generate whole sentences, one
+character at a time. We achieve this by providing an initial sentence fragment,
+or seed. Then we can use our RNN to predict the probability distribution of the
+next character. To generate the next character, we simply sample the next
+character based from these probabilities. This character is then appended to the
+sentence and the process is repeated.</p>
+<p>Diagram of the text generation process is illustrated in the next slide.</p>
 <div class="figure"><span id="fig:rnn-5"></span>
 <img src="figures/rnn-5.svg" alt="RNN, unrolled." width="80%" />
 <p class="caption">
