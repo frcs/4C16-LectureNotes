@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-03" />
+<meta name="date" content="2022-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,13 +165,14 @@ div.csl-indent {
 <li class="part"><span><b>I Introduction to Machine Learning</b></span></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-and-machine-learning"><i class="fa fa-check"></i>Deep Learning and Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-machine-learning-a.i."><i class="fa fa-check"></i>Deep Learning, Machine Learning, A.I.</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-successes"><i class="fa fa-check"></i>Deep Learning Successes</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-classification"><i class="fa fa-check"></i>Image Classification</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scene-understanding"><i class="fa fa-check"></i>Scene Understanding</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-captioning"><i class="fa fa-check"></i>Image Captioning</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#machine-translation"><i class="fa fa-check"></i>Machine Translation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#multimedia-content"><i class="fa fa-check"></i>Multimedia Content</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#game-playing"><i class="fa fa-check"></i>Game Playing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reasons-of-a-success"><i class="fa fa-check"></i>Reasons of a Success</a>
@@ -413,7 +414,7 @@ that has studied for 6.2 hours and successfully passed his exam. This
 shouldn’t change the model but the new LS estimate (magenta) has to
 shift to also minimise the large error for this new entry, even so
 there is no real error.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-25"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-27"></span>
 <img src="figures/LogistiocRegressionToy-linear2error.svg" alt="Example of a binary class problem." width="60%" />
 <p class="caption">
 Figure 2.1: Example of a binary class problem.
@@ -437,7 +438,7 @@ score</strong>. It is a scalar value. The larger the value of <span class="math 
 <span class="math inline">\(\epsilon\)</span>. Multiple choices are possible for the distribution of
 <span class="math inline">\(\epsilon\)</span>. In <strong>logistic</strong> regression, the error <span class="math inline">\(\epsilon\)</span> is
 assumed to follow a <strong>logistic distribution</strong> and the risk score <span class="math inline">\({\bf x}^{\top} {\bf y}\)</span> is also called the <strong>logit</strong>.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-26"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-28"></span>
 <img src="figures/LogisticPDF.svg" alt="probability density function of the logistic distribution" width="60%" />
 <p class="caption">
 Figure 2.2: probability density function of the logistic distribution
@@ -446,7 +447,7 @@ Figure 2.2: probability density function of the logistic distribution
 <p>In <strong>probit</strong> regression, the error <span class="math inline">\(\epsilon\)</span> is assumed to follow a
 <em>normal distribution</em>, the risk score <span class="math inline">\({\bf x}^{\top} {\bf w}\)</span> is also
 called the <strong>probit</strong>.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-27"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-29"></span>
 <img src="figures/NormalPDF.svg" alt="probability density function of the normal distribution" width="60%" />
 <p class="caption">
 Figure 2.3: probability density function of the normal distribution
@@ -496,7 +497,7 @@ p(y=0 | {\bf x}) = 1-h_{\bf w}({\bf x})
 \]</span></p>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-29" class="exercise"><strong>Exercise 2.1  </strong></span>show that <span class="math inline">\(p(y=0 | {\bf x}) = h_{\bf w}(-{\bf x})\)</span>
+<span id="exr:unnamed-chunk-31" class="exercise"><strong>Exercise 2.1  </strong></span>show that <span class="math inline">\(p(y=0 | {\bf x}) = h_{\bf w}(-{\bf x})\)</span>
 </div>
 <p>In <strong>linear regression</strong>, the model <span class="math inline">\(h_{\bf w}({\bf x})\)</span> was a direct
 prediction of the outcome:</p>
@@ -621,7 +622,7 @@ algorithm then consists in iterating the following step:</p>
 \]</span></p>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-32" class="exercise"><strong>Exercise 2.2  </strong></span> Given that the derivative of the sigmoid <span class="math inline">\(f\)</span> is
+<span id="exr:unnamed-chunk-34" class="exercise"><strong>Exercise 2.2  </strong></span> Given that the derivative of the sigmoid <span class="math inline">\(f\)</span> is
 <span class="math inline">\(f&#39;(t)=(1-f(t))f(t)\)</span>, show that
 <span class="math display">\[
 \frac{\partial E}{\partial {\bf w}} = \sum_{i=1}^{n}

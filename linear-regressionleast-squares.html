@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-03" />
+<meta name="date" content="2022-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,13 +165,14 @@ div.csl-indent {
 <li class="part"><span><b>I Introduction to Machine Learning</b></span></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-and-machine-learning"><i class="fa fa-check"></i>Deep Learning and Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-machine-learning-a.i."><i class="fa fa-check"></i>Deep Learning, Machine Learning, A.I.</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-successes"><i class="fa fa-check"></i>Deep Learning Successes</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-classification"><i class="fa fa-check"></i>Image Classification</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scene-understanding"><i class="fa fa-check"></i>Scene Understanding</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-captioning"><i class="fa fa-check"></i>Image Captioning</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#machine-translation"><i class="fa fa-check"></i>Machine Translation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#multimedia-content"><i class="fa fa-check"></i>Multimedia Content</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#game-playing"><i class="fa fa-check"></i>Game Playing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reasons-of-a-success"><i class="fa fa-check"></i>Reasons of a Success</a>
@@ -376,7 +377,7 @@ orbits of celestial bodies. It is often credited to Carl Friedrich
 <strong>Gauss</strong> (1809) but it was first published by Adrien-Marie
 <strong>Legendre</strong> in 1805. The priority dispute comes from Gauss’s claim to
 have used least squares since 1795.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
 <img src="figures/sur-la-methode-des-moindres-carres-crop.jpg" alt="Legendre (1805), Nouvelles méthodes pour la détermination des orbites des comètes." width="60%" />
 <p class="caption">
 Figure 1.1: Legendre (1805), Nouvelles méthodes pour la détermination des orbites des comètes.
@@ -386,7 +387,7 @@ Figure 1.1: Legendre (1805), Nouvelles méthodes pour la détermination des orbi
 <h2><span class="header-section-number">1.1</span> Model and Notations</h2>
 <p>Let us start with a simple example. We have collected some data
 as shown in the figure below.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-14"></span>
 <img src="figures/polyfit_weight_vs_height_scatter.svg" alt="Example of collected data." width="60%" />
 <p class="caption">
 Figure 1.2: Example of collected data.
@@ -542,7 +543,7 @@ independent of <span class="math inline">\(\mathbf {w}\)</span>.</p>
   \end{alignat*}\]</span></p>
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-14" class="exercise"><strong>Exercise 1.1  </strong></span>
+<p><span id="exr:unnamed-chunk-16" class="exercise"><strong>Exercise 1.1  </strong></span>
 compute the gradient <span class="math inline">\(\frac{\partial E({\bf w})}{\partial {\bf w}}\)</span> for</p>
 <p><span class="math display">\[
   E({\bf w}) = ({\bf w}-{\bf B}{\bf w})^{\top} {\bf A} ({\bf w}-{\bf a})
@@ -695,7 +696,7 @@ interesting example for ML. Below is a small dataset <span class="math inline">\
 <h2><span class="header-section-number">1.4</span> Underfitting</h2>
 <p>Let’s see what happens when you try to fit the data with a lower model
 order: <span class="math inline">\(y = w_0 + w_1 x\)</span></p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
 <img src="figures/polyfit1.svg" alt="MSE: 2.02e+02" width="60%" />
 <p class="caption">
 Figure 1.3: MSE: 2.02e+02
@@ -713,7 +714,7 @@ polynomial model).</p>
 <div id="overfitting" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Overfitting</h2>
 <p>Let’s now try a higher model order: <span class="math inline">\(y = w_0 + w_1 x + \cdots + w_9 x^9\)</span></p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
 <img src="figures/polyfit9.svg" alt="MSE: 7.59e-06" width="60%" />
 <p class="caption">
 Figure 1.4: MSE: 7.59e-06
@@ -752,7 +753,7 @@ polynomial of order 9 when the underlying model is actually of order
 estimate is now much closer to the ground-truth, with no overfitting. The
 estimate for the weight <span class="math inline">\(w_9\)</span> corresponding to <span class="math inline">\(x^9\)</span> is <span class="math inline">\(-1.83\times 10^{-8}\)</span> and is
 indeed very small.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
 <img src="figures/polyfit9-denser.svg" alt="MSE: 7.18e-01" width="60%" />
 <p class="caption">
 Figure 1.5: MSE: 7.18e-01

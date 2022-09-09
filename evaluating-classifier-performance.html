@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-03" />
+<meta name="date" content="2022-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,13 +165,14 @@ div.csl-indent {
 <li class="part"><span><b>I Introduction to Machine Learning</b></span></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-and-machine-learning"><i class="fa fa-check"></i>Deep Learning and Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-machine-learning-a.i."><i class="fa fa-check"></i>Deep Learning, Machine Learning, A.I.</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-successes"><i class="fa fa-check"></i>Deep Learning Successes</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-classification"><i class="fa fa-check"></i>Image Classification</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scene-understanding"><i class="fa fa-check"></i>Scene Understanding</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-captioning"><i class="fa fa-check"></i>Image Captioning</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#machine-translation"><i class="fa fa-check"></i>Machine Translation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#multimedia-content"><i class="fa fa-check"></i>Multimedia Content</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#game-playing"><i class="fa fa-check"></i>Game Playing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reasons-of-a-success"><i class="fa fa-check"></i>Reasons of a Success</a>
@@ -561,7 +562,7 @@ really capture the performance of a classifier.</p>
 classifier should perform well on 2 metrics.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-38" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
+<p><span id="exm:unnamed-chunk-40" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
 <table>
 <thead>
 <tr class="header">
@@ -650,7 +651,7 @@ with different performances. We can report the <span class="math inline">\(\math
 FP/(FP+TN) and <span class="math inline">\(\mathrm{TP}\)</span> rate = TP/(TP+FN) for each of the
 different values of <span class="math inline">\(T\)</span> on a graph called the , or R.O.C. curve.</p>
 <p>Here is an example showing the ROC curves for 4 different classifiers.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-39"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-41"></span>
 <img src="figures/ROC-1.svg" alt="Receiving Operating Characteristic (ROC) curve." width="80%" />
 <p class="caption">
 Figure 4.2: Receiving Operating Characteristic (ROC) curve.
@@ -661,7 +662,7 @@ A random classifier will have TP rate equal to the FP rate.</p>
 <p>If your ROC curve is below the random classifier diagonal, then you
 are doing something wrong.</p>
 <p>Below are reported a few ROC curves for the earlier problem.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-40"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-42"></span>
 <img src="figures/compare-classifiers-ROC.svg" alt="ROC curves for the classifiers of Fig. \protect\@ref(fig:dataset04)" width="80%" />
 <p class="caption">
 Figure 4.3: ROC curves for the classifiers of Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>
@@ -726,7 +727,7 @@ with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \m
  \]</span></p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-41" class="example"><strong>Example 4.2  </strong></span></p>
+<p><span id="exm:unnamed-chunk-43" class="example"><strong>Example 4.2  </strong></span></p>
 <p>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
 <p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>
 <p><span class="math display">\[

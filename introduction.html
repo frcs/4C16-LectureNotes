@@ -24,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-03" />
+<meta name="date" content="2022-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,13 +165,14 @@ div.csl-indent {
 <li class="part"><span><b>I Introduction to Machine Learning</b></span></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
 <ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-and-machine-learning"><i class="fa fa-check"></i>Deep Learning and Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-machine-learning-a.i."><i class="fa fa-check"></i>Deep Learning, Machine Learning, A.I.</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-successes"><i class="fa fa-check"></i>Deep Learning Successes</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-classification"><i class="fa fa-check"></i>Image Classification</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scene-understanding"><i class="fa fa-check"></i>Scene Understanding</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-captioning"><i class="fa fa-check"></i>Image Captioning</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#machine-translation"><i class="fa fa-check"></i>Machine Translation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#multimedia-content"><i class="fa fa-check"></i>Multimedia Content</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#game-playing"><i class="fa fa-check"></i>Game Playing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reasons-of-a-success"><i class="fa fa-check"></i>Reasons of a Success</a>
@@ -362,64 +363,83 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="introduction" class="section level1 unnumbered">
 <h1>Introduction</h1>
-<div id="deep-learning-and-machine-learning" class="section level2 unnumbered">
-<h2>Deep Learning and Machine Learning</h2>
-<p><strong>Deep Learning</strong> is a particular type of <strong>machine learning</strong> method,
-and is thus part of the broader field of <strong>artificial intelligence</strong>
+<div id="deep-learning-machine-learning-a.i." class="section level2 unnumbered">
+<h2>Deep Learning, Machine Learning, A.I.</h2>
+<p><em>Deep Learning</em> is a particular type of <em>machine learning</em> method,
+and is thus part of the broader field of <em>artificial intelligence</em>
 (using computers to reason). Deep learning is another name for
-<strong>artificial neural networks</strong>, which are inspired by the structure of
+<em>artificial neural networks</em>, which are inspired by the structure of
 the neurons in the cerebral cortex.</p>
 <p>The recent quantum leap in machine learning has solely been driven by
 deep learning successes. When you read or hear about AI or machine
 Learning successes in recent years, it really means Deep Learning
 successes.</p>
-<p>Machine Learning can be split into 3 main fields:</p>
+<p>Machine Learning can be split into 3 main fields: Supervised Learning,
+Unsupervised Learning and Reinforcement Learning.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
 <img src="figures/AI.svg" alt="AI, ML and Deep Learning." width="66%" />
 <p class="caption">
 Figure 0.1: AI, ML and Deep Learning.
 </p>
 </div>
-<ul>
-<li><p><strong>Supervised Learning</strong>:</p>
-<p>Supervised Learning is by far the most common application in ML (say
-95% of the research papers). We assume that we have collected some
-data (eg. user ). Namely, we collected <span class="math inline">\(p\)</span> features from each of the
-<span class="math inline">\(n\)</span> observations of our dataset (eg. pictures, or user actions on a
-website). For each of these observation feature vectors <span class="math inline">\({\bf x}_i\)</span>,
-we also know the outcome <span class="math inline">\(y_i\)</span> (eg. <span class="math inline">\(y_i=0,1\)</span> depending on whether
-the picture shows a dog or a cat). From this labelled dataset <span class="math inline">\(({\bf x}_i, y_i)\)</span>, we want to estimate the parameters <span class="math inline">\({\bf w}\)</span> of a
-predictive model <span class="math inline">\(f({\bf x}_i, {\bf w})=y_i\)</span>.</p>
+<div id="supervised-learning" class="section level4 unnumbered">
+<h4>Supervised Learning</h4>
+<p>Supervised Learning is by far the most common application in ML (say 95% of the
+research papers). We assume that we have collected some data. Namely, we
+have collected <span class="math inline">\(p\)</span> features from each of the <span class="math inline">\(n\)</span> observations of our
+dataset (eg. pictures, or user actions on a website). For each of these
+observation feature vectors <span class="math inline">\({\bf x}_i\)</span>, we also know the outcome <span class="math inline">\(y_i\)</span>
+(eg. <span class="math inline">\(y_i=0,1\)</span> depending on whether the picture shows a dog or a cat). From this
+labelled dataset <span class="math inline">\(({\bf x}_i, y_i)\)</span>, we want to estimate the parameters <span class="math inline">\({\bf w}\)</span> of a predictive model <span class="math inline">\(f({\bf x}_i, {\bf w})=y_i\)</span>.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
-<img src="figures/dogcat.jpg" alt="AI, ML and Deep Learning." width="66%" />
+<img src="figures/dogcat.jpg" alt="Example of Supervised Learning Task: Image Classification" width="66%" />
 <p class="caption">
-Figure 0.2: AI, ML and Deep Learning.
+Figure 0.2: Example of Supervised Learning Task: Image Classification
 </p>
 </div>
-<p>The task is thus to find a model to predict the outcome from input features.</p></li>
-<li><p><strong>Unsupervised Learning</strong>:</p>
+<p>The task of Supervised Learning is thus to find a model that can predict
+the outcome from input features.</p>
+</div>
+<div id="unsupervised-learning" class="section level4 unnumbered">
+<h4>Unsupervised Learning</h4>
 <p>The task is here to learn about a dataset <span class="math inline">\(({\bf x}_i)\)</span> by just looking at it,
 without any labelled information <span class="math inline">\(y_i\)</span>. For instance, a typical application of
 unsupervised learning is to cluster a dataset into smaller groups of
-observations that seem to share similar feature vectors. Hopefully the
-clusters mean something useful that can be exploited afterwards.</p></li>
-<li><p><strong>Reinforcement Learning</strong>:</p>
-<p>The task is about teaching an agent how to interact with its environment (the
+observations that seem to share similar feature vectors. Hopefully the clusters
+mean something useful that can be exploited afterwards.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="figures/unsupervised-learning.png" alt="Example of Unsupervised Learning Task: Clustering" width="66%" />
+<p class="caption">
+Figure 0.3: Example of Unsupervised Learning Task: Clustering
+</p>
+</div>
+</div>
+<div id="reinforcement-learning" class="section level4 unnumbered">
+<h4>Reinforcement Learning</h4>
+<p>This task is about teaching an agent how to interact with its environment (the
 data), so as to get maximum reward. Reinforcement Learning is used in
-applications such as game playing, robotics, etc.</p></li>
-</ul>
+applications such as game playing, robotics, etc.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<img src="figures/reinforcement-learning.png" alt="Reinforcement Learning" width="66%" />
+<p class="caption">
+Figure 0.4: Reinforcement Learning
+</p>
+</div>
 <p>Deep Learning has made <em>major</em> breakthroughs in all three fields. So much so
 that virtually all research papers in these field rely on neural networks.</p>
 </div>
+</div>
 <div id="deep-learning-successes" class="section level2 unnumbered">
 <h2>Deep Learning Successes</h2>
-<p>Below are a number of machine learning applications, which have been</p>
+<p>Below are a few machine learning applications, where Deep Learning had
+a great impact in recent years.</p>
 <div id="image-classification" class="section level3 unnumbered">
 <h3>Image Classification</h3>
-<p><strong>Image Recognition</strong> is one of the core applications of Computer Vision, and is
-arguably the birthplace of modern Deep Learning. Image recognition used to be a
-particularly challenging task of computer vision. See for instance the 2014
-comic by <em>xkcd</em>:</p>
+<p><em>Image Classification</em>, also known as <em>Image Recognition</em>, is one of
+the core applications of Computer Vision, and is arguably the birthplace
+of modern Deep Learning. Image recognition used to be a particularly
+challenging task of computer vision. See for instance the 2014 comic by
+<em>xkcd</em>:</p>
 <div class="figure">
 <img src="https://imgs.xkcd.com/comics/tasks.png" style="width:30.0%" alt="" />
 <p class="caption"><a href="https://xkcd.com/1425/" class="uri">https://xkcd.com/1425/</a></p>
@@ -427,56 +447,57 @@ comic by <em>xkcd</em>:</p>
 <p>The generally adopted approach was to compute a collection of image features
 that people found to be useful and then apply the most popular classification
 method at that the time.</p>
-<p>ImageNet [www.image-net.org] runs an annual challenge where software programs
+<p><a href="https://www.image-net.org">ImageNet</a> runs an annual challenge where software programs
 compete to correctly classify and detect objects and scenes in images. Up to
 2012, support vector machine (SVM) was the method of choice for classification.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
 <img src="figures/imagenet-fig1.png" alt="Image Net image classification challenge." width="80%" />
 <p class="caption">
-Figure 0.3: Image Net image classification challenge.
+Figure 0.5: Image Net image classification challenge.
 </p>
 </div>
-<p>In 2012, it was shown <span class="citation">(<a href="#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> that deep learning models could massively drop
-the object recognition error rate. This paper has caught the attention of the
-image recognition community and beyond. The paper is surprisingly not
-technically revolutionary. Neural Networks had been indeed around for a few
-decades, without attracting too much momentum. This time however, the
-significance of improvement could not be left unnoticed. Since then, all methods
-are based on neural networks, making year on year incremental progress. So much
-so that machines can now do better than humans in this specific task. In 2014,
-Andrej Karparthy manually entered the competition and <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/">obtained a 5% error
+<p>In 2012, it was shown <span class="citation">(<a href="#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> that deep learning models could
+massively drop the object recognition error rate. This paper has caught
+the attention of the image recognition community and beyond. The paper
+is surprisingly not technically revolutionary. Neural Networks had been
+indeed around for a few decades, without attracting too much
+momentum. This time however, the significance of improvement could not
+be left unnoticed. Since then, all methods are based on neural networks,
+making year on year incremental progress. So much so that machines can
+now do better than humans in this specific task. In 2014, the then PhD
+student Andrej Karparthy manually entered the competition and <a href="http://karpathy.github.io/2014/09/02/what-i-learned-from-competing-against-a-convnet-on-imagenet/">obtained
+a 5% error
 rate</a>). For
-reference, the 2017 winning entry achieved a 2.3% error
-rate.</p>
+reference, the 2022 winning entry achieved a less than 1% error rate</p>
 <div class="figure"><span style="display:block;" id="fig:ImageNetErrorRates"></span>
-<img src="figures/ImageNet.svg" alt="Historical error Rates at ImageNet's classification challenge between 2010 and 2015." width="80%" />
+<img src="figures/ImageNet.svg" alt="Historical error Rates at ImageNet's classification challenge between 2010 and 2015.  ([see full leaderboard](https://paperswithcode.com/sota/image-classification-on-imagenet)) " width="80%" />
 <p class="caption">
-Figure 0.4: Historical error Rates at ImageNet’s classification challenge between 2010 and 2015.
+Figure 0.6: Historical error Rates at ImageNet’s classification challenge between 2010 and 2015. (<a href="https://paperswithcode.com/sota/image-classification-on-imagenet">see full leaderboard</a>)
 </p>
 </div>
 </div>
 <div id="scene-understanding" class="section level3 unnumbered">
 <h3>Scene Understanding</h3>
 <p>These new achievements in image recognition have then been brought to nearby
-fields such <strong>Scene Understanding</strong>. The figure below show the semantic
+fields such <em>Scene Understanding</em>. The figure below show the semantic
 segmentation results from Mask R-CNN <span class="citation">(<a href="#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>. Each pixel can be
 automatically be associated with a particular class (eg. human, train, car,
 etc.).</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-6"></span>
 <img src="figures/MaskRCNN.jpg" alt="Results from Mask R-CNN. [@maskrcnn]" width="80%" />
 <p class="caption">
-Figure 0.5: Results from Mask R-CNN. <span class="citation">(<a href="#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>
+Figure 0.7: Results from Mask R-CNN. <span class="citation">(<a href="#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>
 </p>
 </div>
 </div>
 <div id="image-captioning" class="section level3 unnumbered">
 <h3>Image Captioning</h3>
 <p>By combining image models with language models, we are now able to automatically
-<strong>generate captions</strong> from images (see Figure below).</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<em>generate captions</em> from images (see Figure below).</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
 <img src="figures/captioning.png" alt="Results of automaated image captioning [@imagecaptioning]. See [Google Reserach blog entry](https://goo.gl/U88bDQ)" width="80%" />
 <p class="caption">
-Figure 0.6: Results of automaated image captioning <span class="citation">(<a href="#ref-imagecaptioning" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See <a href="https://goo.gl/U88bDQ">Google Reserach blog entry</a>
+Figure 0.8: Results of automaated image captioning <span class="citation">(<a href="#ref-imagecaptioning" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See <a href="https://goo.gl/U88bDQ">Google Reserach blog entry</a>
 </p>
 </div>
 </div>
@@ -484,19 +505,31 @@ Figure 0.6: Results of automaated image captioning <span class="citation">(<a hr
 <h3>Machine Translation</h3>
 <p>By 2014, the deep learning revolution had spread beyond computer vision and made
 its introduction in natural language processing.</p>
-<p>All major tech companies have rapidly changed their <strong>machine translation</strong>
-systems to use Deep Learning. For instance, Google used to average a yearly
-0.4% improvement on their machine translation system. Their first attempt at
-using Deep Learning yielded an overnight 7% improvement, more than in an entire
-lifetime! (see <a href="https://goo.gl/DPYp6d">here</a>).</p>
+<p>All major tech companies rapidly changed their <em>machine translation</em>
+systems to use Deep Learning. For instance, Google used to average a
+yearly 0.4% improvement on their machine translation system. Their
+first attempt at using Deep Learning yielded an overnight 7%
+improvement, more than in an entire lifetime! (see New York Times’s <a href="https://goo.gl/DPYp6d">“The
+Great AI Awakening”</a>).</p>
 <p>Several years of handcrafted development could not match a single
 initial deep learning implementation.</p>
-<blockquote>
-<p>New York Times, “The Great AI Awakening” <a href="https://goo.gl/DPYp6d">https://goo.gl/DPYp6d</a></p>
-</blockquote>
-<p>In 2014, Skype Translator was announced. It trains and optimises <strong>speech
-recognition</strong>, automatic <strong>machine translation</strong> and <strong>speech synthesis</strong> tasks,
-acting as the glue that holds these elements together.</p>
+<p>Note that since then, Large Language Models (LLM) have further
+revolutionised text processing.</p>
+<p>These models contain hundreds of billions of parameters and have been
+trained to predict text on a extremely large corpus of Internet sources,
+made of hundreds of billion words, and sometimes dozen of languages.</p>
+<p><a href="https://openai.com/blog/gpt-3-apps/">OpenAI’s GPT·3</a> <span class="citation">(<a href="#ref-gpt3" role="doc-biblioref">Brown et al. 2020</a>)</span> is perhaps
+one of the most famous of these large language model and has been
+adopted in hundreds of applications, ranging from grammar correction,
+translation, summarisation, Chat Bots, text generation, etc.</p>
+</div>
+<div id="multimedia-content" class="section level3 unnumbered">
+<h3>Multimedia Content</h3>
+<p>Deep Learning has quickly become the universal language for dealing with
+any content driven application.</p>
+<p>Already in Skype Translator (2014), speech recognition, automatic
+machine translation and speech synthesis tasks are combined, with Deep
+Learning acting as the glue that holds these elements together.</p>
 <blockquote>
 <p><a href="https://www.youtube.com/embed/NhxCg2PA3ZI?start=0">Skype demo</a></p>
 </blockquote>
@@ -506,7 +539,7 @@ acting as the glue that holds these elements together.</p>
 </div>
 <div id="game-playing" class="section level3 unnumbered">
 <h3>Game Playing</h3>
-<p>Deep learning has also been introduced in <strong>reinforcement learning</strong> to
+<p>Deep learning has also been introduced in <em>reinforcement learning</em> to
 solve complex sequential decision making problems.</p>
 <p>Recent successes include: playing old Atari computer games, programming real
 world Robots and beating humans at Go. One notable event has the victory of
@@ -533,24 +566,23 @@ it definitely surprised me, even though I was sitting right there.’’.</p>
 <p>— Sergey Brin, Google co-founder</p>
 </blockquote>
 <p>Why now?</p>
-<p>Because <strong>Deep Learning does scale</strong>.</p>
+<p>Because <em>Deep Learning does scale</em>.</p>
 <p><img src="figures/DLvsOthers.svg" width="60%" /></p>
-<p>Neural Nets are the only ML technique whose performance <strong>scales
-efficiently with the training data size</strong>. Other ML popular
+<p>Neural Nets are the only ML technique whose performance <em>scales
+efficiently with the training data size</em>. Other ML popular
 techniques just can’t scale that well.</p>
-<p>The advent of <strong>big databases</strong>, combined with cheaper <strong>computing
-power</strong> (Graphic Cards), meant that Deep Learning could take advantage
-of all this, whilst other techniques stagnated. Instead of using
-thousands of observations, Deep Learning can take advantage of
-billions.</p>
+<p>The advent of <em>big databases</em>, combined with cheaper <em>computing power</em>
+(Graphic Cards), meant that Deep Learning could take advantage of all
+this, whilst other techniques stagnated. Instead of using thousands of
+observations, Deep Learning can take advantage of billions.</p>
 <p>The tipping point was 2012 in Computer Vision and around 2014 in
 Machine Translation.</p>
 <p>Deep Learning offers a (relatively) simple framework to define and
 parametrise pretty much any kind of numerical method and then optimise
 it over massive databases.</p>
-<p>By adopting an <strong>automated optimisation approach</strong> to tuning
-algorithms, Deep Learning is able to surpass <strong>hand-tailored
-algorithms</strong> of skilled researchers.</p>
+<p>By adopting an <em>automated optimisation approach</em> to tuning
+algorithms, Deep Learning is able to surpass <em>hand-tailored
+algorithms</em> of skilled researchers.</p>
 <p>It offers a systematic approach, when before, algorithms took years of
 human efforts to design.</p>
 <div id="democratisation" class="section level3 unnumbered">
@@ -563,34 +595,38 @@ opportunity for start-ups and it has become a ubiquitous tool in tech companies.
 <div id="global-reach" class="section level3 unnumbered">
 <h3>Global Reach</h3>
 <p>It has been applied successfully to many fields of research, industry
-and society: self-driving cars, image recognition, detecting cancer, speech
-recognition, speech synthesis, machine translation, drug discovery and
-toxicology, customer relationship management, recommendation systems,
-bioinformatics, advertising, controlling lasers, etc.</p>
+and society: self-driving cars, image recognition, detecting cancer,
+speech recognition, speech synthesis, machine translation, molecule
+modelling (see DeepMind’s <a href="https://www.deepmind.com/research/highlighted-research/alphafold">AlphaFold
+project</a>),
+drug discovery and toxicology, customer relationship management,
+recommendation systems, bioinformatics, advertising, controlling lasers,
+etc.</p>
 </div>
 <div id="impact" class="section level3 unnumbered">
 <h3>Impact</h3>
 <p>Here is a question for you: how long before your future job gets replaced by an algorithm?
 Probably much sooner than you think. You might feel safe if you are an artist…</p>
 <p>… but then again:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-8"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-10"></span>
 <img src="figures/styletransfer-2.jpeg" alt="Automatic style transfer, based on [@gatys2015neural]" width="80%" />
 <p class="caption">
-Figure 0.7: Automatic style transfer, based on <span class="citation">(<a href="#ref-gatys2015neural" role="doc-biblioref">Gatys, Ecker, and Bethge 2015</a>)</span>
+Figure 0.9: Automatic style transfer, based on <span class="citation">(<a href="#ref-gatys2015neural" role="doc-biblioref">Gatys, Ecker, and Bethge 2015</a>)</span>
 </p>
 </div>
-<p>… and now large neural networks are capable of combining text and
-images:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-9"></span>
+<p>… and now large neural networks such as DALL·E 2 <span class="citation">(<a href="#ref-dalle2" role="doc-biblioref">Ramesh et al. 2022</a>)</span> are capable of
+combining text and images to produce incredibly creative and high quality pieces
+of art:</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
 <img src="figures/dalle2-astronaut.jpg" alt="OpenAI's [DALL·E 2](https://openai.com/dall-e-2/)'s picture creation from a text description: &quot;An astronaut riding a horse in a photorealistic style&quot; (see [https://openai.com/dall-e-2/](https://openai.com/dall-e-2/))" width="90%" />
 <p class="caption">
-Figure 0.8: OpenAI’s <a href="https://openai.com/dall-e-2/">DALL·E 2</a>’s picture creation from a text description: “An astronaut riding a horse in a photorealistic style” (see <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>)
+Figure 0.10: OpenAI’s <a href="https://openai.com/dall-e-2/">DALL·E 2</a>’s picture creation from a text description: “An astronaut riding a horse in a photorealistic style” (see <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>)
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-10"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
 <img src="figures/dalle2-teddybears.jpg" alt="OpenAI's [DALL·E 2](https://openai.com/dall-e-2/)'s picture creation from a text description: &quot;Teddy bears mixing sparkling chemicals as mad scientists as a 1990s Saturday morning cartoon&quot; (see [https://openai.com/dall-e-2/](https://openai.com/dall-e-2/))" width="90%" />
 <p class="caption">
-Figure 0.9: OpenAI’s <a href="https://openai.com/dall-e-2/">DALL·E 2</a>’s picture creation from a text description: “Teddy bears mixing sparkling chemicals as mad scientists as a 1990s Saturday morning cartoon” (see <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>)
+Figure 0.11: OpenAI’s <a href="https://openai.com/dall-e-2/">DALL·E 2</a>’s picture creation from a text description: “Teddy bears mixing sparkling chemicals as mad scientists as a 1990s Saturday morning cartoon” (see <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>)
 </p>
 </div>
 <blockquote>
@@ -611,6 +647,9 @@ experts. <a href="https://goo.gl/2kfyXd" class="uri">https://goo.gl/2kfyXd</a></
 </div>
 <h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gpt3" class="csl-entry">
+Brown, Tom B., Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, et al. 2020. <span>“Language Models Are Few-Shot Learners.”</span> <em>CoRR</em> abs/2005.14165. <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a>.
+</div>
 <div id="ref-gatys2015neural" class="csl-entry">
 Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. 2015. <span>“A Neural Algorithm of Artistic Style.”</span> <a href="http://arxiv.org/abs/1508.06576">http://arxiv.org/abs/1508.06576</a>.
 </div>
@@ -619,6 +658,9 @@ He, Kaiming, Georgia Gkioxari, Piotr Dollár, and Ross B. Girshick. 2017. <span>
 </div>
 <div id="ref-alexnet" class="csl-entry">
 Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E Hinton. 2012. <span>“ImageNet Classification with Deep Convolutional Neural Networks.”</span> In <em>Advances in Neural Information Processing Systems 25</em>, edited by F. Pereira, C. J. C. Burges, L. Bottou, and K. Q. Weinberger, 1097–1105. Curran Associates, Inc. <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf</a>.
+</div>
+<div id="ref-dalle2" class="csl-entry">
+Ramesh, Aditya, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen. 2022. <span>“Hierarchical Text-Conditional Image Generation with CLIP Latents.”</span> arXiv. <a href="https://doi.org/10.48550/ARXIV.2204.06125">https://doi.org/10.48550/ARXIV.2204.06125</a>.
 </div>
 <div id="ref-imagecaptioning" class="csl-entry">
 Vinyals, Oriol, Alexander Toshev, Samy Bengio, and Dumitru Erhan. 2015. <span>“Show and Tell: A Neural Image Caption Generator.”</span> In <em>Computer Vision and Pattern Recognition</em>. <a href="http://arxiv.org/abs/1411.4555">http://arxiv.org/abs/1411.4555</a>.
