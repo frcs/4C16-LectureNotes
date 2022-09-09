@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications</title>
+  <title>Page not found | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications" />
+  <meta property="og:title" content="Page not found | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="frcs/4c16book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications" />
+  <meta name="twitter:title" content="Page not found | Deep Learning and its Applications" />
   
   <meta name="twitter:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="know-your-classics.html"/>
-<link rel="next" href="feedforward-neural-networks.html"/>
+
+
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -360,447 +360,19 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="evaluating-classifier-performance" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Evaluating Classifier Performance</h1>
-<p>We have seen a number of classifiers (Logistic Regression, SVM, kernel
-classifiers, Decision Trees, <span class="math inline">\(k\)</span>-NN) but we still haven’t talked about
-their performance.</p>
-<p>Recall some of results for these classifiers:</p>
-<div class="figure"><span style="display:block;" id="fig:dataset04"></span>
-<img src="figures/compare-classifiers-decision-boundary-1.svg" alt="Classification Results for some of the popular classifiers." width="80%" />
-<p class="caption">
-Figure 4.1: Classification Results for some of the popular classifiers.
-</p>
-</div>
-<p>How do we measure the performance of a classifier?</p>
-<p>How do we compare classifiers?</p>
-<p>We need metrics that everybody can agree on.</p>
-<div id="metrics-for-binary-classifiers" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Metrics for Binary Classifiers</h2>
-<p>If you have a binary problem with classes 0 (e.g. negative/false/fail) and 1
-(e.g. positive/true/success), you have 4 possible outcomes:</p>
-<p><em>True Positive</em> : you predict <span class="math inline">\(\hat{y}=1\)</span> and indeed <span class="math inline">\(y=1\)</span>.</p>
-<p><em>True Negative</em> : you predict <span class="math inline">\(\hat{y}=0\)</span> and indeed <span class="math inline">\(y=0\)</span>.</p>
-<p><em>False Negative</em> : you predict <span class="math inline">\(\hat{y}=0\)</span> but in fact <span class="math inline">\(y=1\)</span>.</p>
-<p><em>False Positive</em> : you predict <span class="math inline">\(\hat{y}=1\)</span> but in fact <span class="math inline">\(y=0\)</span>.</p>
-<p>In statistics, False Positives are often called type-I errors and False
-Negatives type-II errors.</p>
-<p>A <em>confusion matrix</em> is a table that reports the number of false
-positives, false negatives, true positives, and true negatives for
-each class.</p>
-<table>
-<caption><span id="tab:CM">Table 4.1: </span> Confusion Matrix Definition.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN</td>
-<td align="left">FN</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP</td>
-<td align="left">TP</td>
-</tr>
-</tbody>
-</table>
-<p>For instance, the confusion matrices for the classifiers from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a> are as follows:</p>
-<table>
-<caption><span id="tab:CM-NN">Table 4.2: </span> Confusion Matrix for the <span class="math inline">\(k\)</span>-NN classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=166</td>
-<td align="left">FN=21</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=25</td>
-<td align="left">TP=188</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption><span id="tab:CM-LR">Table 4.3: </span> Confusion Matrix for the Logistic Regression classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=152</td>
-<td align="left">FN=35</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=42</td>
-<td align="left">TP=171</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption><span id="tab:CM-LSVM">Table 4.4: </span> Confusion Matrix for the Linear SVM classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=148</td>
-<td align="left">FN=39</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=41</td>
-<td align="left">TP=172</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption><span id="tab:CM-RBFSVM">Table 4.5: </span> Confusion Matrix for the RBF SVM classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=162</td>
-<td align="left">FN=25</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=17</td>
-<td align="left">TP=196</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption><span id="tab:CM-DT">Table 4.6: </span> Confusion Matrix for the Decision Tree classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=170</td>
-<td align="left">FN=17</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=29</td>
-<td align="left">TP=184</td>
-</tr>
-</tbody>
-</table>
-<p>From TP, TN, FP, FN, we can derive a number of popular metrics.</p>
-<p><strong>Recall</strong> (also called sensitivity or true positive rate) is the
-probability that a positive example is indeed predicted as positive. In other
-words it is the proportion of positives that are correctly labelled as
-positives.
-<span class="math display">\[
-\mathrm {recall} ={\frac {\mathrm {TP} }{P}}={\frac {\mathrm {TP} }{\mathrm {TP}
-    +\mathrm {FN} }} = p(\hat{y}=1 | y=1)
-\]</span></p>
-<p><strong>Precision</strong> is the probability that a positive prediction is indeed
-positive:
-<span class="math display">\[ 
-  \mathrm {precision} ={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FP} }}
-  =  p( y=1 | \hat{y}=1) 
-\]</span></p>
-<p><strong>False Positive Rate</strong> is the proportion of negatives that are
-incorrectly labelled as positive:
-<span class="math display">\[ \begin{aligned}
-  \mathrm {FP\ rate} &amp;={\frac {\mathrm {FP} }{N}}={\frac {\mathrm
-    {FP} }{\mathrm {FP} +\mathrm {TN} }} =  p(\hat{y}=1 | y=0)
-\end{aligned}
-\]</span></p>
-<p><strong>Accuracy</strong> is the probability that a prediction is correct:
-<span class="math display">\[ \begin{aligned}
-  \mathrm {Accuracy} &amp;={\frac {\mathrm {TP} +\mathrm {TN} }{P+N}}={\frac {\mathrm
-    {TP} +\mathrm {TN} }{\mathrm {TP} +\mathrm {TN} +\mathrm {FP} +\mathrm {FN}
-  }}\\
-  &amp;=  p(\hat{y}=1 , y=1) + p(\hat{y}=0 , y=0)
-\end{aligned}
-\]</span></p>
-<p><strong>F1 score</strong> is the harmonic mean of precision and recall:
-<span class="math display">\[ F_{1}=2\cdot {\frac {\mathrm {recall} \cdot \mathrm {precision} }{\mathrm {precision} +\mathrm {recall} }}={\frac {2\mathrm {TP} }{2\mathrm {TP} +\mathrm {FP} +\mathrm {FN} }}\]</span></p>
-<p>Other derived metrics <a href="https://en.wikipedia.org/wiki/Precision_and_recall">exist</a>.</p>
-<p>But remember that since there are two types of errors (false positives
-and false negatives), you will always need at least two metrics to
-really capture the performance of a classifier.</p>
-<p>Performing well on a single metric can be meaningless. A good
-classifier should perform well on 2 metrics.</p>
-
-<div class="example">
-<p><span id="exm:unnamed-chunk-38" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=70</td>
-<td align="left">FN=5</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=15</td>
-<td align="left">TP=10</td>
-</tr>
-</tbody>
-</table>
-<p>The actual number of positives (class 1) is 15 and the actual number
-of negatives is 85 (class 0).</p>
-<p>The recall is TP/(TP+FN)=10/(5+10)=66.7%</p>
-<p>The accuracy is (TP+TN)/(TP+FN+TN+FP)=(70+10)/100=80%.</p>
-<p>If we take a classifier (A) that always returns 1, the confusion matrix for the
-same problem becomes:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=0</td>
-<td align="left">FN=0</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=85</td>
-<td align="left">TP=15</td>
-</tr>
-</tbody>
-</table>
-<p>and its recall is 15/(15+0) = 100%!!</p>
-<p>If we take instead a classifier (B) that always returns 0, we have:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">TN=85</td>
-<td align="left">FN=15</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">FP=0</td>
-<td align="left">TP=0</td>
-</tr>
-</tbody>
-</table>
-<p>and its accuracy is (85+0)/(100) = 85%!!</p>
-<p>Clearly both classifiers (A) and (B) are non informative and are
-really poor choices but you need two metrics to see this:</p>
-<p>For (A), the recall is 100% but the accuracy is only 15%.</p>
-<p>For (B), the accuracy is 85% but the recall is 0%.</p>
-<p><strong>Conclusion: if you don’t know anything about the test set, you need two metrics.</strong></p>
-</div>
-<p>When you start measuring the performance of a classifier, chances
-are that you can tune a few parameters. For instance, if your
-classifier is based on a linear classifier model <span class="math inline">\(y = [{\bf  x}^{\top}{\bf w} &gt; T]\)</span>, you can tune the threshold value
-<span class="math inline">\(T\)</span>. Increasing <span class="math inline">\(T\)</span> means that your classifier will be more
-conservative about classifying points as <span class="math inline">\(y=1\)</span>.</p>
-<p>By varying the parameter <span class="math inline">\(T\)</span>, we can produce a family of classifiers
-with different performances. We can report the <span class="math inline">\(\mathrm{FP}\)</span> rate =
-FP/(FP+TN) and <span class="math inline">\(\mathrm{TP}\)</span> rate = TP/(TP+FN) for each of the
-different values of <span class="math inline">\(T\)</span> on a graph called the , or R.O.C. curve.</p>
-<p>Here is an example showing the ROC curves for 4 different classifiers.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-39"></span>
-<img src="figures/ROC-1.svg" alt="Receiving Operating Characteristic (ROC) curve." width="80%" />
-<p class="caption">
-Figure 4.2: Receiving Operating Characteristic (ROC) curve.
-</p>
-</div>
-<p>A perfect classifier will have a TP rate or 100% and a FP rate of 0%.
-A random classifier will have TP rate equal to the FP rate.</p>
-<p>If your ROC curve is below the random classifier diagonal, then you
-are doing something wrong.</p>
-<p>Below are reported a few ROC curves for the earlier problem.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-40"></span>
-<img src="figures/compare-classifiers-ROC.svg" alt="ROC curves for the classifiers of Fig. \protect\@ref(fig:dataset04)" width="80%" />
-<p class="caption">
-Figure 4.3: ROC curves for the classifiers of Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>
-</p>
-</div>
-</div>
-<div id="multiclass-classifiers" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Multiclass Classifiers</h2>
-<p>Binary metrics don’t adapt nicely to problems where there are more
-than 2 classes. For multiclass problems with <span class="math inline">\(n\)</span> classes, there are
-<span class="math inline">\(n-1\)</span> possible ways of miss-classifying each class. Thus there are
-<span class="math inline">\((n-1) \times n\)</span> types of errors in total.</p>
-<p>You can always present your results as a confusion matrix. For
-instance:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">Actual: 0</th>
-<th align="left">Actual: 1</th>
-<th align="left">Actual: 2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>predicted: 0</td>
-<td align="left">102</td>
-<td align="left">10</td>
-<td align="left">5</td>
-</tr>
-<tr class="even">
-<td>predicted: 1</td>
-<td align="left">8</td>
-<td align="left">89</td>
-<td align="left">12</td>
-</tr>
-<tr class="odd">
-<td>predicted: 2</td>
-<td align="left">7</td>
-<td align="left">11</td>
-<td align="left">120</td>
-</tr>
-</tbody>
-</table>
-<p>You can also think of your multiclass problem as a set of binary
-problems (does an observation belong to class <span class="math inline">\(k\)</span> or not), and then
-aggregate the binary metrics in some way.</p>
-<p>Next are presented two ways of aggregating metrics for multiclass problems.</p>
-<p>In <strong>micro averaging</strong>, the metric (e.g. precision, recall, F1 score)
-is computed from the combined true positives, true negatives, false
-positives, and false negatives of the <span class="math inline">\(K\)</span> classes.</p>
-<p>For instance the micro-averaged precision is:
-<span class="math display">\[
-\mathrm{micro PRE} = \frac{\mathrm{micro TP}}{\mathrm{micro TP} + \mathrm{micro FP}}
-\]</span>
-with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \mathrm{TP}_K\)</span>, and <span class="math inline">\(\mathrm{micro FP} = \mathrm{FP}_1 + \cdots + \mathrm{FP}_K\)</span></p>
-<p>In <strong>macro-averaging</strong>, the performances are averaged over the classes:
-<span class="math display">\[
-\mathrm{macro PRE} = \frac{\mathrm{PRE}_1 + \cdots + \mathrm{PRE}_K}{K} \qquad 
-\text{where} \quad
-  \mathrm{PRE}_k = \frac{\mathrm{TP}_k}{\mathrm{TP}_k + \mathrm{FP}_k}
- \]</span></p>
-
-<div class="example">
-<p><span id="exm:unnamed-chunk-41" class="example"><strong>Example 4.2  </strong></span></p>
-<p>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
-<p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>
-<p><span class="math display">\[
-\mathrm{micro PRE} = \frac{2 + 0 + 0}{ (2+0+0) + (1 + 2 + 1)} = 0.286
-  \]</span></p>
-<span class="math display">\[
-\mathrm{macro PRE} = \frac{1}{3} \left( \frac{2}{2+2} +  \frac{0}{0  +
-    2} +
-  \frac{0}{0 + 1} \right) = 0.167
-  \]</span>
-</div>
-</div>
-<div id="trainingvalidationtesting-sets" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Training/Validation/Testing Sets</h2>
-<p>Now that we have established metrics, we still need to define the data
-that will be used for evaluating the metric. You usually need:</p>
-<ul>
-<li><p>a <strong>Training set</strong> that you use for learning the algorithm.</p></li>
-<li><p>a <strong>Dev</strong> or <strong>Validation</strong> set, that you use to tune the parameters
-of the algorithm.</p></li>
-<li><p>a <strong>Test</strong> set, that you use to fairly assess the performance of the
-algorithm. You should not try to optimise for the test set.</p></li>
-</ul>
-<p>Why so many sets? Because you want to avoid over-fitting. Even if your
-model has many parameters, it is easy to overfit your training set
-with enough training. Thus, we need a testing set to check the
-performance on unseen data.</p>
-<p>Now, if you tune the parameters of your algorithm to perform better on
-the testing set, you are likely to overfit it as well. But we want to
-use the testing set as a way of accurately estimating the performance
-on unseen data. Thus we use a different set, the dev/validation set,
-for any parameter estimation.</p>
-<p>Important: the test and dev sets should contain examples of what you
-ultimately want to perform well on, rather than whatever data you
-happen to have for training.</p>
-<p>How large do the dev/test sets need to be?</p>
-<ul>
-<li><p><strong>Training sets</strong>: as large as you can afford.</p></li>
-<li><p><strong>Validation/Dev sets</strong> with sizes from 1,000 to 10,000 examples are
-common. With 100 examples, you will have a good chance of detecting
-an improvement of 5%. With 10,000 examples, you will have a good
-chance of detecting an improvement of 0.1%.</p></li>
-<li><p><strong>Test sets</strong> should be large enough to give high confidence in the
-overall performance of your system. One popular heuristic had been
-to use 30% of your data for your test set. This is makes sense when
-you have say 100 to 10,000 examples but maybe when you have billion
-of training examples. Basically, think that you want to catch the
-all possible edge cases of your system.</p></li>
-</ul>
-</div>
-<div id="take-away-3" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Take Away</h2>
-<p>When approaching a new project, your first steps should be to design
-your Training/Validation/Test sets and decide on the metrics. Only
-then should you start thinking about which classifier to train.</p>
-<p>Remember that the metrics are usually not the be-all and end-all of
-the evaluation. Each metric can only look at a particular aspect of
-your problem. You need to monitor multiple metrics.</p>
-<p>As the project progresses, it is expected that the datasets will be
-updated and that new metrics will be introduced.</p>
-
-</div>
-</div>
-
-
-
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="know-your-classics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="feedforward-neural-networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -831,7 +403,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/chapter-04-evaluating-classifier-performance.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/%s",
 "text": "Edit"
 },
 "history": {
