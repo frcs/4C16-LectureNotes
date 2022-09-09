@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications</title>
+  <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
+  <meta name="github-repo" content="frcs/4c16book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications" />
+  
+  <meta name="twitter:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
+  
+
+<meta name="author" content="François Pitié" />
+
+
+<meta name="date" content="2022-09-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="know-your-classics.html"/>
+<link rel="next" href="feedforward-neural-networks.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">4C16: Deep Learning and its Applications</a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>Module Information</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Module Descriptor</a></li>
+<li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="part"><span><b>I Introduction to Machine Learning</b></span></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-and-machine-learning"><i class="fa fa-check"></i>Deep Learning and Machine Learning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#deep-learning-successes"><i class="fa fa-check"></i>Deep Learning Successes</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-classification"><i class="fa fa-check"></i>Image Classification</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#scene-understanding"><i class="fa fa-check"></i>Scene Understanding</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#image-captioning"><i class="fa fa-check"></i>Image Captioning</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#machine-translation"><i class="fa fa-check"></i>Machine Translation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#game-playing"><i class="fa fa-check"></i>Game Playing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#reasons-of-a-success"><i class="fa fa-check"></i>Reasons of a Success</a>
+<ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#democratisation"><i class="fa fa-check"></i>Democratisation</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#global-reach"><i class="fa fa-check"></i>Global Reach</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#impact"><i class="fa fa-check"></i>Impact</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html"><i class="fa fa-check"></i><b>1</b> Linear Regression/Least Squares</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#model-and-notations"><i class="fa fa-check"></i><b>1.1</b> Model and Notations</a></li>
+<li class="chapter" data-level="1.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#optimisation"><i class="fa fa-check"></i><b>1.2</b> Optimisation</a></li>
+<li class="chapter" data-level="1.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#least-squares-in-practice"><i class="fa fa-check"></i><b>1.3</b> Least Squares in Practice</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#a-simple-affine-example"><i class="fa fa-check"></i><b>1.3.1</b> A Simple Affine Example</a></li>
+<li class="chapter" data-level="1.3.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#transforming-the-input-features"><i class="fa fa-check"></i><b>1.3.2</b> Transforming the Input Features</a></li>
+<li class="chapter" data-level="1.3.3" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#polynomial-fitting"><i class="fa fa-check"></i><b>1.3.3</b> Polynomial Fitting</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#underfitting"><i class="fa fa-check"></i><b>1.4</b> Underfitting</a></li>
+<li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
+<li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
+<li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
+<li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#take-away"><i class="fa fa-check"></i><b>1.9</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>2</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#introductory-example"><i class="fa fa-check"></i><b>2.1</b> Introductory Example</a></li>
+<li class="chapter" data-level="2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#linear-approximation"><i class="fa fa-check"></i><b>2.2</b> Linear Approximation</a></li>
+<li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
+<li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
+<li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
+<li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
+<li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
+<li class="chapter" data-level="2.10" data-path="logistic-regression.html"><a href="logistic-regression.html#softmax-optimisation"><i class="fa fa-check"></i><b>2.10</b> Softmax Optimisation</a></li>
+<li class="chapter" data-level="2.11" data-path="logistic-regression.html"><a href="logistic-regression.html#take-away-1"><i class="fa fa-check"></i><b>2.11</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="know-your-classics.html"><a href="know-your-classics.html"><i class="fa fa-check"></i><b>3</b> Know your Classics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="know-your-classics.html"><a href="know-your-classics.html#k-nearest-neighbours"><i class="fa fa-check"></i><b>3.1</b> k-nearest neighbours</a></li>
+<li class="chapter" data-level="3.2" data-path="know-your-classics.html"><a href="know-your-classics.html#decision-trees"><i class="fa fa-check"></i><b>3.2</b> Decision Trees</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also"><i class="fa fa-check"></i><b>3.2.1</b> See Also</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#svm"><i class="fa fa-check"></i><b>3.3</b> SVM</a></li>
+<li class="chapter" data-level="3.4" data-path="know-your-classics.html"><a href="know-your-classics.html#no-free-lunch-theorem"><i class="fa fa-check"></i><b>3.4</b> No Free-Lunch Theorem</a></li>
+<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a></li>
+<li class="chapter" data-level="3.6" data-path="know-your-classics.html"><a href="know-your-classics.html#take-away-2"><i class="fa fa-check"></i><b>3.6</b> Take Away</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also-1"><i class="fa fa-check"></i><b>3.6.1</b> See Also</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
+<li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
+<li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
+</ul></li>
+<li class="part"><span><b>II Deep Neural Networks</b></span></li>
+<li class="chapter" data-level="5" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html"><i class="fa fa-check"></i><b>5</b> Feedforward Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#what-is-a-feed-forward-neural-network"><i class="fa fa-check"></i><b>5.1</b> What is a (Feed Forward) Neural Network?</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#a-graph-of-differentiable-operations"><i class="fa fa-check"></i><b>5.1.1</b> A Graph of Differentiable Operations</a></li>
+<li class="chapter" data-level="5.1.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#units-and-artificial-neurons"><i class="fa fa-check"></i><b>5.1.2</b> Units and Artificial Neurons</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#biological-neurons"><i class="fa fa-check"></i><b>5.2</b> Biological Neurons</a></li>
+<li class="chapter" data-level="5.3" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#deep-neural-networks"><i class="fa fa-check"></i><b>5.3</b> Deep Neural Networks</a></li>
+<li class="chapter" data-level="5.4" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#universal-approximation-theorem"><i class="fa fa-check"></i><b>5.4</b> Universal Approximation Theorem</a></li>
+<li class="chapter" data-level="5.5" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#example-1"><i class="fa fa-check"></i><b>5.5</b> Example</a></li>
+<li class="chapter" data-level="5.6" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#training"><i class="fa fa-check"></i><b>5.6</b> Training</a></li>
+<li class="chapter" data-level="5.7" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagation"><i class="fa fa-check"></i><b>5.7</b> Back-Propagation</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#computing-the-gradient"><i class="fa fa-check"></i><b>5.7.1</b> Computing the Gradient</a></li>
+<li class="chapter" data-level="5.7.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#the-chain-rule"><i class="fa fa-check"></i><b>5.7.2</b> The Chain Rule</a></li>
+<li class="chapter" data-level="5.7.3" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#back-propagating-with-the-chain-rule"><i class="fa fa-check"></i><b>5.7.3</b> Back-Propagating with the Chain-Rule</a></li>
+<li class="chapter" data-level="5.7.4" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#vanishing-gradients"><i class="fa fa-check"></i><b>5.7.4</b> Vanishing Gradients</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#mini-batch-and-stochastic-gradient-descent"><i class="fa fa-check"></i><b>5.8.1</b> Mini-Batch and Stochastic Gradient Descent</a></li>
+<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Adavanced Gradient Descent Optimizers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#constraints-and-regularisers"><i class="fa fa-check"></i><b>5.9</b> Constraints and Regularisers</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l2-regularisation"><i class="fa fa-check"></i><b>5.9.1</b> L2 regularisation</a></li>
+<li class="chapter" data-level="5.9.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#l1-regularisation"><i class="fa fa-check"></i><b>5.9.2</b> L1 regularisation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#dropout-noise"><i class="fa fa-check"></i><b>5.10</b> Dropout &amp; Noise</a></li>
+<li class="chapter" data-level="5.11" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#monitoring-and-training-diagnostics"><i class="fa fa-check"></i><b>5.11</b> Monitoring and Training Diagnostics</a></li>
+<li class="chapter" data-level="5.12" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#take-away-4"><i class="fa fa-check"></i><b>5.12</b> Take Away</a></li>
+<li class="chapter" data-level="5.13" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#useful-resources"><i class="fa fa-check"></i><b>5.13</b> Useful Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html"><i class="fa fa-check"></i><b>6</b> Convolutional Neural Networks</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#convolution-filters"><i class="fa fa-check"></i><b>6.1</b> Convolution Filters</a></li>
+<li class="chapter" data-level="6.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#padding"><i class="fa fa-check"></i><b>6.2</b> Padding</a>
+<ul>
+<li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-3"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-picture-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Picture Size</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#stride"><i class="fa fa-check"></i><b>6.3.1</b> Stride</a></li>
+<li class="chapter" data-level="6.3.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#max-pooling"><i class="fa fa-check"></i><b>6.3.2</b> Max Pooling</a></li>
+<li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-4"><i class="fa fa-check"></i>Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.4</b> Architecture Design</a></li>
+<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.5</b> Example: VGG16</a></li>
+<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.6</b> Visualisation</a></li>
+<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.7</b> Take Away</a></li>
+<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.8</b> Useful Resources</a></li>
+</ul></li>
+<li class="part"><span><b>III Advanced Architectures</b></span></li>
+<li class="chapter" data-level="7" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html"><i class="fa fa-check"></i><b>7</b> Advances in Network Architectures</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#transfer-learning"><i class="fa fa-check"></i><b>7.1</b> Transfer Learning</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#re-using-pre-trained-networks"><i class="fa fa-check"></i><b>7.1.1</b> Re-Using Pre-Trained Networks</a></li>
+<li class="chapter" data-level="7.1.2" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#domain-adaption-and-vanishing-gradients"><i class="fa fa-check"></i><b>7.1.2</b> Domain Adaption and Vanishing Gradients</a></li>
+<li class="chapter" data-level="7.1.3" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#normalisation-layers"><i class="fa fa-check"></i><b>7.1.3</b> Normalisation Layers</a></li>
+<li class="chapter" data-level="7.1.4" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#batch-normalisation"><i class="fa fa-check"></i><b>7.1.4</b> Batch Normalisation</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#going-deeper"><i class="fa fa-check"></i><b>7.2</b> Going Deeper</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#googlenet-inception"><i class="fa fa-check"></i><b>7.2.1</b> GoogLeNet: Inception</a></li>
+<li class="chapter" data-level="7.2.2" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#resnet-residual-network"><i class="fa fa-check"></i><b>7.2.2</b> ResNet: Residual Network</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html#generative-adversarial-networks-gan"><i class="fa fa-check"></i><b>7.3</b> Generative Adversarial Networks (GAN)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html"><i class="fa fa-check"></i><b>8</b> Recurrent Neural Networks</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#a-feed-forward-network-rolled-out-over-time"><i class="fa fa-check"></i><b>8.1</b> A Feed Forward Network Rolled Out Over Time</a></li>
+<li class="chapter" data-level="8.2" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#application-example-character-level-language-modelling"><i class="fa fa-check"></i><b>8.2</b> Application Example: Character-Level Language Modelling</a></li>
+<li class="chapter" data-level="8.3" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#training-back-propagation-through-time"><i class="fa fa-check"></i><b>8.3</b> Training: Back-Propagation Through Time</a></li>
+<li class="chapter" data-level="8.4" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#dealing-with-long-sequences"><i class="fa fa-check"></i><b>8.4</b> Dealing with Long Sequences</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#lstm"><i class="fa fa-check"></i><b>8.4.1</b> LSTM</a></li>
+<li class="chapter" data-level="8.4.2" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#gru"><i class="fa fa-check"></i><b>8.4.2</b> GRU</a></li>
+<li class="chapter" data-level="8.4.3" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#gated-units"><i class="fa fa-check"></i><b>8.4.3</b> Gated Units</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#application-image-caption-generator"><i class="fa fa-check"></i><b>8.5</b> Application: Image Caption Generator</a></li>
+<li class="chapter" data-level="8.6" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#take-away-6"><i class="fa fa-check"></i><b>8.6</b> Take Away</a></li>
+<li class="chapter" data-level="8.7" data-path="recurrent-neural-networks.html"><a href="recurrent-neural-networks.html#limitations-of-rnns-and-the-rise-of-transformers"><i class="fa fa-check"></i><b>8.7</b> Limitations of RNNs and the Rise of Transformers</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="autoencoders.html"><a href="autoencoders.html"><i class="fa fa-check"></i><b>9</b> AutoEncoders</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="autoencoders.html"><a href="autoencoders.html#definition"><i class="fa fa-check"></i><b>9.1</b> Definition</a></li>
+<li class="chapter" data-level="9.2" data-path="autoencoders.html"><a href="autoencoders.html#examples"><i class="fa fa-check"></i><b>9.2</b> Examples</a></li>
+<li class="chapter" data-level="9.3" data-path="autoencoders.html"><a href="autoencoders.html#dimension-compression"><i class="fa fa-check"></i><b>9.3</b> Dimension Compression</a></li>
+<li class="chapter" data-level="9.4" data-path="autoencoders.html"><a href="autoencoders.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.4</b> Variational Auto Encoders (VAE)</a></li>
+<li class="chapter" data-level="9.5" data-path="autoencoders.html"><a href="autoencoders.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.5</b> Multi-Tasks Design</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="notes.html"><a href="notes.html#universal-approximation-theorem-1"><i class="fa fa-check"></i><b>A.1</b> Universal Approximation Theorem</a></li>
+<li class="chapter" data-level="A.2" data-path="notes.html"><a href="notes.html#why-does-l_1-regularisation-induce-sparsity"><i class="fa fa-check"></i><b>A.2</b> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?</a></li>
+<li class="chapter" data-level="A.3" data-path="notes.html"><a href="notes.html#note:kernel-trick"><i class="fa fa-check"></i><b>A.3</b> Kernel Trick</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://frcs.github.io/EE4C16" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Deep Learning and its Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="evaluating-classifier-performance" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Evaluating Classifier Performance</h1>
+<p>We have seen a number of classifiers (Logistic Regression, SVM, kernel
+classifiers, Decision Trees, <span class="math inline">\(k\)</span>-NN) but we still haven’t talked about
+their performance.</p>
+<p>Recall some of results for these classifiers:</p>
+<div class="figure"><span style="display:block;" id="fig:dataset04"></span>
+<img src="figures/compare-classifiers-decision-boundary-1.svg" alt="Classification Results for some of the popular classifiers." width="80%" />
+<p class="caption">
+Figure 4.1: Classification Results for some of the popular classifiers.
+</p>
+</div>
+<p>How do we measure the performance of a classifier?</p>
+<p>How do we compare classifiers?</p>
+<p>We need metrics that everybody can agree on.</p>
+<div id="metrics-for-binary-classifiers" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Metrics for Binary Classifiers</h2>
+<p>If you have a binary problem with classes 0 (e.g. negative/false/fail) and 1
+(e.g. positive/true/success), you have 4 possible outcomes:</p>
+<p><em>True Positive</em> : you predict <span class="math inline">\(\hat{y}=1\)</span> and indeed <span class="math inline">\(y=1\)</span>.</p>
+<p><em>True Negative</em> : you predict <span class="math inline">\(\hat{y}=0\)</span> and indeed <span class="math inline">\(y=0\)</span>.</p>
+<p><em>False Negative</em> : you predict <span class="math inline">\(\hat{y}=0\)</span> but in fact <span class="math inline">\(y=1\)</span>.</p>
+<p><em>False Positive</em> : you predict <span class="math inline">\(\hat{y}=1\)</span> but in fact <span class="math inline">\(y=0\)</span>.</p>
+<p>In statistics, False Positives are often called type-I errors and False
+Negatives type-II errors.</p>
+<p>A <em>confusion matrix</em> is a table that reports the number of false
+positives, false negatives, true positives, and true negatives for
+each class.</p>
+<table>
+<caption><span id="tab:CM">Table 4.1: </span> Confusion Matrix Definition.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN</td>
+<td align="left">FN</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP</td>
+<td align="left">TP</td>
+</tr>
+</tbody>
+</table>
+<p>For instance, the confusion matrices for the classifiers from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a> are as follows:</p>
+<table>
+<caption><span id="tab:CM-NN">Table 4.2: </span> Confusion Matrix for the <span class="math inline">\(k\)</span>-NN classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=166</td>
+<td align="left">FN=21</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=25</td>
+<td align="left">TP=188</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:CM-LR">Table 4.3: </span> Confusion Matrix for the Logistic Regression classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=152</td>
+<td align="left">FN=35</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=42</td>
+<td align="left">TP=171</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:CM-LSVM">Table 4.4: </span> Confusion Matrix for the Linear SVM classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=148</td>
+<td align="left">FN=39</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=41</td>
+<td align="left">TP=172</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:CM-RBFSVM">Table 4.5: </span> Confusion Matrix for the RBF SVM classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=162</td>
+<td align="left">FN=25</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=17</td>
+<td align="left">TP=196</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:CM-DT">Table 4.6: </span> Confusion Matrix for the Decision Tree classifier from Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=170</td>
+<td align="left">FN=17</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=29</td>
+<td align="left">TP=184</td>
+</tr>
+</tbody>
+</table>
+<p>From TP, TN, FP, FN, we can derive a number of popular metrics.</p>
+<p><strong>Recall</strong> (also called sensitivity or true positive rate) is the
+probability that a positive example is indeed predicted as positive. In other
+words it is the proportion of positives that are correctly labelled as
+positives.
+<span class="math display">\[
+\mathrm {recall} ={\frac {\mathrm {TP} }{P}}={\frac {\mathrm {TP} }{\mathrm {TP}
+    +\mathrm {FN} }} = p(\hat{y}=1 | y=1)
+\]</span></p>
+<p><strong>Precision</strong> is the probability that a positive prediction is indeed
+positive:
+<span class="math display">\[ 
+  \mathrm {precision} ={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FP} }}
+  =  p( y=1 | \hat{y}=1) 
+\]</span></p>
+<p><strong>False Positive Rate</strong> is the proportion of negatives that are
+incorrectly labelled as positive:
+<span class="math display">\[ \begin{aligned}
+  \mathrm {FP\ rate} &amp;={\frac {\mathrm {FP} }{N}}={\frac {\mathrm
+    {FP} }{\mathrm {FP} +\mathrm {TN} }} =  p(\hat{y}=1 | y=0)
+\end{aligned}
+\]</span></p>
+<p><strong>Accuracy</strong> is the probability that a prediction is correct:
+<span class="math display">\[ \begin{aligned}
+  \mathrm {Accuracy} &amp;={\frac {\mathrm {TP} +\mathrm {TN} }{P+N}}={\frac {\mathrm
+    {TP} +\mathrm {TN} }{\mathrm {TP} +\mathrm {TN} +\mathrm {FP} +\mathrm {FN}
+  }}\\
+  &amp;=  p(\hat{y}=1 , y=1) + p(\hat{y}=0 , y=0)
+\end{aligned}
+\]</span></p>
+<p><strong>F1 score</strong> is the harmonic mean of precision and recall:
+<span class="math display">\[ F_{1}=2\cdot {\frac {\mathrm {recall} \cdot \mathrm {precision} }{\mathrm {precision} +\mathrm {recall} }}={\frac {2\mathrm {TP} }{2\mathrm {TP} +\mathrm {FP} +\mathrm {FN} }}\]</span></p>
+<p>Other derived metrics <a href="https://en.wikipedia.org/wiki/Precision_and_recall">exist</a>.</p>
+<p>But remember that since there are two types of errors (false positives
+and false negatives), you will always need at least two metrics to
+really capture the performance of a classifier.</p>
+<p>Performing well on a single metric can be meaningless. A good
+classifier should perform well on 2 metrics.</p>
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-38" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=70</td>
+<td align="left">FN=5</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=15</td>
+<td align="left">TP=10</td>
+</tr>
+</tbody>
+</table>
+<p>The actual number of positives (class 1) is 15 and the actual number
+of negatives is 85 (class 0).</p>
+<p>The recall is TP/(TP+FN)=10/(5+10)=66.7%</p>
+<p>The accuracy is (TP+TN)/(TP+FN+TN+FP)=(70+10)/100=80%.</p>
+<p>If we take a classifier (A) that always returns 1, the confusion matrix for the
+same problem becomes:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=0</td>
+<td align="left">FN=0</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=85</td>
+<td align="left">TP=15</td>
+</tr>
+</tbody>
+</table>
+<p>and its recall is 15/(15+0) = 100%!!</p>
+<p>If we take instead a classifier (B) that always returns 0, we have:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">TN=85</td>
+<td align="left">FN=15</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">FP=0</td>
+<td align="left">TP=0</td>
+</tr>
+</tbody>
+</table>
+<p>and its accuracy is (85+0)/(100) = 85%!!</p>
+<p>Clearly both classifiers (A) and (B) are non informative and are
+really poor choices but you need two metrics to see this:</p>
+<p>For (A), the recall is 100% but the accuracy is only 15%.</p>
+<p>For (B), the accuracy is 85% but the recall is 0%.</p>
+<p><strong>Conclusion: if you don’t know anything about the test set, you need two metrics.</strong></p>
+</div>
+<p>When you start measuring the performance of a classifier, chances
+are that you can tune a few parameters. For instance, if your
+classifier is based on a linear classifier model <span class="math inline">\(y = [{\bf  x}^{\top}{\bf w} &gt; T]\)</span>, you can tune the threshold value
+<span class="math inline">\(T\)</span>. Increasing <span class="math inline">\(T\)</span> means that your classifier will be more
+conservative about classifying points as <span class="math inline">\(y=1\)</span>.</p>
+<p>By varying the parameter <span class="math inline">\(T\)</span>, we can produce a family of classifiers
+with different performances. We can report the <span class="math inline">\(\mathrm{FP}\)</span> rate =
+FP/(FP+TN) and <span class="math inline">\(\mathrm{TP}\)</span> rate = TP/(TP+FN) for each of the
+different values of <span class="math inline">\(T\)</span> on a graph called the , or R.O.C. curve.</p>
+<p>Here is an example showing the ROC curves for 4 different classifiers.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-39"></span>
+<img src="figures/ROC-1.svg" alt="Receiving Operating Characteristic (ROC) curve." width="80%" />
+<p class="caption">
+Figure 4.2: Receiving Operating Characteristic (ROC) curve.
+</p>
+</div>
+<p>A perfect classifier will have a TP rate or 100% and a FP rate of 0%.
+A random classifier will have TP rate equal to the FP rate.</p>
+<p>If your ROC curve is below the random classifier diagonal, then you
+are doing something wrong.</p>
+<p>Below are reported a few ROC curves for the earlier problem.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-40"></span>
+<img src="figures/compare-classifiers-ROC.svg" alt="ROC curves for the classifiers of Fig. \protect\@ref(fig:dataset04)" width="80%" />
+<p class="caption">
+Figure 4.3: ROC curves for the classifiers of Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>
+</p>
+</div>
+</div>
+<div id="multiclass-classifiers" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Multiclass Classifiers</h2>
+<p>Binary metrics don’t adapt nicely to problems where there are more
+than 2 classes. For multiclass problems with <span class="math inline">\(n\)</span> classes, there are
+<span class="math inline">\(n-1\)</span> possible ways of miss-classifying each class. Thus there are
+<span class="math inline">\((n-1) \times n\)</span> types of errors in total.</p>
+<p>You can always present your results as a confusion matrix. For
+instance:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Actual: 0</th>
+<th align="left">Actual: 1</th>
+<th align="left">Actual: 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>predicted: 0</td>
+<td align="left">102</td>
+<td align="left">10</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td>predicted: 1</td>
+<td align="left">8</td>
+<td align="left">89</td>
+<td align="left">12</td>
+</tr>
+<tr class="odd">
+<td>predicted: 2</td>
+<td align="left">7</td>
+<td align="left">11</td>
+<td align="left">120</td>
+</tr>
+</tbody>
+</table>
+<p>You can also think of your multiclass problem as a set of binary
+problems (does an observation belong to class <span class="math inline">\(k\)</span> or not), and then
+aggregate the binary metrics in some way.</p>
+<p>Next are presented two ways of aggregating metrics for multiclass problems.</p>
+<p>In <strong>micro averaging</strong>, the metric (e.g. precision, recall, F1 score)
+is computed from the combined true positives, true negatives, false
+positives, and false negatives of the <span class="math inline">\(K\)</span> classes.</p>
+<p>For instance the micro-averaged precision is:
+<span class="math display">\[
+\mathrm{micro PRE} = \frac{\mathrm{micro TP}}{\mathrm{micro TP} + \mathrm{micro FP}}
+\]</span>
+with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \mathrm{TP}_K\)</span>, and <span class="math inline">\(\mathrm{micro FP} = \mathrm{FP}_1 + \cdots + \mathrm{FP}_K\)</span></p>
+<p>In <strong>macro-averaging</strong>, the performances are averaged over the classes:
+<span class="math display">\[
+\mathrm{macro PRE} = \frac{\mathrm{PRE}_1 + \cdots + \mathrm{PRE}_K}{K} \qquad 
+\text{where} \quad
+  \mathrm{PRE}_k = \frac{\mathrm{TP}_k}{\mathrm{TP}_k + \mathrm{FP}_k}
+ \]</span></p>
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-41" class="example"><strong>Example 4.2  </strong></span></p>
+<p>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
+<p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>
+<p><span class="math display">\[
+\mathrm{micro PRE} = \frac{2 + 0 + 0}{ (2+0+0) + (1 + 2 + 1)} = 0.286
+  \]</span></p>
+<span class="math display">\[
+\mathrm{macro PRE} = \frac{1}{3} \left( \frac{2}{2+2} +  \frac{0}{0  +
+    2} +
+  \frac{0}{0 + 1} \right) = 0.167
+  \]</span>
+</div>
+</div>
+<div id="trainingvalidationtesting-sets" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Training/Validation/Testing Sets</h2>
+<p>Now that we have established metrics, we still need to define the data
+that will be used for evaluating the metric. You usually need:</p>
+<ul>
+<li><p>a <strong>Training set</strong> that you use for learning the algorithm.</p></li>
+<li><p>a <strong>Dev</strong> or <strong>Validation</strong> set, that you use to tune the parameters
+of the algorithm.</p></li>
+<li><p>a <strong>Test</strong> set, that you use to fairly assess the performance of the
+algorithm. You should not try to optimise for the test set.</p></li>
+</ul>
+<p>Why so many sets? Because you want to avoid over-fitting. Even if your
+model has many parameters, it is easy to overfit your training set
+with enough training. Thus, we need a testing set to check the
+performance on unseen data.</p>
+<p>Now, if you tune the parameters of your algorithm to perform better on
+the testing set, you are likely to overfit it as well. But we want to
+use the testing set as a way of accurately estimating the performance
+on unseen data. Thus we use a different set, the dev/validation set,
+for any parameter estimation.</p>
+<p>Important: the test and dev sets should contain examples of what you
+ultimately want to perform well on, rather than whatever data you
+happen to have for training.</p>
+<p>How large do the dev/test sets need to be?</p>
+<ul>
+<li><p><strong>Training sets</strong>: as large as you can afford.</p></li>
+<li><p><strong>Validation/Dev sets</strong> with sizes from 1,000 to 10,000 examples are
+common. With 100 examples, you will have a good chance of detecting
+an improvement of 5%. With 10,000 examples, you will have a good
+chance of detecting an improvement of 0.1%.</p></li>
+<li><p><strong>Test sets</strong> should be large enough to give high confidence in the
+overall performance of your system. One popular heuristic had been
+to use 30% of your data for your test set. This is makes sense when
+you have say 100 to 10,000 examples but maybe when you have billion
+of training examples. Basically, think that you want to catch the
+all possible edge cases of your system.</p></li>
+</ul>
+</div>
+<div id="take-away-3" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Take Away</h2>
+<p>When approaching a new project, your first steps should be to design
+your Training/Validation/Test sets and decide on the metrics. Only
+then should you start thinking about which classifier to train.</p>
+<p>Remember that the metrics are usually not the be-all and end-all of
+the evaluation. Each metric can only look at a particular aspect of
+your problem. You need to monitor multiple metrics.</p>
+<p>As the project progresses, it is expected that the datasets will be
+updated and that new metrics will be introduced.</p>
+
+</div>
+</div>
+
+
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="know-your-classics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="feedforward-neural-networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/chapter-04-evaluating-classifier-performance.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["4c16.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
