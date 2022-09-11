@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Evaluating Classifier Performance | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-10" />
+<meta name="date" content="2022-09-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="know-your-classics.html"/>
 <link rel="next" href="feedforward-neural-networks.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,15 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -197,7 +195,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
 <li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
 <li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
 <ul>
 <li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
 <li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
@@ -362,8 +360,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="evaluating-classifier-performance" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Evaluating Classifier Performance</h1>
+<div id="evaluating-classifier-performance" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Evaluating Classifier Performance<a href="evaluating-classifier-performance.html#evaluating-classifier-performance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We have seen a number of classifiers (Logistic Regression, SVM, kernel
 classifiers, Decision Trees, <span class="math inline">\(k\)</span>-NN) but we still haven’t talked about
 their performance.</p>
@@ -377,8 +375,8 @@ Figure 4.1: Classification Results for some of the popular classifiers.
 <p>How do we measure the performance of a classifier?</p>
 <p>How do we compare classifiers?</p>
 <p>We need metrics that everybody can agree on.</p>
-<div id="metrics-for-binary-classifiers" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Metrics for Binary Classifiers</h2>
+<div id="metrics-for-binary-classifiers" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Metrics for Binary Classifiers<a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you have a binary problem with classes 0 (e.g. negative/false/fail) and 1
 (e.g. positive/true/success), you have 4 possible outcomes:</p>
 <p><em>True Positive</em> : you predict <span class="math inline">\(\hat{y}=1\)</span> and indeed <span class="math inline">\(y=1\)</span>.</p>
@@ -561,7 +559,6 @@ and false negatives), you will always need at least two metrics to
 really capture the performance of a classifier.</p>
 <p>Performing well on a single metric can be meaningless. A good
 classifier should perform well on 2 metrics.</p>
-
 <div class="example">
 <p><span id="exm:unnamed-chunk-40" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
 <table>
@@ -670,8 +667,8 @@ Figure 4.3: ROC curves for the classifiers of Fig. <a href="evaluating-classifie
 </p>
 </div>
 </div>
-<div id="multiclass-classifiers" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Multiclass Classifiers</h2>
+<div id="multiclass-classifiers" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Multiclass Classifiers<a href="evaluating-classifier-performance.html#multiclass-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Binary metrics don’t adapt nicely to problems where there are more
 than 2 classes. For multiclass problems with <span class="math inline">\(n\)</span> classes, there are
 <span class="math inline">\(n-1\)</span> possible ways of miss-classifying each class. Thus there are
@@ -726,23 +723,21 @@ with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \m
 \text{where} \quad
   \mathrm{PRE}_k = \frac{\mathrm{TP}_k}{\mathrm{TP}_k + \mathrm{FP}_k}
  \]</span></p>
-
 <div class="example">
-<p><span id="exm:unnamed-chunk-43" class="example"><strong>Example 4.2  </strong></span></p>
-<p>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
+<p><span id="exm:unnamed-chunk-43" class="example"><strong>Example 4.2  </strong></span>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
 <p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>
 <p><span class="math display">\[
 \mathrm{micro PRE} = \frac{2 + 0 + 0}{ (2+0+0) + (1 + 2 + 1)} = 0.286
   \]</span></p>
-<span class="math display">\[
+<p><span class="math display">\[
 \mathrm{macro PRE} = \frac{1}{3} \left( \frac{2}{2+2} +  \frac{0}{0  +
     2} +
   \frac{0}{0 + 1} \right) = 0.167
-  \]</span>
+  \]</span></p>
 </div>
 </div>
-<div id="trainingvalidationtesting-sets" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Training/Validation/Testing Sets</h2>
+<div id="trainingvalidationtesting-sets" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Training/Validation/Testing Sets<a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that we have established metrics, we still need to define the data
 that will be used for evaluating the metric. You usually need:</p>
 <ul>
@@ -779,8 +774,8 @@ of training examples. Basically, think that you want to catch the
 all possible edge cases of your system.</p></li>
 </ul>
 </div>
-<div id="take-away-3" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Take Away</h2>
+<div id="take-away-3" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Take Away<a href="evaluating-classifier-performance.html#take-away-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When approaching a new project, your first steps should be to design
 your Training/Validation/Test sets and decide on the metrics. Only
 then should you start thinking about which classifier to train.</p>
@@ -862,7 +857,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Know your Classics | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Know your Classics | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-10" />
+<meta name="date" content="2022-09-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="logistic-regression.html"/>
 <link rel="next" href="evaluating-classifier-performance.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,15 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -197,7 +195,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
 <li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
 <li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
 <ul>
 <li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
 <li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
@@ -362,16 +360,16 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="know-your-classics" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Know your Classics</h1>
+<div id="know-your-classics" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Know your Classics<a href="know-your-classics.html#know-your-classics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Before we dive into Neural Networks, we must keep in mind that Neural Nets have
 been around for a while and, until recently, they were not the method of choice
 for Machine Learning.</p>
 <p>A zoo of algorithms exits out there, and we’ll briefly introduce here some of
 the <em>classic methods</em> for supervised learning. In the following we are looking
 at a few popular classification algorithms.</p>
-<div id="k-nearest-neighbours" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> k-nearest neighbours</h2>
+<div id="k-nearest-neighbours" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> k-nearest neighbours<a href="know-your-classics.html#k-nearest-neighbours" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><span class="math inline">\(k\)</span>-nearest neighbours (<span class="math inline">\(k\)</span>-NN) is a very simple yet powerful technique. For an
 input <span class="math inline">\({\bf x}\)</span>, you retrieve the <span class="math inline">\(k\)</span>-nearest neighbours in the training data,
 then return the majority class amoung the <span class="math inline">\(k\)</span> values. You can also return the
@@ -411,8 +409,8 @@ with the training set.</li>
 <li>You don’t learn much about the features themselves.</li>
 </ul>
 </div>
-<div id="decision-trees" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Decision Trees</h2>
+<div id="decision-trees" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Decision Trees<a href="know-your-classics.html#decision-trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In <strong>decision trees</strong> <span class="citation">(<a href="#ref-decisiontrees" role="doc-biblioref">Breiman et al. 1984</a>)</span> and its many variants, each node of the
 decision tree is associated with a region of the input space, and internal nodes
 partition that region into sub-regions, in a divide and conquer fashion as shown
@@ -458,14 +456,14 @@ diagonal (eg. <span class="math inline">\(x_1&lt;x_2\)</span>):</li>
 Figure 3.5: In Decision Trees, the feature space is split along axes (eg. <span class="math inline">\(x_1&lt;3\)</span>) but it could be more efficient to split the classes along a diagonal (eg. <span class="math inline">\(x_1&lt;x_2\)</span>).
 </p>
 </div>
-<div id="see-also" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> See Also</h3>
+<div id="see-also" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> See Also<a href="know-your-classics.html#see-also" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Ada Boost, Random Forests.</p>
 <p><a href="https://www.youtube.com/watch?v=p17C9q2M00Q" class="uri">https://www.youtube.com/watch?v=p17C9q2M00Q</a></p>
 </div>
 </div>
-<div id="svm" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> SVM</h2>
+<div id="svm" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> SVM<a href="know-your-classics.html#svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Until recently, <strong>Support Vector Machines</strong> were the most popular technique
 around.</p>
 <p>Like in Logistic Regression, SVM starts as a linear classifier:
@@ -488,8 +486,8 @@ Figure 3.6: SVM maximises the separation between classes.
 </div>
 <p>There is a lot more to SVM, but this will be not covered in this module.</p>
 </div>
-<div id="no-free-lunch-theorem" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> No Free-Lunch Theorem</h2>
+<div id="no-free-lunch-theorem" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> No Free-Lunch Theorem<a href="know-your-classics.html#no-free-lunch-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Note that there is <em>a priori</em> no advantage in using linear SVM over logistic
 regression in terms of performance alone. It all depends on the type of data you
 have.</p>
@@ -507,8 +505,8 @@ Figure 3.7: No Free Lunch Theorem.
 </p>
 </div>
 </div>
-<div id="kernel-trick" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Kernel Trick</h2>
+<div id="kernel-trick" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Kernel Trick<a href="know-your-classics.html#kernel-trick" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>SVM gained popularity when it became associated with the <strong>kernel trick</strong>.</p>
 <p>Recall that in linear regression, we managed to fit non-linear functions by
 augmenting the feature space with higher order polynomials of each the
@@ -639,8 +637,8 @@ emerged in 2006 when team lead by G. Hinton demonstrated that a neural network
 on the MNIST benchmark. The real tipping point occured in 2012 with <span class="citation">(<a href="#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>
 (see introduction).</p>
 </div>
-<div id="take-away-2" class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Take Away</h2>
+<div id="take-away-2" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Take Away<a href="know-your-classics.html#take-away-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Neural Nets have existed for a while, but it is only since 2012 that they have
 started to surpass all other techniques.</p>
 <p>Kernel based techniques have been very popular for a while as they offer an
@@ -648,8 +646,8 @@ elegant way of transforming input features into more complex features that can
 then be linearly separated.</p>
 <p>The problem with kernel techniques is that they cannot deal efficiently with
 large datasets (eg. more than 10’s of thousands of observations)</p>
-<div id="see-also-1" class="section level3" number="3.6.1">
-<h3><span class="header-section-number">3.6.1</span> See Also</h3>
+<div id="see-also-1" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> See Also<a href="know-your-classics.html#see-also-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The topic is related to Gaussian Processes, Reproducing kernel Hilbert spaces,
 kernel Logistic Regression.</p>
 <p>Some useful references:</p>
@@ -663,7 +661,7 @@ kernel Logistic Regression.</p>
 </div>
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-decisiontrees" class="csl-entry">
 Breiman, L., J. H. Friedman, R. A. Olshen, and C. J. Stone. 1984. <em>Classification and Regression Trees</em>. Monterey, CA: Wadsworth; Brooks.
@@ -750,7 +748,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

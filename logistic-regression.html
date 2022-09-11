@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Logistic Regression | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Logistic Regression | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-10" />
+<meta name="date" content="2022-09-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="linear-regressionleast-squares.html"/>
 <link rel="next" href="know-your-classics.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,15 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -197,7 +195,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
 <li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
 <li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
 <ul>
 <li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
 <li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
@@ -362,8 +360,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="logistic-regression" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Logistic Regression</h1>
+<div id="logistic-regression" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Logistic Regression<a href="logistic-regression.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>With <strong>Linear Regression</strong>, we looked at linear models, where the output of
 the problem was a <strong>continuous</strong> variable (eg. height, car price,
 temperature, ).</p>
@@ -376,8 +374,8 @@ variable. That is, the outcome is 0/1 or true/false.</p>
 <p>There is a whole zoo of classifiers out there. Why are we covering
 logistic regression in particular?</p>
 <p>Because logistic regression is the building block of Neural Nets.</p>
-<div id="introductory-example" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Introductory Example</h2>
+<div id="introductory-example" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introductory Example<a href="logistic-regression.html#introductory-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll start with an example from Wikipedia:</p>
 <p><em>A group of 20 students spend between 0 and 6 hours studying for an
 exam. How does the number of hours spent studying affect the
@@ -387,8 +385,8 @@ probability that the student will pass the exam?</em></p>
     result (1=pass,0=fail) : 0    0    1    0    ...</code></pre>
 <p><img src="figures/LogistiocRegressionToy-scatter-discrete.svg" width="60%" /></p>
 </div>
-<div id="linear-approximation" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Linear Approximation</h2>
+<div id="linear-approximation" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Linear Approximation<a href="logistic-regression.html#linear-approximation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Although the output <span class="math inline">\(y\)</span> is binary, we could still attempt to fit a
 linear model via least squares:</p>
 <p><span class="math display">\[
@@ -425,8 +423,8 @@ Figure 2.1: Example of a binary class problem.
 <span class="math inline">\({\bf x}^{\top}{\bf w}\)</span> matches <span class="math inline">\({y}\)</span> and not so that <span class="math inline">\([ {\bf x}^{\top}{\bf w} &gt; 0.5 ]\)</span> matches <span class="math inline">\(y\)</span>.</p>
 <p>Let’s see how this can be done.</p>
 </div>
-<div id="general-linear-model" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> General Linear Model</h2>
+<div id="general-linear-model" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> General Linear Model<a href="logistic-regression.html#general-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The problem of <strong>general linear models</strong> can be presented as
 follows. We are trying to find a linear combination of the data <span class="math inline">\({\bf x}^{\top}{\bf w}\)</span>, such that the sign of <span class="math inline">\({\bf x}^{\top}{\bf w}\)</span> tells
 us about the outcome <span class="math inline">\(y\)</span>:</p>
@@ -458,8 +456,8 @@ Figure 2.3: probability density function of the normal distribution
 <em>logit</em> regression. The main difference is that logistic regression is
 numerically easier to solve.</p>
 </div>
-<div id="logistic-model" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Logistic Model</h2>
+<div id="logistic-model" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Logistic Model<a href="logistic-regression.html#logistic-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>From now on, we’ll only look at the logistic model. Note that similar
 derivations could be made for any other model.</p>
 <p>Consider <span class="math inline">\(p(y=1|{\bf x})\)</span>, the <strong>likelihood</strong> that the output is a
@@ -496,9 +494,8 @@ or <strong>sigmoid</strong>:</p>
 <p><span class="math display">\[
 p(y=0 | {\bf x}) = 1-h_{\bf w}({\bf x})
 \]</span></p>
-
 <div class="exercise">
-<span id="exr:unnamed-chunk-31" class="exercise"><strong>Exercise 2.1  </strong></span>show that <span class="math inline">\(p(y=0 | {\bf x}) = h_{\bf w}(-{\bf x})\)</span>
+<p><span id="exr:unnamed-chunk-31" class="exercise"><strong>Exercise 2.1  </strong></span>show that <span class="math inline">\(p(y=0 | {\bf x}) = h_{\bf w}(-{\bf x})\)</span></p>
 </div>
 <p>In <strong>linear regression</strong>, the model <span class="math inline">\(h_{\bf w}({\bf x})\)</span> was a direct
 prediction of the outcome:</p>
@@ -525,8 +522,8 @@ estimate is almost identical to our previous estimate (both magenta
 and red curves actually coincide).</p>
 <p><img src="figures/LogistiocRegressionToy-fit2.svg" width="60%" /></p>
 </div>
-<div id="maximum-likelihood-1" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Maximum Likelihood</h2>
+<div id="maximum-likelihood-1" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Maximum Likelihood<a href="logistic-regression.html#maximum-likelihood-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To estimate the weights <span class="math inline">\({\bf w}\)</span>, we will again use the concept of
 <strong>Maximum Likelihood</strong>.</p>
 <p>As we’ve just seen, for a particular observation <span class="math inline">\({\bf x}_i\)</span>, the
@@ -577,8 +574,8 @@ cross-entropy.</p>
 <p>This is in fact a mistake that the Neural Net community did for a
 number of years before switching to the cross entropy loss function.</p>
 </div>
-<div id="optimisation-gradient-descent" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Optimisation: gradient descent</h2>
+<div id="optimisation-gradient-descent" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Optimisation: gradient descent<a href="logistic-regression.html#optimisation-gradient-descent" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Unfortunately there is no closed form solution to Logistic
 Regression. To minimise the error function <span class="math inline">\(E({\bf w})\)</span>, we need to
 resort to an iterative optimisation strategy: the <strong>gradient descent</strong>
@@ -621,14 +618,13 @@ algorithm then consists in iterating the following step:</p>
 \text{and that} \quad 
   h_{\bf w}({\bf x}) = f({\bf x}^{\top}{\bf w}) = \frac{1}{1 + e^{-{\bf x}^{\top}{\bf w}}}
 \]</span></p>
-
 <div class="exercise">
-<span id="exr:unnamed-chunk-34" class="exercise"><strong>Exercise 2.2  </strong></span> Given that the derivative of the sigmoid <span class="math inline">\(f\)</span> is
+<p><span id="exr:unnamed-chunk-34" class="exercise"><strong>Exercise 2.2  </strong></span>Given that the derivative of the sigmoid <span class="math inline">\(f\)</span> is
 <span class="math inline">\(f&#39;(t)=(1-f(t))f(t)\)</span>, show that
 <span class="math display">\[
 \frac{\partial E}{\partial {\bf w}} = \sum_{i=1}^{n}
   \left(h_{\bf w}({\bf x}_i) - y_i \right) {\bf x}_i
-  \]</span>
+  \]</span></p>
 </div>
 <p>The overall gradient descent method looks like so for Logistic Regression:</p>
 <ol style="list-style-type: decimal">
@@ -642,8 +638,8 @@ algorithm then consists in iterating the following step:</p>
 <li><p>update the weights: <span class="math inline">\({\bf w}^{(t+1)} = {\bf w}^{(t)} - \eta \frac{\partial E}{\partial {\bf w}}\)</span></p></li>
 </ol>
 </div>
-<div id="example" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> Example</h2>
+<div id="example" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Example<a href="logistic-regression.html#example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Below is an example with 2 features.</p>
 <p><img src="figures/LogistiocRegression-2DToy-scatter.svg" width="60%" /></p>
 <p>The estimate for the probability of success is</p>
@@ -653,8 +649,8 @@ h_{\bf w}({\bf x}) = 1/(1 + e^{ - (-1.28  - 1.09 x_1 +  1.89 x_2)} )
 <p>Below are drawn the lines that correspond to <span class="math inline">\(h_{\bf w}({\bf  x})=0.05\)</span>, <span class="math inline">\(h_{\bf w}({\bf x})=0.5\)</span> and <span class="math inline">\(h_{\bf w}({\bf x})=0.95\)</span>.</p>
 <p><img src="figures/LogistiocRegression-2DToy-lines.svg" width="60%" /></p>
 </div>
-<div id="multiclass-classification" class="section level2" number="2.8">
-<h2><span class="header-section-number">2.8</span> Multiclass Classification</h2>
+<div id="multiclass-classification" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Multiclass Classification<a href="logistic-regression.html#multiclass-classification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is very often that you have to deal with more than 2 classes.</p>
 <p>The simplest way to consider a problem that has more than 2 classes
 would be to adopt the <strong>one-vs-all</strong> (or one-against-all) strategy:</p>
@@ -672,8 +668,8 @@ heterogeneous than the positive samples (from class <span class="math inline">\(
 and jointly train them. The extension of Logistic regression that just
 does this is called <strong>multinomial logistic regression</strong>.</p>
 </div>
-<div id="multinomial-logistic-regression" class="section level2" number="2.9">
-<h2><span class="header-section-number">2.9</span> Multinomial Logistic Regression</h2>
+<div id="multinomial-logistic-regression" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Multinomial Logistic Regression<a href="logistic-regression.html#multinomial-logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In Multinomial Logistic Regression, each of the binary classifier is based on
 the following likelihood model:</p>
 <p><span class="math display">\[
@@ -687,8 +683,8 @@ the following likelihood model:</p>
 logits for all classes and returns the vector of corresponding
 likelihoods.</p>
 </div>
-<div id="softmax-optimisation" class="section level2" number="2.10">
-<h2><span class="header-section-number">2.10</span> Softmax Optimisation</h2>
+<div id="softmax-optimisation" class="section level2 hasAnchor" number="2.10">
+<h2><span class="header-section-number">2.10</span> Softmax Optimisation<a href="logistic-regression.html#softmax-optimisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To optimise for the parameters. We can take again the <strong>maximum
 likelihood</strong> approach.</p>
 <p>Combining the likelihood for all possible classes gives us:</p>
@@ -716,8 +712,8 @@ special case of categorical cross entropy as the equation for binary
 cross entropy is the exact equation for categorical cross entropy loss
 when using two classes.</p>
 </div>
-<div id="take-away-1" class="section level2" number="2.11">
-<h2><span class="header-section-number">2.11</span> Take Away</h2>
+<div id="take-away-1" class="section level2 hasAnchor" number="2.11">
+<h2><span class="header-section-number">2.11</span> Take Away<a href="logistic-regression.html#take-away-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>With <strong>Logistic Regression</strong>, we look at linear models, where the
 output of the problem is a <strong>binary categorical</strong> response.</p>
 <p>Instead of directly predicting the actual outcome as in least squares,
@@ -731,7 +727,7 @@ called the <strong>Multinomial Logistic Regression</strong>.</p>
 
 </div>
 </div>
-<h3>References</h3>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-cox1958" class="csl-entry">
 Cox, D. R. 1958. <span>“The Regression Analysis of Binary Sequences.”</span> <em>Journal of the Royal Statistical Society. Series B (Methodological)</em> 20 (2): 215–42. <a href="http://www.jstor.org/stable/2983890">http://www.jstor.org/stable/2983890</a>.
@@ -803,7 +799,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

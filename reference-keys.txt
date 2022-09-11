@@ -139,7 +139,7 @@ underfitting
 overfitting
 regularisation
 maximum-likelihood
-loss-feature-transforms-noise
+loss-noise
 example-1-regression-towards-the-mean
 example-2
 take-away

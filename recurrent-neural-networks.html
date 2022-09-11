@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Recurrent Neural Networks | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Recurrent Neural Networks | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-10" />
+<meta name="date" content="2022-09-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="advances-in-network-architectures.html"/>
 <link rel="next" href="autoencoders.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,15 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -197,7 +195,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
 <li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
 <li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
 <ul>
 <li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
 <li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
@@ -362,12 +360,12 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="recurrent-neural-networks" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Recurrent Neural Networks</h1>
+<div id="recurrent-neural-networks" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Recurrent Neural Networks<a href="recurrent-neural-networks.html#recurrent-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Recurrent Neural Networks (RNN) are special type of neural
 architectures designed to be used on <strong>sequential data</strong>.</p>
-<div id="a-feed-forward-network-rolled-out-over-time" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> A Feed Forward Network Rolled Out Over Time</h2>
+<div id="a-feed-forward-network-rolled-out-over-time" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> A Feed Forward Network Rolled Out Over Time<a href="recurrent-neural-networks.html#a-feed-forward-network-rolled-out-over-time" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sequential data can be found in any time series such as audio signal,
 stock market prices, vehicle trajectory but also in natural language
 processing (text). In fact, RNNs have been particularly successful
@@ -451,8 +449,8 @@ Figure 8.6: RNN, unrolled.
 </p>
 </div>
 </div>
-<div id="application-example-character-level-language-modelling" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Application Example: Character-Level Language Modelling</h2>
+<div id="application-example-character-level-language-modelling" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Application Example: Character-Level Language Modelling<a href="recurrent-neural-networks.html#application-example-character-level-language-modelling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the next slide is presented an example application of RNNs where we try to
 predict next character given a sequence of previous characters. The idea is to
 give the RNN a large corpus of text to train on and try to model the text inner
@@ -489,8 +487,8 @@ Figure 8.8: RNN, unrolled.
 </blockquote>
 <p>Check this link for results and more insight about the RNN!</p>
 </div>
-<div id="training-back-propagation-through-time" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Training: Back-Propagation Through Time</h2>
+<div id="training-back-propagation-through-time" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Training: Back-Propagation Through Time<a href="recurrent-neural-networks.html#training-back-propagation-through-time" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To train a RNN, we can unroll the network to expand it into a standard
 feedforward network and then apply back-propagation as per usual.</p>
 <p>This process is called <strong>Back-Propagation Through Time
@@ -523,18 +521,18 @@ Figure 8.11: RNN, unrolled.
 </p>
 </div>
 </div>
-<div id="dealing-with-long-sequences" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Dealing with Long Sequences</h2>
+<div id="dealing-with-long-sequences" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Dealing with Long Sequences<a href="recurrent-neural-networks.html#dealing-with-long-sequences" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When unrolled, recurrent networks can grow very deep. As with any deep
 network, the main problem with using gradient descent is then that the
 error gradients can vanish (or explode) exponentially
 quickly. Therefore we rarely use the Simple RNN layer architecture as
 they are very difficult to train. Instead, we usually resort to two
 alternative RNN layer architectures: LSTM and GRU.</p>
-<div id="lstm" class="section level3" number="8.4.1">
-<h3><span class="header-section-number">8.4.1</span> LSTM</h3>
+<div id="lstm" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> LSTM<a href="recurrent-neural-networks.html#lstm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>LSTM</strong> (Long Short-Term Memory) was specifically proposed in 1997 by
-Sepp Hochreiter and Jürgen Schmidhuber to deal with the exploding and
+Sepp Hochreiter and Jürgen Schmidhuber <span class="citation">(<a href="#ref-lstm" role="doc-biblioref">Hochreiter and Schmidhuber 1997</a>)</span> to deal with the exploding and
 vanishing gradient problem. LSTM blocks are a special type of network
 that is used for the recurrent hidden layer. LSTM block can be used as
 a direct replacement for the dense layer structure of simple RNNs.</p>
@@ -560,9 +558,9 @@ Figure 8.12: Architecture of LSTM Cell. (Figure by François Deloche).
 </p>
 </div>
 </div>
-<div id="gru" class="section level3" number="8.4.2">
-<h3><span class="header-section-number">8.4.2</span> GRU</h3>
-<p><strong>GRU</strong> (Gated Recurrent Units) were introduced in 2014 as a simpler
+<div id="gru" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> GRU<a href="recurrent-neural-networks.html#gru" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>GRU</strong> (Gated Recurrent Units) were introduced in 2014 <span class="citation">(<a href="#ref-gru" role="doc-biblioref">Chung et al. 2014</a>)</span> as a simpler
 alternative to the LSTM block. Their performance is reported to be
 similar to the one of LSTM (maybe slightly better on smaller problems
 and slightly worse on bigger problems). As they have fewer parameters
@@ -580,8 +578,8 @@ Figure 8.13: Architecture of Gated Recurrent Cell. (Figure by François Deloche)
 </p>
 </div>
 </div>
-<div id="gated-units" class="section level3" number="8.4.3">
-<h3><span class="header-section-number">8.4.3</span> Gated Units</h3>
+<div id="gated-units" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> Gated Units<a href="recurrent-neural-networks.html#gated-units" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Without going too much into the inner workings of GRU and LSTM, we note that
 they make use of gated units, which offer an alternative way for combining
 units. So far, the only way we had to combine two units <span class="math inline">\(u_1\)</span> and <span class="math inline">\(u_2\)</span> was
@@ -620,13 +618,14 @@ u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
 \]</span></p>
 </div>
 </div>
-<div id="application-image-caption-generator" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Application: Image Caption Generator</h2>
+<div id="application-image-caption-generator" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Application: Image Caption Generator<a href="recurrent-neural-networks.html#application-image-caption-generator" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A nice application showing how to merge picture and text processing is
 <strong>Image Caption Generator</strong>, which aims at automatically generating
 text that describes a picture.</p>
 <blockquote>
-<p>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A neural image caption generator’’ [<a href="https://arxiv.org/abs/1411.4555" class="uri">https://arxiv.org/abs/1411.4555</a>]</p>
+<p>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A
+neural image caption generator’’ [<a href="https://arxiv.org/abs/1411.4555" class="uri">https://arxiv.org/abs/1411.4555</a>] <span class="citation">(<a href="#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span></p>
 </blockquote>
 <blockquote>
 <p>Google Research Blog at <a href="https://goo.gl/U88bDQ" class="uri">https://goo.gl/U88bDQ</a></p>
@@ -643,42 +642,54 @@ last Fully Connected layer.</p>
 generate the <code>&lt;end&gt;</code> word token</p>
 <p><img src="figures/rnn-17.svg" width="80%" /></p>
 </div>
-<div id="take-away-6" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Take Away</h2>
-<p>Recurrent Neural Networks offer a way to deal with sequences, such as
-in time series, video sequences, or text processing. RNNs are
-particularly difficult to train as unfolding them into Feed Forward
-Networks lead to very deep networks, which are potentially prone to
-vanishing or exploding gradient issues.</p>
-<p>Gated recurrent networks (LSTM, GRU) have made training much easier
-and have become the method of choice for most of applications based on
-Language models (eg. image captioning, text understanding, machine
-translation, text generation, etc.).</p>
+<div id="take-away-6" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Take Away<a href="recurrent-neural-networks.html#take-away-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recurrent Neural Networks offer a way to deal with sequences, such as in time
+series, video sequences, or text processing. RNNs are particularly difficult to
+train as unfolding them into Feed Forward Networks lead to very deep networks,
+which are potentially prone to vanishing or exploding gradient issues.</p>
+<p>Gated recurrent networks (LSTM, GRU) have made training much easier and have
+become the method of choice for most of applications based on Language models
+(eg. image captioning, text understanding, machine translation, text generation,
+etc.).</p>
 </div>
-<div id="limitations-of-rnns-and-the-rise-of-transformers" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Limitations of RNNs and the Rise of Transformers</h2>
+<div id="limitations-of-rnns-and-the-rise-of-transformers" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Limitations of RNNs and the Rise of Transformers<a href="recurrent-neural-networks.html#limitations-of-rnns-and-the-rise-of-transformers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One issue with the idea of recurrence is that it prevents parallel
-computing. Unrolling the RNN can lead to potentially very deep
-networks of arbitrary length. And, as the weights are shared across
-the whole sequence, there is no convenient way for parallelisation.</p>
-<p>The main critical issue with RNNs/LSTMs is, however, that they are are
-not suitable for transfer learning. It is very difficult to build on
-pre-trained models, as we are doing with CNNs. Any new application
-with RNNs will require vast quantity of data and will be tricky
-training.</p>
-<p>The 2017 landmark paper on the <strong>Attention Mechanism</strong> has since then
-ended the architectural predominance of RNNs. Pretty much any language
-model now relies on the <strong>Transformer</strong> architectures, which are built
-on top of this Attention mechanism. The defining advantage of
-Attention over RNNs is that it can be efficiently used for transfer
-learning. This means that, for any application that requires a
-language model, can now build on top of powerful pre-trained
-Transformers models, such as BERT, and thus avoid the lengthy complex
-training of RNNs.</p>
+computing. Unrolling the RNN can lead to potentially very deep networks of
+arbitrary length. And, as the weights are shared across the whole sequence,
+there is no convenient way for parallelisation.</p>
+<p>The main critical issue with RNNs/LSTMs is, however, that they are are not
+suitable for transfer learning. It is very difficult to build on pre-trained
+models, as we are doing with CNNs. Any new application with RNNs will require
+vast quantity of data and will be tricky training.</p>
+<p>The 2017 landmark paper on the <strong>Attention Mechanism</strong> <span class="citation">(<a href="#ref-attention" role="doc-biblioref">Vaswani et al. 2017</a>)</span> has since
+then ended the architectural predominance of RNNs. Pretty much any language
+model now relies on the <strong>Transformer</strong> architectures, which are built on top of
+this Attention mechanism. The defining advantage of Attention over RNNs is that
+it can be efficiently used for transfer learning. This means that, for any
+application that requires a language model, can now build on top of powerful
+pre-trained Transformers models, such as BERT, and thus avoid the lengthy
+complex training of RNNs.</p>
 <blockquote>
 <p>Attention Is All You Need [<a href="https://arxiv.org/abs/1706.03762" class="uri">https://arxiv.org/abs/1706.03762</a>]</p>
 </blockquote>
 
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gru" class="csl-entry">
+Chung, Junyoung, Caglar Gulcehre, Kyunghyun Cho, and Yoshua Bengio. 2014. <span>“Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling.”</span> In <em>NIPS 2014 Workshop on Deep Learning, December 2014</em>.
+</div>
+<div id="ref-lstm" class="csl-entry">
+Hochreiter, Sepp, and Jürgen Schmidhuber. 1997. <span>“Long Short-Term Memory.”</span> <em>Neural Computation</em> 9 (8): 1735–80.
+</div>
+<div id="ref-attention" class="csl-entry">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> In <em>Advances in Neural Information Processing Systems</em>, edited by I. Guyon, U. Von Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett. Vol. 30. Curran Associates, Inc. <a href="https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf</a>.
+</div>
+<div id="ref-showandtell" class="csl-entry">
+Vinyals, Oriol, Alexander Toshev, Samy Bengio, and Dumitru Erhan. 2015. <span>“Show and Tell: A Neural Image Caption Generator.”</span> In <em>CVPR</em>, 3156–64. IEEE Computer Society. <a href="http://dblp.uni-trier.de/db/conf/cvpr/cvpr2015.html#VinyalsTBE15">http://dblp.uni-trier.de/db/conf/cvpr/cvpr2015.html#VinyalsTBE15</a>.
 </div>
 </div>
             </section>
@@ -747,7 +758,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

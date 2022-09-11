@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Feedforward Neural Networks | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Feedforward Neural Networks | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-10" />
+<meta name="date" content="2022-09-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="evaluating-classifier-performance.html"/>
 <link rel="next" href="convolutional-neural-networks.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,15 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -197,7 +195,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
 <li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
 <li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
 <ul>
 <li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
 <li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
@@ -362,17 +360,17 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="feedforward-neural-networks" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Feedforward Neural Networks</h1>
+<div id="feedforward-neural-networks" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Feedforward Neural Networks<a href="feedforward-neural-networks.html#feedforward-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Remember Logistic Regression? The output of the model was</p>
 <p><span class="math display">\[
     h_{\bf w}({\bf x}) = \frac{1}{1 + e^{-{\bf x}^{\top}{\bf w}}}
 \]</span></p>
 <p>This was your first (very small) neural network.</p>
-<div id="what-is-a-feed-forward-neural-network" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> What is a (Feed Forward) Neural Network?</h2>
-<div id="a-graph-of-differentiable-operations" class="section level3" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> A Graph of Differentiable Operations</h3>
+<div id="what-is-a-feed-forward-neural-network" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> What is a (Feed Forward) Neural Network?<a href="feedforward-neural-networks.html#what-is-a-feed-forward-neural-network" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-graph-of-differentiable-operations" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> A Graph of Differentiable Operations<a href="feedforward-neural-networks.html#a-graph-of-differentiable-operations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Why is our logistic regression model a neural network? If you
 Consider that we have two features <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, we can represent the
 prediction function as a network of operations as shown in Fig.
@@ -402,8 +400,8 @@ we will only consider feed forward neural networks, and as it turns
 out, these are the ones you will read about in 99% of the research
 papers.</p>
 </div>
-<div id="units-and-artificial-neurons" class="section level3" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span> Units and Artificial Neurons</h3>
+<div id="units-and-artificial-neurons" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Units and Artificial Neurons<a href="feedforward-neural-networks.html#units-and-artificial-neurons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Where does the <em>Neural</em> part come from? Because the units are chosen to be
 neuron-like units. A <strong>neuron unit</strong> it a particular type of unit (or function)
 that first takes a linear combination of its inputs and then applies a
@@ -449,8 +447,8 @@ to specify any type of function, as long as you also provide an
 implementation of its gradient (see later).</p>
 </div>
 </div>
-<div id="biological-neurons" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Biological Neurons</h2>
+<div id="biological-neurons" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Biological Neurons<a href="feedforward-neural-networks.html#biological-neurons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Artificial neurons were originally aiming at modelling biological
 neurons. We know for instance that the input signals from the
 dendrites are indeed combined together to go through something
@@ -531,8 +529,8 @@ module, it is best to think of DNNs as what they are: a graph of
 differentiable operations that allow you to define a whole range of
 functions.</p>
 </div>
-<div id="deep-neural-networks" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Deep Neural Networks</h2>
+<div id="deep-neural-networks" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Deep Neural Networks<a href="feedforward-neural-networks.html#deep-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that we have defined what a unit is, we can start combining
 multiple units to form a network of units. Perhaps the earliest form
 of <strong>architecture</strong> is the <strong>multi-layer perceptron</strong> arrangement
@@ -568,8 +566,8 @@ the discovery of the backpropagation algorithm (see later), we did not
 know how to train for two or more hidden layers. Hence the
 significance of dealing with more than one hidden layer.</p>
 </div>
-<div id="universal-approximation-theorem" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Universal Approximation Theorem</h2>
+<div id="universal-approximation-theorem" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Universal Approximation Theorem<a href="feedforward-neural-networks.html#universal-approximation-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <strong>Universal approximation theorem</strong> (Hornik, 1991) says that</p>
 <blockquote>
 <p>a single hidden layer neural network with a linear output unit can
@@ -590,8 +588,8 @@ units should be connected to each other.</p>
 modelled as a neural net. The challenge is to architect networks that
 can be efficiently trained and generalise well.</p>
 </div>
-<div id="example-1" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Example</h2>
+<div id="example-1" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Example<a href="feedforward-neural-networks.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let us look at an example using the <a href="https://playground.tensorflow.org/" class="uri">https://playground.tensorflow.org/</a>
 Neural Network simulator from Tensorflow. In
 Fig.<a href="feedforward-neural-networks.html#fig:playground-1">5.12</a> we have a network with 3 hidden layers of
@@ -635,8 +633,8 @@ to build arbitrary complex features.</p>
 are. Thus, even if deeper networks are harder to train, they tend to
 be more powerful and generalise better.</p>
 </div>
-<div id="training" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Training</h2>
+<div id="training" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Training<a href="feedforward-neural-networks.html#training" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>At its core, a neural net evaluates a function <span class="math inline">\(f\)</span> of the input <span class="math inline">\({\bf x} = (x_1, \cdots, x_p)\)</span> and weights
 <span class="math inline">\({\bf w} = (w_1, \cdots, w_q)\)</span> and returns output values <span class="math inline">\({\bf y} = (y_1, \cdots, y_r)\)</span>:</p>
 <p><span class="math display">\[
@@ -692,8 +690,8 @@ set of parameters <span class="math inline">\({\bf w}\)</span>.</p>
 <p>The Back Propagation algorithm will help us compute this gradient
 <span class="math inline">\(\frac{\partial e}{\partial {\bf w}}({\bf w})\)</span>.</p>
 </div>
-<div id="back-propagation" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> Back-Propagation</h2>
+<div id="back-propagation" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Back-Propagation<a href="feedforward-neural-networks.html#back-propagation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Backpropagation (backprop) was pioneered by David E. Rumelhart,
 Geoffrey E. Hinton, and Ronald J. Williams in 1986.</p>
 <blockquote>
@@ -701,8 +699,8 @@ Geoffrey E. Hinton, and Ronald J. Williams in 1986.</p>
 J. Williams. “Learning representations by back-propagating errors.”
 <em>Cognitive Modeling</em> 5.3 (1988): 1.</p>
 </blockquote>
-<div id="computing-the-gradient" class="section level3" number="5.7.1">
-<h3><span class="header-section-number">5.7.1</span> Computing the Gradient</h3>
+<div id="computing-the-gradient" class="section level3 hasAnchor" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> Computing the Gradient<a href="feedforward-neural-networks.html#computing-the-gradient" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>What is the problem with computing the gradient?</p>
 <p>Say we want to compute the partial derivative for a particular weight <span class="math inline">\(w_{i}\)</span>. We
 could naively compute the gradient by numerical differentiation:
@@ -726,8 +724,8 @@ error <span class="math inline">\(e({\bf w})\)</span>.</p>
 <p>The back-propagation algorithm then uses the <strong>Chain-Rule</strong> to propagate
 the gradient information from the cost unit back to the weights units.</p>
 </div>
-<div id="the-chain-rule" class="section level3" number="5.7.2">
-<h3><span class="header-section-number">5.7.2</span> The Chain Rule</h3>
+<div id="the-chain-rule" class="section level3 hasAnchor" number="5.7.2">
+<h3><span class="header-section-number">5.7.2</span> The Chain Rule<a href="feedforward-neural-networks.html#the-chain-rule" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Recall what the chain-rule is. Suppose you have a small graph, with a variable
 dependency as follows: <span class="math inline">\(x \rightarrow y \rightarrow z\)</span>. Assuming
 <span class="math inline">\(z=f(y)\)</span> and <span class="math inline">\(y=g(x)\)</span> then we can compute the gradient <span class="math inline">\(\frac{dz}{dx}\)</span> by simply
@@ -741,18 +739,16 @@ combining the intermediate gradients <span class="math inline">\(\frac{dz}{dy}\)
 <p><span class="math display">\[\begin{equation}
 \frac{\partial z}{\partial x} = \sum_k \frac{\partial z}{\partial u_k} \frac{\partial u_k}{\partial x} 
 \end{equation}\]</span></p>
-
 <div class="example">
-<p><span id="exm:unnamed-chunk-53" class="example"><strong>Example 5.1  </strong></span>
-Assume that <span class="math inline">\(u(x, y) = x^2 + y^2\)</span>, <span class="math inline">\(y(r, t) = r \sin(t)\)</span> and <span class="math inline">\(x(r,t) = r \cos(t)\)</span>,</p>
+<p><span id="exm:unnamed-chunk-53" class="example"><strong>Example 5.1  </strong></span>Assume that <span class="math inline">\(u(x, y) = x^2 + y^2\)</span>, <span class="math inline">\(y(r, t) = r \sin(t)\)</span> and <span class="math inline">\(x(r,t) = r \cos(t)\)</span>,</p>
 <p><span class="math display">\[\begin{split}
 {\frac  {\partial u}{\partial r}} &amp;={\frac  {\partial u}{\partial x}}{\frac  {\partial x}{\partial r}}+{\frac  {\partial u}{\partial y}}{\frac  {\partial y}{\partial r}} \\ &amp;=(2x)(\cos(t))+(2y)(\sin(t)) \\ &amp;=2r(\sin ^{2}(t)+\cos^2(t))\\&amp;= 2r
 \end{split}
 \]</span></p>
 </div>
 </div>
-<div id="back-propagating-with-the-chain-rule" class="section level3" number="5.7.3">
-<h3><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule</h3>
+<div id="back-propagating-with-the-chain-rule" class="section level3 hasAnchor" number="5.7.3">
+<h3><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule<a href="feedforward-neural-networks.html#back-propagating-with-the-chain-rule" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s come back to our neural net example and let’s see how the
 chain-rule can be used to back-propagate the differentiation.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-54"></span>
@@ -872,8 +868,8 @@ in a graph.</p>
 network architectures it is <span class="math inline">\(\mathcal{O}(\mathrm{number\_of\_units})\)</span>.</p>
 <p>Back-Propagation is what makes training deep neural nets possible.</p>
 </div>
-<div id="vanishing-gradients" class="section level3" number="5.7.4">
-<h3><span class="header-section-number">5.7.4</span> Vanishing Gradients</h3>
+<div id="vanishing-gradients" class="section level3 hasAnchor" number="5.7.4">
+<h3><span class="header-section-number">5.7.4</span> Vanishing Gradients<a href="feedforward-neural-networks.html#vanishing-gradients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One major challenge when training deeper networks is the problem of
 <strong>vanishing gradients</strong>.</p>
 <blockquote>
@@ -924,8 +920,8 @@ half of the range has a non-null gradient.</p>
 and LSTM).</p>
 </div>
 </div>
-<div id="optimisations-for-training-deep-neural-networks" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Optimisations for Training Deep Neural Networks</h2>
+<div id="optimisations-for-training-deep-neural-networks" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Optimisations for Training Deep Neural Networks<a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We have seen how weights can be trained through a gradient descent algorithm and
 how the gradient at each step can be computed via the Back-Propagation
 algorithm.</p>
@@ -937,8 +933,8 @@ neural networks applications. There are no secret sauce to find the right
 combination of hyper parameters and many trials and errors may be required.</p>
 <p>A few optimisation strategies and regularisation techniques are however
 available to help with the convergence.</p>
-<div id="mini-batch-and-stochastic-gradient-descent" class="section level3" number="5.8.1">
-<h3><span class="header-section-number">5.8.1</span> Mini-Batch and Stochastic Gradient Descent</h3>
+<div id="mini-batch-and-stochastic-gradient-descent" class="section level3 hasAnchor" number="5.8.1">
+<h3><span class="header-section-number">5.8.1</span> Mini-Batch and Stochastic Gradient Descent<a href="feedforward-neural-networks.html#mini-batch-and-stochastic-gradient-descent" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Recall the gradient descent step:</p>
 <p><span class="math display">\[
 {\bf w}^{(m+1)} = {\bf w}^{(m)} - \eta \frac{\partial E}{\partial {\bf w}}({\bf w}^{(m)})
@@ -986,8 +982,8 @@ steps.</p>
 <p>Note that after each epoch the samples are usually shuffled so as to
 avoid cyclical repetitions.</p>
 </div>
-<div id="more-adavanced-gradient-descent-optimizers" class="section level3" number="5.8.2">
-<h3><span class="header-section-number">5.8.2</span> More Adavanced Gradient Descent Optimizers</h3>
+<div id="more-adavanced-gradient-descent-optimizers" class="section level3 hasAnchor" number="5.8.2">
+<h3><span class="header-section-number">5.8.2</span> More Adavanced Gradient Descent Optimizers<a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sometimes the vanilla gradient descent is not the most efficient
 way. In this example the loss function forms a deep and long
 valley. In this scenario the gradient descent is not very efficient at
@@ -1021,10 +1017,10 @@ change depending on your problem. So it’s okay to try a few out.</p>
 </blockquote>
 </div>
 </div>
-<div id="constraints-and-regularisers" class="section level2" number="5.9">
-<h2><span class="header-section-number">5.9</span> Constraints and Regularisers</h2>
-<div id="l2-regularisation" class="section level3" number="5.9.1">
-<h3><span class="header-section-number">5.9.1</span> L2 regularisation</h3>
+<div id="constraints-and-regularisers" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Constraints and Regularisers<a href="feedforward-neural-networks.html#constraints-and-regularisers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="l2-regularisation" class="section level3 hasAnchor" number="5.9.1">
+<h3><span class="header-section-number">5.9.1</span> L2 regularisation<a href="feedforward-neural-networks.html#l2-regularisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>L2 is the most common form of regularisation. It is the Tikhonov
 regularisation of Least Squares. To add a L2 regularisation on a
 particular weight <span class="math inline">\(w_i\)</span>, we simply add a penalty to the loss function:</p>
@@ -1032,8 +1028,8 @@ particular weight <span class="math inline">\(w_i\)</span>, we simply add a pena
   E&#39;({\bf w}) = E({\bf w}) + \lambda w_i^2
 \]</span></p>
 </div>
-<div id="l1-regularisation" class="section level3" number="5.9.2">
-<h3><span class="header-section-number">5.9.2</span> L1 regularisation</h3>
+<div id="l1-regularisation" class="section level3 hasAnchor" number="5.9.2">
+<h3><span class="header-section-number">5.9.2</span> L1 regularisation<a href="feedforward-neural-networks.html#l1-regularisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>L1 is another common form of regularisation:</p>
 <p><span class="math display">\[
   E&#39;({\bf w}) = E({\bf w}) + \lambda |w_i|
@@ -1045,8 +1041,8 @@ particular weight <span class="math inline">\(w_i\)</span>, we simply add a pena
 </blockquote>
 </div>
 </div>
-<div id="dropout-noise" class="section level2" number="5.10">
-<h2><span class="header-section-number">5.10</span> Dropout &amp; Noise</h2>
+<div id="dropout-noise" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> Dropout &amp; Noise<a href="feedforward-neural-networks.html#dropout-noise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We know that one way of fighting overfitting is to use more data.</p>
 <p>One cheap way to obtain more data is to take the original observations and add
 a bit of random noise to the features. This can be done synthetically by
@@ -1064,8 +1060,8 @@ randomly selected units have their output set to zero).</p>
 <p><a href="https://keras.io/api/layers/regularization_layers/dropout/" class="uri">https://keras.io/api/layers/regularization_layers/dropout/</a></p>
 </blockquote>
 </div>
-<div id="monitoring-and-training-diagnostics" class="section level2" number="5.11">
-<h2><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
+<div id="monitoring-and-training-diagnostics" class="section level2 hasAnchor" number="5.11">
+<h2><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics<a href="feedforward-neural-networks.html#monitoring-and-training-diagnostics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Training can take a long time. From an hour to a few days. You need to carefully
 monitor the loss function during training. The more information you track, the
 easier it is to diagnostic your training.</p>
@@ -1091,8 +1087,8 @@ Figure 5.29: Detecting Overfitting in Training.
 </p>
 </div>
 </div>
-<div id="take-away-4" class="section level2" number="5.12">
-<h2><span class="header-section-number">5.12</span> Take Away</h2>
+<div id="take-away-4" class="section level2 hasAnchor" number="5.12">
+<h2><span class="header-section-number">5.12</span> Take Away<a href="feedforward-neural-networks.html#take-away-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can see Deep Neural Networks as a framework to model any function as a
 network of basic units (the neurons).</p>
 <p>The universal approximation theorem guarantees us that any function can indeed
@@ -1108,8 +1104,8 @@ minimum. We must thus carefully monitor the optimisation. A few optimisation
 strategies and regularisation techniques are available to help with the
 convergence. Training networks requires a lot of trial and error.</p>
 </div>
-<div id="useful-resources" class="section level2" number="5.13">
-<h2><span class="header-section-number">5.13</span> Useful Resources</h2>
+<div id="useful-resources" class="section level2 hasAnchor" number="5.13">
+<h2><span class="header-section-number">5.13</span> Useful Resources<a href="feedforward-neural-networks.html#useful-resources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>[1] Deep Learning (MIT press) from Ian Goodfellow et al. - chapters 6, 7 &amp; 8, <a href="https://www.deeplearningbook.org" class="uri">https://www.deeplearningbook.org</a></p>
 </blockquote>
@@ -1200,7 +1196,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

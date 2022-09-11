@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A Notes | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A Notes | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -24,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-10" />
+<meta name="date" content="2022-09-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="autoencoders.html"/>
 <link rel="next" href="references.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,15 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -197,7 +195,7 @@ div.csl-indent {
 <li class="chapter" data-level="1.5" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#overfitting"><i class="fa fa-check"></i><b>1.5</b> Overfitting</a></li>
 <li class="chapter" data-level="1.6" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#regularisation"><i class="fa fa-check"></i><b>1.6</b> Regularisation</a></li>
 <li class="chapter" data-level="1.7" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#maximum-likelihood"><i class="fa fa-check"></i><b>1.7</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-feature-transforms-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
+<li class="chapter" data-level="1.8" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#loss-noise"><i class="fa fa-check"></i><b>1.8</b> Loss, Feature Transforms, Noise</a>
 <ul>
 <li class="chapter" data-level="1.8.1" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean"><i class="fa fa-check"></i><b>1.8.1</b> Example 1: Regression Towards the Mean</a></li>
 <li class="chapter" data-level="1.8.2" data-path="linear-regressionleast-squares.html"><a href="linear-regressionleast-squares.html#example-2"><i class="fa fa-check"></i><b>1.8.2</b> Example 2</a></li>
@@ -362,13 +360,13 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="notes" class="section level1" number="10">
-<h1><span class="header-section-number">A</span> Notes</h1>
+<div id="notes" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">A</span> Notes<a href="notes.html#notes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Here is a collection of additional notes to complement the handouts. This
 material is non-examinable… but the it is not rare for these notes to be
 regularly covered at technical interviews.</p>
-<div id="universal-approximation-theorem-1" class="section level2" number="10.1">
-<h2><span class="header-section-number">A.1</span> Universal Approximation Theorem</h2>
+<div id="universal-approximation-theorem-1" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">A.1</span> Universal Approximation Theorem<a href="notes.html#universal-approximation-theorem-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Universal approximation theorem (Hornik, 1991) says that ‘’a single hidden
 layer neural network with a linear output unit can approximate any continuous
 function arbitrarily well, given enough hidden units’’. The result applies for
@@ -424,8 +422,8 @@ Figure A.3: Neural Network for the discretisation of the function <span class="m
 </p>
 </div>
 </div>
-<div id="why-does-l_1-regularisation-induce-sparsity" class="section level2" number="10.2">
-<h2><span class="header-section-number">A.2</span> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?</h2>
+<div id="why-does-l_1-regularisation-induce-sparsity" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">A.2</span> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?<a href="notes.html#why-does-l_1-regularisation-induce-sparsity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>Sparsity</em> is when some of the weights obtained by minimisation of the
 loss function turn out to be zero. Consider a least squares example where our
 model looks something like this:</p>
@@ -469,8 +467,8 @@ this minimum towards zero.</p>
 Figure A.4: Example of a typical loss function <span class="math inline">\(E(w)\)</span>, with minimum at <span class="math inline">\({\hat w}=0.295\)</span>.
 </p>
 </div>
-<div id="l_2-regularisation" class="section level4 unnumbered">
-<h4><span class="math inline">\(L_2\)</span> Regularisation</h4>
+<div id="l_2-regularisation" class="section level4 unnumbered hasAnchor">
+<h4><span class="math inline">\(L_2\)</span> Regularisation<a href="notes.html#l_2-regularisation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let us first look at <span class="math inline">\(L_2\)</span> and see how the regularisation impacts the loss
 function <span class="math inline">\(E(w)\)</span>. The regularised loss <span class="math inline">\(E_2(w)\)</span> can be written as follows:
 <span class="math display">\[\begin{equation}
@@ -527,8 +525,8 @@ optimal weight <span class="math inline">\(\hat{w}\)</span> was already 0 to sta
 <p>With the <span class="math inline">\(L_2\)</span> regularisation, we are almost guaranteed that the optimal
 weights will never be zero. Thus <span class="math inline">\(L_2\)</span> does not induce sparsity.</p>
 </div>
-<div id="l_1-regularisation." class="section level4 unnumbered">
-<h4><span class="math inline">\(L_1\)</span> Regularisation.</h4>
+<div id="l_1-regularisation." class="section level4 unnumbered hasAnchor">
+<h4><span class="math inline">\(L_1\)</span> Regularisation.<a href="notes.html#l_1-regularisation." class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Now, let’s see how <span class="math inline">\(L_1\)</span> regularisation does induce sparsity. The regularised
 loss for <span class="math inline">\(L_1\)</span> is:</p>
 <p><span class="math display">\[\begin{equation}
@@ -575,8 +573,8 @@ this local minimum can also be a global minimum. The typical behaviour is that
 when you gradually increase <span class="math inline">\(\lambda_1\)</span>, the optimal weight will eventually snap
 to zero.</p>
 </div>
-<div id="take-away-7" class="section level4 unnumbered">
-<h4>Take Away</h4>
+<div id="take-away-7" class="section level4 unnumbered hasAnchor">
+<h4>Take Away<a href="notes.html#take-away-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>A solution to sparsity is to add a regulariser, so as to form a local minimum at
 zero. The main difference between <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> basically boils down to this:
 <span class="math inline">\(L_2\)</span> is too smooth and has no effect, whereas the gradient discontinuity of
@@ -588,8 +586,8 @@ the convention notation for these norms). If <span class="math inline">\(p&gt;1\
 if <span class="math inline">\(p\leq 1\)</span>, there is sparsity.</p>
 </div>
 </div>
-<div id="note:kernel-trick" class="section level2" number="10.3">
-<h2><span class="header-section-number">A.3</span> Kernel Trick</h2>
+<div id="note:kernel-trick" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">A.3</span> Kernel Trick<a href="notes.html#note:kernel-trick" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this note we look back at the kernel trick.</p>
 <p>We start by observing that many linear machine learning methods are based on
 minimising something like:</p>
@@ -724,7 +722,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
