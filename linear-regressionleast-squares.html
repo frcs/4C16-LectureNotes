@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Linear Regression/Least Squares | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Linear Regression/Least Squares | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
+  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -23,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,6 +33,7 @@
   
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="logistic-regression.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,15 +51,15 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -209,7 +211,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +235,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -360,8 +374,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-regressionleast-squares" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Linear Regression/Least Squares<a href="linear-regressionleast-squares.html#linear-regressionleast-squares" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="linear-regressionleast-squares" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Linear Regression/Least Squares</h1>
 <p>We start this module on Machine Learning (ML) with a brief revisit of
 Linear Regression/Least Squares (LS). You are already probably
 familiar with Least Squares, thus the aim is not to give you a primer
@@ -382,8 +396,8 @@ have used least squares since 1795.</p>
 Figure 1.1: Legendre (1805), Nouvelles méthodes pour la détermination des orbites des comètes.
 </p>
 </div>
-<div id="model-and-notations" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Model and Notations<a href="linear-regressionleast-squares.html#model-and-notations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="model-and-notations" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Model and Notations</h2>
 <p>Let us start with a simple example. We have collected some data
 as shown in the figure below.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-14"></span>
@@ -449,8 +463,8 @@ linear regression. Other error metrics are possible (eg. mean
 absolute difference) but the they lead to very different
 mathematics. In ML, we call this function the <strong>loss</strong> function.</p>
 </div>
-<div id="optimisation" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Optimisation<a href="linear-regressionleast-squares.html#optimisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="optimisation" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Optimisation</h2>
 <p>To find the optimal values for <span class="math inline">\(w_0, w_1, \cdots, w_p\)</span> that
 minimise the mean squared error function <span class="math inline">\(E(w_0, w_1, \cdots, w_p)\)</span>, we note that, at the minimum of <span class="math inline">\(E\)</span>, <span class="math inline">\(\frac{\partial E}{\partial w_0}=\cdots=\frac{\partial E}{\partial w_p}=0\)</span>.</p>
 <p><span class="math display">\[
@@ -540,12 +554,14 @@ independent of <span class="math inline">\(\mathbf {w}\)</span>.</p>
     = ({\mathbf {a}}{\mathbf {b}}^{\top }+{\mathbf {b}}{\mathbf {a}}^{\top
     }){\mathbf {w}} &amp;&amp; \\
   \end{alignat*}\]</span></p>
+
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-16" class="exercise"><strong>Exercise 1.1  </strong></span>compute the gradient <span class="math inline">\(\frac{\partial E({\bf w})}{\partial {\bf w}}\)</span> for</p>
+<p><span id="exr:unnamed-chunk-16" class="exercise"><strong>Exercise 1.1  </strong></span>
+compute the gradient <span class="math inline">\(\frac{\partial E({\bf w})}{\partial {\bf w}}\)</span> for</p>
 <p><span class="math display">\[
   E({\bf w}) = ({\bf w}-{\bf B}{\bf w})^{\top} {\bf A} ({\bf w}-{\bf a})
   \]</span></p>
-<p>We have no assumptions about matrices <span class="math inline">\({\bf A}\)</span> and <span class="math inline">\({\bf B}\)</span>.</p>
+We have no assumptions about matrices <span class="math inline">\({\bf A}\)</span> and <span class="math inline">\({\bf B}\)</span>.
 </div>
 <p>Let’s come back to our problem:
 <span class="math display">\[\begin{eqnarray*}
@@ -572,12 +588,12 @@ which can be simplified as into the following <strong>normal equation</strong>::
      \]</span></p>
 <p>which is the same as our linear system.</p>
 </div>
-<div id="least-squares-in-practice" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Least Squares in Practice<a href="linear-regressionleast-squares.html#least-squares-in-practice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="least-squares-in-practice" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Least Squares in Practice</h2>
 <p>Now that we know how to solve for Least Squares, let see how this can
 be used in practice.</p>
-<div id="a-simple-affine-example" class="section level3 hasAnchor" number="1.3.1">
-<h3><span class="header-section-number">1.3.1</span> A Simple Affine Example<a href="linear-regressionleast-squares.html#a-simple-affine-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="a-simple-affine-example" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> A Simple Affine Example</h3>
 <p>Let’s first come back to our original example and derive the normal
 equations using matrix notations.</p>
 <p>The model is affine <span class="math inline">\(y = w_0 + w_1 x\)</span>.</p>
@@ -616,8 +632,8 @@ equations using matrix notations.</p>
 \mathrm{weight} = \mathrm{height} \times 0.972 − 99.5
 \]</span></p>
 </div>
-<div id="transforming-the-input-features" class="section level3 hasAnchor" number="1.3.2">
-<h3><span class="header-section-number">1.3.2</span> Transforming the Input Features<a href="linear-regressionleast-squares.html#transforming-the-input-features" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="transforming-the-input-features" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Transforming the Input Features</h3>
 <p>Although the model for LS must be linear, it doesn’t mean that we can only fit a linear or
 affine curve. Indeed a model will be linear if you can write the model as follows:
 <span class="math display">\[
@@ -649,8 +665,8 @@ with the output of each observation defined as <span class="math inline">\(y_i =
 techniques of the past 30 years. However, as we will see later in section
 <a href="linear-regressionleast-squares.html#loss-noise">1.8</a>, transforming features is not totally without consequences.</p>
 </div>
-<div id="polynomial-fitting" class="section level3 hasAnchor" number="1.3.3">
-<h3><span class="header-section-number">1.3.3</span> Polynomial Fitting<a href="linear-regressionleast-squares.html#polynomial-fitting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="polynomial-fitting" class="section level3" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Polynomial Fitting</h3>
 <p>Let us examine in more details the use of feature transforms by
 looking at the problem of polynomial fitting, which is a particularly
 interesting example for ML. Below is a small dataset <span class="math inline">\((x_i,y_i)_{i \in \{1..n\}}\)</span>, where a single scalar measure is collected.</p>
@@ -689,8 +705,8 @@ interesting example for ML. Below is a small dataset <span class="math inline">\
 <p><img src="figures/polyfit2.svg" width="60%" /></p>
 </div>
 </div>
-<div id="underfitting" class="section level2 hasAnchor" number="1.4">
-<h2><span class="header-section-number">1.4</span> Underfitting<a href="linear-regressionleast-squares.html#underfitting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="underfitting" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Underfitting</h2>
 <p>Let’s see what happens when you try to fit the data with a lower model
 order: <span class="math inline">\(y = w_0 + w_1 x\)</span></p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
@@ -708,8 +724,8 @@ enough.</p>
 increase the model complexity (eg. increase the degree of the
 polynomial model).</p>
 </div>
-<div id="overfitting" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Overfitting<a href="linear-regressionleast-squares.html#overfitting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overfitting" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Overfitting</h2>
 <p>Let’s now try a higher model order: <span class="math inline">\(y = w_0 + w_1 x + \cdots + w_9 x^9\)</span></p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
 <img src="figures/polyfit9.svg" alt="MSE: 7.59e-06" width="60%" />
@@ -761,8 +777,8 @@ to perform better on exercises that you’ve already worked on many times than o
 exercises that you’ve never seen before. In fact, you should probably aim for
 some level of overfitting as underfitting is probably worse in practice.</p>
 </div>
-<div id="regularisation" class="section level2 hasAnchor" number="1.6">
-<h2><span class="header-section-number">1.6</span> Regularisation<a href="linear-regressionleast-squares.html#regularisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="regularisation" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Regularisation</h2>
 <p>But what if you can’t get enough data? Well, that sounds like a poor excuse, so,
 go back and get more data. But what if I <em>really</em>, <em>really</em> can’t? Then, one
 last catch-all solution is to use <strong>regularisation</strong>.</p>
@@ -807,8 +823,8 @@ invertible is to have enough observations to properly constrain the
 problem.</p>
 <p>So, go back and get more data!</p>
 </div>
-<div id="maximum-likelihood" class="section level2 hasAnchor" number="1.7">
-<h2><span class="header-section-number">1.7</span> Maximum Likelihood<a href="linear-regressionleast-squares.html#maximum-likelihood" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="maximum-likelihood" class="section level2" number="1.7">
+<h2><span class="header-section-number">1.7</span> Maximum Likelihood</h2>
 <p>Very early on, Gauss connected Least squares with the principles of probability
 and to the Gaussian distribution.</p>
 <p>Recall that the linear model is:
@@ -874,12 +890,12 @@ not that that many different types of loss functions to choose from
 and the choice of loss function is usually driven by the overall
 performance on the test set and the ease of optimisation.</p>
 </div>
-<div id="loss-noise" class="section level2 hasAnchor" number="1.8">
-<h2><span class="header-section-number">1.8</span> Loss, Feature Transforms, Noise<a href="linear-regressionleast-squares.html#loss-noise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="loss-noise" class="section level2" number="1.8">
+<h2><span class="header-section-number">1.8</span> Loss, Feature Transforms, Noise</h2>
 <p>Here are a few examples to illustrate the relationship between loss,
 model and noise.</p>
-<div id="example-1-regression-towards-the-mean" class="section level3 hasAnchor" number="1.8.1">
-<h3><span class="header-section-number">1.8.1</span> Example 1: Regression Towards the Mean<a href="linear-regressionleast-squares.html#example-1-regression-towards-the-mean" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="example-1-regression-towards-the-mean" class="section level3" number="1.8.1">
+<h3><span class="header-section-number">1.8.1</span> Example 1: Regression Towards the Mean</h3>
 <p>In this first example, we consider the very reasonable case where the
 observations are noisy. The model is as follows:</p>
 <p><span class="math display">\[ y = (x + \nu) w + \epsilon \]</span></p>
@@ -916,8 +932,8 @@ temperatures at different times of the day. In that case, there is no
 uncertainty on <span class="math inline">\(x\)</span> and it is safe to apply LS and any feature
 transform can be applied.</p>
 </div>
-<div id="example-2" class="section level3 hasAnchor" number="1.8.2">
-<h3><span class="header-section-number">1.8.2</span> Example 2<a href="linear-regressionleast-squares.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="example-2" class="section level3" number="1.8.2">
+<h3><span class="header-section-number">1.8.2</span> Example 2</h3>
 <p>Consider now the model given by:</p>
 <p><span class="math display">\[ y = x_1^{w_1} \sin(x_2+0.1x_3)^{w_2} \cos (x_2-0.1x_3)^{w_3} +
       \epsilon
@@ -946,8 +962,8 @@ affect your assumptions about the error predictions and you may end up
 with biases in your estimations.</p>
 </div>
 </div>
-<div id="take-away" class="section level2 hasAnchor" number="1.9">
-<h2><span class="header-section-number">1.9</span> Take Away<a href="linear-regressionleast-squares.html#take-away" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="take-away" class="section level2" number="1.9">
+<h2><span class="header-section-number">1.9</span> Take Away</h2>
 <p>We start from a collection of <span class="math inline">\(n\)</span> examples <span class="math inline">\(({\bf x}_i, y_i)_{i \in \{1..n\}}\)</span>. Each of the examples was made up of a number <span class="math inline">\(p\)</span> of
 features <span class="math inline">\({\bf x}_i=(x_1,\cdots,x_p)\)</span>.</p>
 <p>We assume that the output can be predicted by a linear model: <span class="math inline">\(y_i = {\bf x}_i^{\top}{\bf w} + \varepsilon_i\)</span>, with some error
@@ -1037,7 +1053,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

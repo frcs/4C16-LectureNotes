@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Advances in Network Architectures | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Advances in Network Architectures | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
+  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -23,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,6 +33,7 @@
   
 <link rel="prev" href="convolutional-neural-networks.html"/>
 <link rel="next" href="recurrent-neural-networks.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,15 +51,15 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -209,7 +211,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +235,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -360,17 +374,17 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="advances-in-network-architectures" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Advances in Network Architectures<a href="advances-in-network-architectures.html#advances-in-network-architectures" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="advances-in-network-architectures" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Advances in Network Architectures</h1>
 <p>In this chapter are covered some of the important advances in network
 architectures between 2012 and 2015.</p>
 <p>These advances try to address some of the major difficulties in DNN’s,
 including the problem of vanishing gradients when training deeper
 networks.</p>
-<div id="transfer-learning" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Transfer Learning<a href="advances-in-network-architectures.html#transfer-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="re-using-pre-trained-networks" class="section level3 hasAnchor" number="7.1.1">
-<h3><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks<a href="advances-in-network-architectures.html#re-using-pre-trained-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="transfer-learning" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Transfer Learning</h2>
+<div id="re-using-pre-trained-networks" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks</h3>
 <p>Say you are asked to develop a DNN application that can recognise
 pelicans on images. Training a state of the art CNN network from
 scratch can necessitate weeks of training and hundreds of thousands of
@@ -420,8 +434,8 @@ state of the art performances in most applications.</p>
 Recognition’’. 2014. <a href="https://arxiv.org/abs/1403.6382" class="uri">https://arxiv.org/abs/1403.6382</a></p>
 </blockquote>
 </div>
-<div id="domain-adaption-and-vanishing-gradients" class="section level3 hasAnchor" number="7.1.2">
-<h3><span class="header-section-number">7.1.2</span> Domain Adaption and Vanishing Gradients<a href="advances-in-network-architectures.html#domain-adaption-and-vanishing-gradients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="domain-adaption-and-vanishing-gradients" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Domain Adaption and Vanishing Gradients</h3>
 <p>Let’s see why re-using networks on new training sets can be difficult.
 Consider a single neuron and assume a <span class="math inline">\(\mathrm{tanh}\)</span> activation
 function <span class="math inline">\(f(x_i, w) = \mathrm{tanh}(x_i+w)\)</span>. The training samples
@@ -440,8 +454,8 @@ days. The new samples values <span class="math inline">\(x_i\)</span> (green cro
 zero, which means we have a problem of vanishing gradients. It will be
 difficult to update the network weights.</p>
 </div>
-<div id="normalisation-layers" class="section level3 hasAnchor" number="7.1.3">
-<h3><span class="header-section-number">7.1.3</span> Normalisation Layers<a href="advances-in-network-architectures.html#normalisation-layers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="normalisation-layers" class="section level3" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> Normalisation Layers</h3>
 <p>It is thus critical for the input data to be in the correct value
 range. To cope with possible shifts of value range between datasets we
 can use a <strong>Normalisation Layer</strong>, whose purpose it to scale the data
@@ -462,8 +476,8 @@ Figure 7.3: Domain Shift After Normalisation.
 </p>
 </div>
 </div>
-<div id="batch-normalisation" class="section level3 hasAnchor" number="7.1.4">
-<h3><span class="header-section-number">7.1.4</span> Batch Normalisation<a href="advances-in-network-architectures.html#batch-normalisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="batch-normalisation" class="section level3" number="7.1.4">
+<h3><span class="header-section-number">7.1.4</span> Batch Normalisation</h3>
 <p><strong>Batch Normalisation</strong> (BN) is a particular type of normalisation
 layer where the rescaling parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are chosen as
 follows.</p>
@@ -482,8 +496,8 @@ Deep Network Training by Reducing Internal Covariate Shift.” (2015)
 </blockquote>
 </div>
 </div>
-<div id="going-deeper" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Going Deeper<a href="advances-in-network-architectures.html#going-deeper" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="going-deeper" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Going Deeper</h2>
 <p>There has been a general trend in recent years to design deeper
 networks. Deeper network are known to produce more complex features
 and tend to generalise better.</p>
@@ -515,8 +529,8 @@ all three terms need to be null.</p>
 <p>So a simple way of mitigating vanishing gradients is to avoid a pure
 sequential architecture and introduce parallel paths in the network.</p>
 <p>This is what was proposed in GoogLeNet (2014) and ResNet (2015).</p>
-<div id="googlenet-inception" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> GoogLeNet: Inception<a href="advances-in-network-architectures.html#googlenet-inception" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="googlenet-inception" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> GoogLeNet: Inception</h3>
 <p>GoogLeNet was the winner of ILSVRC 2014 (the annual competition on
 ImageNet) with a top 5 error rate of 6.7% (human error rate is around
 5%).</p>
@@ -525,7 +539,7 @@ ImageNet) with a top 5 error rate of 6.7% (human error rate is around
 <p>Szegedy et al. “Going Deeper with Convolutions,” \
 CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-76"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-75"></span>
 <img src="figures/GoogLeNet2.png" alt="GoogLeNet" width="80%" />
 <p class="caption">
 Figure 7.4: GoogLeNet
@@ -537,7 +551,7 @@ sequence of convolution layers, we have a sequence of inception layers
 <p>An inception layer is a sub-network (hence the name inception) that
 produces 4 different types of convolutions filters, which are then
 concatenated (see this video: <a href="https://youtu.be/VxhSouuSZDY" class="uri">https://youtu.be/VxhSouuSZDY</a>).</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-76"></span>
 <img src="figures/inception-subnetwork.png" alt="GoogLeNet Inception Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.5: GoogLeNet Inception Sub-Network
@@ -546,8 +560,8 @@ Figure 7.5: GoogLeNet Inception Sub-Network
 <p>The inception network creates parallel paths that help with the
 vanishing gradient problem and allow for a deeper architecture.</p>
 </div>
-<div id="resnet-residual-network" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> ResNet: Residual Network<a href="advances-in-network-architectures.html#resnet-residual-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="resnet-residual-network" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> ResNet: Residual Network</h3>
 <p>ResNet is a 152 (yes, 152!!) layer network architecture developed at
 Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
 (better than human performance).</p>
@@ -559,7 +573,7 @@ Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
 parallel connections between deeper layers and shallower layers. The
 connection is simply done by adding the result of a previous layer to
 the result after 2 convolutions layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-78"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
 <img src="figures/resnet-subnetwork.png" alt="ResNet Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.6: ResNet Sub-Network
@@ -572,8 +586,8 @@ variants, pre-trained on ImageNet, can be found, such as the
 ResNet-18/34/50/101/151 models.</p>
 </div>
 </div>
-<div id="generative-adversarial-networks-gan" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Generative Adversarial Networks (GAN)<a href="advances-in-network-architectures.html#generative-adversarial-networks-gan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generative-adversarial-networks-gan" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Generative Adversarial Networks (GAN)</h2>
 <p>Consider the two following problems:</p>
 <p><strong>A</strong>. You are asked to design an application that can generate photo
 portraits of people that don’t exist. Your idea is to start from a
@@ -616,7 +630,7 @@ addressing both problem at the same time in a single architecture, we
 can solve for both problems.</p>
 <p>Training GAN networks is particularly slow and difficult but the
 benefits are spectacular. This is a very hot topic of research.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-78"></span>
 <img src="figures/GAN-NVIDIA.jpg" alt="Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [https://goo.gl/AgxRhp]" width="100%" />
 <p class="caption">
 Figure 7.8: Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [<a href="https://goo.gl/AgxRhp" class="uri">https://goo.gl/AgxRhp</a>]
@@ -691,7 +705,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

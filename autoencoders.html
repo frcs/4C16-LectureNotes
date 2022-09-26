@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 AutoEncoders | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 AutoEncoders | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
+  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -23,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,6 +33,7 @@
   
 <link rel="prev" href="recurrent-neural-networks.html"/>
 <link rel="next" href="notes.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,15 +51,15 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -209,7 +211,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +235,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -360,10 +374,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="autoencoders" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">Chapter 9</span> AutoEncoders<a href="autoencoders.html#autoencoders" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="definition" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Definition<a href="autoencoders.html#definition" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="autoencoders" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> AutoEncoders</h1>
+<div id="definition" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Definition</h2>
 <p>So far, we have looked at <strong>supervised learning applications</strong>, for
 which the training data <span class="math inline">\({\bf x}\)</span> is associated with ground truth
 labels <span class="math inline">\({\bf y}\)</span>. For most applications, labelling the data is the
@@ -405,8 +419,8 @@ data, you could use a <span class="math inline">\(L_2\)</span> loss as follows:<
 \]</span></p>
 <p>Alternatively you can use cross-entropy if <span class="math inline">\({\bf x}\)</span> is categorical.</p>
 </div>
-<div id="examples" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> Examples<a href="autoencoders.html#examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="examples" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Examples</h2>
 <p>The following examples consider the MNIST handwritten digit database
 and are taken from the following link:</p>
 <blockquote>
@@ -469,8 +483,8 @@ Figure 9.4: reconstruction results on noisy inputs.
 </p>
 </div>
 </div>
-<div id="dimension-compression" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Dimension Compression<a href="autoencoders.html#dimension-compression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="dimension-compression" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Dimension Compression</h2>
 <p>We need however to be mindful that dimensional reduction does not necessarily
 imply information compression. In Fig. <a href="autoencoders.html#fig:AE-mapping-ND-1D-pca">9.5</a> is shown
 an example of what we are looking to do. The mapping from <span class="math inline">\({\bf x}\)</span> into <span class="math inline">\({\bf z}\)</span> comes with a loss of information. In this case, any variation perpendicular
@@ -540,8 +554,8 @@ that the <span class="math inline">\({\bf z}=0\)</span> is the mean value of the
 that its standard deviation is set to 1. This is exactely what variational auto
 encoders are trying to do.</p>
 </div>
-<div id="variational-auto-encoders-vae" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Variational Auto Encoders (VAE)<a href="autoencoders.html#variational-auto-encoders-vae" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="variational-auto-encoders-vae" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Variational Auto Encoders (VAE)</h2>
 <p>In <strong>Variational Auto Encoders</strong> (VAEs), we impose a prior on the distribution
 <span class="math inline">\(p({\bf z})\)</span> of the latent vectors <span class="math inline">\({\bf z}=[{ z}_1, \cdots, { z}_n ]^\top\)</span>. The
 prior is that <span class="math inline">\(p({\bf z})\)</span> should be the normal distribution:
@@ -626,8 +640,8 @@ Figure 9.11: 2D scatter plot of the latent variable <span class="math inline">\(
 </p>
 </div>
 </div>
-<div id="multi-tasks-design" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> Multi-Tasks Design<a href="autoencoders.html#multi-tasks-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="multi-tasks-design" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Multi-Tasks Design</h2>
 <p>The Encoder is the key part of the autoencoder architecture. There is however
 only so much that can be achieved with an unsupervised method. Looking at the
 success of pretrained networks such as ResNet or VGG, supervised learning is
@@ -726,7 +740,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

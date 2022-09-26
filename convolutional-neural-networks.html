@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Convolutional Neural Networks | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Convolutional Neural Networks | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
+  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -23,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,6 +33,7 @@
   
 <link rel="prev" href="feedforward-neural-networks.html"/>
 <link rel="next" href="advances-in-network-architectures.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,15 +51,15 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -209,7 +211,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +235,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -360,8 +374,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="convolutional-neural-networks" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Convolutional Neural Networks<a href="convolutional-neural-networks.html#convolutional-neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="convolutional-neural-networks" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Convolutional Neural Networks</h1>
 <p>Convolutional Neural Networks, or convnets, are a type of neural net
 especially used for processing image data.</p>
 <p>They are inspired by the organisation of the visual cortex and
@@ -370,11 +384,11 @@ image filtering by convolution.</p>
 <p>Convnets gained popularity with LeNet-5, a pioneering 7-level
 convolutional network by LeCun et al. (1998) that was successfully
 applied on the MNIST dataset.</p>
-<div id="convolution-filters" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Convolution Filters<a href="convolutional-neural-networks.html#convolution-filters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="convolution-filters" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Convolution Filters</h2>
 <p>Recall that in dense layers, every unit in the layer is
 connected to every unit in the adjacent layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-60"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-59"></span>
 <img src="tikz-figures/nn-dag-deep-ml-perceptron.svg" alt="Deep Neural Network in a Multi-Layer Perceptron Layout. " width="79.4%" />
 <p class="caption">
 Figure 6.1: Deep Neural Network in a Multi-Layer Perceptron Layout.
@@ -387,7 +401,7 @@ the input layer will be a multidimensional array, or <strong>tensor</strong>,
 containing <code>width</code> <span class="math inline">\(\times\)</span> <code>height</code> <span class="math inline">\(\times\)</span> 3 input units.</p>
 <p>If the next layer is of the same size, then we have up to <span class="math inline">\(({\tt width}\times {\tt height}\times 3)^2\)</span> weights to train, which can
 become very large very quickly.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-61"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-60"></span>
 <img src="tikz-figures/cnn-intro1.svg" alt="Dense Layer on Images. " width="79.4%" />
 <p class="caption">
 Figure 6.2: Dense Layer on Images.
@@ -401,7 +415,7 @@ of this.</p>
 <p>This is what is done in <strong>convolutional neural networks</strong>, where the
 units in the next layer are only connected to their neighbours in the
 input layer. In this case the neighbourhood is defined as a <span class="math inline">\(5\times 5\)</span> window.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-62"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-61"></span>
 <img src="tikz-figures/cnn-intro2.svg" alt="Convolution Network Architecture. " width="79.4%" />
 <p class="caption">
 Figure 6.3: Convolution Network Architecture.
@@ -441,8 +455,8 @@ u_{i,j-1,n-1} - 4 u_{i,j,n-1}
 <img src="figures/convsrc-05.svg" width="40%" /><img src="figures/convout-05.svg" width="40%" />
 <img src="figures/convsrc-10.svg" width="40%" /><img src="figures/convout-10.svg" width="40%" /></p>
 </div>
-<div id="padding" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Padding<a href="convolutional-neural-networks.html#padding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="padding" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Padding</h2>
 <p>At the picture boundaries, not all neighbours are defined.</p>
 <p>In Keras two <strong>padding</strong> strategies are possible:</p>
 <p><code>padding='same'</code> means that the values outside of image domain are
@@ -457,8 +471,8 @@ require out of domain neighbours.</p>
 <p>Each convolutional layer defines a number of convolution filters and the
 output of a layer is thus a new image, where each channel is the
 result of a convolution filter followed by activation.</p>
-<div id="example-3" class="section level3 unnumbered hasAnchor">
-<h3>Example<a href="convolutional-neural-networks.html#example-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="example-3" class="section level3 unnumbered">
+<h3>Example</h3>
 <p>Next is a colour picture with a tensor of size <span class="math inline">\({\tt 443}\times {\tt 592}\times {\tt 3}\)</span> (width=<span class="math inline">\({\tt 443}\)</span>, height=<span class="math inline">\({\tt 592}\)</span>, number of
 channels=<span class="math inline">\({\tt 3}\)</span>). The convolutional layer used has a kernel of
 size <span class="math inline">\({\tt 5}\times {\tt 5}\)</span>, and produces <span class="math inline">\({\tt 6}\)</span> different
@@ -515,8 +529,8 @@ original
 </div>
 </div>
 </div>
-<div id="reducing-the-picture-size" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Reducing the Picture Size<a href="convolutional-neural-networks.html#reducing-the-picture-size" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="reducing-the-picture-size" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Reducing the Picture Size</h2>
 <p>If convolution filters offer a way of reducing the number of weights
 in the network, the number of units still remains high.</p>
 <p>For instance, applying <code>Conv2D(16, (5,5))</code> to an input tensor image of
@@ -524,8 +538,8 @@ size <span class="math inline">\({\tt 2000} \times {\tt 2000} \times {\tt 3}\)</
 train, but still produces <span class="math inline">\({\tt 2000} \times {\tt 2000} \times {\tt 16} = {\tt 64 million}\)</span> units.</p>
 <p>In this section, we’ll see how <strong>stride</strong> and <strong>pooling</strong> can be
 used to downsample the images and thus reduce the number of units.</p>
-<div id="stride" class="section level3 hasAnchor" number="6.3.1">
-<h3><span class="header-section-number">6.3.1</span> Stride<a href="convolutional-neural-networks.html#stride" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="stride" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Stride</h3>
 <p>In image processing, the <strong>stride</strong> is the distance that
 separates each processed pixel. A stride of 1 means that all pixels
 are processed and kept. A stride of 2 means that only every second
@@ -563,8 +577,8 @@ pixel in both x and y directions are kept.</p>
 </div>
 </div>
 </div>
-<div id="max-pooling" class="section level3 hasAnchor" number="6.3.2">
-<h3><span class="header-section-number">6.3.2</span> Max Pooling<a href="convolutional-neural-networks.html#max-pooling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="max-pooling" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Max Pooling</h3>
 <p>Whereas stride is set on the convolution layer itself,  is
 a separate node that is appended after the conv layer. The Pooling
 layer operates a sub-sampling of the picture.</p>
@@ -589,8 +603,8 @@ pooling, stochastic pooling.</p>
 </div>
 </div>
 </div>
-<div id="example-4" class="section level3 unnumbered hasAnchor">
-<h3>Example<a href="convolutional-neural-networks.html#example-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="example-4" class="section level3 unnumbered">
+<h3>Example</h3>
 <p>In the following <code>keras</code> code:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="convolutional-neural-networks.html#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">32</span>, <span class="dv">32</span>, <span class="dv">3</span>)) </span>
 <span id="cb5-2"><a href="convolutional-neural-networks.html#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">16</span>, [<span class="dv">5</span>, <span class="dv">5</span>], activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, </span>
@@ -603,8 +617,8 @@ convolution filter.</p>
 <p>Then maxpooling reduces the image size to <span class="math inline">\(16\times 16\times 16\)</span>.</p>
 </div>
 </div>
-<div id="architecture-design" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Architecture Design<a href="convolutional-neural-networks.html#architecture-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="architecture-design" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Architecture Design</h2>
 <p>A typical convnet architecture for classification is based on
 interleaving convolution layers with pooling layers. Conv layers
 usually have a small kernel size (eg. <span class="math inline">\(5\times 5\)</span> or <span class="math inline">\(3 \times 3\)</span>). As
@@ -619,7 +633,7 @@ classification:</p>
 as we go deeper, we built more and more features that are increasingly
 more complex.</p>
 <p>Next are presented some of the early landmark convolutional networks.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-67"></span>
 <img src="figures/LeNet-5.jpg" alt="LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets." width="80%" />
 <p class="caption">
 Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets.
@@ -629,7 +643,7 @@ Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutiona
 <p>LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998).
 Gradient-based learning applied to document recognition.</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-69"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
 <img src="figures/alexnet.jpg" alt="AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution." width="80%" />
 <p class="caption">
 Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution.
@@ -639,7 +653,7 @@ Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of
 <p>Alex Krizhevsky, Ilya Sutskever, Geoffrey E Hinton (2012)
 Imagenet classification with deep convolutional neural networks.</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-70"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-69"></span>
 <img src="figures/vgg.jpg" alt="VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition." width="80%" />
 <p class="caption">
 Figure 6.9: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition.
@@ -650,8 +664,8 @@ Figure 6.9: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer netwo
 Very Deep Convolutional Networks for Large-Scale Image Recognition</p>
 </blockquote>
 </div>
-<div id="example-vgg16" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Example: VGG16<a href="convolutional-neural-networks.html#example-vgg16" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example-vgg16" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Example: VGG16</h2>
 <p>Below is the code for the network definition of VGG16 in Keras.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="convolutional-neural-networks.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Block 1</span></span>
 <span id="cb6-2"><a href="convolutional-neural-networks.html#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block1_conv1&#39;</span>)(img_input)</span>
@@ -894,8 +908,8 @@ helps classification if we have a clear separation between each of the
 features. In this case, the third filter in the last row seem to pick
 up the bird’s head and eyes.</p>
 </div>
-<div id="visualisation" class="section level2 hasAnchor" number="6.6">
-<h2><span class="header-section-number">6.6</span> Visualisation<a href="convolutional-neural-networks.html#visualisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="visualisation" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Visualisation</h2>
 <p>Understanding each of the inner operations of a trained network is
 still an open problem. Thankfully Convolutional Neural Nets focus on
 images and a few visualisation techniques have been proposed. One
@@ -926,8 +940,8 @@ the next slides.</p>
 very low-level (eg. edges, corners), but as we go deeper, the features
 pick up much more complex texture patterns.</p>
 </div>
-<div id="take-away-5" class="section level2 hasAnchor" number="6.7">
-<h2><span class="header-section-number">6.7</span> Take Away<a href="convolutional-neural-networks.html#take-away-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="take-away-5" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Take Away</h2>
 <p>Convolutional Neural Nets offer a very effective simplification over
 Dense Nets when dealing with images. By interleaving pooling and
 convolutional layers, we can reduce both the number of weights and the
@@ -939,8 +953,8 @@ long been understood. What convnets have brought, is a framework to
 systematically train optimal filters and combine them to produce
 powerful high level visual features.</p>
 </div>
-<div id="useful-resources-1" class="section level2 hasAnchor" number="6.8">
-<h2><span class="header-section-number">6.8</span> Useful Resources<a href="convolutional-neural-networks.html#useful-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="useful-resources-1" class="section level2" number="6.8">
+<h2><span class="header-section-number">6.8</span> Useful Resources</h2>
 <blockquote>
 <p>[1] Deep Learning (MIT press) from Ian Goodfellow et al. - chapters 9, <a href="https://www.deeplearningbook.org" class="uri">https://www.deeplearningbook.org</a></p>
 </blockquote>
@@ -1026,7 +1040,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Introduction | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
-  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Introduction | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
+  
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
@@ -23,7 +24,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,6 +33,7 @@
   
 <link rel="prev" href="prerequisites.html"/>
 <link rel="next" href="linear-regressionleast-squares.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,15 +51,15 @@
 
 
 
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -209,7 +211,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +235,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -360,10 +374,10 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1 unnumbered hasAnchor">
-<h1>Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="deep-learning-machine-learning-a.i." class="section level2 unnumbered hasAnchor">
-<h2>Deep Learning, Machine Learning, A.I.<a href="introduction.html#deep-learning-machine-learning-a.i." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introduction" class="section level1 unnumbered">
+<h1>Introduction</h1>
+<div id="deep-learning-machine-learning-a.i." class="section level2 unnumbered">
+<h2>Deep Learning, Machine Learning, A.I.</h2>
 <p><em>Deep Learning</em> is a particular type of <em>machine learning</em> method,
 and is thus part of the broader field of <em>artificial intelligence</em>
 (using computers to reason). Deep learning is another name for
@@ -381,8 +395,8 @@ Unsupervised Learning and Reinforcement Learning.</p>
 Figure 0.1: AI, ML and Deep Learning.
 </p>
 </div>
-<div id="supervised-learning" class="section level4 unnumbered hasAnchor">
-<h4>Supervised Learning<a href="introduction.html#supervised-learning" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="supervised-learning" class="section level4 unnumbered">
+<h4>Supervised Learning</h4>
 <p>Supervised Learning is by far the most common application in ML (say 95% of the
 research papers). We assume that we have collected some data. Namely, we
 have collected <span class="math inline">\(p\)</span> features from each of the <span class="math inline">\(n\)</span> observations of our
@@ -399,8 +413,8 @@ Figure 0.2: Example of Supervised Learning Task: Image Classification
 <p>The task of Supervised Learning is thus to find a model that can predict
 the outcome from input features.</p>
 </div>
-<div id="unsupervised-learning" class="section level4 unnumbered hasAnchor">
-<h4>Unsupervised Learning<a href="introduction.html#unsupervised-learning" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="unsupervised-learning" class="section level4 unnumbered">
+<h4>Unsupervised Learning</h4>
 <p>The task is here to learn about a dataset <span class="math inline">\(({\bf x}_i)\)</span> by just looking at it,
 without any labelled information <span class="math inline">\(y_i\)</span>. For instance, a typical application of
 unsupervised learning is to cluster a dataset into smaller groups of
@@ -413,8 +427,8 @@ Figure 0.3: Example of Unsupervised Learning Task: Clustering
 </p>
 </div>
 </div>
-<div id="reinforcement-learning" class="section level4 unnumbered hasAnchor">
-<h4>Reinforcement Learning<a href="introduction.html#reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="reinforcement-learning" class="section level4 unnumbered">
+<h4>Reinforcement Learning</h4>
 <p>This task is about teaching an agent how to interact with its environment (the
 data), so as to get maximum reward. Reinforcement Learning is used in
 applications such as game playing, robotics, etc.</p>
@@ -428,12 +442,12 @@ Figure 0.4: Reinforcement Learning
 that virtually all research papers in these field rely on neural networks.</p>
 </div>
 </div>
-<div id="deep-learning-successes" class="section level2 unnumbered hasAnchor">
-<h2>Deep Learning Successes<a href="introduction.html#deep-learning-successes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="deep-learning-successes" class="section level2 unnumbered">
+<h2>Deep Learning Successes</h2>
 <p>Below are a few machine learning applications, where Deep Learning had
 a great impact in recent years.</p>
-<div id="image-classification" class="section level3 unnumbered hasAnchor">
-<h3>Image Classification<a href="introduction.html#image-classification" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="image-classification" class="section level3 unnumbered">
+<h3>Image Classification</h3>
 <p><em>Image Classification</em>, also known as <em>Image Recognition</em>, is one of
 the core applications of Computer Vision, and is arguably the birthplace
 of modern Deep Learning. Image recognition used to be a particularly
@@ -475,8 +489,8 @@ Figure 0.6: Historical error Rates at ImageNet’s classification challenge betw
 </p>
 </div>
 </div>
-<div id="scene-understanding" class="section level3 unnumbered hasAnchor">
-<h3>Scene Understanding<a href="introduction.html#scene-understanding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="scene-understanding" class="section level3 unnumbered">
+<h3>Scene Understanding</h3>
 <p>These new achievements in image recognition have then been brought to nearby
 fields such <em>Scene Understanding</em>. The figure below show the semantic
 segmentation results from Mask R-CNN <span class="citation">(<a href="#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>. Each pixel can be
@@ -489,8 +503,8 @@ Figure 0.7: Results from Mask R-CNN. <span class="citation">(<a href="#ref-maskr
 </p>
 </div>
 </div>
-<div id="image-captioning" class="section level3 unnumbered hasAnchor">
-<h3>Image Captioning<a href="introduction.html#image-captioning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="image-captioning" class="section level3 unnumbered">
+<h3>Image Captioning</h3>
 <p>By combining image models with language models, we are now able to automatically
 <em>generate captions</em> from images (see Figure below).</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
@@ -500,8 +514,8 @@ Figure 0.8: Results of automaated image captioning <span class="citation">(<a hr
 </p>
 </div>
 </div>
-<div id="machine-translation" class="section level3 unnumbered hasAnchor">
-<h3>Machine Translation<a href="introduction.html#machine-translation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="machine-translation" class="section level3 unnumbered">
+<h3>Machine Translation</h3>
 <p>By 2014, the deep learning revolution had spread beyond computer vision and made
 its introduction in natural language processing.</p>
 <p>All major tech companies rapidly changed their <em>machine translation</em>
@@ -522,8 +536,8 @@ one of the most famous of these large language model and has been
 adopted in hundreds of applications, ranging from grammar correction,
 translation, summarisation, Chat Bots, text generation, etc. (<a href="https://beta.openai.com/examples">see examples</a>).</p>
 </div>
-<div id="multimedia-content" class="section level3 unnumbered hasAnchor">
-<h3>Multimedia Content<a href="introduction.html#multimedia-content" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="multimedia-content" class="section level3 unnumbered">
+<h3>Multimedia Content</h3>
 <p>Deep Learning has quickly become the universal language for dealing with
 any content driven application.</p>
 <p>Already in Skype Translator (2014), speech recognition, automatic
@@ -536,8 +550,8 @@ Learning acting as the glue that holds these elements together.</p>
 <p><a href="https://goo.gl/eAuPcS">Microsoft blog post</a></p>
 </blockquote>
 </div>
-<div id="game-playing" class="section level3 unnumbered hasAnchor">
-<h3>Game Playing<a href="introduction.html#game-playing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="game-playing" class="section level3 unnumbered">
+<h3>Game Playing</h3>
 <p>Deep learning has also been introduced in <em>reinforcement learning</em> to
 solve complex sequential decision making problems.</p>
 <p>Recent successes include: playing old Atari computer games, programming real
@@ -552,8 +566,8 @@ AlphaGo by DeepMind over the humans.</p>
 </blockquote>
 </div>
 </div>
-<div id="reasons-of-a-success" class="section level2 unnumbered hasAnchor">
-<h2>Reasons of a Success<a href="introduction.html#reasons-of-a-success" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="reasons-of-a-success" class="section level2 unnumbered">
+<h2>Reasons of a Success</h2>
 <p>Neural Networks have been around for decades. But is only now that it surpasses
 all other machine learning techniques. Deep Learning is now a <em><strong>disruptive</strong></em>
 technology that has been unexpectedly taking over operations of technology
@@ -584,15 +598,15 @@ algorithms, Deep Learning is able to surpass <em>hand-tailored
 algorithms</em> of skilled researchers.</p>
 <p>It offers a systematic approach, when before, algorithms took years of
 human efforts to design.</p>
-<div id="democratisation" class="section level3 unnumbered hasAnchor">
-<h3>Democratisation<a href="introduction.html#democratisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="democratisation" class="section level3 unnumbered">
+<h3>Democratisation</h3>
 <p>Another aspect of the revolutionary aspect of Deep Learning is it is a
 (relatively) simple framework. Good programmers can train state of the art
 neural nets, without having done 10+ years of research in the domain. It is an
 opportunity for start-ups and it has become a ubiquitous tool in tech companies.</p>
 </div>
-<div id="global-reach" class="section level3 unnumbered hasAnchor">
-<h3>Global Reach<a href="introduction.html#global-reach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="global-reach" class="section level3 unnumbered">
+<h3>Global Reach</h3>
 <p>It has been applied successfully to many fields of research, industry
 and society: self-driving cars, image recognition, detecting cancer,
 speech recognition, speech synthesis, machine translation, molecule
@@ -602,8 +616,8 @@ drug discovery and toxicology, customer relationship management,
 recommendation systems, bioinformatics, advertising, controlling lasers,
 etc.</p>
 </div>
-<div id="impact" class="section level3 unnumbered hasAnchor">
-<h3>Impact<a href="introduction.html#impact" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="impact" class="section level3 unnumbered">
+<h3>Impact</h3>
 <p>Here is a question for you: how long before your future job gets replaced by an algorithm?
 Probably much sooner than you think. You might feel safe if you are an artist…</p>
 <p>… but then again:</p>
@@ -642,8 +656,8 @@ experts. <a href="https://goo.gl/2kfyXd" class="uri">https://goo.gl/2kfyXd</a></
 </blockquote>
 </div>
 </div>
-<div id="in-summary" class="section level2 unnumbered hasAnchor">
-<h2>In Summary<a href="introduction.html#in-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="in-summary" class="section level2 unnumbered">
+<h2>In Summary</h2>
 <p>Even if self-driving cars are not quite here yet, and that no, computers
 have not yet become self-aware, Deep Learning is definitely an ongoing
 revolution that is having a profound impact on the way we do research
@@ -657,7 +671,7 @@ of Neural Networks (PART II) and recent advances (PART III).</p>
 
 </div>
 </div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-gpt3" class="csl-entry">
 Brown, Tom B., Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, et al. 2020. <span>“Language Models Are Few-Shot Learners.”</span> <em>CoRR</em> abs/2005.14165. <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a>.
@@ -744,7 +758,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
