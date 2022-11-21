@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-11-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +233,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -261,7 +273,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a>
 <ul>
 <li class="chapter" data-level="5.8.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#mini-batch-and-stochastic-gradient-descent"><i class="fa fa-check"></i><b>5.8.1</b> Mini-Batch and Stochastic Gradient Descent</a></li>
-<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Adavanced Gradient Descent Optimizers</a></li>
+<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-advanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Advanced Gradient Descent Optimizers</a></li>
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#constraints-and-regularisers"><i class="fa fa-check"></i><b>5.9</b> Constraints and Regularisers</a>
 <ul>
@@ -335,8 +347,8 @@ div.csl-indent {
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="notes.html"><a href="notes.html#universal-approximation-theorem-1"><i class="fa fa-check"></i><b>A.1</b> Universal Approximation Theorem</a></li>
-<li class="chapter" data-level="A.2" data-path="notes.html"><a href="notes.html#why-does-l_1-regularisation-induce-sparsity"><i class="fa fa-check"></i><b>A.2</b> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?</a></li>
+<li class="chapter" data-level="A.1" data-path="notes.html"><a href="notes.html#note:uat"><i class="fa fa-check"></i><b>A.1</b> Universal Approximation Theorem</a></li>
+<li class="chapter" data-level="A.2" data-path="notes.html"><a href="notes.html#note:l1-induces-sparsity"><i class="fa fa-check"></i><b>A.2</b> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?</a></li>
 <li class="chapter" data-level="A.3" data-path="notes.html"><a href="notes.html#note:kernel-trick"><i class="fa fa-check"></i><b>A.3</b> Kernel Trick</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -385,6 +397,8 @@ Figure 4.1: Classification Results for some of the popular classifiers.
 <p><em>False Positive</em> : you predict <span class="math inline">\(\hat{y}=1\)</span> but in fact <span class="math inline">\(y=0\)</span>.</p>
 <p>In statistics, False Positives are often called type-I errors and False
 Negatives type-II errors.</p>
+<div id="confusion-matrix" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Confusion Matrix<a href="evaluating-classifier-performance.html#confusion-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A <em>confusion matrix</em> is a table that reports the number of false
 positives, false negatives, true positives, and true negatives for
 each class.</p>
@@ -522,28 +536,40 @@ each class.</p>
 </tbody>
 </table>
 <p>From TP, TN, FP, FN, we can derive a number of popular metrics.</p>
-<p><strong>Recall</strong> (also called sensitivity or true positive rate) is the
+</div>
+<div id="recallsensitivitytrue-positive-rate-tpr" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Recall/Sensitivity/True Positive Rate (TPR)<a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Recall</em> (also called sensitivity or true positive rate) is the
 probability that a positive example is indeed predicted as positive. In other
 words it is the proportion of positives that are correctly labelled as
 positives.
 <span class="math display">\[
-\mathrm {recall} ={\frac {\mathrm {TP} }{P}}={\frac {\mathrm {TP} }{\mathrm {TP}
+\mathrm {Recall} ={\frac {\mathrm {TP} }{P}}={\frac {\mathrm {TP} }{\mathrm {TP}
     +\mathrm {FN} }} = p(\hat{y}=1 | y=1)
 \]</span></p>
-<p><strong>Precision</strong> is the probability that a positive prediction is indeed
+</div>
+<div id="precision" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Precision<a href="evaluating-classifier-performance.html#precision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Precision</em> is the probability that a positive prediction is indeed
 positive:
 <span class="math display">\[ 
-  \mathrm {precision} ={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FP} }}
+  \mathrm {Precision} ={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FP} }}
   =  p( y=1 | \hat{y}=1) 
 \]</span></p>
-<p><strong>False Positive Rate</strong> is the proportion of negatives that are
+</div>
+<div id="false-positive-rate-fpr" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> False Positive Rate (FPR)<a href="evaluating-classifier-performance.html#false-positive-rate-fpr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>False Positive Rate</em> is the proportion of negatives that are
 incorrectly labelled as positive:
 <span class="math display">\[ \begin{aligned}
   \mathrm {FP\ rate} &amp;={\frac {\mathrm {FP} }{N}}={\frac {\mathrm
     {FP} }{\mathrm {FP} +\mathrm {TN} }} =  p(\hat{y}=1 | y=0)
 \end{aligned}
 \]</span></p>
-<p><strong>Accuracy</strong> is the probability that a prediction is correct:
+</div>
+<div id="accuracy" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Accuracy<a href="evaluating-classifier-performance.html#accuracy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Accuracy</em> is the probability that a prediction is correct:
 <span class="math display">\[ \begin{aligned}
   \mathrm {Accuracy} &amp;={\frac {\mathrm {TP} +\mathrm {TN} }{P+N}}={\frac {\mathrm
     {TP} +\mathrm {TN} }{\mathrm {TP} +\mathrm {TN} +\mathrm {FP} +\mathrm {FN}
@@ -551,16 +577,23 @@ incorrectly labelled as positive:
   &amp;=  p(\hat{y}=1 , y=1) + p(\hat{y}=0 , y=0)
 \end{aligned}
 \]</span></p>
-<p><strong>F1 score</strong> is the harmonic mean of precision and recall:
+</div>
+<div id="f1-score" class="section level3 hasAnchor" number="4.1.6">
+<h3><span class="header-section-number">4.1.6</span> F1 Score<a href="evaluating-classifier-performance.html#f1-score" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>F1 score</em> is the harmonic mean of precision and recall:
 <span class="math display">\[ F_{1}=2\cdot {\frac {\mathrm {recall} \cdot \mathrm {precision} }{\mathrm {precision} +\mathrm {recall} }}={\frac {2\mathrm {TP} }{2\mathrm {TP} +\mathrm {FP} +\mathrm {FN} }}\]</span></p>
-<p>Other derived metrics <a href="https://en.wikipedia.org/wiki/Precision_and_recall">exist</a>.</p>
-<p>But remember that since there are two types of errors (false positives
-and false negatives), you will always need at least two metrics to
-really capture the performance of a classifier.</p>
+</div>
+<div id="you-need-two-metrics" class="section level3 hasAnchor" number="4.1.7">
+<h3><span class="header-section-number">4.1.7</span> You Need Two Metrics<a href="evaluating-classifier-performance.html#you-need-two-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Many other derived metrics
+<a href="https://en.wikipedia.org/wiki/Precision_and_recall">exist</a>, but
+remember that since there are two types of errors (false positives and
+false negatives), you will always need at least two metrics to really
+capture the performance of a classifier.</p>
 <p>Performing well on a single metric can be meaningless. A good
 classifier should perform well on 2 metrics.</p>
 <div class="example">
-<p><span id="exm:unnamed-chunk-40" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
+<p><span id="exm:unnamed-chunk-39" class="example"><strong>Example 4.1  </strong></span>Consider a classifier with this confusion matrix:</p>
 <table>
 <thead>
 <tr class="header">
@@ -639,6 +672,9 @@ really poor choices but you need two metrics to see this:</p>
 <p>For (B), the accuracy is 85% but the recall is 0%.</p>
 <p><strong>Conclusion: if you don’t know anything about the test set, you need two metrics.</strong></p>
 </div>
+</div>
+<div id="roc-curve" class="section level3 hasAnchor" number="4.1.8">
+<h3><span class="header-section-number">4.1.8</span> ROC curve<a href="evaluating-classifier-performance.html#roc-curve" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When you start measuring the performance of a classifier, chances
 are that you can tune a few parameters. For instance, if your
 classifier is based on a linear classifier model <span class="math inline">\(y = [{\bf  x}^{\top}{\bf w} &gt; T]\)</span>, you can tune the threshold value
@@ -647,9 +683,10 @@ conservative about classifying points as <span class="math inline">\(y=1\)</span
 <p>By varying the parameter <span class="math inline">\(T\)</span>, we can produce a family of classifiers
 with different performances. We can report the <span class="math inline">\(\mathrm{FP}\)</span> rate =
 FP/(FP+TN) and <span class="math inline">\(\mathrm{TP}\)</span> rate = TP/(TP+FN) for each of the
-different values of <span class="math inline">\(T\)</span> on a graph called the , or R.O.C. curve.</p>
+different values of <span class="math inline">\(T\)</span> on a graph called the <em>receiver
+operating characteristic curve</em>, or ROC curve.</p>
 <p>Here is an example showing the ROC curves for 4 different classifiers.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-41"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-40"></span>
 <img src="figures/ROC-1.svg" alt="Receiving Operating Characteristic (ROC) curve." width="80%" />
 <p class="caption">
 Figure 4.2: Receiving Operating Characteristic (ROC) curve.
@@ -660,11 +697,37 @@ A random classifier will have TP rate equal to the FP rate.</p>
 <p>If your ROC curve is below the random classifier diagonal, then you
 are doing something wrong.</p>
 <p>Below are reported a few ROC curves for the earlier problem.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-42"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-41"></span>
 <img src="figures/compare-classifiers-ROC.svg" alt="ROC curves for the classifiers of Fig. \protect\@ref(fig:dataset04)" width="80%" />
 <p class="caption">
 Figure 4.3: ROC curves for the classifiers of Fig. <a href="evaluating-classifier-performance.html#fig:dataset04">4.1</a>
 </p>
+</div>
+</div>
+<div id="roc-auc" class="section level3 hasAnchor" number="4.1.9">
+<h3><span class="header-section-number">4.1.9</span> ROC-AUC<a href="evaluating-classifier-performance.html#roc-auc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are some metrics that attempt to summarise the performance of the
+classifier across all thresholds into a single statistic. Typically with the ROC curve, we would use the <em>Area Under the Curve (AUC)</em>, which is basically defined as the integral of the ROC curve:</p>
+<p><span class="math display">\[
+\mathrm{AUC} = \int \mathrm{TPR} (\mathrm{FPR}) d \mathrm{FPR}
+\]</span></p>
+<p>This integral is typically implemented by measuring <span class="math inline">\(\mathrm{FPR}_{i}\)</span>
+and <span class="math inline">\(\mathrm{TPR}_{i}\)</span> for a set of <span class="math inline">\(n\)</span> thresholds different
+thresholds <span class="math inline">\(T_i\)</span> and evaluating the integral via trapezoidal
+integration:</p>
+<p><span class="math display">\[
+\mathrm{AUC} = \sum_{i=2}^n \frac{1}{2} \left(\mathrm{TPR}_i+\mathrm{TPR}_{i-1}\right) \times \left(\mathrm{FPR}_i-\mathrm{FPR}_{i-1}\right) 
+\]</span></p>
+</div>
+<div id="average-precision" class="section level3 hasAnchor" number="4.1.10">
+<h3><span class="header-section-number">4.1.10</span> Average Precision<a href="evaluating-classifier-performance.html#average-precision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Similarly, the <em>Average Precision</em> computes the area under the curve for the <span class="math inline">\(\mathrm{Precision}\)</span>-<span class="math inline">\(\mathrm{Recall}\)</span> curve. It is implemented slightly differently
+from the ROC-AUC:
+<span class="math display">\[
+\mathrm{AP} = \sum_{i=1}^n \mathrm{Precision}_i \times \left(\mathrm{Recall}_i-\mathrm{Recall}_{i-1}\right) 
+\]</span>
+where <span class="math inline">\(\mathrm{Recall}_i\)</span> and <span class="math inline">\(\mathrm{Precision}_i\)</span> are the precision and
+recall values taken at <span class="math inline">\(n\)</span> different thresholds <span class="math inline">\(T_i\)</span> values.</p>
 </div>
 </div>
 <div id="multiclass-classifiers" class="section level2 hasAnchor" number="4.2">
@@ -724,7 +787,7 @@ with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \m
   \mathrm{PRE}_k = \frac{\mathrm{TP}_k}{\mathrm{TP}_k + \mathrm{FP}_k}
  \]</span></p>
 <div class="example">
-<p><span id="exm:unnamed-chunk-43" class="example"><strong>Example 4.2  </strong></span>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
+<p><span id="exm:unnamed-chunk-42" class="example"><strong>Example 4.2  </strong></span>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
 <p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>
 <p><span class="math display">\[
 \mathrm{micro PRE} = \frac{2 + 0 + 0}{ (2+0+0) + (1 + 2 + 1)} = 0.286

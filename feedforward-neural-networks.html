@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2022-09-11" />
+<meta name="date" content="2022-11-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#general-linear-model"><i class="fa fa-check"></i><b>2.3</b> General Linear Model</a></li>
 <li class="chapter" data-level="2.4" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-model"><i class="fa fa-check"></i><b>2.4</b> Logistic Model</a></li>
 <li class="chapter" data-level="2.5" data-path="logistic-regression.html"><a href="logistic-regression.html#maximum-likelihood-1"><i class="fa fa-check"></i><b>2.5</b> Maximum Likelihood</a></li>
-<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: gradient descent</a></li>
+<li class="chapter" data-level="2.6" data-path="logistic-regression.html"><a href="logistic-regression.html#optimisation-gradient-descent"><i class="fa fa-check"></i><b>2.6</b> Optimisation: Gradient Descent</a></li>
 <li class="chapter" data-level="2.7" data-path="logistic-regression.html"><a href="logistic-regression.html#example"><i class="fa fa-check"></i><b>2.7</b> Example</a></li>
 <li class="chapter" data-level="2.8" data-path="logistic-regression.html"><a href="logistic-regression.html#multiclass-classification"><i class="fa fa-check"></i><b>2.8</b> Multiclass Classification</a></li>
 <li class="chapter" data-level="2.9" data-path="logistic-regression.html"><a href="logistic-regression.html#multinomial-logistic-regression"><i class="fa fa-check"></i><b>2.9</b> Multinomial Logistic Regression</a></li>
@@ -233,7 +233,19 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html"><i class="fa fa-check"></i><b>4</b> Evaluating Classifier Performance</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a></li>
+<li class="chapter" data-level="4.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#metrics-for-binary-classifiers"><i class="fa fa-check"></i><b>4.1</b> Metrics for Binary Classifiers</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#confusion-matrix"><i class="fa fa-check"></i><b>4.1.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="4.1.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#recallsensitivitytrue-positive-rate-tpr"><i class="fa fa-check"></i><b>4.1.2</b> Recall/Sensitivity/True Positive Rate (TPR)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#precision"><i class="fa fa-check"></i><b>4.1.3</b> Precision</a></li>
+<li class="chapter" data-level="4.1.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#false-positive-rate-fpr"><i class="fa fa-check"></i><b>4.1.4</b> False Positive Rate (FPR)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#accuracy"><i class="fa fa-check"></i><b>4.1.5</b> Accuracy</a></li>
+<li class="chapter" data-level="4.1.6" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#f1-score"><i class="fa fa-check"></i><b>4.1.6</b> F1 Score</a></li>
+<li class="chapter" data-level="4.1.7" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#you-need-two-metrics"><i class="fa fa-check"></i><b>4.1.7</b> You Need Two Metrics</a></li>
+<li class="chapter" data-level="4.1.8" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-curve"><i class="fa fa-check"></i><b>4.1.8</b> ROC curve</a></li>
+<li class="chapter" data-level="4.1.9" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#roc-auc"><i class="fa fa-check"></i><b>4.1.9</b> ROC-AUC</a></li>
+<li class="chapter" data-level="4.1.10" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#average-precision"><i class="fa fa-check"></i><b>4.1.10</b> Average Precision</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#multiclass-classifiers"><i class="fa fa-check"></i><b>4.2</b> Multiclass Classifiers</a></li>
 <li class="chapter" data-level="4.3" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#trainingvalidationtesting-sets"><i class="fa fa-check"></i><b>4.3</b> Training/Validation/Testing Sets</a></li>
 <li class="chapter" data-level="4.4" data-path="evaluating-classifier-performance.html"><a href="evaluating-classifier-performance.html#take-away-3"><i class="fa fa-check"></i><b>4.4</b> Take Away</a></li>
@@ -261,7 +273,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.8" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#optimisations-for-training-deep-neural-networks"><i class="fa fa-check"></i><b>5.8</b> Optimisations for Training Deep Neural Networks</a>
 <ul>
 <li class="chapter" data-level="5.8.1" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#mini-batch-and-stochastic-gradient-descent"><i class="fa fa-check"></i><b>5.8.1</b> Mini-Batch and Stochastic Gradient Descent</a></li>
-<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Adavanced Gradient Descent Optimizers</a></li>
+<li class="chapter" data-level="5.8.2" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#more-advanced-gradient-descent-optimizers"><i class="fa fa-check"></i><b>5.8.2</b> More Advanced Gradient Descent Optimizers</a></li>
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="feedforward-neural-networks.html"><a href="feedforward-neural-networks.html#constraints-and-regularisers"><i class="fa fa-check"></i><b>5.9</b> Constraints and Regularisers</a>
 <ul>
@@ -335,8 +347,8 @@ div.csl-indent {
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
 <ul>
-<li class="chapter" data-level="A.1" data-path="notes.html"><a href="notes.html#universal-approximation-theorem-1"><i class="fa fa-check"></i><b>A.1</b> Universal Approximation Theorem</a></li>
-<li class="chapter" data-level="A.2" data-path="notes.html"><a href="notes.html#why-does-l_1-regularisation-induce-sparsity"><i class="fa fa-check"></i><b>A.2</b> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?</a></li>
+<li class="chapter" data-level="A.1" data-path="notes.html"><a href="notes.html#note:uat"><i class="fa fa-check"></i><b>A.1</b> Universal Approximation Theorem</a></li>
+<li class="chapter" data-level="A.2" data-path="notes.html"><a href="notes.html#note:l1-induces-sparsity"><i class="fa fa-check"></i><b>A.2</b> Why Does <span class="math inline">\(L_1\)</span> Regularisation Induce Sparsity?</a></li>
 <li class="chapter" data-level="A.3" data-path="notes.html"><a href="notes.html#note:kernel-trick"><i class="fa fa-check"></i><b>A.3</b> Kernel Trick</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -406,26 +418,26 @@ papers.</p>
 neuron-like units. A <strong>neuron unit</strong> it a particular type of unit (or function)
 that first takes a linear combination of its inputs and then applies a
 non-linear function <span class="math inline">\(f\)</span>, called an <strong>activation function</strong>:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-44"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-43"></span>
 <img src="tikz-figures/nn-dag-neuron.svg" alt="Neuron Model" width="100%" />
 <p class="caption">
 Figure 5.2: Neuron Model
 </p>
 </div>
 <p>Many activation functions exist. Here are some of the most popular:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-45"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-44"></span>
 <img src="figures/activation-sigmoid.svg" alt="Sigmoid Activation Function: $z \mapsto 1/(1+\mathrm{exp}(-z))$" width="60%" />
 <p class="caption">
 Figure 5.3: Sigmoid Activation Function: <span class="math inline">\(z \mapsto 1/(1+\mathrm{exp}(-z))\)</span>
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-46"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-45"></span>
 <img src="figures/activation-tanh.svg" alt="Tanh Activation Function: $z \mapsto \mathrm{tanh}(z)$" width="60%" />
 <p class="caption">
 Figure 5.4: Tanh Activation Function: <span class="math inline">\(z \mapsto \mathrm{tanh}(z)\)</span>
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-47"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-46"></span>
 <img src="figures/activation-relu.svg" alt="Relu Activation Function: $z\mapsto \max(0,z)$. Note that the activation function is not differentiable at $z=0$, but this turns out not to be a problem in practice." width="60%" />
 <p class="caption">
 Figure 5.5: Relu Activation Function: <span class="math inline">\(z\mapsto \max(0,z)\)</span>. Note that the activation function is not differentiable at <span class="math inline">\(z=0\)</span>, but this turns out not to be a problem in practice.
@@ -453,7 +465,7 @@ implementation of its gradient (see later).</p>
 neurons. We know for instance that the input signals from the
 dendrites are indeed combined together to go through something
 resembling a ReLU activation function.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-48"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-47"></span>
 <img src="figures/actual-neuron.svg" alt="Representation of a Biological Neuron" width="100%" />
 <p class="caption">
 Figure 5.6: Representation of a Biological Neuron
@@ -470,7 +482,7 @@ C_{\mathrm {m} }{\frac {dV_{\mathrm {m} }(t)}{dt}}=I(t)-{\frac {V_{\mathrm {m} }
 the connected neurons) is provided, until it reaches a threshold. At
 that point an output voltage <em>spike</em> occurs and the membrane voltage
 is reset to a lower potential. These models are often referred to as
-<strong>spiking neurons</strong>. Fig.<a href="feedforward-neural-networks.html#fig:LIFcircuit">5.7</a> shows a circuit
+<strong>spiking neurons</strong>. Fig. <a href="feedforward-neural-networks.html#fig:LIFcircuit">5.7</a> shows a circuit
 representation of the Leaky Integrate-and-Fire model (left) and the
 membrane potential response to an input signal of constant intensity
 (right).</p>
@@ -481,7 +493,7 @@ Figure 5.7: The leaky Integrate-and-Fire model. On the left, a circuit represent
 </p>
 </div>
 <p>The overall dynamics of a spiking neuron network is illustrated in
-Fig.<a href="feedforward-neural-networks.html#fig:LIFmodel">5.8</a>. Each neuron receives a train of input voltage
+Fig. <a href="feedforward-neural-networks.html#fig:LIFmodel">5.8</a>. Each neuron receives a train of input voltage
 spikes from each of its connected neurons. The neuron’s membrane
 potential integrates the combined input intensity and fires output
 voltage spikes once a threshold has been reached.</p>
@@ -494,14 +506,14 @@ Figure 5.8: Overview of the spiking neuron models.
 <p>It is important to note that the membrane potential drops in the
 absence of stimulus. This means that the input excitation must reach a
 certain level of intensity before the neuron starts firing output
-spikes. For instance, in Fig.<a href="feedforward-neural-networks.html#fig:LIFmodel">5.8</a>, the input spikes are
-not intense enough to trigger an output spike. The output fire rate
-response under a constant intensity stimulus is shown in
-Fig.<a href="feedforward-neural-networks.html#fig:LIF-IvR">5.9</a>. The responses are shown for different levels
-of input signal noise. We can observe the two modes of operations:
-below an input threshold, the output firing rate is zero or near zero,
-after that threshold, the rate increases linearly with the intensity
-of the input stimuli.</p>
+spikes. For instance, in Fig. <a href="feedforward-neural-networks.html#fig:LIFmodel">5.8</a>, after <span class="math inline">\(t_1\)</span>, the
+input spikes are not intense enough to trigger an output spike. The
+output fire rate response under a constant intensity stimulus is shown
+in Fig. <a href="feedforward-neural-networks.html#fig:LIF-IvR">5.9</a>. The responses are shown for different
+levels of input signal noise. We can observe the two modes of
+operations: below an input threshold, the output firing rate is zero
+or near zero, after that threshold, the rate increases linearly with
+the intensity of the input stimuli.</p>
 <div class="figure"><span style="display:block;" id="fig:LIF-IvR"></span>
 <img src="figures/LIF-IvsRate.svg" alt="Output Fire rate as a function of the input intensity for different levels of noise (see https://arxiv.org/abs/1706.03609). " width="60%" />
 <p class="caption">
@@ -510,8 +522,8 @@ Figure 5.9: Output Fire rate as a function of the input intensity for different 
 </div>
 <p>This is exactly what the activation functions try to model, and, as we
 can see, the range of possible response shapes shown in
-Fig.<a href="feedforward-neural-networks.html#fig:LIF-IvR">5.9</a> does indeed match the shape of some classical
-activation such as ReLu, leaky ReLu, softplus, etc.. What the figure
+Fig. <a href="feedforward-neural-networks.html#fig:LIF-IvR">5.9</a> does indeed match the shape of some classical
+activation such as ReLu, leaky ReLu, softplus, etc. What the figure
 also shows is that the exact shape of the activation function relates
 to the exact nature of the input signal (in this case the amount of
 noise in the input signal).</p>
@@ -534,7 +546,7 @@ functions.</p>
 <p>Now that we have defined what a unit is, we can start combining
 multiple units to form a network of units. Perhaps the earliest form
 of <strong>architecture</strong> is the <strong>multi-layer perceptron</strong> arrangement
-illustrated in Fig.<a href="feedforward-neural-networks.html#fig:ml-perceptron">5.10</a>.</p>
+illustrated in Fig. <a href="feedforward-neural-networks.html#fig:ml-perceptron">5.10</a>.</p>
 <div class="figure"><span style="display:block;" id="fig:ml-perceptron"></span>
 <img src="tikz-figures/nn-dag-ml-perceptron.svg" alt="Neural Network made of neuron units, arranged in a Multi-Layer Perceptron Layout." width="60%" />
 <p class="caption">
@@ -575,24 +587,27 @@ approximate any continuous function arbitrarily well, given enough
 hidden units</p>
 </blockquote>
 <p>The result applies for sigmoid, tanh and many other hidden layer
-activation functions.</p>
+activation functions. An intuition for why the theorem works is given
+in note <a href="notes.html#note:uat">A.1</a>.</p>
 <p>The universal theorem reassures us that neural networks can model
-pretty much anything.</p>
-<p>Although the universal theorem tells us you only need one hidden
-layer, all recent works show that deeper networks require fewer
+pretty much anything and that just throwing more units at a problem
+will always work.</p>
+<p>However, although the universal theorem tells us you only need one
+hidden layer, all recent works show that deeper networks require fewer
 parameters and generalise better to the testing set.</p>
-<p>The <strong>architecture</strong> or structure of the network is thus a key
-design consideration: how many units it should have and how these
-units should be connected to each other.</p>
+<p>Thus, instead of just throwing more units at a problem, it is often
+more effective to think about the <strong>architecture</strong> or structure of the
+network. That is, how many units it should have and how these units
+should be connected to each other.</p>
 <p>This is the main topic of research today. We know that anything can be
 modelled as a neural net. The challenge is to architect networks that
-can be efficiently trained and generalise well.</p>
+can be efficiently trained and that generalise well.</p>
 </div>
 <div id="example-1" class="section level2 hasAnchor" number="5.5">
 <h2><span class="header-section-number">5.5</span> Example<a href="feedforward-neural-networks.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let us look at an example using the <a href="https://playground.tensorflow.org/" class="uri">https://playground.tensorflow.org/</a>
 Neural Network simulator from Tensorflow. In
-Fig.<a href="feedforward-neural-networks.html#fig:playground-1">5.12</a> we have a network with 3 hidden layers of
+Fig. <a href="feedforward-neural-networks.html#fig:playground-1">5.12</a> we have a network with 3 hidden layers of
 respectively 8, 8 and 2 units. The original features are the x and y
 coordinates. The units of the first hidden layer produces different
 rotated versions. Already complex features appear in the second hidden
@@ -603,25 +618,25 @@ layer and even more complex features in the third hidden layer.</p>
 Figure 5.12: Screenshot from the Tensorflow Playground page.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-49"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-48"></span>
 <img src="figures/playground-tensorflow.002.jpg" alt="Screenshot from the Tensorflow Playground page. Output of one of the Layer 1 neurons." width="80%" />
 <p class="caption">
 Figure 5.13: Screenshot from the Tensorflow Playground page. Output of one of the Layer 1 neurons.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-50"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-49"></span>
 <img src="figures/playground-tensorflow.003.jpg" alt="Screenshot from the Tensorflow Playground page. Output of one of the Layer 2 neurons." width="80%" />
 <p class="caption">
 Figure 5.14: Screenshot from the Tensorflow Playground page. Output of one of the Layer 2 neurons.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-51"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-50"></span>
 <img src="figures/playground-tensorflow.004.jpg" alt="Screenshot from the Tensorflow Playground page. Output of one of the Layer 3 neurons." width="80%" />
 <p class="caption">
 Figure 5.15: Screenshot from the Tensorflow Playground page. Output of one of the Layer 3 neurons.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-52"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-51"></span>
 <img src="figures/playground-tensorflow.005.jpg" alt="Screenshot from the Tensorflow Playground page. Output of the final unit." width="80%" />
 <p class="caption">
 Figure 5.16: Screenshot from the Tensorflow Playground page. Output of the final unit.
@@ -641,7 +656,7 @@ be more powerful and generalise better.</p>
 f(x_1, \cdots, x_p, w_1, \cdots, w_q) = (y_1,\cdots, y_r)
 \]</span></p>
 <p>An example of the graph of operations for <strong>evaluating</strong> the model is presented
-next in Fig.<a href="feedforward-neural-networks.html#fig:nn-dag-evaluation">5.17</a>. In this graph, the units are not
+next in Fig. <a href="feedforward-neural-networks.html#fig:nn-dag-evaluation">5.17</a>. In this graph, the units are not
 neuron-types but simply some arbitrary functions. For instance we could have
 defined <span class="math inline">\(u_7\)</span> as <span class="math inline">\(u_7: (u_1,u_2,u_3,u_4) \mapsto \cos(u_1+u_2+u_3)\exp(-2u_4)\)</span>
 and <span class="math inline">\(u_8\)</span> as <span class="math inline">\(u_8: (u_1,u_2,u_3,u_4) \mapsto \sin(u_1+u_2+u_3)\exp(-3u_4)\)</span>.</p>
@@ -664,7 +679,7 @@ E({\bf w}) = \sum_{i=1}^n e(f({\bf x}_i, {\bf w}), {\bf y}_i),
 where <span class="math inline">\(e(f({\bf x}_i, {\bf w}), {\bf y}_i)\)</span> is the loss for an individual
 observation <span class="math inline">\({\bf x}_i\)</span>.</p>
 <p>Thus we can build a graph of operations for training a single observation (see
-Fig.<a href="feedforward-neural-networks.html#fig:nn-graph-training">5.18</a>). It is the same graph as for evaluation but
+Fig. <a href="feedforward-neural-networks.html#fig:nn-graph-training">5.18</a>). It is the same graph as for evaluation but
 with all outputs units connected to a loss function unit.</p>
 <div class="figure"><span style="display:block;" id="fig:nn-graph-training"></span>
 <img src="tikz-figures/nn-training-0.svg" alt="Example of a graph of operations for neural net training." width="80%" />
@@ -740,7 +755,7 @@ combining the intermediate gradients <span class="math inline">\(\frac{dz}{dy}\)
 \frac{\partial z}{\partial x} = \sum_k \frac{\partial z}{\partial u_k} \frac{\partial u_k}{\partial x} 
 \end{equation}\]</span></p>
 <div class="example">
-<p><span id="exm:unnamed-chunk-53" class="example"><strong>Example 5.1  </strong></span>Assume that <span class="math inline">\(u(x, y) = x^2 + y^2\)</span>, <span class="math inline">\(y(r, t) = r \sin(t)\)</span> and <span class="math inline">\(x(r,t) = r \cos(t)\)</span>,</p>
+<p><span id="exm:unnamed-chunk-52" class="example"><strong>Example 5.1  </strong></span>Assume that <span class="math inline">\(u(x, y) = x^2 + y^2\)</span>, <span class="math inline">\(y(r, t) = r \sin(t)\)</span> and <span class="math inline">\(x(r,t) = r \cos(t)\)</span>,</p>
 <p><span class="math display">\[\begin{split}
 {\frac  {\partial u}{\partial r}} &amp;={\frac  {\partial u}{\partial x}}{\frac  {\partial x}{\partial r}}+{\frac  {\partial u}{\partial y}}{\frac  {\partial y}{\partial r}} \\ &amp;=(2x)(\cos(t))+(2y)(\sin(t)) \\ &amp;=2r(\sin ^{2}(t)+\cos^2(t))\\&amp;= 2r
 \end{split}
@@ -751,7 +766,7 @@ combining the intermediate gradients <span class="math inline">\(\frac{dz}{dy}\)
 <h3><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule<a href="feedforward-neural-networks.html#back-propagating-with-the-chain-rule" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s come back to our neural net example and let’s see how the
 chain-rule can be used to back-propagate the differentiation.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-54"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-53"></span>
 <img src="tikz-figures/nn-training-1.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.19: Backpropagation.
@@ -771,7 +786,7 @@ then
 \frac{\partial e}{\partial u_{12}} = 2(u_{12} - a) \quad, \frac{\partial e}{\partial u_{13}} = 2(u_{13} - b)
 \quad, \frac{\partial e}{\partial u_{14}} = 2(u_{14} - c).
 \]</span></p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-55"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-54"></span>
 <img src="tikz-figures/nn-training-2.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.20: Backpropagation.
@@ -838,13 +853,13 @@ each node at a time.</p>
  \frac{\partial u_{9}}{\partial u_{4}} \frac{\partial e}{\partial u_{9}}
  \end{split}
 \]</span></p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-56"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-55"></span>
 <img src="tikz-figures/nn-training-3.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.21: Backpropagation.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-57"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-56"></span>
 <img src="tikz-figures/nn-training-4.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.22: Backpropagation.
@@ -876,7 +891,7 @@ network architectures it is <span class="math inline">\(\mathcal{O}(\mathrm{numb
 <p>Hochreiter, S. (1991). Untersuchungen zu dynamischen neuronalen Netzen (PDF) (diploma thesis). Technical University Munich, Institute of Computer Science.</p>
 </blockquote>
 <p>Consider training the following deep network with 6 hidden layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-58"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-57"></span>
 <img src="tikz-figures/nn-vanishing-gradients.svg" alt="Backpropagation." width="90%" />
 <p class="caption">
 Figure 5.23: Backpropagation.
@@ -888,8 +903,8 @@ Figure 5.23: Backpropagation.
 \]</span>
 It is a product, so if any of <span class="math inline">\(\left|\frac{de}{du_6}\right|, \dots, \left|\frac{du_1}{dw}\right|\)</span>
 is near zero, then the resulting gradient will also be near zero.</p>
-<p>In Fig.<a href="feedforward-neural-networks.html#fig:derivative-sigmoid">5.24</a>, Fig.<a href="feedforward-neural-networks.html#fig:derivative-tanh">5.25</a>
-and Fig.<a href="feedforward-neural-networks.html#fig:derivative-relu">5.26</a> are shown the derivatives of some
+<p>In Fig. <a href="feedforward-neural-networks.html#fig:derivative-sigmoid">5.24</a>, Fig. <a href="feedforward-neural-networks.html#fig:derivative-tanh">5.25</a>
+and Fig. <a href="feedforward-neural-networks.html#fig:derivative-relu">5.26</a> are shown the derivatives of some
 popular activation functions.</p>
 <div class="figure"><span style="display:block;" id="fig:derivative-sigmoid"></span>
 <img src="figures/derivative-activation-sigmoid.svg" alt="Derivative of the sigmoid activation function." width="40%" />
@@ -982,13 +997,13 @@ steps.</p>
 <p>Note that after each epoch the samples are usually shuffled so as to
 avoid cyclical repetitions.</p>
 </div>
-<div id="more-adavanced-gradient-descent-optimizers" class="section level3 hasAnchor" number="5.8.2">
-<h3><span class="header-section-number">5.8.2</span> More Adavanced Gradient Descent Optimizers<a href="feedforward-neural-networks.html#more-adavanced-gradient-descent-optimizers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="more-advanced-gradient-descent-optimizers" class="section level3 hasAnchor" number="5.8.2">
+<h3><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimizers<a href="feedforward-neural-networks.html#more-advanced-gradient-descent-optimizers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sometimes the vanilla gradient descent is not the most efficient
 way. In this example the loss function forms a deep and long
 valley. In this scenario the gradient descent is not very efficient at
 reaching the minimum.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-59"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-58"></span>
 <img src="figures/SGD-example.svg" alt="Illustration of a Stochastic Gradient Descent." width="60%" />
 <p class="caption">
 Figure 5.27: Illustration of a Stochastic Gradient Descent.
@@ -1035,7 +1050,8 @@ particular weight <span class="math inline">\(w_i\)</span>, we simply add a pena
   E&#39;({\bf w}) = E({\bf w}) + \lambda |w_i|
 \]</span></p>
 <p>L1 regularisation can have the desirable effect of settings weights
-<span class="math inline">\(w_i\)</span> to zero and thus simplifying the network.</p>
+<span class="math inline">\(w_i\)</span> to zero and thus simplifying the network (see note
+<a href="notes.html#note:l1-induces-sparsity">A.2</a>).</p>
 <blockquote>
 <p><a href="https://keras.io/api/layers/regularization_layers/" class="uri">https://keras.io/api/layers/regularization_layers/</a></p>
 </blockquote>
