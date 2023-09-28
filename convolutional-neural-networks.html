@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-21" />
+<meta name="date" content="2023-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,9 +229,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also"><i class="fa fa-check"></i><b>3.2.1</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#svm"><i class="fa fa-check"></i><b>3.3</b> SVM</a></li>
+<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#linear-svm"><i class="fa fa-check"></i><b>3.3</b> Linear SVM</a></li>
 <li class="chapter" data-level="3.4" data-path="know-your-classics.html"><a href="know-your-classics.html#no-free-lunch-theorem"><i class="fa fa-check"></i><b>3.4</b> No Free-Lunch Theorem</a></li>
-<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a></li>
+<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="know-your-classics.html"><a href="know-your-classics.html#the-problem-with-feature-expansions"><i class="fa fa-check"></i><b>3.5.1</b> The Problem with Feature Expansions</a></li>
+<li class="chapter" data-level="3.5.2" data-path="know-your-classics.html"><a href="know-your-classics.html#step-1-re-parameterisation"><i class="fa fa-check"></i><b>3.5.2</b> Step 1: re-parameterisation</a></li>
+<li class="chapter" data-level="3.5.3" data-path="know-your-classics.html"><a href="know-your-classics.html#step-2-kernel-function"><i class="fa fa-check"></i><b>3.5.3</b> Step 2: Kernel Function</a></li>
+<li class="chapter" data-level="3.5.4" data-path="know-your-classics.html"><a href="know-your-classics.html#understanding-the-rbf"><i class="fa fa-check"></i><b>3.5.4</b> Understanding the RBF</a></li>
+<li class="chapter" data-level="3.5.5" data-path="know-your-classics.html"><a href="know-your-classics.html#support-vectors"><i class="fa fa-check"></i><b>3.5.5</b> Support Vectors</a></li>
+<li class="chapter" data-level="3.5.6" data-path="know-your-classics.html"><a href="know-your-classics.html#what-does-it-look-like"><i class="fa fa-check"></i><b>3.5.6</b> What does it look like?</a></li>
+<li class="chapter" data-level="3.5.7" data-path="know-your-classics.html"><a href="know-your-classics.html#remarks"><i class="fa fa-check"></i><b>3.5.7</b> Remarks</a></li>
+</ul></li>
 <li class="chapter" data-level="3.6" data-path="know-your-classics.html"><a href="know-your-classics.html#take-away-2"><i class="fa fa-check"></i><b>3.6</b> Take Away</a>
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also-1"><i class="fa fa-check"></i><b>3.6.1</b> See Also</a></li>
@@ -392,7 +401,7 @@ applied on the MNIST dataset.</p>
 <h2><span class="header-section-number">6.1</span> Convolution Filters<a href="convolutional-neural-networks.html#convolution-filters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall that in dense layers, every unit in the layer is
 connected to every unit in the adjacent layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-59"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-60"></span>
 <img src="tikz-figures/nn-dag-deep-ml-perceptron.svg" alt="Deep Neural Network in a Multi-Layer Perceptron Layout. " width="79.4%" />
 <p class="caption">
 Figure 6.1: Deep Neural Network in a Multi-Layer Perceptron Layout.
@@ -405,7 +414,7 @@ the input layer will be a multidimensional array, or <strong>tensor</strong>,
 containing <code>width</code> <span class="math inline">\(\times\)</span> <code>height</code> <span class="math inline">\(\times\)</span> 3 input units.</p>
 <p>If the next layer is of the same size, then we have up to <span class="math inline">\(({\tt width}\times {\tt height}\times 3)^2\)</span> weights to train, which can
 become very large very quickly.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-60"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-61"></span>
 <img src="tikz-figures/cnn-intro1.svg" alt="Dense Layer on Images. " width="79.4%" />
 <p class="caption">
 Figure 6.2: Dense Layer on Images.
@@ -419,7 +428,7 @@ of this.</p>
 <p>This is what is done in <strong>convolutional neural networks</strong>, where the
 units in the next layer are only connected to their neighbours in the
 input layer. In this case the neighbourhood is defined as a <span class="math inline">\(5\times 5\)</span> window.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-61"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-62"></span>
 <img src="tikz-figures/cnn-intro2.svg" alt="Convolution Network Architecture. " width="79.4%" />
 <p class="caption">
 Figure 6.3: Convolution Network Architecture.
@@ -489,7 +498,7 @@ picture of size <span class="math inline">\({\tt 439}\times {\tt 588}\times {\tt
 <span id="cb2-3"><a href="convolutional-neural-networks.html#cb2-3" tabindex="-1"></a>                      padding<span class="op">=</span><span class="st">&#39;valid&#39;</span>)(x) </span></code></pre></div>
 <p>This convolution layer is defined by <span class="math inline">\({\tt 3}\times {\tt 6}\times {\tt 5}\times {\tt 5} = {\tt 450}\)</span> weights. This is only a
 fraction of what would be required in a dense layer.</p>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:convoutput"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -526,10 +535,9 @@ original
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" Example of convolution outputs" />
-<div class="figcaption"> Example of convolution outputs</div>
-</div>
+<p class="caption">
+Figure 6.4:  Example of convolution outputs]
+</p>
 </div>
 </div>
 </div>
@@ -550,7 +558,7 @@ are processed and kept. A stride of 2 means that only every second
 pixel in both x and y directions are kept.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="convolutional-neural-networks.html#cb3-1" tabindex="-1"></a>x <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">16</span>, <span class="dv">1</span>))</span>
 <span id="cb3-2"><a href="convolutional-neural-networks.html#cb3-2" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">1</span>, [<span class="dv">3</span>, <span class="dv">3</span>], padding<span class="op">=</span><span class="st">&#39;valid&#39;</span>, stride<span class="op">=</span><span class="dv">2</span>)(x) </span></code></pre></div>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:stride"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -575,10 +583,9 @@ pixel in both x and y directions are kept.</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" Srides of 2, 3, 4" />
-<div class="figcaption"> Srides of 2, 3, 4</div>
-</div>
+<p class="caption">
+Figure 6.5:  Srides of 2, 3, 4
+</p>
 </div>
 </div>
 <div id="max-pooling" class="section level3 hasAnchor" number="6.3.2">
@@ -590,7 +597,7 @@ layer operates a sub-sampling of the picture.</p>
 pooling, stochastic pooling.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="convolutional-neural-networks.html#cb4-1" tabindex="-1"></a>MaxPooling2D(pool_size<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span></code></pre></div>
 <p>The maximum of each block is kept.</p>
-<div class="figure" style="width:50%">
+<div class="figure" style="width:50%"><span style="display:block;" id="fig:maxpooling"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -601,10 +608,9 @@ pooling, stochastic pooling.</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" MaxPooling" />
-<div class="figcaption"> MaxPooling</div>
-</div>
+<p class="caption">
+Figure 6.6:  MaxPooling
+</p>
 </div>
 </div>
 <div id="example-4" class="section level3 unnumbered hasAnchor">
@@ -637,7 +643,7 @@ classification:</p>
 as we go deeper, we built more and more features that are increasingly
 more complex.</p>
 <p>Next are presented some of the early landmark convolutional networks.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-67"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
 <img src="figures/LeNet-5.jpg" alt="LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets." width="80%" />
 <p class="caption">
 Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutional layers in neural nets.
@@ -647,7 +653,7 @@ Figure 6.7: LeNet-5 (LeCun, 1998). The network pioneered the use of convolutiona
 <p>LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998).
 Gradient-based learning applied to document recognition.</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-68"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-69"></span>
 <img src="figures/alexnet.jpg" alt="AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution." width="80%" />
 <p class="caption">
 Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of the ILSVRC-2012 competition for object recognition. This is the network that started the deep learning revolution.
@@ -657,7 +663,7 @@ Figure 6.8: AlexNet (Alex Krizhevsky et al., 2012). This is the winning entry of
 <p>Alex Krizhevsky, Ilya Sutskever, Geoffrey E Hinton (2012)
 Imagenet classification with deep convolutional neural networks.</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-69"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-70"></span>
 <img src="figures/vgg.jpg" alt="VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition." width="80%" />
 <p class="caption">
 Figure 6.9: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer network used by the VGG team in the ILSVRC-2014 competition for object recognition.
@@ -710,12 +716,11 @@ the number of channels/features per pixel is 512.</p>
 based on the visual features of <code>block5_pool</code>.</p>
 <p>Let’s take the following input image (tensor size <span class="math inline">\(224\times 224 \times 3\)</span>, image
 has been resized to match that dimension):</p>
-<div class="float">
-<img src="figures/bird-crop.jpg" alt="original image" />
-<div class="figcaption">original image</div>
+<div class="figure">
+<p><img src="figures/bird-crop.jpg" alt="original image" /></p>
 </div>
 <p>Below are shown the output of some of the layers of this network.</p>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:block1-conv2"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -747,13 +752,12 @@ has been resized to match that dimension):</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" A few output images from the 64 filters of block1_conv2 (size 224 \times 224 \times 64)" />
-<div class="figcaption"> A few output images from the 64 filters of <code>block1_conv2</code> (size
-<span class="math inline">\(224 \times 224 \times 64\)</span>)</div>
+<p class="caption">
+Figure 6.10:  A few output images from the 64 filters
+of <code>block1_conv2</code> (size <span class="math inline">\(224 \times 224 \times 64\)</span>)
+</p>
 </div>
-</div>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:block2-conv2"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -785,13 +789,12 @@ has been resized to match that dimension):</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" A few output images from the 64 filters of block2_conv2 (size 224 \times 224 \times 64)" />
-<div class="figcaption"> A few output images from the 64 filters of <code>block2_conv2</code> (size
-<span class="math inline">\(224 \times 224 \times 64\)</span>)</div>
+<p class="caption">
+Figure 6.11:  A few output images from the 64 filters
+of <code>block2_conv2</code> (size <span class="math inline">\(224 \times 224 \times 64\)</span>)
+</p>
 </div>
-</div>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:block3-conv3"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -823,13 +826,12 @@ has been resized to match that dimension):</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" A few output images from the 64 filters of block3_conv3 (size 224 \times 224 \times 64)" />
-<div class="figcaption"> A few output images from the 64 filters of <code>block3_conv3</code> (size
-<span class="math inline">\(224 \times 224 \times 64\)</span>)</div>
+<p class="caption">
+Figure 6.12:  A few output images from the 64 filters of <code>block3_conv3</code> (size
+<span class="math inline">\(224 \times 224 \times 64\)</span>)
+</p>
 </div>
-</div>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:block4-conv3"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -861,13 +863,12 @@ has been resized to match that dimension):</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" A few output images from the 64 filters of block4_conv3 (size 224 \times 224 \times 64)" />
-<div class="figcaption"> A few output images from the 64 filters of <code>block4_conv3</code> (size
-<span class="math inline">\(224 \times 224 \times 64\)</span>)</div>
+<p class="caption">
+Figure 6.13:  A few output images from the 64 filters of <code>block4_conv3</code> (size
+<span class="math inline">\(224 \times 224 \times 64\)</span>)
+</p>
 </div>
-</div>
-<div class="figure">
+<div class="figure"><span style="display:block;" id="fig:block5-conv3"></span>
 <table class="transparent" style="table-layout: fixed;">
 <tr>
 <td>
@@ -899,11 +900,10 @@ has been resized to match that dimension):</p>
 </td>
 </tr>
 </table>
-<div class="float">
-<img src="1x1.png" alt=" A few output images from the 64 filters of block5_conv3 (size 224 \times 224 \times 64)" />
-<div class="figcaption"> A few output images from the 64 filters of <code>block5_conv3</code> (size
-<span class="math inline">\(224 \times 224 \times 64\)</span>)</div>
-</div>
+<p class="caption">
+Figure 6.14:  A few output images from the 64 filters of <code>block5_conv3</code> (size
+<span class="math inline">\(224 \times 224 \times 64\)</span>)
+</p>
 </div>
 <p>As you can see, the output of the filters become more and more sparse,
 that is, for the last layer, most of entries are filled with zeros and

@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-21" />
+<meta name="date" content="2023-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,9 +229,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also"><i class="fa fa-check"></i><b>3.2.1</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#svm"><i class="fa fa-check"></i><b>3.3</b> SVM</a></li>
+<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#linear-svm"><i class="fa fa-check"></i><b>3.3</b> Linear SVM</a></li>
 <li class="chapter" data-level="3.4" data-path="know-your-classics.html"><a href="know-your-classics.html#no-free-lunch-theorem"><i class="fa fa-check"></i><b>3.4</b> No Free-Lunch Theorem</a></li>
-<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a></li>
+<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="know-your-classics.html"><a href="know-your-classics.html#the-problem-with-feature-expansions"><i class="fa fa-check"></i><b>3.5.1</b> The Problem with Feature Expansions</a></li>
+<li class="chapter" data-level="3.5.2" data-path="know-your-classics.html"><a href="know-your-classics.html#step-1-re-parameterisation"><i class="fa fa-check"></i><b>3.5.2</b> Step 1: re-parameterisation</a></li>
+<li class="chapter" data-level="3.5.3" data-path="know-your-classics.html"><a href="know-your-classics.html#step-2-kernel-function"><i class="fa fa-check"></i><b>3.5.3</b> Step 2: Kernel Function</a></li>
+<li class="chapter" data-level="3.5.4" data-path="know-your-classics.html"><a href="know-your-classics.html#understanding-the-rbf"><i class="fa fa-check"></i><b>3.5.4</b> Understanding the RBF</a></li>
+<li class="chapter" data-level="3.5.5" data-path="know-your-classics.html"><a href="know-your-classics.html#support-vectors"><i class="fa fa-check"></i><b>3.5.5</b> Support Vectors</a></li>
+<li class="chapter" data-level="3.5.6" data-path="know-your-classics.html"><a href="know-your-classics.html#what-does-it-look-like"><i class="fa fa-check"></i><b>3.5.6</b> What does it look like?</a></li>
+<li class="chapter" data-level="3.5.7" data-path="know-your-classics.html"><a href="know-your-classics.html#remarks"><i class="fa fa-check"></i><b>3.5.7</b> Remarks</a></li>
+</ul></li>
 <li class="chapter" data-level="3.6" data-path="know-your-classics.html"><a href="know-your-classics.html#take-away-2"><i class="fa fa-check"></i><b>3.6</b> Take Away</a>
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also-1"><i class="fa fa-check"></i><b>3.6.1</b> See Also</a></li>
@@ -424,26 +433,26 @@ papers.</p>
 neuron-like units. A <strong>neuron unit</strong> it a particular type of unit (or function)
 that first takes a linear combination of its inputs and then applies a
 non-linear function <span class="math inline">\(f\)</span>, called an <strong>activation function</strong>:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-43"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-44"></span>
 <img src="tikz-figures/nn-dag-neuron.svg" alt="Neuron Model" width="100%" />
 <p class="caption">
 Figure 5.2: Neuron Model
 </p>
 </div>
 <p>Many activation functions exist. Here are some of the most popular:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-44"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-45"></span>
 <img src="figures/activation-sigmoid.svg" alt="Sigmoid Activation Function: $z \mapsto 1/(1+\mathrm{exp}(-z))$" width="60%" />
 <p class="caption">
 Figure 5.3: Sigmoid Activation Function: <span class="math inline">\(z \mapsto 1/(1+\mathrm{exp}(-z))\)</span>
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-45"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-46"></span>
 <img src="figures/activation-tanh.svg" alt="Tanh Activation Function: $z \mapsto \mathrm{tanh}(z)$" width="60%" />
 <p class="caption">
 Figure 5.4: Tanh Activation Function: <span class="math inline">\(z \mapsto \mathrm{tanh}(z)\)</span>
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-46"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-47"></span>
 <img src="figures/activation-relu.svg" alt="Relu Activation Function: $z\mapsto \max(0,z)$. Note that the activation function is not differentiable at $z=0$, but this turns out not to be a problem in practice." width="60%" />
 <p class="caption">
 Figure 5.5: Relu Activation Function: <span class="math inline">\(z\mapsto \max(0,z)\)</span>. Note that the activation function is not differentiable at <span class="math inline">\(z=0\)</span>, but this turns out not to be a problem in practice.
@@ -471,7 +480,7 @@ implementation of its gradient (see later).</p>
 neurons. We know for instance that the input signals from the
 dendrites are indeed combined together to go through something
 resembling a ReLU activation function.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-47"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-48"></span>
 <img src="figures/actual-neuron.svg" alt="Representation of a Biological Neuron" width="100%" />
 <p class="caption">
 Figure 5.6: Representation of a Biological Neuron
@@ -624,25 +633,25 @@ layer and even more complex features in the third hidden layer.</p>
 Figure 5.12: Screenshot from the Tensorflow Playground page.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-48"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-49"></span>
 <img src="figures/playground-tensorflow.002.jpg" alt="Screenshot from the Tensorflow Playground page. Output of one of the Layer 1 neurons." width="80%" />
 <p class="caption">
 Figure 5.13: Screenshot from the Tensorflow Playground page. Output of one of the Layer 1 neurons.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-49"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-50"></span>
 <img src="figures/playground-tensorflow.003.jpg" alt="Screenshot from the Tensorflow Playground page. Output of one of the Layer 2 neurons." width="80%" />
 <p class="caption">
 Figure 5.14: Screenshot from the Tensorflow Playground page. Output of one of the Layer 2 neurons.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-50"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-51"></span>
 <img src="figures/playground-tensorflow.004.jpg" alt="Screenshot from the Tensorflow Playground page. Output of one of the Layer 3 neurons." width="80%" />
 <p class="caption">
 Figure 5.15: Screenshot from the Tensorflow Playground page. Output of one of the Layer 3 neurons.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-51"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-52"></span>
 <img src="figures/playground-tensorflow.005.jpg" alt="Screenshot from the Tensorflow Playground page. Output of the final unit." width="80%" />
 <p class="caption">
 Figure 5.16: Screenshot from the Tensorflow Playground page. Output of the final unit.
@@ -761,7 +770,7 @@ combining the intermediate gradients <span class="math inline">\(\frac{dz}{dy}\)
 \frac{\partial z}{\partial x} = \sum_k \frac{\partial z}{\partial u_k} \frac{\partial u_k}{\partial x}
 \end{equation}\]</span></p>
 <div class="example">
-<p><span id="exm:unnamed-chunk-52" class="example"><strong>Example 5.1  </strong></span>Assume that <span class="math inline">\(u(x, y) = x^2 + y^2\)</span>, <span class="math inline">\(y(r, t) = r \sin(t)\)</span> and <span class="math inline">\(x(r,t) = r \cos(t)\)</span>,</p>
+<p><span id="exm:unnamed-chunk-53" class="example"><strong>Example 5.1  </strong></span>Assume that <span class="math inline">\(u(x, y) = x^2 + y^2\)</span>, <span class="math inline">\(y(r, t) = r \sin(t)\)</span> and <span class="math inline">\(x(r,t) = r \cos(t)\)</span>,</p>
 <p><span class="math display">\[\begin{split}
 {\frac  {\partial u}{\partial r}} &amp;={\frac  {\partial u}{\partial x}}{\frac  {\partial x}{\partial r}}+{\frac  {\partial u}{\partial y}}{\frac  {\partial y}{\partial r}} \\ &amp;=(2x)(\cos(t))+(2y)(\sin(t)) \\ &amp;=2r(\sin ^{2}(t)+\cos^2(t))\\&amp;= 2r
 \end{split}
@@ -772,7 +781,7 @@ combining the intermediate gradients <span class="math inline">\(\frac{dz}{dy}\)
 <h3><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule<a href="feedforward-neural-networks.html#back-propagating-with-the-chain-rule" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s come back to our neural net example and let’s see how the
 chain-rule can be used to back-propagate the differentiation.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-53"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-54"></span>
 <img src="tikz-figures/nn-training-1.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.19: Backpropagation.
@@ -792,7 +801,7 @@ then
 \frac{\partial e}{\partial u_{12}} = 2(u_{12} - a) \quad, \frac{\partial e}{\partial u_{13}} = 2(u_{13} - b)
 \quad, \frac{\partial e}{\partial u_{14}} = 2(u_{14} - c).
 \]</span></p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-54"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-55"></span>
 <img src="tikz-figures/nn-training-2.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.20: Backpropagation.
@@ -859,13 +868,13 @@ each node at a time.</p>
 \frac{\partial u_{9}}{\partial u_{4}} \frac{\partial e}{\partial u_{9}}
 \end{split}
 \]</span></p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-55"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-56"></span>
 <img src="tikz-figures/nn-training-3.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.21: Backpropagation.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-56"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-57"></span>
 <img src="tikz-figures/nn-training-4.svg" alt="Backpropagation." width="60%" />
 <p class="caption">
 Figure 5.22: Backpropagation.
@@ -897,7 +906,7 @@ network architectures it is <span class="math inline">\(\mathcal{O}(\mathrm{numb
 <p>Hochreiter, S. (1991). Untersuchungen zu dynamischen neuronalen Netzen (PDF) (diploma thesis). Technical University Munich, Institute of Computer Science.</p>
 </blockquote>
 <p>Consider training the following deep network with 6 hidden layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-57"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-58"></span>
 <img src="tikz-figures/nn-vanishing-gradients.svg" alt="Backpropagation." width="90%" />
 <p class="caption">
 Figure 5.23: Backpropagation.
@@ -1009,7 +1018,7 @@ avoid cyclical repetitions.</p>
 way. In this example the loss function forms a deep and long
 valley. In this scenario the gradient descent is not very efficient at
 reaching the minimum.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-58"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-59"></span>
 <img src="figures/SGD-example.svg" alt="Illustration of a Stochastic Gradient Descent." width="60%" />
 <p class="caption">
 Figure 5.27: Illustration of a Stochastic Gradient Descent.

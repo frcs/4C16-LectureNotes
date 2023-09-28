@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-21" />
+<meta name="date" content="2023-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -229,9 +229,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also"><i class="fa fa-check"></i><b>3.2.1</b> See Also</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#svm"><i class="fa fa-check"></i><b>3.3</b> SVM</a></li>
+<li class="chapter" data-level="3.3" data-path="know-your-classics.html"><a href="know-your-classics.html#linear-svm"><i class="fa fa-check"></i><b>3.3</b> Linear SVM</a></li>
 <li class="chapter" data-level="3.4" data-path="know-your-classics.html"><a href="know-your-classics.html#no-free-lunch-theorem"><i class="fa fa-check"></i><b>3.4</b> No Free-Lunch Theorem</a></li>
-<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a></li>
+<li class="chapter" data-level="3.5" data-path="know-your-classics.html"><a href="know-your-classics.html#kernel-trick"><i class="fa fa-check"></i><b>3.5</b> Kernel Trick</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="know-your-classics.html"><a href="know-your-classics.html#the-problem-with-feature-expansions"><i class="fa fa-check"></i><b>3.5.1</b> The Problem with Feature Expansions</a></li>
+<li class="chapter" data-level="3.5.2" data-path="know-your-classics.html"><a href="know-your-classics.html#step-1-re-parameterisation"><i class="fa fa-check"></i><b>3.5.2</b> Step 1: re-parameterisation</a></li>
+<li class="chapter" data-level="3.5.3" data-path="know-your-classics.html"><a href="know-your-classics.html#step-2-kernel-function"><i class="fa fa-check"></i><b>3.5.3</b> Step 2: Kernel Function</a></li>
+<li class="chapter" data-level="3.5.4" data-path="know-your-classics.html"><a href="know-your-classics.html#understanding-the-rbf"><i class="fa fa-check"></i><b>3.5.4</b> Understanding the RBF</a></li>
+<li class="chapter" data-level="3.5.5" data-path="know-your-classics.html"><a href="know-your-classics.html#support-vectors"><i class="fa fa-check"></i><b>3.5.5</b> Support Vectors</a></li>
+<li class="chapter" data-level="3.5.6" data-path="know-your-classics.html"><a href="know-your-classics.html#what-does-it-look-like"><i class="fa fa-check"></i><b>3.5.6</b> What does it look like?</a></li>
+<li class="chapter" data-level="3.5.7" data-path="know-your-classics.html"><a href="know-your-classics.html#remarks"><i class="fa fa-check"></i><b>3.5.7</b> Remarks</a></li>
+</ul></li>
 <li class="chapter" data-level="3.6" data-path="know-your-classics.html"><a href="know-your-classics.html#take-away-2"><i class="fa fa-check"></i><b>3.6</b> Take Away</a>
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="know-your-classics.html"><a href="know-your-classics.html#see-also-1"><i class="fa fa-check"></i><b>3.6.1</b> See Also</a></li>
@@ -480,8 +489,8 @@ Figure 3.5: In Decision Trees, the feature space is split along axes (eg. <span 
 <p><a href="https://www.youtube.com/watch?v=p17C9q2M00Q" class="uri">https://www.youtube.com/watch?v=p17C9q2M00Q</a></p>
 </div>
 </div>
-<div id="svm" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> SVM<a href="know-your-classics.html#svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="linear-svm" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Linear SVM<a href="know-your-classics.html#linear-svm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Until recently, <strong>Support Vector Machines</strong> were the most popular technique
 around.</p>
 <p>Like in Logistic Regression, SVM starts as a linear classifier:
@@ -525,6 +534,8 @@ Figure 3.7: No Free Lunch Theorem.
 </div>
 <div id="kernel-trick" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Kernel Trick<a href="know-your-classics.html#kernel-trick" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-problem-with-feature-expansions" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> The Problem with Feature Expansions<a href="know-your-classics.html#the-problem-with-feature-expansions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>SVM gained popularity when it became associated with the <strong>kernel trick</strong>.</p>
 <p>Recall that in linear regression, we managed to fit non-linear functions by
 augmenting the feature space with higher order polynomials of each the
@@ -577,6 +588,9 @@ of the original problem.</p>
 <p>The <strong>Kernel trick</strong> offers an elegant solution to this problem and allows us to
 use very complex mapping functions <span class="math inline">\(\phi\)</span> without having to ever explicitly
 compute them.</p>
+</div>
+<div id="step-1-re-parameterisation" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Step 1: re-parameterisation<a href="know-your-classics.html#step-1-re-parameterisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In most machine learning algorithms, the loss function usually depend
 on computing the score <span class="math inline">\({\bf x}^{\top}{\bf w}\)</span>. We can show (see note
 <a href="notes.html#note:kernel-trick">A.3</a>) that the optimal weights <span class="math inline">\(\hat{\bf w}\)</span> can
@@ -584,19 +598,27 @@ then be re-expressed in terms of the existing input feature vectors:</p>
 <p><span class="math display">\[
 \hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
 \]</span></p>
-<p>where <span class="math inline">\(\alpha_i\)</span> are new weights defining <span class="math inline">\({\bf w}\)</span> as a linear
-combination in the <span class="math inline">\({\bf x}_i\)</span> data points. The score <span class="math inline">\({\bf  x}^{\top}{\bf w}\)</span> can now be re-written as:</p>
+<p>where <span class="math inline">\(\alpha_i\)</span> are new weights defining <span class="math inline">\({\bf w}\)</span> as a linear combination in
+the <span class="math inline">\({\bf x}_i\)</span> data points.</p>
+<p>The score <span class="math inline">\({\bf  x}^{\top}{\bf w}\)</span> can now be re-written as:</p>
 <p><span class="math display">\[
   {\bf x}^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}^{\top} {\bf x}_i,
 \]</span></p>
 <p>where we note that the scalars <span class="math inline">\({\bf x}^{\top} {\bf x}_i\)</span> are
 dot-products between feature vectors.</p>
-<p>Now look at what happens when we use augmented features:</p>
+<p>These new weights can be seen as a re-parametrisation of <span class="math inline">\(\hat{\bf w}\)</span>, with the
+loss <span class="math inline">\(E({\bf w})\)</span> now being re-expressed as <span class="math inline">\(E({\boldsymbol\alpha})\)</span>. These new
+weights are sometimes called the dual coefficients in SVM.</p>
+<p>Apriori it looks like we are making things more complicated for ourselves (and
+it’s a bit true), but look at what happens when we use augmented features:</p>
 <p><span class="math display">\[
     \phi({\bf x})^{\top}{\bf w} = \sum_{i=1}^n \alpha_i \phi({\bf x})^{\top} \phi({\bf x}_i)
 \]</span></p>
 <p>To compute <span class="math inline">\(\phi({\bf x})^{\top}\hat{\bf w}\)</span>, we only ever need to know how to
 compute the dot products <span class="math inline">\(\phi({\bf x})^{\top} \phi({\bf x}_i)\)</span>.</p>
+</div>
+<div id="step-2-kernel-function" class="section level3 hasAnchor" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Step 2: Kernel Function<a href="know-your-classics.html#step-2-kernel-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Introducing the <strong>kernel function</strong> as
 <span class="math display">\[
 \kappa({\bf x}, {\bf z} ) = \phi({\bf x})^{\top} \phi({\bf z}),
@@ -627,33 +649,102 @@ dimensions, we only need vectors of size <span class="math inline">\(n\)</span> 
 \]</span></p>
 <p>The induced mapping <span class="math inline">\(\phi\)</span> is infinitely dimensional, but that’s OK
 because we never need to evaluate <span class="math inline">\(\phi({\bf x})\)</span>.</p>
+</div>
+<div id="understanding-the-rbf" class="section level3 hasAnchor" number="3.5.4">
+<h3><span class="header-section-number">3.5.4</span> Understanding the RBF<a href="know-your-classics.html#understanding-the-rbf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To have some intuition about these kernels, consider the kernel trick for a
+RBF kernel. The score for a particular observation <span class="math inline">\({\bf x}\)</span> is:
+<span class="math display">\[
+\mathrm{score}({\bf x}) = \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i)
+\]</span></p>
+<p>The kernel function <span class="math inline">\(\kappa({\bf u}, {\bf v}) = e^{- \gamma \| {\bf u} - {\bf v}\|^2 }\)</span>
+is a measure of similarity between observations. If both observations
+are similar, <span class="math inline">\(\kappa({\bf u}, {\bf v}) \approx 1\)</span>. If they are very different,
+<span class="math inline">\(\kappa({\bf u}, {\bf v}) \approx 0\)</span>. We can see it as a neighbourhood indicator
+function. If the observations are close, <span class="math inline">\(\kappa({\bf u}, {\bf v}) \approx 1\)</span>,
+else <span class="math inline">\(\kappa({\bf u}, {\bf v}) \approx 0\)</span>. The scale of this neighbourhood is
+controlled by <span class="math inline">\(\gamma\)</span>.</p>
+<p>(as you can imaging, this is less intuitive for other kernels)</p>
+<p>Let’s choose <span class="math inline">\(\alpha_i = 1\)</span> for positive observations and <span class="math inline">\(\alpha_i = -1\)</span> for
+negative observations. This is obviously not the optimal, but this is in fact
+close to what happens in SVM. We have now something resembling <span class="math inline">\(k\)</span>-NN. Indeed,
+look at the score:</p>
+<p><span class="math display">\[
+  \begin{aligned}
+    \mathrm{score}({\bf x}) &amp;= \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i)
+    \\
+    &amp;\approx \sum_{i \in \text{neighbours of ${\bf x}$}} \begin{cases} 1 &amp;
+      \text{if $y_i$ positive} \\ -1 &amp; \text{if  $y_i$  negative}
+    \end{cases} \\
+    &amp;\approx \text{nb of positive neighbours of ${\bf x}$}  - \text{nb of negative
+      neighbours  of ${\bf x}$}
+  \end{aligned}
+\]</span></p>
+<p>This makes sense: if <span class="math inline">\({\bf x}\)</span> has more positive than negative neighbours in the
+dataset, then its score should be high, and its prediction positive.</p>
+<p>Thus we have here something similar to <span class="math inline">\(k\)</span>-NN. The main difference is that
+instead of finding a fixed number of the <span class="math inline">\(k\)</span> closest neighbours, we consider all
+the neighbours within some radius (controlled by <span class="math inline">\(\gamma\)</span>).</p>
+</div>
+<div id="support-vectors" class="section level3 hasAnchor" number="3.5.5">
+<h3><span class="header-section-number">3.5.5</span> Support Vectors<a href="know-your-classics.html#support-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In SVM, the actual values of <span class="math inline">\(\hat{\alpha}_i\)</span> are estimated by ways of the
+minimisation of the Hinge loss.</p>
+<p>The optimisation falls outside of the scope of this course material. We could
+use Gradient Descent, but, as it turns out, the Hinge loss makes this problem a
+<em>quadratic programming problem</em> and we can use a solver for that. The good news
+is that we can find the global minimum without having to worry about convergence
+issues.</p>
+<p>After optimisation, we find that, indeed, <span class="math inline">\(-1\leq \hat{\alpha}_i \leq 1\)</span>, with
+the sign of <span class="math inline">\(\hat{\alpha}_i\)</span> indicating the class membership. This this thus
+following a similar idea to what was proposed previously.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-37"></span>
+<img src="figures/kernel-trick-alpha-rbf.svg" alt="SVM using a RBF kernel with support vectors" width="55%" />
+<p class="caption">
+Figure 3.9: SVM using a RBF kernel with support vectors
+</p>
+</div>
+<p>Above is an example using SVM-RBF, with contour lines of the score. The
+thickness of the outer circle for each observation <span class="math inline">\({\bf x}_i\)</span> is proportional
+to <span class="math inline">\(|\alpha_i| \leq 1\)</span> (no black circle means <span class="math inline">\(\alpha_i=0\)</span>).</p>
+<p>Only a fraction of the datapoints have non-null
+<span class="math inline">\(\alpha_i\)</span>. These special datapoints are called <strong>support vectors</strong>. They typically lie near the
+class boundary. Only these support vectors are required to compute predictions,
+which means that prediction can be made (a bit) more efficiently.</p>
+</div>
+<div id="what-does-it-look-like" class="section level3 hasAnchor" number="3.5.6">
+<h3><span class="header-section-number">3.5.6</span> What does it look like?<a href="know-your-classics.html#what-does-it-look-like" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-38"></span>
 <img src="figures/compare-classifiers-decision-boundary-SVM-poly.svg" alt="Decision Boundaries for SVM using a linear and polynomial kernels." width="100%" />
 <p class="caption">
-Figure 3.9: Decision Boundaries for SVM using a linear and polynomial kernels.
+Figure 3.10: Decision Boundaries for SVM using a linear and polynomial kernels.
 </p>
 </div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-38"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-39"></span>
 <img src="figures/compare-classifiers-decision-boundary-SVM-RBF.svg" alt="Decision Boundaries for SVM using Gaussian kernels. The value of gamma controls the smoothness of the boundary." width="100%" />
 <p class="caption">
-Figure 3.10: Decision Boundaries for SVM using Gaussian kernels. The value of gamma controls the smoothness of the boundary.
+Figure 3.11: Decision Boundaries for SVM using Gaussian kernels. The value of gamma controls the smoothness of the boundary.
 </p>
 </div>
+</div>
+<div id="remarks" class="section level3 hasAnchor" number="3.5.7">
+<h3><span class="header-section-number">3.5.7</span> Remarks<a href="know-your-classics.html#remarks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Support vector machines <strong>are not the only algorithm that can avail
 of the kernel trick</strong>. Many other linear models (including logistic
 regression) can be enhanced in this way. They are known
 as <strong>kernel methods</strong>.</p>
 <p>A major drawback to kernel methods is that the cost of evaluating the
 decision function is proportional to the number of training examples,
-because the <span class="math inline">\(i^{th}\)</span> example contributes a term <span class="math inline">\(\alpha_i \kappa({\bf  x},{\bf x}_i)\)</span> to the decision function.</p>
-<p>SVM somehow mitigates this by learning which examples contribute the most.
-These training examples are known as <strong>support vectors</strong>.</p>
+because the <span class="math inline">\(i^{th}\)</span> observation contributes a term <span class="math inline">\(\alpha_i \kappa({\bf  x},{\bf x}_i)\)</span> to the decision function.</p>
+<p>SVM somehow mitigates this by learning which examples contribute the most (the
+<strong>support vectors</strong>).</p>
 <p>The cost of training is however still high for large datasets
 (<em>eg.</em> with tens of thousands of datapoints).</p>
 <p>Evidence that deep learning could outperform kernel SVM on large datasets
 emerged in 2006 when team lead by G. Hinton demonstrated that a neural network
 on the MNIST benchmark. The real tipping point occured in 2012 with <span class="citation">(<a href="#ref-alexnet">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>
 (see introduction).</p>
+</div>
 </div>
 <div id="take-away-2" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Take Away<a href="know-your-classics.html#take-away-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -663,7 +754,7 @@ started to surpass all other techniques.</p>
 elegant way of transforming input features into more complex features that can
 then be linearly separated.</p>
 <p>The problem with kernel techniques is that they cannot deal efficiently with
-large datasets (eg. more than 10’s of thousands of observations)</p>
+large datasets (eg. more than 10’s of thousands of observations).</p>
 <div id="see-also-1" class="section level3 hasAnchor" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> See Also<a href="know-your-classics.html#see-also-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The topic is related to Gaussian Processes, Reproducing kernel Hilbert spaces,
