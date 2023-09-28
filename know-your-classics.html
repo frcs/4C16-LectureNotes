@@ -235,7 +235,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="know-your-classics.html"><a href="know-your-classics.html#the-problem-with-feature-expansions"><i class="fa fa-check"></i><b>3.5.1</b> The Problem with Feature Expansions</a></li>
 <li class="chapter" data-level="3.5.2" data-path="know-your-classics.html"><a href="know-your-classics.html#step-1-re-parameterisation"><i class="fa fa-check"></i><b>3.5.2</b> Step 1: re-parameterisation</a></li>
-<li class="chapter" data-level="3.5.3" data-path="know-your-classics.html"><a href="know-your-classics.html#step-2-kernel-function"><i class="fa fa-check"></i><b>3.5.3</b> Step 2: Kernel Function</a></li>
+<li class="chapter" data-level="3.5.3" data-path="know-your-classics.html"><a href="know-your-classics.html#step-2-the-kernel-functions"><i class="fa fa-check"></i><b>3.5.3</b> Step 2: the Kernel Functions</a></li>
 <li class="chapter" data-level="3.5.4" data-path="know-your-classics.html"><a href="know-your-classics.html#understanding-the-rbf"><i class="fa fa-check"></i><b>3.5.4</b> Understanding the RBF</a></li>
 <li class="chapter" data-level="3.5.5" data-path="know-your-classics.html"><a href="know-your-classics.html#support-vectors"><i class="fa fa-check"></i><b>3.5.5</b> Support Vectors</a></li>
 <li class="chapter" data-level="3.5.6" data-path="know-your-classics.html"><a href="know-your-classics.html#what-does-it-look-like"><i class="fa fa-check"></i><b>3.5.6</b> What does it look like?</a></li>
@@ -534,14 +534,14 @@ Figure 3.7: No Free Lunch Theorem.
 </div>
 <div id="kernel-trick" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Kernel Trick<a href="know-your-classics.html#kernel-trick" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>SVM gained popularity when it became associated with the <strong>kernel trick</strong>.</p>
 <div id="the-problem-with-feature-expansions" class="section level3 hasAnchor" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> The Problem with Feature Expansions<a href="know-your-classics.html#the-problem-with-feature-expansions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>SVM gained popularity when it became associated with the <strong>kernel trick</strong>.</p>
 <p>Recall that in linear regression, we managed to fit non-linear functions by
 augmenting the feature space with higher order polynomials of each the
 observations, e.g, <span class="math inline">\(x\)</span>, <span class="math inline">\(x^2\)</span>, <span class="math inline">\(x^3\)</span>, etc.</p>
 <p>What we’ve done is to map the original features into a higher
-dimensional feature space: <span class="math inline">\(\phi: {\bf x}\rightarrow \phi({\bf x})\)</span>. In our case we had:</p>
+dimensional feature space: <span class="math inline">\(\phi: {\bf x}\mapsto \phi({\bf x})\)</span>. In our case we had:</p>
 <p><span class="math display">\[
 \phi ({x}) = \left( \begin{matrix} 1 \\ x \\ x^2 \\ x^3 \\ \vdots
 \end{matrix} \right)
@@ -617,11 +617,11 @@ it’s a bit true), but look at what happens when we use augmented features:</p>
 <p>To compute <span class="math inline">\(\phi({\bf x})^{\top}\hat{\bf w}\)</span>, we only ever need to know how to
 compute the dot products <span class="math inline">\(\phi({\bf x})^{\top} \phi({\bf x}_i)\)</span>.</p>
 </div>
-<div id="step-2-kernel-function" class="section level3 hasAnchor" number="3.5.3">
-<h3><span class="header-section-number">3.5.3</span> Step 2: Kernel Function<a href="know-your-classics.html#step-2-kernel-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="step-2-the-kernel-functions" class="section level3 hasAnchor" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Step 2: the Kernel Functions<a href="know-your-classics.html#step-2-the-kernel-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Introducing the <strong>kernel function</strong> as
 <span class="math display">\[
-\kappa({\bf x}, {\bf z} ) = \phi({\bf x})^{\top} \phi({\bf z}),
+\kappa({\bf u}, {\bf v} ) = \phi({\bf u})^{\top} \phi({\bf v}),
 \]</span>
 we can rewrite the scores as:
 <span class="math display">\[
@@ -629,11 +629,10 @@ we can rewrite the scores as:
 \]</span></p>
 <p>The key is now is that we could define <span class="math inline">\(\kappa\)</span> without having to
 explicitly define <span class="math inline">\(\phi\)</span>.</p>
-<p>The kernel trick builds on the <strong>Theory of Reproducing Kernels</strong>,
-which we says that for a whole class of kernel functions <span class="math inline">\(\kappa\)</span> we
-can find a mapping <span class="math inline">\(\phi\)</span> that is such that <span class="math inline">\(\kappa({\bf x}, {\bf z}  ) = \phi({\bf x})^{\top} \phi({\bf z})\)</span>. The beauty is that we do
-not need to know about <span class="math inline">\(\phi\)</span> or even compute it. We only need to
-only how to compute the kernel function <span class="math inline">\(\kappa\)</span>.</p>
+<p>The kernel trick builds on the <strong>Theory of Reproducing Kernels</strong>, which we says
+that for a whole class of kernel functions <span class="math inline">\(\kappa\)</span> we can find a mapping <span class="math inline">\(\phi\)</span>
+that is such that <span class="math inline">\(\kappa({\bf u}, {\bf v} ) = \phi({\bf u})^{\top} \phi({\bf v})\)</span>. The beauty is that we do not need to know about <span class="math inline">\(\phi\)</span> or even compute
+it. We only need to only how to compute the kernel function <span class="math inline">\(\kappa\)</span>.</p>
 <p>Many kernel functions are possible. For instance, the polynomial kernel is
 defined as:
 <span class="math display">\[

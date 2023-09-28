@@ -165,7 +165,7 @@ no-free-lunch-theorem
 kernel-trick
 the-problem-with-feature-expansions
 step-1-re-parameterisation
-step-2-kernel-function
+step-2-the-kernel-functions
 understanding-the-rbf
 support-vectors
 what-does-it-look-like
