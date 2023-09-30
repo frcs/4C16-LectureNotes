@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-28" />
+<meta name="date" content="2023-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -307,17 +307,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-3"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-picture-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Picture Size</a>
+<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-tensor-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Tensor Size</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#stride"><i class="fa fa-check"></i><b>6.3.1</b> Stride</a></li>
 <li class="chapter" data-level="6.3.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#max-pooling"><i class="fa fa-check"></i><b>6.3.2</b> Max Pooling</a></li>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-4"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.4</b> Architecture Design</a></li>
-<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.5</b> Example: VGG16</a></li>
-<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.6</b> Visualisation</a></li>
-<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.7</b> Take Away</a></li>
-<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.8</b> Useful Resources</a></li>
+<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#increasing-the-tensor-size"><i class="fa fa-check"></i><b>6.4</b> Increasing the Tensor Size</a></li>
+<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.5</b> Architecture Design</a></li>
+<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.6</b> Example: VGG16</a></li>
+<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.7</b> Visualisation</a></li>
+<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.8</b> Take Away</a></li>
+<li class="chapter" data-level="6.9" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.9</b> Useful Resources</a></li>
 </ul></li>
 <li class="part"><span><b>III Advanced Architectures</b></span></li>
 <li class="chapter" data-level="7" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html"><i class="fa fa-check"></i><b>7</b> Advances in Network Architectures</a>
@@ -443,9 +444,9 @@ function, <span class="math inline">\({\bf W}_{h}\)</span> and <span class="math
 output.</p>
 <p>The parameters <span class="math inline">\({\bf W}_{h}\)</span>, <span class="math inline">\({\bf W}_{y}\)</span>, <span class="math inline">\({\bf b}_{h}\)</span>, <span class="math inline">\({\bf b}_{y}\)</span> are shared by all input vectors <span class="math inline">\({x}_t\)</span>.</p>
 <p>In Keras, we can define a simple RNN layer as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="recurrent-neural-networks.html#cb8-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
-<span id="cb8-2"><a href="recurrent-neural-networks.html#cb8-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>})(<span class="bu">input</span>)</span>
-<span id="cb8-3"><a href="recurrent-neural-networks.html#cb8-3" tabindex="-1"></a>output <span class="op">=</span> Dense(osize, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="recurrent-neural-networks.html#cb9-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
+<span id="cb9-2"><a href="recurrent-neural-networks.html#cb9-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>})(<span class="bu">input</span>)</span>
+<span id="cb9-3"><a href="recurrent-neural-networks.html#cb9-3" tabindex="-1"></a>output <span class="op">=</span> Dense(osize, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:rnn-2"></span>
 <img src="figures/rnn-2.svg" alt="RNN, unrolled." width="60%" />
 <p class="caption">
@@ -455,9 +456,9 @@ Figure 8.4: RNN, unrolled.
 <p>Note that we can choose to produce a single output for the entire
 sequence instead of an output at each timestamp. In Keras, this would
 be defined as:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="recurrent-neural-networks.html#cb9-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
-<span id="cb9-2"><a href="recurrent-neural-networks.html#cb9-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
-<span id="cb9-3"><a href="recurrent-neural-networks.html#cb9-3" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="recurrent-neural-networks.html#cb10-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
+<span id="cb10-2"><a href="recurrent-neural-networks.html#cb10-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
+<span id="cb10-3"><a href="recurrent-neural-networks.html#cb10-3" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:rnn-1"></span>
 <img src="figures/rnn-1.svg" alt="RNN, unrolled." width="60%" />
 <p class="caption">
@@ -465,10 +466,10 @@ Figure 8.5: RNN, unrolled.
 </p>
 </div>
 <p>And we can stack multiple RNN layers. For instance:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="recurrent-neural-networks.html#cb10-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
-<span id="cb10-2"><a href="recurrent-neural-networks.html#cb10-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
-<span id="cb10-3"><a href="recurrent-neural-networks.html#cb10-3" tabindex="-1"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
-<span id="cb10-4"><a href="recurrent-neural-networks.html#cb10-4" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(k)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="recurrent-neural-networks.html#cb11-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
+<span id="cb11-2"><a href="recurrent-neural-networks.html#cb11-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
+<span id="cb11-3"><a href="recurrent-neural-networks.html#cb11-3" tabindex="-1"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
+<span id="cb11-4"><a href="recurrent-neural-networks.html#cb11-4" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(k)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:rnn-3"></span>
 <img src="figures/rnn-3.svg" alt="RNN, unrolled." width="60%" />
 <p class="caption">

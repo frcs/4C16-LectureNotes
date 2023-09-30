@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-28" />
+<meta name="date" content="2023-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -307,17 +307,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-3"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-picture-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Picture Size</a>
+<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-tensor-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Tensor Size</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#stride"><i class="fa fa-check"></i><b>6.3.1</b> Stride</a></li>
 <li class="chapter" data-level="6.3.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#max-pooling"><i class="fa fa-check"></i><b>6.3.2</b> Max Pooling</a></li>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-4"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.4</b> Architecture Design</a></li>
-<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.5</b> Example: VGG16</a></li>
-<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.6</b> Visualisation</a></li>
-<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.7</b> Take Away</a></li>
-<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.8</b> Useful Resources</a></li>
+<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#increasing-the-tensor-size"><i class="fa fa-check"></i><b>6.4</b> Increasing the Tensor Size</a></li>
+<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.5</b> Architecture Design</a></li>
+<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.6</b> Example: VGG16</a></li>
+<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.7</b> Visualisation</a></li>
+<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.8</b> Take Away</a></li>
+<li class="chapter" data-level="6.9" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.9</b> Useful Resources</a></li>
 </ul></li>
 <li class="part"><span><b>III Advanced Architectures</b></span></li>
 <li class="chapter" data-level="7" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html"><i class="fa fa-check"></i><b>7</b> Advances in Network Architectures</a>
@@ -437,7 +438,7 @@ update some of the imported layers, so as to fine tune the features
 for your specific application. If you don’t have enough data, you
 probably should freeze the values of the imported weights.</p>
 <p>In Keras you can freeze the update of parameters using the <code>trainable=False</code> argument. For instance:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="advances-in-network-architectures.html#cb7-1" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="advances-in-network-architectures.html#cb8-1" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code></pre></div>
 <p>In most image based applications you should first consider reusing
 off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been
 shown (see link below) that using such generic visual features yield

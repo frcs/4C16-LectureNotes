@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-28" />
+<meta name="date" content="2023-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -307,17 +307,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-3"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-picture-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Picture Size</a>
+<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-tensor-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Tensor Size</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#stride"><i class="fa fa-check"></i><b>6.3.1</b> Stride</a></li>
 <li class="chapter" data-level="6.3.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#max-pooling"><i class="fa fa-check"></i><b>6.3.2</b> Max Pooling</a></li>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-4"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.4</b> Architecture Design</a></li>
-<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.5</b> Example: VGG16</a></li>
-<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.6</b> Visualisation</a></li>
-<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.7</b> Take Away</a></li>
-<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.8</b> Useful Resources</a></li>
+<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#increasing-the-tensor-size"><i class="fa fa-check"></i><b>6.4</b> Increasing the Tensor Size</a></li>
+<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.5</b> Architecture Design</a></li>
+<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.6</b> Example: VGG16</a></li>
+<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.7</b> Visualisation</a></li>
+<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.8</b> Take Away</a></li>
+<li class="chapter" data-level="6.9" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.9</b> Useful Resources</a></li>
 </ul></li>
 <li class="part"><span><b>III Advanced Architectures</b></span></li>
 <li class="chapter" data-level="7" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html"><i class="fa fa-check"></i><b>7</b> Advances in Network Architectures</a>
@@ -541,8 +542,8 @@ Figure 6.4:  Example of convolution outputs]
 </div>
 </div>
 </div>
-<div id="reducing-the-picture-size" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Reducing the Picture Size<a href="convolutional-neural-networks.html#reducing-the-picture-size" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="reducing-the-tensor-size" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Reducing the Tensor Size<a href="convolutional-neural-networks.html#reducing-the-tensor-size" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If convolution filters offer a way of reducing the number of weights
 in the network, the number of units still remains high.</p>
 <p>For instance, applying <code>Conv2D(16, (5,5))</code> to an input tensor image of
@@ -627,8 +628,27 @@ convolution filter.</p>
 <p>Then maxpooling reduces the image size to <span class="math inline">\(16\times 16\times 16\)</span>.</p>
 </div>
 </div>
-<div id="architecture-design" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Architecture Design<a href="convolutional-neural-networks.html#architecture-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="increasing-the-tensor-size" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Increasing the Tensor Size<a href="convolutional-neural-networks.html#increasing-the-tensor-size" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Similarly we can increase the horizontal and vertical dimensions of a tensor
+using an upsampling operation. This step is sometimes called <strong>up-convolution</strong>,
+<strong>deconvolution</strong> or <strong>transposed convolution</strong>.</p>
+<p>This step is equivalent to first upsampling the tensor by inserting zeros
+in-between the input samples and then applying a convolution layer. More on this
+is discussed
+<a href="https://towardsdatascience.com/types-of-convolutions-in-deep-learning-717013397f4d">here</a>.</p>
+<p>In <code>keras</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="convolutional-neural-networks.html#cb6-1" tabindex="-1"></a>x <span class="op">=</span> np.random.rand(<span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">8</span>, <span class="dv">128</span>) </span>
+<span id="cb6-2"><a href="convolutional-neural-networks.html#cb6-2" tabindex="-1"></a>nfilters <span class="op">=</span> <span class="dv">32</span><span class="op">;</span> kernel_size <span class="op">=</span> (<span class="dv">3</span>,<span class="dv">3</span>)<span class="op">;</span> stride <span class="op">=</span> (<span class="dv">2</span>, <span class="dv">2</span>) </span>
+<span id="cb6-3"><a href="convolutional-neural-networks.html#cb6-3" tabindex="-1"></a>y <span class="op">=</span> Conv2DTranspose(nfilters, kernel_size, stride)(x) </span>
+<span id="cb6-4"><a href="convolutional-neural-networks.html#cb6-4" tabindex="-1"></a><span class="bu">print</span>(y.shape) <span class="co"># (4, 21, 17, 32)</span></span></code></pre></div>
+<p>Note that <em>deconvolution</em> is a very unfortunate term for this step as this term
+is already used in signal processing and refers to trying to estimate the input
+signal/tensor from the output signal. (eg. trying to recover the original image
+from an blurred image).</p>
+</div>
+<div id="architecture-design" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Architecture Design<a href="convolutional-neural-networks.html#architecture-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A typical convnet architecture for classification is based on
 interleaving convolution layers with pooling layers. Conv layers
 usually have a small kernel size (eg. <span class="math inline">\(5\times 5\)</span> or <span class="math inline">\(3 \times 3\)</span>). As
@@ -674,37 +694,37 @@ Figure 6.9: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer netwo
 Very Deep Convolutional Networks for Large-Scale Image Recognition</p>
 </blockquote>
 </div>
-<div id="example-vgg16" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Example: VGG16<a href="convolutional-neural-networks.html#example-vgg16" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example-vgg16" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Example: VGG16<a href="convolutional-neural-networks.html#example-vgg16" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Below is the code for the network definition of VGG16 in Keras.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="convolutional-neural-networks.html#cb6-1" tabindex="-1"></a><span class="co"># Block 1</span></span>
-<span id="cb6-2"><a href="convolutional-neural-networks.html#cb6-2" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block1_conv1&#39;</span>)(img_input)</span>
-<span id="cb6-3"><a href="convolutional-neural-networks.html#cb6-3" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block1_conv2&#39;</span>)(x)</span>
-<span id="cb6-4"><a href="convolutional-neural-networks.html#cb6-4" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block1_pool&#39;</span>)(x)</span>
-<span id="cb6-5"><a href="convolutional-neural-networks.html#cb6-5" tabindex="-1"></a><span class="co"># Block 2</span></span>
-<span id="cb6-6"><a href="convolutional-neural-networks.html#cb6-6" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">128</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block2_conv1&#39;</span>)(x)</span>
-<span id="cb6-7"><a href="convolutional-neural-networks.html#cb6-7" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">128</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block2_conv2&#39;</span>)(x)</span>
-<span id="cb6-8"><a href="convolutional-neural-networks.html#cb6-8" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block2_pool&#39;</span>)(x)</span>
-<span id="cb6-9"><a href="convolutional-neural-networks.html#cb6-9" tabindex="-1"></a><span class="co"># Block 3</span></span>
-<span id="cb6-10"><a href="convolutional-neural-networks.html#cb6-10" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">256</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block3_conv1&#39;</span>)(x)</span>
-<span id="cb6-11"><a href="convolutional-neural-networks.html#cb6-11" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">256</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block3_conv2&#39;</span>)(x)</span>
-<span id="cb6-12"><a href="convolutional-neural-networks.html#cb6-12" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">256</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block3_conv3&#39;</span>)(x)</span>
-<span id="cb6-13"><a href="convolutional-neural-networks.html#cb6-13" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block3_pool&#39;</span>)(x)</span>
-<span id="cb6-14"><a href="convolutional-neural-networks.html#cb6-14" tabindex="-1"></a><span class="co"># Block 4</span></span>
-<span id="cb6-15"><a href="convolutional-neural-networks.html#cb6-15" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block4_conv1&#39;</span>)(x)</span>
-<span id="cb6-16"><a href="convolutional-neural-networks.html#cb6-16" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block4_conv2&#39;</span>)(x)</span>
-<span id="cb6-17"><a href="convolutional-neural-networks.html#cb6-17" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block4_conv3&#39;</span>)(x)</span>
-<span id="cb6-18"><a href="convolutional-neural-networks.html#cb6-18" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block4_pool&#39;</span>)(x)</span>
-<span id="cb6-19"><a href="convolutional-neural-networks.html#cb6-19" tabindex="-1"></a><span class="co"># Block 5</span></span>
-<span id="cb6-20"><a href="convolutional-neural-networks.html#cb6-20" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block5_conv1&#39;</span>)(x)</span>
-<span id="cb6-21"><a href="convolutional-neural-networks.html#cb6-21" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block5_conv2&#39;</span>)(x)</span>
-<span id="cb6-22"><a href="convolutional-neural-networks.html#cb6-22" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block5_conv3&#39;</span>)(x)</span>
-<span id="cb6-23"><a href="convolutional-neural-networks.html#cb6-23" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block5_pool&#39;</span>)(x)</span>
-<span id="cb6-24"><a href="convolutional-neural-networks.html#cb6-24" tabindex="-1"></a><span class="co"># Classification block</span></span>
-<span id="cb6-25"><a href="convolutional-neural-networks.html#cb6-25" tabindex="-1"></a>x <span class="op">=</span> Flatten(name<span class="op">=</span><span class="st">&#39;flatten&#39;</span>)(x)</span>
-<span id="cb6-26"><a href="convolutional-neural-networks.html#cb6-26" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">4096</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, name<span class="op">=</span><span class="st">&#39;fc1&#39;</span>)(x)</span>
-<span id="cb6-27"><a href="convolutional-neural-networks.html#cb6-27" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">4096</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, name<span class="op">=</span><span class="st">&#39;fc2&#39;</span>)(x)</span>
-<span id="cb6-28"><a href="convolutional-neural-networks.html#cb6-28" tabindex="-1"></a>x <span class="op">=</span> Dense(classes, activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>, name<span class="op">=</span><span class="st">&#39;predictions&#39;</span>)(x)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="convolutional-neural-networks.html#cb7-1" tabindex="-1"></a><span class="co"># Block 1</span></span>
+<span id="cb7-2"><a href="convolutional-neural-networks.html#cb7-2" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block1_conv1&#39;</span>)(img_input)</span>
+<span id="cb7-3"><a href="convolutional-neural-networks.html#cb7-3" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">64</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block1_conv2&#39;</span>)(x)</span>
+<span id="cb7-4"><a href="convolutional-neural-networks.html#cb7-4" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block1_pool&#39;</span>)(x)</span>
+<span id="cb7-5"><a href="convolutional-neural-networks.html#cb7-5" tabindex="-1"></a><span class="co"># Block 2</span></span>
+<span id="cb7-6"><a href="convolutional-neural-networks.html#cb7-6" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">128</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block2_conv1&#39;</span>)(x)</span>
+<span id="cb7-7"><a href="convolutional-neural-networks.html#cb7-7" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">128</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block2_conv2&#39;</span>)(x)</span>
+<span id="cb7-8"><a href="convolutional-neural-networks.html#cb7-8" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block2_pool&#39;</span>)(x)</span>
+<span id="cb7-9"><a href="convolutional-neural-networks.html#cb7-9" tabindex="-1"></a><span class="co"># Block 3</span></span>
+<span id="cb7-10"><a href="convolutional-neural-networks.html#cb7-10" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">256</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block3_conv1&#39;</span>)(x)</span>
+<span id="cb7-11"><a href="convolutional-neural-networks.html#cb7-11" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">256</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block3_conv2&#39;</span>)(x)</span>
+<span id="cb7-12"><a href="convolutional-neural-networks.html#cb7-12" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">256</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block3_conv3&#39;</span>)(x)</span>
+<span id="cb7-13"><a href="convolutional-neural-networks.html#cb7-13" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block3_pool&#39;</span>)(x)</span>
+<span id="cb7-14"><a href="convolutional-neural-networks.html#cb7-14" tabindex="-1"></a><span class="co"># Block 4</span></span>
+<span id="cb7-15"><a href="convolutional-neural-networks.html#cb7-15" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block4_conv1&#39;</span>)(x)</span>
+<span id="cb7-16"><a href="convolutional-neural-networks.html#cb7-16" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block4_conv2&#39;</span>)(x)</span>
+<span id="cb7-17"><a href="convolutional-neural-networks.html#cb7-17" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block4_conv3&#39;</span>)(x)</span>
+<span id="cb7-18"><a href="convolutional-neural-networks.html#cb7-18" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block4_pool&#39;</span>)(x)</span>
+<span id="cb7-19"><a href="convolutional-neural-networks.html#cb7-19" tabindex="-1"></a><span class="co"># Block 5</span></span>
+<span id="cb7-20"><a href="convolutional-neural-networks.html#cb7-20" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block5_conv1&#39;</span>)(x)</span>
+<span id="cb7-21"><a href="convolutional-neural-networks.html#cb7-21" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block5_conv2&#39;</span>)(x)</span>
+<span id="cb7-22"><a href="convolutional-neural-networks.html#cb7-22" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">512</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>, name<span class="op">=</span><span class="st">&#39;block5_conv3&#39;</span>)(x)</span>
+<span id="cb7-23"><a href="convolutional-neural-networks.html#cb7-23" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), strides<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">2</span>), name<span class="op">=</span><span class="st">&#39;block5_pool&#39;</span>)(x)</span>
+<span id="cb7-24"><a href="convolutional-neural-networks.html#cb7-24" tabindex="-1"></a><span class="co"># Classification block</span></span>
+<span id="cb7-25"><a href="convolutional-neural-networks.html#cb7-25" tabindex="-1"></a>x <span class="op">=</span> Flatten(name<span class="op">=</span><span class="st">&#39;flatten&#39;</span>)(x)</span>
+<span id="cb7-26"><a href="convolutional-neural-networks.html#cb7-26" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">4096</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, name<span class="op">=</span><span class="st">&#39;fc1&#39;</span>)(x)</span>
+<span id="cb7-27"><a href="convolutional-neural-networks.html#cb7-27" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">4096</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, name<span class="op">=</span><span class="st">&#39;fc2&#39;</span>)(x)</span>
+<span id="cb7-28"><a href="convolutional-neural-networks.html#cb7-28" tabindex="-1"></a>x <span class="op">=</span> Dense(classes, activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>, name<span class="op">=</span><span class="st">&#39;predictions&#39;</span>)(x)</span></code></pre></div>
 <p>As you can see the network definition is rather compact. The
 convolutional layers are laid out in sequence. After <code>block1_pool</code>,
 the image tensor contains 64 channels but is halfed in width and
@@ -912,8 +932,8 @@ helps classification if we have a clear separation between each of the
 features. In this case, the third filter in the last row seem to pick
 up the bird’s head and eyes.</p>
 </div>
-<div id="visualisation" class="section level2 hasAnchor" number="6.6">
-<h2><span class="header-section-number">6.6</span> Visualisation<a href="convolutional-neural-networks.html#visualisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="visualisation" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Visualisation<a href="convolutional-neural-networks.html#visualisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Understanding each of the inner operations of a trained network is
 still an open problem. Thankfully Convolutional Neural Nets focus on
 images and a few visualisation techniques have been proposed. One
@@ -944,8 +964,8 @@ the next slides.</p>
 very low-level (eg. edges, corners), but as we go deeper, the features
 pick up much more complex texture patterns.</p>
 </div>
-<div id="take-away-5" class="section level2 hasAnchor" number="6.7">
-<h2><span class="header-section-number">6.7</span> Take Away<a href="convolutional-neural-networks.html#take-away-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="take-away-5" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Take Away<a href="convolutional-neural-networks.html#take-away-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Convolutional Neural Nets offer a very effective simplification over
 Dense Nets when dealing with images. By interleaving pooling and
 convolutional layers, we can reduce both the number of weights and the
@@ -957,8 +977,8 @@ long been understood. What convnets have brought, is a framework to
 systematically train optimal filters and combine them to produce
 powerful high level visual features.</p>
 </div>
-<div id="useful-resources-1" class="section level2 hasAnchor" number="6.8">
-<h2><span class="header-section-number">6.8</span> Useful Resources<a href="convolutional-neural-networks.html#useful-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="useful-resources-1" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Useful Resources<a href="convolutional-neural-networks.html#useful-resources-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>[1] Deep Learning (MIT press) from Ian Goodfellow et al. - chapters 9, <a href="https://www.deeplearningbook.org" class="uri">https://www.deeplearningbook.org</a></p>
 </blockquote>

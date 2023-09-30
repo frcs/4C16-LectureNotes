@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-09-28" />
+<meta name="date" content="2023-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -307,17 +307,18 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-3"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-picture-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Picture Size</a>
+<li class="chapter" data-level="6.3" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#reducing-the-tensor-size"><i class="fa fa-check"></i><b>6.3</b> Reducing the Tensor Size</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#stride"><i class="fa fa-check"></i><b>6.3.1</b> Stride</a></li>
 <li class="chapter" data-level="6.3.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#max-pooling"><i class="fa fa-check"></i><b>6.3.2</b> Max Pooling</a></li>
 <li class="chapter" data-level="" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-4"><i class="fa fa-check"></i>Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.4</b> Architecture Design</a></li>
-<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.5</b> Example: VGG16</a></li>
-<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.6</b> Visualisation</a></li>
-<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.7</b> Take Away</a></li>
-<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.8</b> Useful Resources</a></li>
+<li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#increasing-the-tensor-size"><i class="fa fa-check"></i><b>6.4</b> Increasing the Tensor Size</a></li>
+<li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.5</b> Architecture Design</a></li>
+<li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.6</b> Example: VGG16</a></li>
+<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.7</b> Visualisation</a></li>
+<li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.8</b> Take Away</a></li>
+<li class="chapter" data-level="6.9" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.9</b> Useful Resources</a></li>
 </ul></li>
 <li class="part"><span><b>III Advanced Architectures</b></span></li>
 <li class="chapter" data-level="7" data-path="advances-in-network-architectures.html"><a href="advances-in-network-architectures.html"><i class="fa fa-check"></i><b>7</b> Advances in Network Architectures</a>
@@ -440,29 +441,29 @@ and are taken from the following link:</p>
 <p><a href="https://blog.keras.io/building-autoencoders-in-keras.html" class="uri">https://blog.keras.io/building-autoencoders-in-keras.html</a></p>
 </blockquote>
 <p>Here is an example of autoencoder using FC layers:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="autoencoders.html#cb11-1" tabindex="-1"></a>encoding_dim <span class="op">=</span> <span class="dv">32</span>  </span>
-<span id="cb11-2"><a href="autoencoders.html#cb11-2" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
-<span id="cb11-3"><a href="autoencoders.html#cb11-3" tabindex="-1"></a>encoded <span class="op">=</span> Dense(encoding_dim, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(input_img)</span>
-<span id="cb11-4"><a href="autoencoders.html#cb11-4" tabindex="-1"></a>decoded <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(encoded)</span>
-<span id="cb11-5"><a href="autoencoders.html#cb11-5" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="autoencoders.html#cb12-1" tabindex="-1"></a>encoding_dim <span class="op">=</span> <span class="dv">32</span>  </span>
+<span id="cb12-2"><a href="autoencoders.html#cb12-2" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
+<span id="cb12-3"><a href="autoencoders.html#cb12-3" tabindex="-1"></a>encoded <span class="op">=</span> Dense(encoding_dim, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(input_img)</span>
+<span id="cb12-4"><a href="autoencoders.html#cb12-4" tabindex="-1"></a>decoded <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(encoded)</span>
+<span id="cb12-5"><a href="autoencoders.html#cb12-5" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span></code></pre></div>
 <p>Here is an example of a convolutional autoencoder:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="autoencoders.html#cb12-1" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
-<span id="cb12-2"><a href="autoencoders.html#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="autoencoders.html#cb12-3" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(input_img)</span>
-<span id="cb12-4"><a href="autoencoders.html#cb12-4" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb12-5"><a href="autoencoders.html#cb12-5" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb12-6"><a href="autoencoders.html#cb12-6" tabindex="-1"></a>encoded <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb12-7"><a href="autoencoders.html#cb12-7" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="autoencoders.html#cb12-8" tabindex="-1"></a><span class="co"># at this point the representation is (7, 7, 32)</span></span>
-<span id="cb12-9"><a href="autoencoders.html#cb12-9" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="autoencoders.html#cb12-10" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(encoded)</span>
-<span id="cb12-11"><a href="autoencoders.html#cb12-11" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
-<span id="cb12-12"><a href="autoencoders.html#cb12-12" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb12-13"><a href="autoencoders.html#cb12-13" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
-<span id="cb12-14"><a href="autoencoders.html#cb12-14" tabindex="-1"></a>decoded <span class="op">=</span> Conv2D(<span class="dv">1</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb12-15"><a href="autoencoders.html#cb12-15" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="autoencoders.html#cb12-16" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span>
-<span id="cb12-17"><a href="autoencoders.html#cb12-17" tabindex="-1"></a>autoencoder.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&#39;adadelta&#39;</span>, loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="autoencoders.html#cb13-1" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
+<span id="cb13-2"><a href="autoencoders.html#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="autoencoders.html#cb13-3" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(input_img)</span>
+<span id="cb13-4"><a href="autoencoders.html#cb13-4" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb13-5"><a href="autoencoders.html#cb13-5" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb13-6"><a href="autoencoders.html#cb13-6" tabindex="-1"></a>encoded <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb13-7"><a href="autoencoders.html#cb13-7" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="autoencoders.html#cb13-8" tabindex="-1"></a><span class="co"># at this point the representation is (7, 7, 32)</span></span>
+<span id="cb13-9"><a href="autoencoders.html#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="autoencoders.html#cb13-10" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(encoded)</span>
+<span id="cb13-11"><a href="autoencoders.html#cb13-11" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
+<span id="cb13-12"><a href="autoencoders.html#cb13-12" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb13-13"><a href="autoencoders.html#cb13-13" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
+<span id="cb13-14"><a href="autoencoders.html#cb13-14" tabindex="-1"></a>decoded <span class="op">=</span> Conv2D(<span class="dv">1</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb13-15"><a href="autoencoders.html#cb13-15" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="autoencoders.html#cb13-16" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span>
+<span id="cb13-17"><a href="autoencoders.html#cb13-17" tabindex="-1"></a>autoencoder.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&#39;adadelta&#39;</span>, loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>)</span></code></pre></div>
 <p>Note that we use <code>UpSampling2D</code> to upsample the tensor in the decoder
 part. This upsampling stage is sometimes called <strong>up-convolution</strong>,
 <strong>deconvolution</strong> or <strong>transposed convolution</strong>. This step upsamples
@@ -526,11 +527,11 @@ extreme mappings. Still, we have little control over the latent space itself,
 which could end up being skewed and hard to make sense of.</p>
 <p>Let’s see that on an example for MNIST with a 2D latent space with the
 following network:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="autoencoders.html#cb13-1" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
-<span id="cb13-2"><a href="autoencoders.html#cb13-2" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(inputs)</span>
-<span id="cb13-3"><a href="autoencoders.html#cb13-3" tabindex="-1"></a>z <span class="op">=</span> Dense(<span class="dv">2</span>, name<span class="op">=</span><span class="st">&#39;latent_variables&#39;</span>)(x)</span>
-<span id="cb13-4"><a href="autoencoders.html#cb13-4" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(z)</span>
-<span id="cb13-5"><a href="autoencoders.html#cb13-5" tabindex="-1"></a>outputs <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(x)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="autoencoders.html#cb14-1" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
+<span id="cb14-2"><a href="autoencoders.html#cb14-2" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(inputs)</span>
+<span id="cb14-3"><a href="autoencoders.html#cb14-3" tabindex="-1"></a>z <span class="op">=</span> Dense(<span class="dv">2</span>, name<span class="op">=</span><span class="st">&#39;latent_variables&#39;</span>)(x)</span>
+<span id="cb14-4"><a href="autoencoders.html#cb14-4" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(z)</span>
+<span id="cb14-5"><a href="autoencoders.html#cb14-5" tabindex="-1"></a>outputs <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(x)</span></code></pre></div>
 <p>The bottleneck layer only contains 2 units. Thus the input <span class="math inline">\(28 \times 28\)</span> image
 is mapped into two latent variables <span class="math inline">\(z_1, z_2\)</span>. Fig. <a href="autoencoders.html#fig:AE-mean">9.7</a> shows
 the 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class

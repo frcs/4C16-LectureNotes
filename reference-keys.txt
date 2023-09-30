@@ -214,9 +214,10 @@ useful-resources
 convolutional-neural-networks
 convolution-filters
 padding
-reducing-the-picture-size
+reducing-the-tensor-size
 stride
 max-pooling
+increasing-the-tensor-size
 architecture-design
 example-vgg16
 visualisation
