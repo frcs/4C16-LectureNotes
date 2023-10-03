@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-10-02" />
+<meta name="date" content="2023-10-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -692,9 +692,9 @@ the neighbours within some radius (controlled by <span class="math inline">\(\ga
 minimisation of the Hinge loss.</p>
 <p>The optimisation falls outside of the scope of this course material. We could
 use Gradient Descent, but, as it turns out, the Hinge loss makes this problem a
-<em>quadratic programming problem</em> and we can use a solver for that. The good news
-is that we can find the global minimum without having to worry about convergence
-issues.</p>
+<em>constrained optimisation problem</em>, for which we can find an off-the-shelf
+solver (eg. <code>minimize</code> from <code>scipy.optimize</code>). The good news is that we can find
+the global minimum without having to worry about convergence issues.</p>
 <p>After optimisation, we find that, indeed, <span class="math inline">\(-1\leq \hat{\alpha}_i \leq 1\)</span>, with
 the sign of <span class="math inline">\(\hat{\alpha}_i\)</span> indicating the class membership. This this thus
 following a similar idea to what was proposed previously.</p>
