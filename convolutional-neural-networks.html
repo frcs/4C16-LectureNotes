@@ -450,13 +450,13 @@ consideration.</p>
 <p><span class="math display">\[
 \mathrm{logit}_{i, j, k, n} = w_{0,k,n} + \sum_{a=-h_1}^{h_1}\sum_{b=-h_2}^{h_2}\sum_{c=1}^{h_3} w_{a,b,c,k,n} u_{a+i,b+j,c,n-1}
 \]</span></p>
-<p>where <span class="math inline">\(h_1\)</span> and <span class="math inline">\(h_2\)</span> correspond to half of the dimensions of the
-neighbourhood window and <span class="math inline">\(h_3\)</span> is the number of channels of the input
-image for that layer. (Some of you may have noted that this is in fact not the formula for convolution but instead
-the formula for cross-correlation. Since convolution is just a cross-correlation
-with a mirrored mask, most neural networks platforms simply implement
-the cross-correlation so as to avoid the extra mirroring step. Both
-formulas are totally equivalent in practice).</p>
+<p>where <span class="math inline">\(h_1\)</span> and <span class="math inline">\(h_2\)</span> correspond to half of the dimensions of the neighbourhood
+window and <span class="math inline">\(h_3\)</span> is the number of channels of the input image for that
+layer. (Some of you may have noted that this is in fact not the formula for
+convolution but instead the formula for cross-correlation. Since convolution is
+just a cross-correlation with a mirrored mask, most neural networks platforms
+simply implement the cross-correlation so as to avoid the extra mirroring
+step. Both formulas are totally equivalent in practice).</p>
 <p>After activation <span class="math inline">\(f\)</span>, the output of the neuron is simply:
 <span class="math display">\[
 u_{i, j, k, n} =
@@ -472,6 +472,23 @@ u_{i,j-1,n-1} - 4 u_{i,j,n-1}
 <p><img src="figures/convsrc-02.svg" width="40%" /><img src="figures/convout-02.svg" width="40%" />
 <img src="figures/convsrc-05.svg" width="40%" /><img src="figures/convout-05.svg" width="40%" />
 <img src="figures/convsrc-10.svg" width="40%" /><img src="figures/convout-10.svg" width="40%" /></p>
+<p>Note that convolution is a fundamental consequence of working on grid-type
+data. Indeed, as you would have maybe already seen if you took a signal
+processing module, convolution natually araises when trying to design operations
+on signals that follow the constraints of linearity and shift-invariance.</p>
+<p><strong>Linearity</strong> means that we have <span class="math inline">\(a x(i,j) + b x(i,j) \rightarrow a y(i,j) + b y(i,j)\)</span>. Linearity is something we already have with our neurons thanks to the
+linear combination of the inputs. <strong>Shift invariance</strong> (or time-invariance for
+time series) means that <span class="math inline">\(x(i-a, j-b) \rightarrow y(i-a, j-b)\)</span>, which is also a
+very reasonable assumption. You would expect indeed that shifting the input
+tensor to the left has the only effect of shifting the output tensor to the
+left.</p>
+<p>In this case, the response <span class="math inline">\(y\)</span> of the system to an arbitrary input <span class="math inline">\(x\)</span> can
+be found directly using convolution: <span class="math inline">\(y = x * h\)</span>, where <span class="math inline">\(h\)</span> is the system’s
+impulse response defined by the kernel mask. This makes convolution ineluctable
+in neural newtorks that have this kind of grid structure.</p>
+<p>Note also that the examples given here are for 2D images, but we can also do
+convolution for 1D data (eg. time series or text processing), and ND data
+(eg. fluid simulation, 3D reconstruction, etc.).</p>
 </div>
 <div id="padding" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Padding<a href="convolutional-neural-networks.html#padding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -945,7 +962,7 @@ images and a few visualisation techniques have been proposed.</p>
 <div id="retrieving-images-that-maximise-a-neuron-activation" class="section level3 hasAnchor" number="6.7.1">
 <h3><span class="header-section-number">6.7.1</span> Retrieving images that maximise a neuron activation<a href="convolutional-neural-networks.html#retrieving-images-that-maximise-a-neuron-activation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The simplest technique is perhaps to take an entire dataset and retrieve the
-images that have maximum response for the particular neuron of interest. Recall
+images that have maximum response for the particular filter of interest. Recall
 that the output of ReLU and sigmoid is always positive and that a positive
 activation means that the filter has detected something. Thus finding the image
 that maximises the response from that filter will give us a good indication
@@ -961,7 +978,8 @@ Figure 6.15: Images that maximise the output of 6 filters of AlexNet. The activa
 basis of filters, that we linearly combine afterwards. This means that each
 filter is not necessarily semantic by itself, it is better to think of them as
 basis functions. This means that these examplars are not necessarily
-semantically meaningful in isolation, they typically show textural patterns.
+semantically meaningful in isolation. Instead, they typically show different
+types of textural patterns.
 This is perhaps more evident when looking at the other possible visualisation
 technique presented below.</p>
 </div>
