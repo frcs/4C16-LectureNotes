@@ -967,9 +967,9 @@ technique presented below.</p>
 </div>
 <div id="engineering-examplars" class="section level3 hasAnchor" number="6.7.2">
 <h3><span class="header-section-number">6.7.2</span> Engineering Examplars<a href="convolutional-neural-networks.html#engineering-examplars" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Another technique is to engineer an input image that maximises the activation
-for that specific filter (see <a href="https://arxiv.org/pdf/1312.6034.pdf">paper</a> by
-Simonyan et al. and the <a href="https://blog.keras.io/category/demo.html">Keras blog
+<p>Another visualisation technique is to engineer an input image that maximises the activation
+for a specific filter (see <a href="https://arxiv.org/pdf/1312.6034.pdf">this paper</a> by
+Simonyan et al. and <a href="https://blog.keras.io/category/demo.html">this Keras blog
 post</a>).</p>
 <p>The optimisation proceeds as follows:</p>
 <ol style="list-style-type: decimal">
@@ -984,6 +984,8 @@ post</a>).</p>
 <p>As can be seen, the visual features picked up by the first layers are
 very low-level (eg. edges, corners), but as we go deeper, the features
 pick up much more complex texture patterns.</p>
+<p>A classifier would linearly combine the responses to these filters to produce
+the logits for each class.</p>
 </div>
 </div>
 <div id="take-away-5" class="section level2 hasAnchor" number="6.8">
