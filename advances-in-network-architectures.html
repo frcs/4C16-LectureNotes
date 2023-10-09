@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-10-03" />
+<meta name="date" content="2023-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -316,7 +316,11 @@ div.csl-indent {
 <li class="chapter" data-level="6.4" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#increasing-the-tensor-size"><i class="fa fa-check"></i><b>6.4</b> Increasing the Tensor Size</a></li>
 <li class="chapter" data-level="6.5" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#architecture-design"><i class="fa fa-check"></i><b>6.5</b> Architecture Design</a></li>
 <li class="chapter" data-level="6.6" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#example-vgg16"><i class="fa fa-check"></i><b>6.6</b> Example: VGG16</a></li>
-<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.7</b> Visualisation</a></li>
+<li class="chapter" data-level="6.7" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#visualisation"><i class="fa fa-check"></i><b>6.7</b> Visualisation</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#retrieving-images-that-maximise-a-neuron-activation"><i class="fa fa-check"></i><b>6.7.1</b> Retrieving images that maximise a neuron activation</a></li>
+<li class="chapter" data-level="6.7.2" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#engineering-examplars"><i class="fa fa-check"></i><b>6.7.2</b> Engineering Examplars</a></li>
+</ul></li>
 <li class="chapter" data-level="6.8" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#take-away-5"><i class="fa fa-check"></i><b>6.8</b> Take Away</a></li>
 <li class="chapter" data-level="6.9" data-path="convolutional-neural-networks.html"><a href="convolutional-neural-networks.html#useful-resources-1"><i class="fa fa-check"></i><b>6.9</b> Useful Resources</a></li>
 </ul></li>
@@ -553,7 +557,7 @@ ImageNet) with a top 5 error rate of 6.7% (human error rate is around
 <p>Szegedy et al. “Going Deeper with Convolutions”, \
 CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-76"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
 <img src="figures/GoogLeNet2.png" alt="GoogLeNet" width="80%" />
 <p class="caption">
 Figure 7.4: GoogLeNet
@@ -565,7 +569,7 @@ sequence of convolution layers, we have a sequence of inception layers
 <p>An inception layer is a sub-network (hence the name inception) that
 produces 4 different types of convolutions filters, which are then
 concatenated (see this video: <a href="https://youtu.be/VxhSouuSZDY" class="uri">https://youtu.be/VxhSouuSZDY</a>).</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-78"></span>
 <img src="figures/inception-subnetwork.png" alt="GoogLeNet Inception Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.5: GoogLeNet Inception Sub-Network
@@ -587,7 +591,7 @@ Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
 parallel connections between deeper layers and shallower layers. The
 connection is simply done by adding the result of a previous layer to
 the result after 2 convolutions layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-78"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
 <img src="figures/resnet-subnetwork.png" alt="ResNet Sub-Network" width="80%" />
 <p class="caption">
 Figure 7.6: ResNet Sub-Network
@@ -644,7 +648,7 @@ addressing both problem at the same time in a single architecture, we
 can solve for both problems.</p>
 <p>Training GAN networks is particularly slow and difficult but the
 benefits are spectacular. This is a very hot topic of research.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-80"></span>
 <img src="figures/GAN-NVIDIA.jpg" alt="Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [https://goo.gl/AgxRhp]" width="100%" />
 <p class="caption">
 Figure 7.8: Example of GAN generating pictures of fake celebrities (see 2018 ICLR NVidia paper here [<a href="https://goo.gl/AgxRhp" class="uri">https://goo.gl/AgxRhp</a>]
