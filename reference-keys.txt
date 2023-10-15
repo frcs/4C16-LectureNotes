@@ -87,14 +87,14 @@ fig:block2-conv2
 fig:block3-conv3
 fig:block4-conv3
 fig:block5-conv3
+fig:unnamed-chunk-71
 fig:ch7-alexnet
 fig:transfer-learning-vg
 fig:transfer-learning-vg-after-bn
-fig:unnamed-chunk-76
 fig:unnamed-chunk-77
 fig:unnamed-chunk-78
-fig:gan-architecture
 fig:unnamed-chunk-79
+fig:ch7-cosineannealing
 fig:rnn-def
 fig:rnn-def-unrolled
 fig:rnn-ctx
@@ -221,6 +221,8 @@ increasing-the-tensor-size
 architecture-design
 example-vgg16
 visualisation
+retrieving-images-that-maximise-a-neuron-activation
+engineering-examplars
 take-away-5
 useful-resources-1
 advances-in-network-architectures
@@ -232,7 +234,11 @@ batch-normalisation
 going-deeper
 googlenet-inception
 resnet-residual-network
-generative-adversarial-networks-gan
+a-modern-training-pipeline
+data-augmentation
+initialisation
+optimisation-1
+take-away-6
 recurrent-neural-networks
 a-feed-forward-network-rolled-out-over-time
 application-example-character-level-language-modelling
@@ -242,7 +248,7 @@ lstm
 gru
 gated-units
 application-image-caption-generator
-take-away-6
+take-away-7
 limitations-of-rnns-and-the-rise-of-transformers
 autoencoders
 definition
