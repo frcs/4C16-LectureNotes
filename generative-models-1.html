@@ -789,17 +789,34 @@ dataset is simply <span class="math inline">\(p({\bf z}) = \mathcal{N}(0, Id)\)<
 <div id="deep-auto-regressive-models" class="section level2 hasAnchor" number="9.3">
 <h2><span class="header-section-number">9.3</span> Deep Auto-Regressive Models<a href="generative-models-1.html#deep-auto-regressive-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This is something we already looked at in RNNs. The idea is to forecast future
-behavior based on past behavior data:
+behavior based on past behavior data. In othwer words, we try to model this probability:
 <span class="math display">\[
 p(x_i | x_1, \dots, x_{i-1})
 \]</span></p>
-<p>Generally we restrict ourselves to a context window and end up with something
+<p>Generally we restrict ourselves to a context window of size <span class="math inline">\(k\)</span> and end up with
+something
 like a Markov chain:
 <span class="math display">\[
 p(x_i | x_1, \dots, x_{i-1}) = p(x_i | x_{i-k}, \dots, x_{i-1})
 \]</span></p>
-<p>See handout on RNNs how to use it for text generation. This is also the basis
-for large language models (see later handout).</p>
+<p>This is an idea that we already explored in the handout on RNNs for text
+generation. This is also the basis for large language models (see later
+handout).</p>
+<p>The notion of auto-regressive is, of course, borrowed from signal processing. In
+signal processing, an autoregressive (AR) model of order <span class="math inline">\(k\)</span> is defined as <span class="math inline">\(AR(k)\)</span>:
+<span class="math display">\[
+{\bf x}_i = \sum_{l=1}^{k} w_l {\bf x}_{i-l}
+\]</span></p>
+<p>The idea is now to extend the linear relationship to a DNN:
+<span class="math display">\[
+ p(x_i | x_{i-k}, \dots, x_{i-1})  = DNN({\bf x}_{i-k}, \dots, {\bf x}_{i-1})
+\]</span></p>
+<p>Notable early deep autoregressive models include PixelCNN and WaveNet by Google
+DeepMind’s team. The seminal Transformer model (“attention is all you need”
+paper) by Google Brain, and all following Large Language Models (<em>eg.</em> BERT,
+GTP, Llama, etc.) are also autoregressive models.</p>
+<p>Yet again, note that we use a cheap labelling: the labelling is simply given by
+the data itself.</p>
 </div>
 <div id="take-away-8" class="section level2 hasAnchor" number="9.4">
 <h2><span class="header-section-number">9.4</span> Take Away<a href="generative-models-1.html#take-away-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
