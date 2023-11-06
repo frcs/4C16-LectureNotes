@@ -109,6 +109,10 @@ fig:rnn-10
 fig:rnn-lstm
 fig:rnn-gru
 fig:rnn-gated-units
+exm:unnamed-chunk-80
+exm:unnamed-chunk-81
+fig:gan-architecture
+fig:unnamed-chunk-82
 fig:AE-example
 fig:AE-example-generic
 fig:AE-MNIST-reconstructions
@@ -250,6 +254,8 @@ gated-units
 application-image-caption-generator
 take-away-7
 limitations-of-rnns-and-the-rise-of-transformers
+generative-models-1
+generative-adversarial-networks-gan
 autoencoders
 definition
 examples
