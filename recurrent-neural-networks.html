@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -373,6 +373,8 @@ div.csl-indent {
 <li class="chapter" data-level="9.2.4" data-path="generative-models-1.html"><a href="generative-models-1.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.2.4</b> Variational Auto Encoders (VAE)</a></li>
 <li class="chapter" data-level="9.2.5" data-path="generative-models-1.html"><a href="generative-models-1.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.2.5</b> Multi-Tasks Design</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
+<li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
@@ -458,9 +460,9 @@ function, <span class="math inline">\({\bf W}_{h}\)</span> and <span class="math
 output.</p>
 <p>The parameters <span class="math inline">\({\bf W}_{h}\)</span>, <span class="math inline">\({\bf W}_{y}\)</span>, <span class="math inline">\({\bf b}_{h}\)</span>, <span class="math inline">\({\bf b}_{y}\)</span> are shared by all input vectors <span class="math inline">\({x}_t\)</span>.</p>
 <p>In Keras, we can define a simple RNN layer as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="recurrent-neural-networks.html#cb10-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
-<span id="cb10-2"><a href="recurrent-neural-networks.html#cb10-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>})(<span class="bu">input</span>)</span>
-<span id="cb10-3"><a href="recurrent-neural-networks.html#cb10-3" tabindex="-1"></a>output <span class="op">=</span> Dense(osize, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="recurrent-neural-networks.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
+<span id="cb10-2"><a href="recurrent-neural-networks.html#cb10-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>})(<span class="bu">input</span>)</span>
+<span id="cb10-3"><a href="recurrent-neural-networks.html#cb10-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(osize, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:rnn-2"></span>
 <img src="figures/rnn-2.svg" alt="RNN, unrolled." width="60%" />
 <p class="caption">
@@ -470,9 +472,9 @@ Figure 8.4: RNN, unrolled.
 <p>Note that we can choose to produce a single output for the entire
 sequence instead of an output at each timestamp. In Keras, this would
 be defined as:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="recurrent-neural-networks.html#cb11-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
-<span id="cb11-2"><a href="recurrent-neural-networks.html#cb11-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
-<span id="cb11-3"><a href="recurrent-neural-networks.html#cb11-3" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="recurrent-neural-networks.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
+<span id="cb11-2"><a href="recurrent-neural-networks.html#cb11-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
+<span id="cb11-3"><a href="recurrent-neural-networks.html#cb11-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(h)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:rnn-1"></span>
 <img src="figures/rnn-1.svg" alt="RNN, unrolled." width="60%" />
 <p class="caption">
@@ -480,10 +482,10 @@ Figure 8.5: RNN, unrolled.
 </p>
 </div>
 <p>And we can stack multiple RNN layers. For instance:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="recurrent-neural-networks.html#cb12-1" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
-<span id="cb12-2"><a href="recurrent-neural-networks.html#cb12-2" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
-<span id="cb12-3"><a href="recurrent-neural-networks.html#cb12-3" tabindex="-1"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
-<span id="cb12-4"><a href="recurrent-neural-networks.html#cb12-4" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(k)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="recurrent-neural-networks.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
+<span id="cb12-2"><a href="recurrent-neural-networks.html#cb12-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
+<span id="cb12-3"><a href="recurrent-neural-networks.html#cb12-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
+<span id="cb12-4"><a href="recurrent-neural-networks.html#cb12-4" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(os, Activation<span class="op">=</span><span class="st">&#39;softmax&#39;</span>)(k)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:rnn-3"></span>
 <img src="figures/rnn-3.svg" alt="RNN, unrolled." width="60%" />
 <p class="caption">
@@ -574,7 +576,7 @@ alternative RNN layer architectures: LSTM and GRU.</p>
 <div id="lstm" class="section level3 hasAnchor" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> LSTM<a href="recurrent-neural-networks.html#lstm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>LSTM</strong> (Long Short-Term Memory) was specifically proposed in 1997 by
-Sepp Hochreiter and Jürgen Schmidhuber <span class="citation">(<a href="#ref-lstm">Hochreiter and Schmidhuber 1997</a>)</span> to deal with the exploding and
+Sepp Hochreiter and Jürgen Schmidhuber <span class="citation">(<a href="#ref-lstm" role="doc-biblioref">Hochreiter and Schmidhuber 1997</a>)</span> to deal with the exploding and
 vanishing gradient problem. LSTM blocks are a special type of network
 that is used for the recurrent hidden layer. LSTM block can be used as
 a direct replacement for the dense layer structure of simple RNNs.</p>
@@ -582,7 +584,7 @@ a direct replacement for the dense layer structure of simple RNNs.</p>
 Microsoft started using LSTM in their speech recognition or Machine
 Translation products.</p>
 <blockquote>
-<p>S. Hochreiter and J. Schmidhuber (1997). “Long short-term memory”. [<a href="https://goo.gl/hhBNRE" class="uri">https://goo.gl/hhBNRE</a>]</p>
+<p>S. Hochreiter and J. Schmidhuber (1997). “Long short-term memory.” [<a href="https://goo.gl/hhBNRE" class="uri">https://goo.gl/hhBNRE</a>]</p>
 </blockquote>
 <blockquote>
 <p>Keras: <a href="https://keras.io/api/layers/recurrent_layers/lstm" class="uri">https://keras.io/api/layers/recurrent_layers/lstm</a></p>
@@ -602,13 +604,13 @@ Figure 8.12: Architecture of LSTM Cell. (Figure by François Deloche).
 </div>
 <div id="gru" class="section level3 hasAnchor" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> GRU<a href="recurrent-neural-networks.html#gru" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>GRU</strong> (Gated Recurrent Units) were introduced in 2014 <span class="citation">(<a href="#ref-gru">Chung et al. 2014</a>)</span> as a simpler
+<p><strong>GRU</strong> (Gated Recurrent Units) were introduced in 2014 <span class="citation">(<a href="#ref-gru" role="doc-biblioref">Chung et al. 2014</a>)</span> as a simpler
 alternative to the LSTM block. Their performance is reported to be
 similar to the one of LSTM (maybe slightly better on smaller problems
 and slightly worse on bigger problems). As they have fewer parameters
 than LSTM, GRUs are quite a bit faster to train.</p>
 <blockquote>
-<p>J. Chung, C. Gulcehre, K. Cho and Y. Bengio (2014). “Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling”. [<a href="https://arxiv.org/abs/1412.3555" class="uri">https://arxiv.org/abs/1412.3555</a>]</p>
+<p>J. Chung, C. Gulcehre, K. Cho and Y. Bengio (2014). “Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling.” [<a href="https://arxiv.org/abs/1412.3555" class="uri">https://arxiv.org/abs/1412.3555</a>]</p>
 </blockquote>
 <blockquote>
 <p>Keras: <a href="https://keras.io/api/layers/recurrent_layers/gru/" class="uri">https://keras.io/api/layers/recurrent_layers/gru/</a></p>
@@ -644,10 +646,10 @@ u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
   \\ p(\text{bat --- the stick}) = 0.3
   \\ \vdots \end{bmatrix}
 \]</span></p>
-<p>Here there is some ambiguity about the meaning of “bat”. The role of the
+<p>Here there is some ambiguity about the meaning of “bat.” The role of the
 prediction <span class="math inline">\(\sigma(u_1)\)</span> could be to specifically disambiguate this:</p>
 <p><span class="math display">\[
-\sigma(u_1) = \begin{bmatrix} \vdots \\ 0.96 \\ 0.04
+ \sigma(u_1) = \begin{bmatrix} \vdots \\ 0.96 \\ 0.04
   \\ \vdots \end{bmatrix}
 \]</span></p>
 <p>Then multiplying both vectors would filter out the unwanted features:</p>
@@ -667,7 +669,7 @@ u_2 = \begin{bmatrix} \vdots \\ p(\text{bat --- the animal}) = 0.4
 text that describes a picture.</p>
 <blockquote>
 <p>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A
-neural image caption generator’’ [<a href="https://arxiv.org/abs/1411.4555" class="uri">https://arxiv.org/abs/1411.4555</a>] <span class="citation">(<a href="#ref-showandtell">Vinyals et al. 2015</a>)</span></p>
+neural image caption generator’’ [<a href="https://arxiv.org/abs/1411.4555" class="uri">https://arxiv.org/abs/1411.4555</a>] <span class="citation">(<a href="#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span></p>
 </blockquote>
 <blockquote>
 <p>Google Research Blog at <a href="https://goo.gl/U88bDQ" class="uri">https://goo.gl/U88bDQ</a></p>
@@ -705,7 +707,7 @@ there is no convenient way for parallelisation.</p>
 suitable for transfer learning. It is very difficult to build on pre-trained
 models, as we are doing with CNNs. Any new application with RNNs will require
 vast quantity of data and will be tricky training.</p>
-<p>The 2017 landmark paper on the <strong>Attention Mechanism</strong> <span class="citation">(<a href="#ref-attention">Vaswani et al. 2017</a>)</span> has since
+<p>The 2017 landmark paper on the <strong>Attention Mechanism</strong> <span class="citation">(<a href="#ref-attention" role="doc-biblioref">Vaswani et al. 2017</a>)</span> has since
 then ended the architectural predominance of RNNs. Pretty much any language
 model now relies on the <strong>Transformer</strong> architectures, which are built on top of
 this Attention mechanism. The defining advantage of Attention over RNNs is that

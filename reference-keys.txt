@@ -262,6 +262,8 @@ examples
 dimension-compression
 variational-auto-encoders-vae
 multi-tasks-design
+deep-auto-regressive-models
+take-away-8
 notes
 note:uat
 note:l1-induces-sparsity

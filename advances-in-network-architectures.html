@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -373,6 +373,8 @@ div.csl-indent {
 <li class="chapter" data-level="9.2.4" data-path="generative-models-1.html"><a href="generative-models-1.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.2.4</b> Variational Auto Encoders (VAE)</a></li>
 <li class="chapter" data-level="9.2.5" data-path="generative-models-1.html"><a href="generative-models-1.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.2.5</b> Multi-Tasks Design</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
+<li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
@@ -455,7 +457,7 @@ update some of the imported layers, so as to fine tune the features
 for your specific application. If you don’t have enough data, you
 probably should freeze the values of the imported weights.</p>
 <p>In Keras you can freeze the update of parameters using the <code>trainable=False</code> argument. For instance:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="advances-in-network-architectures.html#cb8-1" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="advances-in-network-architectures.html#cb8-1" aria-hidden="true" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code></pre></div>
 <p>In most image based applications you should first consider reusing
 off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been
 shown (see link below) that using such generic visual features yield
@@ -545,7 +547,7 @@ architectures like VGG couldn’t be trained for more than 14-16 layers.</p>
 </p>
 </div>
 <p><span class="math display">\[
-\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
+\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w} 
 \]</span></p>
 <p>During the gradient descent, we evaluate <span class="math inline">\(\frac{\partial e}{\partial w}\)</span>, which is a product of the intermediate derivatives. If any of
 these is zero, then <span class="math inline">\(\frac{\partial e}{\partial w}\approx 0\)</span>.</p>
@@ -557,7 +559,7 @@ of 3 units in parallel (<span class="math inline">\(u_3\)</span>, <span class="m
 </p>
 </div>
 <p><span class="math display">\[
-\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w} \color{gRed} + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
+\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w} \color{gRed} + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w} 
 \]</span></p>
 <p>It is now less likely to <span class="math inline">\(\frac{\partial e}{\partial w}\approx 0\)</span> as
 all three terms need to be null.</p>
@@ -571,7 +573,7 @@ ImageNet) with a top 5 error rate of 6.7% (human error rate is around
 5%).</p>
 <p>The CNN is 22 layer deep (compared to the 16 layers of VGG).</p>
 <blockquote>
-<p>Szegedy et al. “Going Deeper with Convolutions”, \
+<p>Szegedy et al. “Going Deeper with Convolutions,” \
 CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
 </blockquote>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
@@ -601,7 +603,7 @@ vanishing gradient problem and allow for a deeper architecture.</p>
 Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
 (better than human performance).</p>
 <blockquote>
-<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”.
+<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition.”
 <a href="https://goo.gl/Zs6G6X" class="uri">https://goo.gl/Zs6G6X</a></p>
 </blockquote>
 <p>Similarly to GoogLeNet, at the heart of ResNet is the idea of creating
@@ -713,11 +715,11 @@ Figure 7.7: AlexNet
 </div>
 <p>An example of a reasonably modern optimiser scheme would look like this in
 Keras:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="advances-in-network-architectures.html#cb9-1" tabindex="-1"></a>  cosine_decay_scheduler <span class="op">=</span> optimizers.schedules.CosineDecay(</span>
-<span id="cb9-2"><a href="advances-in-network-architectures.html#cb9-2" tabindex="-1"></a>       initial_learning_rate, decay_steps, alpha<span class="op">=</span><span class="fl">0.0</span>, name<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb9-3"><a href="advances-in-network-architectures.html#cb9-3" tabindex="-1"></a>  optimizer <span class="op">=</span> optimizers.AdamW(learning_rate<span class="op">=</span>cosine_decay_scheduler)</span>
-<span id="cb9-4"><a href="advances-in-network-architectures.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="advances-in-network-architectures.html#cb9-5" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="advances-in-network-architectures.html#cb9-1" aria-hidden="true" tabindex="-1"></a>  cosine_decay_scheduler <span class="op">=</span> optimizers.schedules.CosineDecay(</span>
+<span id="cb9-2"><a href="advances-in-network-architectures.html#cb9-2" aria-hidden="true" tabindex="-1"></a>       initial_learning_rate, decay_steps, alpha<span class="op">=</span><span class="fl">0.0</span>, name<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb9-3"><a href="advances-in-network-architectures.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  optimizer <span class="op">=</span> optimizers.AdamW(learning_rate<span class="op">=</span>cosine_decay_scheduler)</span>
+<span id="cb9-4"><a href="advances-in-network-architectures.html#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="advances-in-network-architectures.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, ...)</span></code></pre></div>
 </div>
 <div id="take-away-6" class="section level3 hasAnchor" number="7.3.4">
 <h3><span class="header-section-number">7.3.4</span> Take Away<a href="advances-in-network-architectures.html#take-away-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>

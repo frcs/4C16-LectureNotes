@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -373,6 +373,8 @@ div.csl-indent {
 <li class="chapter" data-level="9.2.4" data-path="generative-models-1.html"><a href="generative-models-1.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.2.4</b> Variational Auto Encoders (VAE)</a></li>
 <li class="chapter" data-level="9.2.5" data-path="generative-models-1.html"><a href="generative-models-1.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.2.5</b> Multi-Tasks Design</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
+<li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
@@ -542,7 +544,7 @@ Figure A.6: Corresponding estimated weight values for different values of <span 
 <p>The regularised expression can then be approximated as:</p>
 <p><span class="math display">\[\begin{equation}
   E_2(w) \approx E(0) + \frac{dE}{dw}(0) w +
-  \frac{1}{2}\left( \frac{d^2E}{dw^2}(0) + \lambda_2 \right) w^2
+  \frac{1}{2}\left( \frac{d^2E}{dw^2}(0) + \lambda_2 \right) w^2 
 \end{equation}\]</span>
 To have a local minimum at <span class="math inline">\(w=0\)</span>, we would need to have <span class="math inline">\(\frac{dE_2}{dw}(0)=0\)</span>,
 but instead we have
@@ -593,7 +595,7 @@ Figure A.8: Corresponding estimated weight values for different values of <span 
 zero gives us:</p>
 <p><span class="math display">\[\begin{equation}
   E(w) \approx E(0) + \frac{dE}{dw}(0) w +
-  \lambda_1  | w |
+  \lambda_1  | w | 
 \end{equation}\]</span></p>
 <p>This time it is a bit trickier as we have a discontinuity of the derivative at
 zero:</p>
@@ -606,7 +608,7 @@ zero:</p>
 <p>But note that the derivative near zero does now depend on the regulariser and a
 local minimum can in fact be formed at <span class="math inline">\(0\)</span> when</p>
 <p><span class="math display">\[\begin{equation}
-\lambda_1 &gt; \left| \frac{dE}{dw}(0)  \right|.
+ \lambda_1 &gt; \left| \frac{dE}{dw}(0)  \right|.
 \end{equation}\]</span></p>
 <p>Thus, when we increase <span class="math inline">\(\lambda_1\)</span>, as soon as <span class="math inline">\(\lambda_1 &gt; \left| \frac{dE}{dw}(0) \right|\)</span>, zero will become a local minimum (on our example, we
 can observe this threshold in Figure <a href="notes.html#fig:sparsity-wopt1">A.8</a> at
@@ -615,8 +617,8 @@ this local minimum can also be a global minimum. The typical behaviour is that
 when you gradually increase <span class="math inline">\(\lambda_1\)</span>, the optimal weight will eventually snap
 to zero.</p>
 </div>
-<div id="take-away-8" class="section level4 unnumbered hasAnchor">
-<h4>Take Away<a href="notes.html#take-away-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="take-away-9" class="section level4 unnumbered hasAnchor">
+<h4>Take Away<a href="notes.html#take-away-9" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>A solution to sparsity is to add a regulariser, so as to form a local minimum at
 zero. The main difference between <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> basically boils down to this:
 <span class="math inline">\(L_2\)</span> is too smooth and has no effect, whereas the gradient discontinuity of
@@ -656,9 +658,9 @@ in linear regression.</p>
 <p><span class="math display">\[
 \begin{aligned}
 E(X^{\top} \alpha + {\bf v}) &amp;=  \mathcal{L}( X X^{\top} \alpha + X{\bf v} , y)
-+ \lambda
+ + \lambda
 \| X^{\top} \alpha + {\bf v}\|^2
-\\
+ \\
 &amp;= \mathcal{L}( X X^{\top} \alpha , y) + \lambda\left(\alpha^{\top}XX^{\top}\alpha
   + 2 \alpha X {\bf v} + {\bf v}^{\top}{\bf v} \right) \\
   &amp;= \mathcal{L}( X X^{\top} \alpha , y) + \lambda

@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -373,6 +373,8 @@ div.csl-indent {
 <li class="chapter" data-level="9.2.4" data-path="generative-models-1.html"><a href="generative-models-1.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.2.4</b> Variational Auto Encoders (VAE)</a></li>
 <li class="chapter" data-level="9.2.5" data-path="generative-models-1.html"><a href="generative-models-1.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.2.5</b> Multi-Tasks Design</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
+<li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
@@ -484,7 +486,7 @@ comparison.</p>
 <p>In linear regression, we choose to combine the error terms using the
 <strong>mean squared error</strong> (MSE):</p>
 <p><span class="math display">\[\begin{eqnarray*}
-    E &amp;=&amp; \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots  + w_p x_{ip} - y_n \right)^2
+    E &amp;=&amp; \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots  + w_p x_{ip} - y_n \right)^2 
   \end{eqnarray*}\]</span></p>
 <p>The choice of the mean squared error is a fundamental aspect of
 linear regression. Other error metrics are possible (eg. mean
@@ -593,7 +595,7 @@ independent of <span class="math inline">\(\mathbf {w}\)</span>.</p>
 <span class="math display">\[\begin{eqnarray*}
     \frac{\partial E}{\partial \mathbf{w} } &amp;=&amp; \frac{1}{n} \frac{\partial
     }{\partial \mathbf{w} }  \left( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} + \mathbf {y}^{\top}\mathbf {y} - 2
-    \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y}  \right)
+    \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y}  \right) 
   \end{eqnarray*}\]</span>
 Applying the previous formulas for each of the terms gives us:
 <span class="math display">\[\begin{eqnarray*}
@@ -610,7 +612,7 @@ Thus
      \]</span>
 which can be simplified as into the following <strong>normal equation</strong>::
 <span class="math display">\[
-{\mathbf {X}}^{\top}  {\mathbf {X}} {\mathbf {w}} =  {\mathbf {X}}^{\top}  {\mathbf {y}}
+ {\mathbf {X}}^{\top}  {\mathbf {X}} {\mathbf {w}} =  {\mathbf {X}}^{\top}  {\mathbf {y}}
      \]</span></p>
 <p>which is the same as our linear system.</p>
 </div>
@@ -636,20 +638,20 @@ equations using matrix notations.</p>
          \mathbf{X}^{\top} \mathbf{y}  =
          {\begin{pmatrix}
              \sum_{i=1}^{n} y_i \\
-             \sum_{i=1}^{n} x_i y_i
+             \sum_{i=1}^{n} x_i y_i 
          \end{pmatrix}}
   \]</span></p>
 <p>The LS estimate is then:
 <span class="math display">\[
-\boldsymbol{\hat{\textbf{w}}} =  \left(\mathbf{X}^{\top} \mathbf{X}
-\right)^{-1} \mathbf{X}^{\top} \mathbf{y} =   
+ \boldsymbol{\hat{\textbf{w}}} =  \left(\mathbf{X}^{\top} \mathbf{X}
+ \right)^{-1} \mathbf{X}^{\top} \mathbf{y} =   
          {\begin{pmatrix}
              \sum_{i=1}^{n} 1 &amp; \sum_{i=1}^{n} x_i  \\
              \sum_{i=1}^{n} x_i &amp; \sum_{i=1}^{n} x_i^2 \\
-         \end{pmatrix}}^{-1}
+         \end{pmatrix}}^{-1} 
          {\begin{pmatrix}
              \sum_{i=1}^{n} y_i \\
-             \sum_{i=1}^{n} x_i y_i
+             \sum_{i=1}^{n} x_i y_i 
          \end{pmatrix}}
   \]</span></p>
 <p><img src="figures/polyfit_weight_vs_height_regression.svg" width="60%" /></p>
@@ -674,7 +676,7 @@ This is still a ``linear’’ model in the sense that <span class="math inline"
 combination of <span class="math inline">\(1\)</span>, <span class="math inline">\(x\)</span>, <span class="math inline">\(x^2\)</span> and <span class="math inline">\(x^3\)</span>.</p>
 <p>Many other transformations of the features can be used, e.g.
 <span class="math display">\[
-y = w_0 + w_1 \cos(2\pi x) + w_2  \sin(2\pi x)
+y = w_0 + w_1 \cos(2\pi x) + w_2  \sin(2\pi x) 
 \]</span>
 is also a linear model in the parameters <span class="math inline">\(w_0\)</span>, <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> with input vector
 <span class="math inline">\({\bf x} = [1, \cos(2\pi x), \sin(2\pi x)]\)</span>. Note that
@@ -725,7 +727,7 @@ interesting example for ML. Below is a small dataset <span class="math inline">\
   \]</span></p>
 <p>The LS estimate is then:
 <span class="math display">\[
-\boldsymbol{\hat{\textbf{w}}} =  \left(\mathbf{X}^{\top} \mathbf{X} \right)^{-1} \mathbf{X}^{\top} \mathbf{y}
+ \boldsymbol{\hat{\textbf{w}}} =  \left(\mathbf{X}^{\top} \mathbf{X} \right)^{-1} \mathbf{X}^{\top} \mathbf{y}
   \]</span></p>
 <p>This is what the LS estimate looks like:</p>
 <p><img src="figures/polyfit2.svg" width="60%" /></p>
@@ -837,7 +839,7 @@ this comes at the cost of biasing the estimation. Thus in practice you want to
 avoid it.</p>
 <p>Note that adding the Tikhonov regularisation still leads to a direct solution:
 <span class="math display">\[
-\boldsymbol{\hat{\textbf{w}}}=(\mathbf{X}^{\top }\mathbf{X}+\alpha \mathbf{I} )^{-1}\mathbf{X}^{\top }\mathbf {y}
+\boldsymbol{\hat{\textbf{w}}}=(\mathbf{X}^{\top }\mathbf{X}+\alpha \mathbf{I} )^{-1}\mathbf{X}^{\top }\mathbf {y} 
 \]</span>
 where <span class="math inline">\({\bf I}\)</span> is identity matrix (zeros everywhere and ones on the diagonal).</p>
 <p>Numerically, overfitting arises because the problem is
@@ -856,7 +858,7 @@ and to the Gaussian distribution.</p>
 <p>Recall that the linear model is:
 <span class="math display">\[
   \mathbf {y} = \mathbf{X} \mathbf{w} + \boldsymbol{\varepsilon}
-\]</span></p>
+ \]</span></p>
 <p>Let’s give a probabilistic view on this by assuming that the error
 <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> follows a Gaussian distribution:</p>
 <p><span class="math display">\[
@@ -874,21 +876,21 @@ p(y_i|{\bf x}_i, {\bf w}) = p(\varepsilon_i =  {\bf x}_i^{\top}{\bf w}  - y_i) =
 outputs <span class="math inline">\({\bf y}\)</span> given all data <span class="math inline">\({\bf X}\)</span> is given by</p>
 <p><span class="math display">\[\begin{eqnarray*}
 p({\bf y}|{\bf X}, {\bf w}) &amp;=&amp; \prod_{i=1}^n  p(\varepsilon_i)\\ %= \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \mathrm{exp}\left(-\frac{{\varepsilon}_i^2}{2\sigma^2}\right) \\
-&amp;=&amp;   \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n   \mathrm{exp}\left(-\sum_{i=1}^n\frac{ \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2}{2\sigma^2}\right)
+ &amp;=&amp;   \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n   \mathrm{exp}\left(-\sum_{i=1}^n\frac{ \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2}{2\sigma^2}\right) 
 \end{eqnarray*}\]</span></p>
 <p>We seek to find the <strong>maximum likelihood</strong> estimate of <span class="math inline">\({\bf w}\)</span>. That
 is, finding <span class="math inline">\({\bf w}\)</span> that maximises the likelihood <span class="math inline">\(p({\bf y}|{\bf X}, {\bf w})\)</span>:</p>
 <p><span class="math display">\[
-\boldsymbol{\hat{\textbf{w}}}_{ML} = \arg\max_{\bf w}
-p({\bf y}|{\bf X}, {\bf w})
+ \boldsymbol{\hat{\textbf{w}}}_{ML} = \arg\max_{\bf w}
+p({\bf y}|{\bf X}, {\bf w}) 
 \]</span></p>
 <p>A more practical, but equivalent, approach is to minimise the negative log
 likelihood:</p>
 <p><span class="math display">\[\begin{eqnarray*}
-\boldsymbol{\hat{\textbf{w}}}_{ML} &amp;=&amp; \arg\min_{\bf w}
+ \boldsymbol{\hat{\textbf{w}}}_{ML} &amp;=&amp; \arg\min_{\bf w}
 - \mathrm{log}\left(p({\bf y}|{\bf X}, {\bf w})\right) \\
 &amp;=&amp; \arg\min_{\bf w}  \frac{1}{2\sigma^2} \sum_{i=1}^n \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2  + \frac{n}{\sqrt{2\pi\sigma^2}} \\
-&amp;=&amp; \arg\min_{\bf w}   \sum_{i=1}^n \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2
+&amp;=&amp; \arg\min_{\bf w}   \sum_{i=1}^n \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2 
 \end{eqnarray*}\]</span></p>
 <p>As we can see, the Least Square estimate is in fact the Maximum
 Likelihood solution if the error is assumed to be Gaussian. This
@@ -951,7 +953,7 @@ that are not as tall (or not as small). This is because, instead of
 finding <span class="math inline">\(w=1\)</span>, LS gave him <span class="math inline">\(\hat{w}_{LS} &lt; 1\)</span>. Hence the expression
 regression towards the mean. The problem is that both measured heights
 for the parents and offsprings are indirect noisy measurements of the
-underlying “height gene”.</p>
+underlying “height gene.”</p>
 <p>Now, we don’t necessarily have a noisy features. For instance <span class="math inline">\(x\)</span>
 could be time stamp in a time series, such as when measuring
 temperatures at different times of the day. In that case, there is no

@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -373,6 +373,8 @@ div.csl-indent {
 <li class="chapter" data-level="9.2.4" data-path="generative-models-1.html"><a href="generative-models-1.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.2.4</b> Variational Auto Encoders (VAE)</a></li>
 <li class="chapter" data-level="9.2.5" data-path="generative-models-1.html"><a href="generative-models-1.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.2.5</b> Multi-Tasks Design</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
+<li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
@@ -582,9 +584,9 @@ positives.
 <h3><span class="header-section-number">4.1.3</span> Precision<a href="evaluating-classifier-performance.html#precision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><em>Precision</em> is the probability that a positive prediction is indeed
 positive:
-<span class="math display">\[
+<span class="math display">\[ 
   \mathrm {Precision} ={\frac {\mathrm {TP} }{\mathrm {TP} +\mathrm {FP} }}
-  =  p( y=1 | \hat{y}=1)
+  =  p( y=1 | \hat{y}=1) 
 \]</span></p>
 </div>
 <div id="false-positive-rate-fpr" class="section level3 hasAnchor" number="4.1.4">
@@ -746,7 +748,7 @@ and <span class="math inline">\(\mathrm{TPR}_{i}\)</span> for a set of <span cla
 thresholds <span class="math inline">\(T_i\)</span> and evaluating the integral via trapezoidal
 integration:</p>
 <p><span class="math display">\[
-\mathrm{AUC} = \sum_{i=2}^n \frac{1}{2} \left(\mathrm{TPR}_i+\mathrm{TPR}_{i-1}\right) \times \left(\mathrm{FPR}_i-\mathrm{FPR}_{i-1}\right)
+\mathrm{AUC} = \sum_{i=2}^n \frac{1}{2} \left(\mathrm{TPR}_i+\mathrm{TPR}_{i-1}\right) \times \left(\mathrm{FPR}_i-\mathrm{FPR}_{i-1}\right) 
 \]</span></p>
 </div>
 <div id="average-precision" class="section level3 hasAnchor" number="4.1.10">
@@ -754,7 +756,7 @@ integration:</p>
 <p>Similarly, the <em>Average Precision</em> computes the area under the curve for the <span class="math inline">\(\mathrm{Precision}\)</span>-<span class="math inline">\(\mathrm{Recall}\)</span> curve. It is implemented slightly differently
 from the ROC-AUC:
 <span class="math display">\[
-\mathrm{AP} = \sum_{i=1}^n \mathrm{Precision}_i \times \left(\mathrm{Recall}_i-\mathrm{Recall}_{i-1}\right)
+\mathrm{AP} = \sum_{i=1}^n \mathrm{Precision}_i \times \left(\mathrm{Recall}_i-\mathrm{Recall}_{i-1}\right) 
 \]</span>
 where <span class="math inline">\(\mathrm{Recall}_i\)</span> and <span class="math inline">\(\mathrm{Precision}_i\)</span> are the precision and
 recall values taken at <span class="math inline">\(n\)</span> different thresholds <span class="math inline">\(T_i\)</span> values.</p>
@@ -812,10 +814,10 @@ positives, and false negatives of the <span class="math inline">\(K\)</span> cla
 with <span class="math inline">\(\mathrm{micro TP} = \mathrm{TP}_1 + \cdots + \mathrm{TP}_K\)</span>, and <span class="math inline">\(\mathrm{micro FP} = \mathrm{FP}_1 + \cdots + \mathrm{FP}_K\)</span></p>
 <p>In <strong>macro-averaging</strong>, the performances are averaged over the classes:
 <span class="math display">\[
-\mathrm{macro PRE} = \frac{\mathrm{PRE}_1 + \cdots + \mathrm{PRE}_K}{K} \qquad
+\mathrm{macro PRE} = \frac{\mathrm{PRE}_1 + \cdots + \mathrm{PRE}_K}{K} \qquad 
 \text{where} \quad
   \mathrm{PRE}_k = \frac{\mathrm{TP}_k}{\mathrm{TP}_k + \mathrm{FP}_k}
-\]</span></p>
+ \]</span></p>
 <div class="example">
 <p><span id="exm:unnamed-chunk-43" class="example"><strong>Example 4.2  </strong></span>Given y_true = [0, 1, 2, 0, 1, 2, 2] and y_pred = [0, 2, 1, 0, 0, 1, 0]</p>
 <p>we have <span class="math inline">\(\mathrm{TP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{TP}_1 = 0\)</span>, <span class="math inline">\(\mathrm{TP}_2 = 0\)</span>, <span class="math inline">\(\mathrm{FP}_0 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_1 = 2\)</span>, <span class="math inline">\(\mathrm{FP}_2 = 1\)</span></p>

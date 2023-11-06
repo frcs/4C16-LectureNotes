@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -373,6 +373,8 @@ div.csl-indent {
 <li class="chapter" data-level="9.2.4" data-path="generative-models-1.html"><a href="generative-models-1.html#variational-auto-encoders-vae"><i class="fa fa-check"></i><b>9.2.4</b> Variational Auto Encoders (VAE)</a></li>
 <li class="chapter" data-level="9.2.5" data-path="generative-models-1.html"><a href="generative-models-1.html#multi-tasks-design"><i class="fa fa-check"></i><b>9.2.5</b> Multi-Tasks Design</a></li>
 </ul></li>
+<li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
+<li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
@@ -453,7 +455,7 @@ with the training set.</li>
 </div>
 <div id="decision-trees" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Decision Trees<a href="know-your-classics.html#decision-trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In <strong>decision trees</strong> <span class="citation">(<a href="#ref-decisiontrees">Breiman et al. 1984</a>)</span> and its many variants, each node of the
+<p>In <strong>decision trees</strong> <span class="citation">(<a href="#ref-decisiontrees" role="doc-biblioref">Breiman et al. 1984</a>)</span> and its many variants, each node of the
 decision tree is associated with a region of the input space, and internal nodes
 partition that region into sub-regions, in a divide and conquer fashion as shown
 in Figure <a href="know-your-classics.html#fig:diag-decisiontree">3.3</a>.</p>
@@ -467,7 +469,7 @@ Figure 3.3: Decision-Tree principle.
 take a decision according to a binary test such as <span class="math inline">\(x_2 &lt; 3\)</span>).</p>
 <p>Decision Trees do not produce probabilties to belong to a class, but by
 considering multiple decision trees and aggregating their outputs, as in
-Ada-Boost <span class="citation">(<a href="#ref-adaboost">Freund and Schapire 1995</a>)</span> and Random Forests <span class="citation">(<a href="#ref-randomforests">Ho 1995</a>)</span>, we can obtain
+Ada-Boost <span class="citation">(<a href="#ref-adaboost" role="doc-biblioref">Freund and Schapire 1995</a>)</span> and Random Forests <span class="citation">(<a href="#ref-randomforests" role="doc-biblioref">Ho 1995</a>)</span>, we can obtain
 different levels of probability (as we did with <span class="math inline">\(k\)</span>-NN).</p>
 <p>As can been seen in Figure <a href="know-your-classics.html#fig:db-decisiontrees">3.4</a>, the decision maps for
 these techniques produce vertical and horisontal contours, which follow each of
@@ -480,7 +482,7 @@ Figure 3.4: Decision maps for Decision Tree, Ada Boost and Random Forest. In Ada
 </div>
 <p>Random Forests gained a lot of popularity before the rise of Neural Nets as they
 can be very efficiently computed. For instance they where used for the body part
-identification in the Microsoft Kinect <span class="citation">(<a href="#ref-mskinect">Shotton et al. 2013</a>)</span> (see <a href="https://goo.gl/UTM6s1">demo
+identification in the Microsoft Kinect <span class="citation">(<a href="#ref-mskinect" role="doc-biblioref">Shotton et al. 2013</a>)</span> (see <a href="https://goo.gl/UTM6s1">demo
 page</a>).</p>
 <p><strong>pros:</strong></p>
 <ul>
@@ -537,7 +539,7 @@ have.</p>
 about the distribution of the prediction errors, and thus about the dataset of
 your problem).</p>
 <p>This is formalised in the <a href="http://www.no-free-lunch.org/">no free lunch theorem</a>
-<span class="citation">(<a href="#ref-WolpMacr97">Wolpert and Macready 1997</a>)</span>, which tells us that classifiers perform equally well when
+<span class="citation">(<a href="#ref-WolpMacr97" role="doc-biblioref">Wolpert and Macready 1997</a>)</span>, which tells us that classifiers perform equally well when
 averaged over all possible problems. In other words: your choice of classifier
 should depend on the problem at hand.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-36"></span>
@@ -611,7 +613,7 @@ on computing the score <span class="math inline">\({\bf x}^{\top}{\bf w}\)</span
 <a href="notes.html#note:kernel-trick">A.3</a>) that the optimal weights <span class="math inline">\(\hat{\bf w}\)</span> can
 then be re-expressed in terms of the existing input feature vectors:</p>
 <p><span class="math display">\[
-\hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
+ \hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
 \]</span></p>
 <p>where <span class="math inline">\(\alpha_i\)</span> are new weights defining <span class="math inline">\({\bf w}\)</span> as a linear combination in
 the <span class="math inline">\({\bf x}_i\)</span> data points.</p>
@@ -636,7 +638,7 @@ compute the dot products <span class="math inline">\(\phi({\bf x})^{\top} \phi({
 <h3><span class="header-section-number">3.5.3</span> Step 2: the Kernel Functions<a href="know-your-classics.html#step-2-the-kernel-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Introducing the <strong>kernel function</strong> as
 <span class="math display">\[
-\kappa({\bf u}, {\bf v} ) = \phi({\bf u})^{\top} \phi({\bf v}),
+ \kappa({\bf u}, {\bf v} ) = \phi({\bf u})^{\top} \phi({\bf v}),
 \]</span>
 we can rewrite the scores as:
 <span class="math display">\[
@@ -691,7 +693,7 @@ look at the score:</p>
       \text{if $y_i$ positive} \\ -1 &amp; \text{if  $y_i$  negative}
     \end{cases} \\
     &amp;\approx \text{nb of positive neighbours of ${\bf x}$}  - \text{nb of negative
-      neighbours  of ${\bf x}$}
+      neighbours  of ${\bf x}$} 
   \end{aligned}
 \]</span></p>
 <p>This makes sense: if <span class="math inline">\({\bf x}\)</span> has more positive than negative neighbours in the
@@ -756,7 +758,7 @@ because the <span class="math inline">\(i^{th}\)</span> observation contributes 
 (<em>eg.</em> with tens of thousands of datapoints).</p>
 <p>Evidence that deep learning could outperform kernel SVM on large datasets
 emerged in 2006 when team lead by G. Hinton demonstrated that a neural network
-on the MNIST benchmark. The real tipping point occured in 2012 with <span class="citation">(<a href="#ref-alexnet">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>
+on the MNIST benchmark. The real tipping point occured in 2012 with <span class="citation">(<a href="#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>
 (see introduction).</p>
 </div>
 </div>
