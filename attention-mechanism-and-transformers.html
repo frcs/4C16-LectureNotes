@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Advances in Network Architectures | Deep Learning and its Applications</title>
+  <title>Chapter 10 Attention Mechanism and Transformers | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Advances in Network Architectures | Deep Learning and its Applications" />
+  <meta property="og:title" content="Chapter 10 Attention Mechanism and Transformers | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Advances in Network Architectures | Deep Learning and its Applications" />
+  <meta name="twitter:title" content="Chapter 10 Attention Mechanism and Transformers | Deep Learning and its Applications" />
   
   <meta name="twitter:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="convolutional-neural-networks.html"/>
-<link rel="next" href="recurrent-neural-networks.html"/>
+<link rel="prev" href="generative-models-1.html"/>
+<link rel="next" href="large-language-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -459,339 +459,525 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="advances-in-network-architectures" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Advances in Network Architectures<a href="advances-in-network-architectures.html#advances-in-network-architectures" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter are covered some of the important advances in network
-architectures between 2012 and 2015.</p>
-<p>These advances try to address some of the major difficulties in DNN’s, including
-the problem of vanishing gradients when training deeper networks. The idea is to
-try to highlight some of the typical components of a modern architecture and
-training pipeline.</p>
-<div id="transfer-learning" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Transfer Learning<a href="advances-in-network-architectures.html#transfer-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="re-using-pre-trained-networks" class="section level3 hasAnchor" number="7.1.1">
-<h3><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks<a href="advances-in-network-architectures.html#re-using-pre-trained-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Transfer learning</strong> is the idea of reusing knowledge learned from a task to
-boost performance on a related task.</p>
-<p>Say you are asked to develop a DNN application that can recognise
-pelicans on images. Training a state of the art CNN network from
-scratch can necessitate weeks of training and hundreds of thousands of
-pictures. This would be unpractical in your case because you can only
-source a thousand images.</p>
-<p>What can you do? You can reuse parts of existing networks.</p>
-<p>Recall the architecture of AlexNet (2012) in
-Fig. <a href="advances-in-network-architectures.html#fig:ch7-alexnet">7.1</a>.</p>
-<div class="figure"><span style="display:block;" id="fig:ch7-alexnet"></span>
-<img src="figures/alexnet-annotated.png" alt="AlexNet" width="80%" />
-<p class="caption">
-Figure 7.1: AlexNet
-</p>
+<div id="attention-mechanism-and-transformers" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Attention Mechanism and Transformers<a href="attention-mechanism-and-transformers.html#attention-mechanism-and-transformers" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The <strong>Attention Mechanism</strong> (2015) and the <strong>Transformer model</strong> (2017), which
+builds on it, have revolutionised the field of natural language processing (NLP)
+and have a been widely adopted in all Deep Learning applications.</p>
+<p>In this chapter, we’ll be looking in detail at the Attention Mechanism and the
+Transformer model that is based on it.</p>
+<p>As these architectures have mainly originated from NLP, we’ll introduce them in
+the context of text processing.</p>
+<div id="motivation" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Motivation<a href="attention-mechanism-and-transformers.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-problem-with-cnns-and-rnns" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> The Problem with CNNs and RNNs<a href="attention-mechanism-and-transformers.html#the-problem-with-cnns-and-rnns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To give a bit of context, let’s look back at RNNs. Recurrent Neural Networks
+(LSTM/GRU) are the model of choice when working with <em>variable-length</em> inputs
+and are thus a natural fit to operate on text processing.</p>
+<p>but:</p>
+<ul>
+<li>the sequential nature of RNNs prohibits parallelisation,</li>
+<li>the context is computed from past only,</li>
+<li>there is no explicit distinction between short and long range dependencies
+(everything is dealt with via the context),</li>
+<li>training is tricky,</li>
+<li>how can we do you do efficiently transfer learning?</li>
+</ul>
+<p>On the other hand, Convolution can</p>
+<ul>
+<li>operate on both time-series (1D convolution), and images,</li>
+<li>be massively parallelised,</li>
+<li>exploit local dependencies (within the kernel) and long range dependencies
+(using multiple layers),</li>
+</ul>
+<p>but:</p>
+<ul>
+<li>we can’t deal with variable-size inputs,</li>
+<li>the position of these dependencies is fixed (see below).</li>
+</ul>
 </div>
-<p>Broadly speaking the convolutional layers (up to C5) build visual
-features whilst the last dense layers (FC6, FC7 and FC8) perform
-classification based on these visual features.</p>
-<p>AlexNet (and any of the popular off-the-shelf networks such as VGG,
-ResNet or GoogLeNet) was trained on millions of images and thousands
-of classes. The network is thus able to deal with a great variety of
-problems and the trained filters produce very generic features that
-are relevant to most visual applications.</p>
-<p>Therefore AlexNet’s visual features could be very effective for your
-particular task and maybe there is no need to train new visual
-features: just reuse these existing ones.</p>
-<p>The only task left is to design and train the classification part of
-the network (eg. the dense layers).</p>
-<p>Your application looks like this: copy/paste a pre-trained network,
-cut away the last few layers and replace them with your own
-specialised network.</p>
-<p>Depending on the amount of training data available to you, you may
-decide to only redesign the last layer (<em>ie.</em> FC8), or a handful of
-layers (<em>eg.</em> C5, FC6, FC7, FC8). Keep in mind that redesigning more
-layers will necessitate more training data.</p>
-<p>If you have enough samples, you might want to allow backpropagation to
-update some of the imported layers, so as to fine tune the features
-for your specific application. If you don’t have enough data, you
-probably should freeze the values of the imported weights.</p>
-<p>In Keras you can freeze the update of parameters using the <code>trainable=False</code> argument. For instance:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="advances-in-network-architectures.html#cb8-1" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code></pre></div>
-<p>In most image based applications you should first consider reusing
-off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been
-shown (see link below) that using such generic visual features yield
-state of the art performances in most applications.</p>
-<blockquote>
-<p>Razavian et al. ``CNN Features off-the-shelf: an Astounding Baseline for
-Recognition’’. 2014. <a href="https://arxiv.org/abs/1403.6382" class="uri">https://arxiv.org/abs/1403.6382</a></p>
-</blockquote>
-</div>
-<div id="domain-adaption-and-vanishing-gradients" class="section level3 hasAnchor" number="7.1.2">
-<h3><span class="header-section-number">7.1.2</span> Domain Adaption and Vanishing Gradients<a href="advances-in-network-architectures.html#domain-adaption-and-vanishing-gradients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let’s see why re-using networks on new training sets can be difficult.
-Consider a single neuron and assume a <span class="math inline">\(\mathrm{tanh}\)</span> activation
-function <span class="math inline">\(f(x_i, w) = \mathrm{tanh}(x_i+w)\)</span>. The training samples
-shown in Fig.<a href="advances-in-network-architectures.html#fig:transfer-learning-vg">7.2</a> are images taken on a
-sunny day. The input values <span class="math inline">\(x_i\)</span> (red dots) are centred about <span class="math inline">\(0\)</span> and
-the estimated <span class="math inline">\(w\)</span> is <span class="math inline">\(\hat{w}=0\)</span>.</p>
-<div class="figure"><span style="display:block;" id="fig:transfer-learning-vg"></span>
-<img src="figures/domain-shift-example.svg" alt="Domain Shift Example. " width="80%" />
-<p class="caption">
-Figure 7.2: Domain Shift Example.
-</p>
-</div>
-<p>We want to fine tune the training with new images taken on cloudy
-days. The new samples values <span class="math inline">\(x_i\)</span> (green crosses) are centred around
-<span class="math inline">\(5\)</span>. For that input range, the derivative of <span class="math inline">\(\mathrm{tanh}\)</span> is almost
-zero, which means we have a problem of vanishing gradients. It will be
-difficult to update the network weights.</p>
-</div>
-<div id="normalisation-layers" class="section level3 hasAnchor" number="7.1.3">
-<h3><span class="header-section-number">7.1.3</span> Normalisation Layers<a href="advances-in-network-architectures.html#normalisation-layers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is thus critical for the input data to be in the correct value
-range. To cope with possible shifts of value range between datasets we
-can use a <strong>Normalisation Layer</strong>, whose purpose it to scale the data
-according to the training set statistics.</p>
-<p>Denoting <span class="math inline">\(x_{i}\)</span> an input value of the normalisation layer, the output
-<span class="math inline">\(x_i&#39;\)</span> after normalisation is defined as follows:</p>
+<div id="the-problem-with-positional-dependencies" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> The Problem with Positional Dependencies<a href="attention-mechanism-and-transformers.html#the-problem-with-positional-dependencies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Take a simple 1D convolution on a sequence of feature vectors <span class="math inline">\({\bf x}_i\)</span> with a
+kernel size of 5. To simply the argument, we are going to ignore cross-channels
+interactions:</p>
 <p><span class="math display">\[
-x&#39;_{i} = \frac{x_{i} - \mu_i}{\sigma_i}
+  \text{output}_i = w_{-2} {\bf x}_{i-2} + w_{-1} {\bf x}_{i-1} + w_{0} {\bf x}_{i} + w_{1}
+  {\bf x}_{i+1} + w_{+2} {\bf x}_{i+2} + b,
 \]</span></p>
-<p>where <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma_i\)</span> are computed off-line based on the input
-data statistics.</p>
-<p>The samples after normalisation are shown in
-Fig.<a href="advances-in-network-architectures.html#fig:transfer-learning-vg-after-bn">7.3</a>.</p>
-<div class="figure"><span style="display:block;" id="fig:transfer-learning-vg-after-bn"></span>
-<img src="figures/domain-shift-example-after-BN.svg" alt="Domain Shift After Normalisation. " width="80%" />
-<p class="caption">
-Figure 7.3: Domain Shift After Normalisation.
-</p>
-</div>
-</div>
-<div id="batch-normalisation" class="section level3 hasAnchor" number="7.1.4">
-<h3><span class="header-section-number">7.1.4</span> Batch Normalisation<a href="advances-in-network-architectures.html#batch-normalisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Batch Normalisation</strong> (BN) is a particular type of normalisation
-layer where the rescaling parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are chosen as
-follows.</p>
-<p>For training, <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma_i\)</span> are set as the mean value and
-standard deviation of <span class="math inline">\(x_i\)</span> over the mini-batch. That way the
-distribution of the values of <span class="math inline">\(x_i&#39;\)</span> after BN is 0 centred and with
-variance 1.</p>
-<p>For evaluation, <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma_i\)</span> are averaged over the entire
-training set.</p>
-<p>BN can help to achieve higher learning rates and be less careful about
-optimisation considerations such as initialisation or Dropout.</p>
-<blockquote>
-<p>Sergey Ioffe, Christian Szegedy. “Batch Normalization: Accelerating
-Deep Network Training by Reducing Internal Covariate Shift.” (2015)
-<a href="https://arxiv.org/abs/1502.03167" class="uri">https://arxiv.org/abs/1502.03167</a></p>
-</blockquote>
-</div>
-</div>
-<div id="going-deeper" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Going Deeper<a href="advances-in-network-architectures.html#going-deeper" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As the potential for deeper networks to generalise better became evident, a
-fervent competition to push the boundaries further began after 2012.</p>
-<p>The key hurdle in this race was that, because of vanishing gradients, sequential
-architectures like VGG couldn’t be trained for more than 14-16 layers.</p>
-<!-- There has been a general trend in recent years to design deeper -->
-<!-- networks. Deeper network are known to produce more complex features -->
-<!-- and tend to generalise better. -->
-<!-- Training deep networks is however difficult. One key recurring issue -->
-<!-- being the problem of vanishing gradients. -->
-<p>Recall the problem of vanishing gradients on this simple network:</p>
-<div class="figure">
-<img src="tikz-figures/vg-inception-1.svg" alt=" " width="60%" />
-<p class="caption">
-</p>
-</div>
+<p>The weight <span class="math inline">\(w_{-1}\)</span> is always associated to the dependence relationship between
+the current and previous context sample (<em>ie.</em> distance = 1 away in past).</p>
+<p>Now, take a dense layer (again ignoring cross-channels interactions):</p>
 <p><span class="math display">\[
-\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
-\]</span></p>
-<p>During the gradient descent, we evaluate <span class="math inline">\(\frac{\partial e}{\partial w}\)</span>, which is a product of the intermediate derivatives. If any of
-these is zero, then <span class="math inline">\(\frac{\partial e}{\partial w}\approx 0\)</span>.</p>
-<p>Now consider the layer containing <span class="math inline">\(u_2\)</span>, and replace it with a network
-of 3 units in parallel (<span class="math inline">\(u_3\)</span>, <span class="math inline">\(u_2\)</span>, <span class="math inline">\(u_4\)</span>).</p>
-<div class="figure">
-<img src="tikz-figures/vg-inception-3.svg" alt=" " width="60%" />
+  \text{output}_i = \sum_{j=1}^L w_{i,j} {\bf x}_{j} + b,
+\]</span>
+we have same issue that all the relationships are defined according to fixed
+positions between words, <em>eg.</em> the relationship between the first and
+third words is assumed to be the same in all sentences.</p>
+<p>But look at an actual dependency graph in a sentence:</p>
+<div class="figure"><span style="display:block;" id="fig:sentence-dependency-graph"></span>
+<img src="../figures-tikz/sentence-dependency-graph.svg" alt="Example of a Sentence Dependency Graph" width="80%" />
 <p class="caption">
+Figure 10.1: Example of a Sentence Dependency Graph
 </p>
 </div>
+<p>Distances between relations are not set in stone.</p>
+<p><em>eg.</em> the verb is not always the next word after the subject.</p>
+<p>Convolutional and Dense layers are not well equipped to deal with such
+relationships.</p>
+<p>So, what is the problem? Can’t we just make the network bigger?</p>
+<p>Yes, the Universal Approximation Theorem tells us that you can always throw more
+filters at the problem, and basically train the neural net to learn all possible
+dependency graphs, but it’s clearly not optimal.</p>
+<p>The <strong>Attention Mechanism</strong> comes to the rescue.</p>
+</div>
+</div>
+<div id="attention-mechanism" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Attention Mechanism<a href="attention-mechanism-and-transformers.html#attention-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Attention Mechanism was originally motivated by how different regions of an
+image or correlate words in one sentence in image captioning applications
+<span class="citation">(<a href="#ref-pmlr-v37-xuc15">Xu et al. 2015</a>)</span>. This idea was then quickly adapted to explain the
+relationship between words in sentences
+<span class="citation">Luong, Pham, and Manning (<a href="#ref-luong-etal-2015-effective">2015</a>)</span>.</p>
+<p>The idea of the Attention Mechanism has since then been iterated through many
+papers, and has taken many forms (<em>eg.</em> Bahdanau-Attention, Luong-Attention,
+etc.). We will look here at the <em>Dot-Product Attention Mechanism</em> as
+presented in Transformers, as it is arguably the most popular.</p>
+<div id="core-mechanism-of-a-dot-product-attention-layer" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Core Mechanism of a Dot-Product Attention Layer<a href="attention-mechanism-and-transformers.html#core-mechanism-of-a-dot-product-attention-layer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider again our Dense layer formulation:</p>
 <p><span class="math display">\[
-\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w} \color{gRed} + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
+  \text{output}_i = \sum_{j=1}^L w_{i,j} {\bf x}_{j} + b,
 \]</span></p>
-<p>It is now less likely to <span class="math inline">\(\frac{\partial e}{\partial w}\approx 0\)</span> as
-all three terms need to be null.</p>
-<p>So a simple way of mitigating vanishing gradients is to avoid a pure
-sequential architecture and introduce parallel paths in the network.</p>
-<p>This is what was proposed in GoogLeNet (2014) and ResNet (2015).</p>
-<div id="googlenet-inception" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> GoogLeNet: Inception<a href="advances-in-network-architectures.html#googlenet-inception" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>GoogLeNet was the winner of ILSVRC 2014 (the annual competition on
-ImageNet) with a top 5 error rate of 6.7% (human error rate is around
-5%).</p>
-<p>The CNN is 22 layer deep (compared to the 16 layers of VGG).</p>
+<p>The core idea of Attention is that, instead of learning all possible weights
+<span class="math inline">\(w_{i,j}\)</span>, we could try to learn a recipe to generate these weights. For
+instance, something like this:</p>
+<p><span class="math display">\[
+\text{output}_i = \sum_{j=1}^L f({\bf x}_{i},
+{\bf x}_{j}) {\bf x}_{j},
+\]</span></p>
+<p>where <span class="math inline">\(f\)</span> would be a formula that computes the weights.</p>
+<p>Taking our previous NLP example, the word <code>is</code> is clearly a verb and <code>hearing</code>
+is a subject, hence we could imagine that the weight
+<span class="math inline">\(w_{\text{is},\text{hearing}}\)</span> could be defined, just based on the semantics of
+<span class="math inline">\({\bf x}_\text{is}\)</span> and <span class="math inline">\({\bf x}_\text{hearing}\)</span> alone, regardless of their
+actual positions in the sentence:</p>
+<p><span class="math display">\[
+w_{\text{is},\text{hearing}} = f({\bf x}_\text{is},
+{\bf x}_\text{hearing}).
+\]</span></p>
+<p>This idea is the main mechanism behind Attention. Let us now see how it is
+actually done.</p>
+<p>To make things more generic we’ll consider two sequences of vectors <span class="math inline">\({\bf q}_1, \dots, {\bf q}_{L_q}\)</span> (the <em>queries</em>) and another sequence <span class="math inline">\({\bf k}_1, \dots, {\bf k}_{L_k}\)</span> (the <em>keys</em>). In the following, we will only consider a single element of the original sequence, e.g. <span class="math inline">\({\bf q}_3\)</span>:</p>
+<p><img src="figures/attention-mechanism-animation-02.svg" width="60%" /></p>
+<p>The Attention layer will compute an alignment/similarity score <span class="math inline">\(s\)</span> between each
+of the keys <span class="math inline">\({\bf k}_{1}, \dots, {\bf k}_{4}\)</span> and the query <span class="math inline">\({\bf q}_{3}\)</span>:</p>
+<p><img src="figures/attention-mechanism-animation-03.svg" width="60%" /></p>
+<p>Many formulas for the alignment score exist. The formula in the Transformer
+paper is based on the feature vectors scalar product:</p>
+<p><span class="math display">\[
+     s_{i,j} = {\bf q}_{j}^{\top} {\bf k}_{i} / \sqrt{d_k}
+\]</span></p>
+<p><em>(note: the normalisation with vector dimension <span class="math inline">\(d_k\)</span> is optional, but was found to help in training)</em></p>
+<p>The scores <span class="math inline">\(s\)</span> are a bit like our logits (<span class="math inline">\(s \gg 0\)</span> means <span class="math inline">\({\bf q}\)</span> and <span class="math inline">\({\bf k}\)</span> are very related). Softmax can normalise these to weights that sum up to 1:</p>
+<p><span class="math display">\[
+  [w_{3,1}; w_{3,2}; w_{3,3}; w_{3,4}]
+  = \mathrm{softmax}(  [s_{3,1} ; s_{3,2} ; s_{3,3} ; s_{3,4}])
+\]</span></p>
+<p><img src="figures/attention-mechanism-animation-05.svg" width="60%" /></p>
+<p>Instead of combining the keys, we combine associated <em>value</em> vectors
+<span class="math inline">\({\bf v}_1, \dots, {\bf v}_{L_k}\)</span>:</p>
+<p><span class="math display">\[
+  \mathrm{output}_3 = w_{3,1} {\bf v}_1 + w_{3,2} {\bf v}_2 + w_{3,3} {\bf v}_3 + w_{3,4} {\bf v}_4
+\]</span></p>
+<p><img src="figures/attention-mechanism-animation-06.svg" width="60%" /></p>
+<p>We can repeat this operation for other query vectors, <em>eg.</em> for <span class="math inline">\({\bf q}_5\)</span>:</p>
+<p><img src="figures/attention-mechanism-animation-08.svg" width="60%" /></p>
+<p>Thus, in summary, Attention takes as an input three tensors:</p>
+<p><span class="math inline">\({\bf Q}=[{\bf q_1}, \dots, {\bf q_{L_q}}]^{\top}\)</span>, is a tensor of <em>queries</em>. It
+is of size <span class="math inline">\(L_q \times d_q\)</span>, where <span class="math inline">\(L_q\)</span> is the length of the sequence of
+queries and <span class="math inline">\(d_q\)</span> the dimension of the queries feature vectors.</p>
+<p><span class="math inline">\({\bf K}=[{\bf k_1}, \dots, {\bf k_{L_k}}]^{\top}\)</span> and <span class="math inline">\({\bf V} = [{\bf v_1}, \dots, {\bf v_{L_k}}]^{\top}\)</span> are the tensor containing the <strong>keys</strong>
+and <em>values</em>. They are of size <span class="math inline">\(L_k \times d_q\)</span> and <span class="math inline">\(L_k \times d_v\)</span>, where <span class="math inline">\(L_k\)</span> is the number of keys, <span class="math inline">\(d_k=d_q\)</span>, and <span class="math inline">\(d_v\)</span> the dimension of
+the value feature vectors.</p>
+<p>The <em>values</em> correspond to your typical context vectors associated with each
+word, as you would have in RNNs. The <em>keys</em> and <em>queries</em> are
+versions/representations of your current word <span class="math inline">\(i\)</span> under a certain relationship.</p>
+<p>From <span class="math inline">\([{\bf q_1}, \dots, {\bf q_{L_q}}]^{\top}\)</span>, <span class="math inline">\([{\bf k_1}, \dots, {\bf k_{L_k}}]^{\top}\)</span>, <span class="math inline">\([{\bf v_1}, \dots, {\bf v_{L_k}}]^{\top}\)</span>, the Attention
+layer returns a new tensor made of weighted average <em>value</em> vectors:</p>
+<p><span class="math display">\[
+     \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} {\bf v}_{j}
+\]</span></p>
+<p>as we have seen, on the face of it, this looks like a dense layer (each output
+vector is obtained as a linear combination of the <em>value</em> vectors). The
+difference is that we have a formula to <em>dymanically</em> compute the weights
+<span class="math inline">\(w_{i,j}\)</span> as a function of a <em>score</em> of how aligned <span class="math inline">\({\bf q}_i\)</span> and <span class="math inline">\({\bf k}_j\)</span>
+are:</p>
+<p><span class="math display">\[
+     s_{i,j} = {\bf q}_{j}^{\top} {\bf k}_{i} / \sqrt{d_k}
+\]</span></p>
+<p>which are then normalised through a softmax layer:</p>
+<p><span class="math display">\[
+     w_{i,j} = \frac{\exp(s_{i,j})}{\sum_{j=1}^{L_k} \exp(s_{i,j})} \quad \text{so
+       as to have $\sum_j w_{i,j} = 1$ and $0 \leq w_{i,j} \leq 1$. }
+\]</span></p>
+<p>In other words, for each entry <span class="math inline">\(i\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>We evaluate the alignment/similarity between the current <em>query</em>
+vector <span class="math inline">\({\bf q}_i\)</span> and all the other <em>keys</em> <span class="math inline">\({\bf k}_j\)</span>:</li>
+</ol>
+<p><span class="math display">\[
+s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>The scores are then normalised across the <em>keys</em> using softmax:</li>
+</ol>
+<p><span class="math display">\[
+     w_{i,j} = \frac{\exp(s_{i,j})}{\sum_{j=1}^{L_k} \exp(s_{i,j})}
+\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>We return a new context vector that is the corresponding weighted average
+of the <em>value</em>/context vectors <span class="math inline">\({\bf v}_j\)</span>:</li>
+</ol>
+<p><span class="math display">\[
+    \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} {\bf v}_{j}
+\]</span></p>
+</div>
+<div id="no-trainable-parameters" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> No-Trainable Parameters<a href="attention-mechanism-and-transformers.html#no-trainable-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As we loop through the queries and keys, the number of similarities to compute
+is thus <span class="math inline">\(L_q \times L_k\)</span>. Each similarity measure takes <span class="math inline">\(\mathcal{O}(d_k)\)</span>
+multiplications/add so the overall computation complexity is <span class="math inline">\(\mathcal{O}(L_q \times L_k \times d_k)\)</span>.</p>
+<p>This is thus very similar complexity to a dense layer (expect that we don’t try
+to have cross-channel weights).</p>
+<p>Importantly, as we have a formula to compute the weights, <strong>Attention does
+not have any trainable parameter</strong>. This is something that is apparent when we
+write down the full mathematical formula:</p>
+<p><span class="math display">\[
+  \small
+  \text{Attention}({\bf Q}, {\bf K}, {\bf V}) = \mathrm{softmax}\left(\frac{{\bf Q} {\bf K}^\top}{\sqrt{d_k}} \right) {\bf V}
+\]</span></p>
+<p>where <span class="math inline">\(\mathrm{softmax}\)</span> denotes a <em>row-wise</em> softmax normalisation function.</p>
+</div>
+<div id="self-attention" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Self-Attention<a href="attention-mechanism-and-transformers.html#self-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Self-Attention is a particular use-case of Attention, where the tensors <span class="math inline">\({\bf Q}\)</span> and <span class="math inline">\({\bf K}\)</span>,<span class="math inline">\({\bf V}\)</span> are all derived from a single input tensor <span class="math inline">\({\bf X} = [{\bf x}_1, {\bf x}_2, \cdots, {\bf x}_L]^{\top}\)</span> of size <span class="math inline">\(L \times d\)</span>, by
+means of 3 simple linear feature transforms:</p>
+<p><span class="math display">\[
+{\bf q}_i = {\bf W}_Q^{\top} {\bf x}_i,
+\]</span></p>
+<p><span class="math display">\[
+{\bf k}_i = {\bf W}_K^{\top} {\bf x}_i,
+\]</span></p>
+<p><span class="math display">\[
+{\bf v}_i = {\bf W}_V^{\top} {\bf x}_i .
+\]</span></p>
+<p>Self-Attention is thus simply given by:</p>
+<p><span class="math display">\[
+\text{Self-Attention}({\bf X}, {\bf W}_q, {\bf W}_k, {\bf W}_v) =
+\text{Attention}({\bf X}{\bf W}_V,{\bf X}{\bf W}_Q,{\bf X}{\bf W}_K)
+\]</span></p>
+<p>If we want to put all that in a single equation we have:</p>
+<p><span class="math display">\[
+\text{Self-Attention}({\bf X}, {\bf W}_q, {\bf W}_k, {\bf W}_v) = \mathrm{softmax}\left(\frac{{\bf X} {\bf W_{\bf q}}{\bf W_{\bf k}}^\top {\bf
+    X}^\top }{\sqrt{d_k}} \right) {\bf X} {\bf W}_v
+\]</span></p>
+<p>The only trainable parameters are contained in the <span class="math inline">\(d \times d_k\)</span> matrices <span class="math inline">\({\bf W}_K\)</span> and <span class="math inline">\({\bf W}_Q\)</span> and in the <span class="math inline">\(d \times d_v\)</span> matrix <span class="math inline">\({\bf W}_V\)</span>. These are
+relatively small matrices, and they can operate on sequences of <em>any length</em>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="attention-mechanism-and-transformers.html#cb16-1" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="attention-mechanism-and-transformers.html#cb16-2" tabindex="-1"></a><span class="kw">def</span> softmax(x):</span>
+<span id="cb16-3"><a href="attention-mechanism-and-transformers.html#cb16-3" tabindex="-1"></a>  <span class="cf">return</span>(np.exp(x)<span class="op">/</span>np.exp(x).<span class="bu">sum</span>())</span>
+<span id="cb16-4"><a href="attention-mechanism-and-transformers.html#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="attention-mechanism-and-transformers.html#cb16-5" tabindex="-1"></a><span class="co"># encoder representations of four different words</span></span>
+<span id="cb16-6"><a href="attention-mechanism-and-transformers.html#cb16-6" tabindex="-1"></a>word_1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>])<span class="op">;</span> word_2 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb16-7"><a href="attention-mechanism-and-transformers.html#cb16-7" tabindex="-1"></a>word_3 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>])<span class="op">;</span> word_4 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb16-8"><a href="attention-mechanism-and-transformers.html#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="attention-mechanism-and-transformers.html#cb16-9" tabindex="-1"></a><span class="co"># initialisation of the weight matrices</span></span>
+<span id="cb16-10"><a href="attention-mechanism-and-transformers.html#cb16-10" tabindex="-1"></a>W_Q <span class="op">=</span> np.random.randn(<span class="dv">3</span>, <span class="dv">2</span>) <span class="co"># d=3, dK=dQ=2, needs to be trained</span></span>
+<span id="cb16-11"><a href="attention-mechanism-and-transformers.html#cb16-11" tabindex="-1"></a>W_K <span class="op">=</span> np.random.randn(<span class="dv">3</span>, <span class="dv">2</span>) <span class="co"># d=3, dK=dQ=2, needs to be trained</span></span>
+<span id="cb16-12"><a href="attention-mechanism-and-transformers.html#cb16-12" tabindex="-1"></a>W_V <span class="op">=</span> np.random.randn(<span class="dv">3</span>, <span class="dv">2</span>) <span class="co"># d=3, dV=2,    needs to be trained</span></span>
+<span id="cb16-13"><a href="attention-mechanism-and-transformers.html#cb16-13" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="attention-mechanism-and-transformers.html#cb16-14" tabindex="-1"></a><span class="co"># generating the queries, keys and values</span></span>
+<span id="cb16-15"><a href="attention-mechanism-and-transformers.html#cb16-15" tabindex="-1"></a>query_1 <span class="op">=</span> word_1 <span class="op">@</span> W_Q<span class="op">;</span> key_1 <span class="op">=</span> word_1 <span class="op">@</span> W_K<span class="op">;</span> value_1 <span class="op">=</span> word_1 <span class="op">@</span> W_V</span>
+<span id="cb16-16"><a href="attention-mechanism-and-transformers.html#cb16-16" tabindex="-1"></a>query_2 <span class="op">=</span> word_2 <span class="op">@</span> W_Q<span class="op">;</span> key_2 <span class="op">=</span> word_2 <span class="op">@</span> W_K<span class="op">;</span> value_2 <span class="op">=</span> word_2 <span class="op">@</span> W_V</span>
+<span id="cb16-17"><a href="attention-mechanism-and-transformers.html#cb16-17" tabindex="-1"></a>query_3 <span class="op">=</span> word_3 <span class="op">@</span> W_Q<span class="op">;</span> key_3 <span class="op">=</span> word_3 <span class="op">@</span> W_K<span class="op">;</span> value_3 <span class="op">=</span> word_3 <span class="op">@</span> W_V</span>
+<span id="cb16-18"><a href="attention-mechanism-and-transformers.html#cb16-18" tabindex="-1"></a>query_4 <span class="op">=</span> word_4 <span class="op">@</span> W_Q<span class="op">;</span> key_4 <span class="op">=</span> word_4 <span class="op">@</span> W_K<span class="op">;</span> value_4 <span class="op">=</span> word_4 <span class="op">@</span> W_V</span>
+<span id="cb16-19"><a href="attention-mechanism-and-transformers.html#cb16-19" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="attention-mechanism-and-transformers.html#cb16-20" tabindex="-1"></a><span class="co"># scoring the first query vector against all key vectors</span></span>
+<span id="cb16-21"><a href="attention-mechanism-and-transformers.html#cb16-21" tabindex="-1"></a>scores_1 <span class="op">=</span> array([dot(query_1, key_1), dot(query_1, key_2),</span>
+<span id="cb16-22"><a href="attention-mechanism-and-transformers.html#cb16-22" tabindex="-1"></a>                  dot(query_1, key_3), dot(query_1, key_4)])</span>
+<span id="cb16-23"><a href="attention-mechanism-and-transformers.html#cb16-23" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="attention-mechanism-and-transformers.html#cb16-24" tabindex="-1"></a><span class="co"># computing the weights by a softmax operation</span></span>
+<span id="cb16-25"><a href="attention-mechanism-and-transformers.html#cb16-25" tabindex="-1"></a>weights_1 <span class="op">=</span> softmax(scores_1 <span class="op">/</span> key_1.shape[<span class="dv">0</span>] <span class="op">**</span> <span class="fl">0.5</span>)</span>
+<span id="cb16-26"><a href="attention-mechanism-and-transformers.html#cb16-26" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="attention-mechanism-and-transformers.html#cb16-27" tabindex="-1"></a><span class="co"># computing first attention vector</span></span>
+<span id="cb16-28"><a href="attention-mechanism-and-transformers.html#cb16-28" tabindex="-1"></a>attention_1 <span class="op">=</span> weights_1[<span class="dv">0</span>]<span class="op">*</span>value_1 <span class="op">+</span> weights_1[<span class="dv">1</span>]<span class="op">*</span>value_2 <span class="op">+</span> weights_1[<span class="dv">2</span>]<span class="op">*</span>value_3 <span class="op">+</span> weights_1[<span class="dv">3</span>]<span class="op">*</span>value_4</span>
+<span id="cb16-29"><a href="attention-mechanism-and-transformers.html#cb16-29" tabindex="-1"></a> </span>
+<span id="cb16-30"><a href="attention-mechanism-and-transformers.html#cb16-30" tabindex="-1"></a><span class="bu">print</span>(attention_1)</span></code></pre></div>
+</div>
+<div id="computational-complexity" class="section level3 hasAnchor" number="10.2.4">
+<h3><span class="header-section-number">10.2.4</span> Computational Complexity<a href="attention-mechanism-and-transformers.html#computational-complexity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since each feature vector is compared to all the other feature vectors of the
+sequence, the computational complexity is, similarly to a dense layer,
+<strong>quadratic</strong> in the input sequence dimension <span class="math inline">\(L\)</span>.</p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th align="center">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Self-Attention</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(L^2 \times d_k)\)</span></td>
+</tr>
+<tr class="even">
+<td>RNN/LSTM/GRU</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(L \times d \times d_v)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Convolution</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(L \times \text{kernel_size} \times d \times d_v)\)</span></td>
+</tr>
+<tr class="even">
+<td>Dense Layer</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(L^2 \times d \times d_v )\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note that we typically choose <span class="math inline">\(d_k\)</span> to be much smaller than <span class="math inline">\(d\)</span> (eg. <span class="math inline">\(d_k=d/8\)</span>),
+so the computational complexity is reduced (but is still quadratic in the input
+dimension <span class="math inline">\(L\)</span>). The idea is that we are only looking at one aspect of the
+problem, <em>eg.</em> what is the relationship under verb-subject in the
+sentence?</p>
+<p>As with Dense Layers and Convolution, Attention can be easily parallelised, and
+as with the convolution, we could restrict the length of the sequence <span class="math inline">\(L\)</span> by
+limiting the attention window to a local neighbourhood. We could also constrain
+the input tensor to be of a limited fixed size.</p>
+<p>More than the computional complexity, however, it is the number of paremters
+that is interesting. And clearly the number of trainable parameters is
+potentially much lower than in RNNs or Convolutions.</p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th align="center">Number of Trainable Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Self-Attention</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(d \times d_k + d \times d_k + d \times d_v)\)</span></td>
+</tr>
+<tr class="even">
+<td>RNN/LSTM/GRU</td>
+<td align="center"><span class="math inline">\(\mathcal{O}( d \times d_v + d_v \times d_v)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Convolution</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(\text{kernel_size} \times d \times d_v )\)</span></td>
+</tr>
+<tr class="even">
+<td>Dense Layer</td>
+<td align="center"><span class="math inline">\(\mathcal{O}(L \times d \times d_v )\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="a-perfect-tool-for-multi-modal-processing" class="section level3 hasAnchor" number="10.2.5">
+<h3><span class="header-section-number">10.2.5</span> A Perfect Tool for Multi-Modal Processing<a href="attention-mechanism-and-transformers.html#a-perfect-tool-for-multi-modal-processing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Attention is a versatile tool that allows some flexibility about how to design
+the input tensors <span class="math inline">\({\bf Q}\)</span> and <span class="math inline">\({\bf K},{\bf V}\)</span>. For instance, if we have one
+tensor derived from text and one from audio inputs, we fuse/combine both tensors
+using :</p>
+<p><span class="math display">\[
+  {\bf V}_{\text{audio}/\text{text}} = \text{Attention}({\bf
+    Q}_{\text{audio}}, {\bf K}_{\text{text}},  {\bf V}_{\text{text}})
+\]</span></p>
+<p>The sources do not need to be perfectly synchronised (<em>ie.</em> text vector keys and
+values don’t have to align with query audio vector, see exercise below), and, in
+fact, the sources don’t even need to be of the same length (<em>ie.</em> <span class="math inline">\(L_q \neq L_k\)</span>). For these reasons Attention is very well suited for combining
+multi-modal inputs.</p>
+<div class="exercise">
+<p><span id="exr:unnamed-chunk-83" class="exercise"><strong>Exercise 10.1  </strong></span>Show that the output of the Attention layer is the same if the entries of the
+keys and values tensor are shifted or shuffled, <em>e.g</em>:</p>
+<p><span class="math display">\[
+\text{Attention}(
+     [{\bf q}_1,\dots,{\bf q}_{L_q} ],
+     [{\bf k}_1,{\bf k}_2,\dots,{\bf k}_{L_k} ],
+     [{\bf v}_1,{\bf v}_2,\dots,{\bf v}_{L_k} ])
+      = \\
+\text{Attention}(
+     [{\bf q}_1,\dots,{\bf q}_{L_q} ],
+     [{\bf k}_{L_k}, {\bf k}_{{L_k}-1}, \dots,{\bf k}_1 ],
+     [{\bf v}_{L_k}, {\bf v}_{{L_k}-1}, \dots,{\bf v}_1 ])
+\]</span></p>
+</div>
+</div>
+<div id="the-multi-head-attention-layer" class="section level3 hasAnchor" number="10.2.6">
+<h3><span class="header-section-number">10.2.6</span> The Multi-Head Attention Layer<a href="attention-mechanism-and-transformers.html#the-multi-head-attention-layer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can think of Attention as a replacement for convolution layers. You can
+chain multiple Attention layers, in a similar way to what you would do with
+convolutional layers.</p>
+<p>In Transformers, a set of <span class="math inline">\(\left(W_{Q},W_{K},W_{V}\right)\)</span> matrices is called an
+<strong>attention head</strong> and <strong>multi-head attention</strong> layer is simply a layer
+that concatenates the output of multiple attention layers.</p>
+<p>The number of heads loosely corresponds to your number of filters in a
+convolutional layer.</p>
+<p>Below is an example in Keras of self-attention 2-head attention:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="attention-mechanism-and-transformers.html#cb17-1" tabindex="-1"></a>  x  <span class="op">=</span> tf.keras.layers.MultiHeadAttention(</span>
+<span id="cb17-2"><a href="attention-mechanism-and-transformers.html#cb17-2" tabindex="-1"></a>           num_heads<span class="op">=</span><span class="dv">2</span>, key_dim<span class="op">=</span><span class="dv">2</span>, value_dim<span class="op">=</span><span class="dv">3</span>)(</span>
+<span id="cb17-3"><a href="attention-mechanism-and-transformers.html#cb17-3" tabindex="-1"></a>           query<span class="op">=</span>x, key<span class="op">=</span>x, value<span class="op">=</span>x)</span></code></pre></div>
+<p>here we would define two sets of <span class="math inline">\(\left(W_{Q},W_{K},W_{V}\right)\)</span> matrices and
+<span class="math inline">\(d_K=2\)</span> and <span class="math inline">\(d_V=3\)</span>.</p>
+</div>
+<div id="take-away-attention-mechanism" class="section level3 hasAnchor" number="10.2.7">
+<h3><span class="header-section-number">10.2.7</span> Take Away (Attention Mechanism)<a href="attention-mechanism-and-transformers.html#take-away-attention-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>RNNs don’t parallelise well and Convolutions assume fixed positional
+relationships, which is not the case in text.</p>
+<p>The <strong>Attention Mechanism</strong> resolves these issues by defining a formula to
+dynamically compute the weights between any two positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, based on
+the alignment (dot-product) between a _query feature vector for <span class="math inline">\(i\)</span> and
+a <em>key</em> feature vector for <span class="math inline">\(j\)</span>.</p>
+<p>With <strong>Self-Attention</strong>, feature transformation matrices allow to produce
+the <em>queries</em>, <em>keys</em>, and <em>value</em> vectors from a single
+input tensor.</p>
+<p>The computational complexity of <em>Attention</em> is quadratic in the input
+tensor dimension (as with Dense Layers). <em>Attention</em> does not have any
+trainable parameters, <em>Self-Attention</em> needs <span class="math inline">\(W_q\)</span>, <span class="math inline">\(W_k\)</span> and <span class="math inline">\(W_v\)</span>.</p>
+<p>Self-Attention and Attention are well suited to work with text processing as the
+semantics of the words takes precedence over their absolute or relative
+positions.</p>
+<p><strong>Cross-Attention</strong> allows you to work with <strong>multiple modalities</strong>
+(eg. audio, video, images, text) as it is agnostic to the position of the
+keys/values and thus can deal with any potential synchronisation issues.</p>
+</div>
+</div>
+<div id="transformers" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Transformers<a href="attention-mechanism-and-transformers.html#transformers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In 2017, Vaswani et al. proposed the Transformer architecture, which is a
+(relatively!) simple network architecture solely based on attention layers.</p>
+<p>This architecture has fundamentally impacted text processing, but also the rest
+of the deep learning fields.</p>
 <blockquote>
-<p>Szegedy et al. “Going Deeper with Convolutions”, \
-CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
+<p>A. Vaswani et al. Attention Is All You Need. In Advances in Neural
+Information Processing Systems, page 5998–6008. (2017)</p>
+<p>[<a href="https://arxiv.org/abs/1706.03762" class="uri">https://arxiv.org/abs/1706.03762</a>]</p>
 </blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
-<img src="figures/GoogLeNet2.png" alt="GoogLeNet" width="80%" />
+<p>The original publication has generated 57,463 citations as of 2022 (for
+reference, a paper is doing very well when it has 100+ citations).</p>
+<div id="an-encoder-decoder-architecture" class="section level3 hasAnchor" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> an Encoder-Decoder Architecture<a href="attention-mechanism-and-transformers.html#an-encoder-decoder-architecture" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Transformer architecture, as described in the original paper, is presented
+in Fig.<a href="attention-mechanism-and-transformers.html#fig:transformers-annotate-architecture">10.2</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:transformers-annotate-architecture"></span>
+<img src="figures/transformers-annotate-architecture.svg" alt="The Transformer architecture, as described in the original paper (with encoder and decoder parts highlighted in magenta) " width="60%" />
 <p class="caption">
-Figure 7.4: GoogLeNet
+Figure 10.2: The Transformer architecture, as described in the original paper (with encoder and decoder parts highlighted in magenta)
 </p>
 </div>
-<p>The architecture resembles the one of VGG, except that instead of a
-sequence of convolution layers, we have a sequence of inception layers
-(eg. green box).</p>
-<p>An inception layer is a sub-network (hence the name inception) that
-produces 4 different types of convolutions filters, which are then
-concatenated (see this video: <a href="https://youtu.be/VxhSouuSZDY" class="uri">https://youtu.be/VxhSouuSZDY</a>).</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-78"></span>
-<img src="figures/inception-subnetwork.png" alt="GoogLeNet Inception Sub-Network" width="80%" />
-<p class="caption">
-Figure 7.5: GoogLeNet Inception Sub-Network
-</p>
+<p>The First part of the network (highlighted here in magenta) is an <strong>encoder</strong>,
+<em>ie.</em> a sub-network that transforms the input into a meaningful, compact, tensor
+representation.</p>
+<p>Think of it as the VGG network that transforms an image into a compact <span class="math inline">\(4096 \times 1\)</span> feature vector. And as for VGG, the idea is that this encoder could be
+re-used with transfer learning.</p>
+<p>The Encoder itself is made of a sequence of blocks. At the core of each of these
+blocks is a Multi-Head Attention layer:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="attention-mechanism-and-transformers.html#cb18-1" tabindex="-1"></a><span class="kw">def</span> encoder_block(inputs):</span>
+<span id="cb18-2"><a href="attention-mechanism-and-transformers.html#cb18-2" tabindex="-1"></a>    x <span class="op">=</span> MultiHeadAttention(num_heads<span class="op">=</span><span class="dv">2</span>, key_dim<span class="op">=</span><span class="dv">2</span>)(</span>
+<span id="cb18-3"><a href="attention-mechanism-and-transformers.html#cb18-3" tabindex="-1"></a>          query<span class="op">=</span>inputs, key<span class="op">=</span>inputs, value<span class="op">=</span>inputs)</span>
+<span id="cb18-4"><a href="attention-mechanism-and-transformers.html#cb18-4" tabindex="-1"></a>    x  <span class="op">=</span> Dropout(<span class="fl">0.1</span>)(x)</span>
+<span id="cb18-5"><a href="attention-mechanism-and-transformers.html#cb18-5" tabindex="-1"></a>    <span class="co"># applying normalisation and residual connection        </span></span>
+<span id="cb18-6"><a href="attention-mechanism-and-transformers.html#cb18-6" tabindex="-1"></a>    attn <span class="op">=</span> LayerNormalization()(inputs <span class="op">+</span> x)</span>
+<span id="cb18-7"><a href="attention-mechanism-and-transformers.html#cb18-7" tabindex="-1"></a>    <span class="co"># &#39;Feed Forward&#39; is a simple 1x1 conv on the features</span></span>
+<span id="cb18-8"><a href="attention-mechanism-and-transformers.html#cb18-8" tabindex="-1"></a>    x <span class="op">=</span> Conv1D(ff_dim, kernel_size<span class="op">=</span><span class="dv">1</span>, activation<span class="op">=</span><span class="st">&quot;relu&quot;</span>)(x)</span>
+<span id="cb18-9"><a href="attention-mechanism-and-transformers.html#cb18-9" tabindex="-1"></a>    x <span class="op">=</span> Dropout(dropout)(x)</span>
+<span id="cb18-10"><a href="attention-mechanism-and-transformers.html#cb18-10" tabindex="-1"></a>    x <span class="op">=</span> Conv1D(filters<span class="op">=</span>inputs.shape[<span class="op">-</span><span class="dv">1</span>], kernel_size<span class="op">=</span><span class="dv">1</span>)(x)  </span>
+<span id="cb18-11"><a href="attention-mechanism-and-transformers.html#cb18-11" tabindex="-1"></a>    <span class="cf">return</span> LayerNormalization()(attn <span class="op">+</span> x)</span>
+<span id="cb18-12"><a href="attention-mechanism-and-transformers.html#cb18-12" tabindex="-1"></a>    </span>
+<span id="cb18-13"><a href="attention-mechanism-and-transformers.html#cb18-13" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="attention-mechanism-and-transformers.html#cb18-14" tabindex="-1"></a><span class="kw">def</span> encoder(x, n_blocks):</span>
+<span id="cb18-15"><a href="attention-mechanism-and-transformers.html#cb18-15" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_blocks):</span>
+<span id="cb18-16"><a href="attention-mechanism-and-transformers.html#cb18-16" tabindex="-1"></a>        x <span class="op">=</span> encoder_block(x)</span>
+<span id="cb18-17"><a href="attention-mechanism-and-transformers.html#cb18-17" tabindex="-1"></a>    <span class="cf">return</span> x</span></code></pre></div>
+<p>The <em>Decoder</em>, that is also highlighted magenta, is also made of a sequence of
+Blocks with Multi-Head Attention layers.</p>
 </div>
-<p>The inception network creates parallel paths that help with the
-vanishing gradient problem and allow for a deeper architecture.</p>
-</div>
-<div id="resnet-residual-network" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> ResNet: Residual Network<a href="advances-in-network-architectures.html#resnet-residual-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>ResNet is a 152 (yes, 152!!) layer network architecture developed at
-Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
-(better than human performance).</p>
-<blockquote>
-<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”.
-<a href="https://goo.gl/Zs6G6X" class="uri">https://goo.gl/Zs6G6X</a></p>
-</blockquote>
-<p>Similarly to GoogLeNet, at the heart of ResNet is the idea of creating
-parallel connections between deeper layers and shallower layers. The
-connection is simply done by adding the result of a previous layer to
-the result after 2 convolutions layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
-<img src="figures/resnet-subnetwork.png" alt="ResNet Sub-Network" width="80%" />
-<p class="caption">
-Figure 7.6: ResNet Sub-Network
-</p>
-</div>
-<p>The idea is very simple but allows for a very deep and very efficient
-architecture.</p>
-<p>The ResNet architecture has been hugely successful. Many ResNet
-variants, pre-trained on ImageNet, can be found, such as the
-ResNet-18/34/50/101/151 models.</p>
-</div>
-</div>
-<div id="a-modern-training-pipeline" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> A Modern Training Pipeline<a href="advances-in-network-architectures.html#a-modern-training-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="data-augmentation" class="section level3 hasAnchor" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Data Augmentation<a href="advances-in-network-architectures.html#data-augmentation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is often possible to naturally increase your dataset by generating variants
-of your input data.</p>
-<p>For instance, with images, we know that minor image
-processing operations, such as crop, flip, rotation, zoom, contrast change, JPEG
-compression, noise, <em>etc.</em> should not change the outcome.</p>
-<p>Therefore these variants allow us to expand our dataset for free.</p>
-<blockquote>
-<p>see <a href="https://keras.io/api/layers/preprocessing_layers/image_augmentation/" class="uri">https://keras.io/api/layers/preprocessing_layers/image_augmentation/</a></p>
-</blockquote>
-<p>Similar ideas can be applied in other domains. For instance, in audio, you can
-also add noise, compression, reverb, <em>etc.</em></p>
-<p>Sometimes a good way to get data is to synthesise data through a similuation
-model (<em>e.g.</em> using game engine). Be mindful, however, that this artificial data
-is a simplified model of the real-world problem, and thus can lead to
-overfitting. Also, synthetic data tends to have slightly different
-characteristics from real data, and we will need to be careful with domain
-adaptation issues.</p>
-<p>Generative DNNs (see later chapter) can also be used to sytnthesise data (<em>e.g.</em>
-you can use ChatGTP to generate text for your dataset, or dialogue interactions
-for your bots).</p>
-</div>
-<div id="initialisation" class="section level3 hasAnchor" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> Initialisation<a href="advances-in-network-architectures.html#initialisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Initialisation needs to be considered carefully. Starting at <span class="math inline">\(w=0\)</span> is probably
-not a good idea, as you are likely to be stuck into some special local minimum,
-with the gradient being zero right from the start.</p>
-<p>The idea would then be to start at random. We need, however to be careful, and
-control the output at each layer to avoid a situation where gradients would
-explode or vanish through the different layers.</p>
-<p>For ReLU, a popular initialisation is He’s initialisation. For each layer <span class="math inline">\(l\)</span>,
-the bias <span class="math inline">\(b\)</span> and weights <span class="math inline">\(w\)</span> are initialised as <span class="math inline">\(b_l=0, w_l\sim \mathcal{N}(0, \sqrt{2/n_{l-1}})\)</span>, where <span class="math inline">\(n_{l-1}\)</span> is the number of neurons in prev
-layer. Using this guarantees stable gradients throughout the network (at least
-at the start of the training).</p>
-<blockquote>
-<p>see <a href="https://keras.io/api/layers/initializers/" class="uri">https://keras.io/api/layers/initializers/</a></p>
-</blockquote>
-<blockquote>
-<p>More Detailed Explanations and very nice Demos
-<a href="https://www.deeplearning.ai/ai-notes/initialization/" class="uri">https://www.deeplearning.ai/ai-notes/initialization/</a></p>
-</blockquote>
-<blockquote>
-<p>Kaiming He et al. Delving Deep into Rectifiers
-<a href="https://arxiv.org/abs/1502.01852" class="uri">https://arxiv.org/abs/1502.01852</a></p>
-</blockquote>
-<p>Here is a quick overview of how this works (non-examinable material).</p>
-<p>Consider a sequence of conv or dense layers (indexed <span class="math inline">\(l\)</span>). The logits and
-ReLU activations can be derived as follows:
+<div id="positional-encoder" class="section level3 hasAnchor" number="10.3.2">
+<h3><span class="header-section-number">10.3.2</span> Positional Encoder<a href="attention-mechanism-and-transformers.html#positional-encoder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Note the presence of a <em>Positional Encoder</em>. As
+Attention strips away any positional information, Transformers
+propose to encode the position as extra features in the input
+vector (see original paper for more details about this).</p>
+<p>The positional encoder is an embedding <span class="math inline">\(i \mapsto \phi(i)\)</span> that is appended as
+additional features to the feature vector, <em>ie.</em> <span class="math inline">\({\bf x}&#39;_i = [{\bf  x}_i; \phi(i)]\)</span>.</p>
+<p>Why do we need an encoder for this? Why not simply add the position as a simple
+additional number? <em>ie.</em> <span class="math inline">\(\phi(i) = [i]\)</span>?</p>
+<p>This is because the similarity measure still needs to make sense. Here we use
+the dot product, thus the similarity between positions <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> would simply
+be <span class="math inline">\(i \times j\)</span>. But we would like <span class="math inline">\(\phi(i)^\top \phi(j)\)</span> to be <span class="math inline">\(\gg 0\)</span> if <span class="math inline">\(i \approx j\)</span> and <span class="math inline">\(\ll 0\)</span>, or at least <span class="math inline">\(\approx 0\)</span>, if they are far away, but this
+is not the case.</p>
+<p>What would work is an embedding that achieves something like this:
 <span class="math display">\[
-    {\bf y}_l = {\bf W}_l {\bf x}_l \quad \text{and} \quad {\bf x}_l = \max({\bf
-      y}_{l-1},0).
+\phi(i)^\top \phi(j) = \exp( -
+\lambda (i-j)^2).
 \]</span></p>
-<p>Assuming independence and weights and biases with zero mean:</p>
+<p>Such an embedding exists, we talked about it in the case of SVMs with RBF
+kernels. The embedding is the (infinite) Fourier series basis function.</p>
+<p>As we can’t afford the luxury of an infinite embedding, we need to truncate the
+series. This is what was proposed in the original Transformers paper. Assuming a
+positional encoding of dimension <span class="math inline">\(d_{pos}\)</span>, they propose:</p>
 <p><span class="math display">\[
-  \mathrm{Var}[y_l] = n_l \mathrm{Var}[w_lx_l] = n_l \mathrm{Var}[w_l]E[x_l^2].
+i \mapsto \phi(i) = \begin{bmatrix}
+  \sin(\omega_1 i) \\
+  \cos(\omega_1 i) \\[5pt]
+  \sin(\omega_2 i) \\
+  \cos(\omega_2 i) \\[5pt]
+  \vdots \\
+  \sin(\omega_{d_{pos}/2} i) \\
+  \cos(\omega_{d_{pos}/2} i)
+\end{bmatrix} \quad \text{where } \omega_k = 1/10000^{2k/d_{pos}}
 \]</span></p>
-<p>For ReLU, <span class="math inline">\(x_l =0\)</span> for <span class="math inline">\(y_{l-1} &lt; 0\)</span>, thus <span class="math inline">\(E[x_l^2] = \frac{1}{2}\mathrm{Var}[y_{l-1}]\)</span>, and</p>
-<p><span class="math display">\[
-  \mathrm{Var}[y_l] = \frac{1}{2}n_l \mathrm{Var}[w_l] \mathrm{Var}[y_{l-1}].
-\]</span></p>
-<p>One way to avoid an increase/decrease of the variance throughout the layers is to set:
-<span class="math display">\[
-  \mathrm{Var}[w_l] = \frac{2}{n_l},
-  \]</span>
-which we can achieve by sampling <span class="math inline">\(w_l\)</span> from <span class="math inline">\(\mathcal{N}(0, \sqrt{2/n_l})\)</span>.</p>
+<p>The advantage of using a positional encoding vs. hard-coding relationships, as
+in convolution, is that the position is treated as another piece of information,
+that can be transformed, combined with other features, or simply ignored. The
+point is it is up to training to learn what to do with it.</p>
 </div>
-<div id="optimisation-1" class="section level3 hasAnchor" number="7.3.3">
-<h3><span class="header-section-number">7.3.3</span> Optimisation<a href="advances-in-network-architectures.html#optimisation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As we have seen in previous chapters, a number of optimisation techniques are
-available to us for training. Papers in the literature tend to gravitate around
-Adam or SGD. Adam seems to be the fastest out of the box, but best-in-class
-models tend to be trained on SGD with momentum, as they find local minima that
-generalise better than the ones found by Adam.</p>
-<p>Since then, an improved version of Adam, AdamW, was proposed and seems to fix
-Adam’s shortcomings.</p>
-<p>Another aspect of the optimisation is the scheduling of the learning rate. We
-know that we should probably reduced the learning rate as we approach the local
-minimum.</p>
-<p>In 2017 was popularised the idea of warm restarts, which periodically raise the
-learning rate to temporary diverge and allow to hop over hills. A variant of
-this scheme is the cosine annealing schedule:</p>
-<div class="figure"><span style="display:block;" id="fig:ch7-cosineannealing"></span>
-<img src="figures/LR-cosine-annealing.svg" alt="AlexNet" width="80%" />
-<p class="caption">
-Figure 7.7: AlexNet
-</p>
-</div>
-<p>An example of a reasonably modern optimiser scheme would look like this in
-Keras:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="advances-in-network-architectures.html#cb9-1" tabindex="-1"></a>  cosine_decay_scheduler <span class="op">=</span> optimizers.schedules.CosineDecay(</span>
-<span id="cb9-2"><a href="advances-in-network-architectures.html#cb9-2" tabindex="-1"></a>       initial_learning_rate, decay_steps, alpha<span class="op">=</span><span class="fl">0.0</span>, name<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb9-3"><a href="advances-in-network-architectures.html#cb9-3" tabindex="-1"></a>  optimizer <span class="op">=</span> optimizers.AdamW(learning_rate<span class="op">=</span>cosine_decay_scheduler)</span>
-<span id="cb9-4"><a href="advances-in-network-architectures.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="advances-in-network-architectures.html#cb9-5" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, ...)</span></code></pre></div>
-</div>
-<div id="take-away-6" class="section level3 hasAnchor" number="7.3.4">
-<h3><span class="header-section-number">7.3.4</span> Take Away<a href="advances-in-network-architectures.html#take-away-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is typical for modern convolution networks to enhance the original
-convolution/activation block with a combination of normalisation layers and
-residual connections. The new blocks are much more resilient to the vanishing
-gradient problem, and allows both 1) to go much deeper, and 2) to be efficiently
-used for transfer learning.</p>
-<p>Modern training pipelines typically include some data augmentation step, a
-dedicated initialisation strategy (eg. He or Xavier), a careful consideration of
-the optimisation (eg. AdamW) and of the learning rate schedule (eg. cosine
-annealing), with sometimes a transfer-learning/fine-tuning approach to kick
-start the training.</p>
-<p>Keep in mind that there are no universal truth here. These are popular
-techniques but they might not be optimal for your problem.</p>
+<div id="take-away-transformers" class="section level3 hasAnchor" number="10.3.3">
+<h3><span class="header-section-number">10.3.3</span> Take Away (Transformers)<a href="attention-mechanism-and-transformers.html#take-away-transformers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There is obviously a lot more to know about Transformers but we have
+covered here the main idea: it is an encoder/decoder network that is
+solely based on sequences of Attention layers.</p>
+<p>The <strong>Transformer model</strong> is an encoder-decoder architecture based on Attention
+layers blocks.</p>
+<p>The positional information, which is lost in the attention mechanism, can be
+embedded in the input vector as extra features.</p>
+<p>Transformers benefit from the efficiency of the Attention Mechanism and require
+fewer parameters and can be easily be parallelised.</p>
+<p>Transformers are the backbone of modern NLP networks such as ChatGTP. They are
+also the backbone of any method that handles multiple modalities (<em>eg.</em> text,
+image, speech, etc.)</p>
 
 </div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-luong-etal-2015-effective" class="csl-entry">
+Luong, Thang, Hieu Pham, and Christopher D. Manning. 2015. <span>“Effective Approaches to Attention-Based Neural Machine Translation.”</span> In <em>Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing</em>, edited by Lluı́s Màrquez, Chris Callison-Burch, and Jian Su, 1412–21. Lisbon, Portugal: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D15-1166">https://doi.org/10.18653/v1/D15-1166</a>.
+</div>
+<div id="ref-pmlr-v37-xuc15" class="csl-entry">
+Xu, Kelvin, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and Yoshua Bengio. 2015. <span>“Show, Attend and Tell: Neural Image Caption Generation with Visual Attention.”</span> In <em>Proceedings of the 32nd International Conference on Machine Learning</em>, edited by Francis Bach and David Blei, 37:2048–57. Proceedings of Machine Learning Research. Lille, France: PMLR. <a href="https://proceedings.mlr.press/v37/xuc15.html">https://proceedings.mlr.press/v37/xuc15.html</a>.
 </div>
 </div>
             </section>
@@ -799,8 +985,8 @@ techniques but they might not be optimal for your problem.</p>
           </div>
         </div>
       </div>
-<a href="convolutional-neural-networks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="recurrent-neural-networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="generative-models-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="large-language-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -831,7 +1017,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/chapter-07-advances-in-network-architectures.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/chapter-10-transformers.Rmd",
 "text": "Edit"
 },
 "history": {

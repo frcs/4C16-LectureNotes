@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Advances in Network Architectures | Deep Learning and its Applications</title>
+  <title>Conclusion | Deep Learning and its Applications</title>
   <meta name="description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Advances in Network Architectures | Deep Learning and its Applications" />
+  <meta property="og:title" content="Conclusion | Deep Learning and its Applications" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   <meta name="github-repo" content="frcs/4c16book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Advances in Network Architectures | Deep Learning and its Applications" />
+  <meta name="twitter:title" content="Conclusion | Deep Learning and its Applications" />
   
   <meta name="twitter:description" content="handbook for the 4C16 module on Deep learning delivered at Trinity College Dublin" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="convolutional-neural-networks.html"/>
-<link rel="next" href="recurrent-neural-networks.html"/>
+<link rel="prev" href="large-language-models.html"/>
+<link rel="next" href="notes.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -459,348 +459,21 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="advances-in-network-architectures" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Advances in Network Architectures<a href="advances-in-network-architectures.html#advances-in-network-architectures" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter are covered some of the important advances in network
-architectures between 2012 and 2015.</p>
-<p>These advances try to address some of the major difficulties in DNN’s, including
-the problem of vanishing gradients when training deeper networks. The idea is to
-try to highlight some of the typical components of a modern architecture and
-training pipeline.</p>
-<div id="transfer-learning" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Transfer Learning<a href="advances-in-network-architectures.html#transfer-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="re-using-pre-trained-networks" class="section level3 hasAnchor" number="7.1.1">
-<h3><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks<a href="advances-in-network-architectures.html#re-using-pre-trained-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Transfer learning</strong> is the idea of reusing knowledge learned from a task to
-boost performance on a related task.</p>
-<p>Say you are asked to develop a DNN application that can recognise
-pelicans on images. Training a state of the art CNN network from
-scratch can necessitate weeks of training and hundreds of thousands of
-pictures. This would be unpractical in your case because you can only
-source a thousand images.</p>
-<p>What can you do? You can reuse parts of existing networks.</p>
-<p>Recall the architecture of AlexNet (2012) in
-Fig. <a href="advances-in-network-architectures.html#fig:ch7-alexnet">7.1</a>.</p>
-<div class="figure"><span style="display:block;" id="fig:ch7-alexnet"></span>
-<img src="figures/alexnet-annotated.png" alt="AlexNet" width="80%" />
-<p class="caption">
-Figure 7.1: AlexNet
-</p>
-</div>
-<p>Broadly speaking the convolutional layers (up to C5) build visual
-features whilst the last dense layers (FC6, FC7 and FC8) perform
-classification based on these visual features.</p>
-<p>AlexNet (and any of the popular off-the-shelf networks such as VGG,
-ResNet or GoogLeNet) was trained on millions of images and thousands
-of classes. The network is thus able to deal with a great variety of
-problems and the trained filters produce very generic features that
-are relevant to most visual applications.</p>
-<p>Therefore AlexNet’s visual features could be very effective for your
-particular task and maybe there is no need to train new visual
-features: just reuse these existing ones.</p>
-<p>The only task left is to design and train the classification part of
-the network (eg. the dense layers).</p>
-<p>Your application looks like this: copy/paste a pre-trained network,
-cut away the last few layers and replace them with your own
-specialised network.</p>
-<p>Depending on the amount of training data available to you, you may
-decide to only redesign the last layer (<em>ie.</em> FC8), or a handful of
-layers (<em>eg.</em> C5, FC6, FC7, FC8). Keep in mind that redesigning more
-layers will necessitate more training data.</p>
-<p>If you have enough samples, you might want to allow backpropagation to
-update some of the imported layers, so as to fine tune the features
-for your specific application. If you don’t have enough data, you
-probably should freeze the values of the imported weights.</p>
-<p>In Keras you can freeze the update of parameters using the <code>trainable=False</code> argument. For instance:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="advances-in-network-architectures.html#cb8-1" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code></pre></div>
-<p>In most image based applications you should first consider reusing
-off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been
-shown (see link below) that using such generic visual features yield
-state of the art performances in most applications.</p>
-<blockquote>
-<p>Razavian et al. ``CNN Features off-the-shelf: an Astounding Baseline for
-Recognition’’. 2014. <a href="https://arxiv.org/abs/1403.6382" class="uri">https://arxiv.org/abs/1403.6382</a></p>
-</blockquote>
-</div>
-<div id="domain-adaption-and-vanishing-gradients" class="section level3 hasAnchor" number="7.1.2">
-<h3><span class="header-section-number">7.1.2</span> Domain Adaption and Vanishing Gradients<a href="advances-in-network-architectures.html#domain-adaption-and-vanishing-gradients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let’s see why re-using networks on new training sets can be difficult.
-Consider a single neuron and assume a <span class="math inline">\(\mathrm{tanh}\)</span> activation
-function <span class="math inline">\(f(x_i, w) = \mathrm{tanh}(x_i+w)\)</span>. The training samples
-shown in Fig.<a href="advances-in-network-architectures.html#fig:transfer-learning-vg">7.2</a> are images taken on a
-sunny day. The input values <span class="math inline">\(x_i\)</span> (red dots) are centred about <span class="math inline">\(0\)</span> and
-the estimated <span class="math inline">\(w\)</span> is <span class="math inline">\(\hat{w}=0\)</span>.</p>
-<div class="figure"><span style="display:block;" id="fig:transfer-learning-vg"></span>
-<img src="figures/domain-shift-example.svg" alt="Domain Shift Example. " width="80%" />
-<p class="caption">
-Figure 7.2: Domain Shift Example.
-</p>
-</div>
-<p>We want to fine tune the training with new images taken on cloudy
-days. The new samples values <span class="math inline">\(x_i\)</span> (green crosses) are centred around
-<span class="math inline">\(5\)</span>. For that input range, the derivative of <span class="math inline">\(\mathrm{tanh}\)</span> is almost
-zero, which means we have a problem of vanishing gradients. It will be
-difficult to update the network weights.</p>
-</div>
-<div id="normalisation-layers" class="section level3 hasAnchor" number="7.1.3">
-<h3><span class="header-section-number">7.1.3</span> Normalisation Layers<a href="advances-in-network-architectures.html#normalisation-layers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is thus critical for the input data to be in the correct value
-range. To cope with possible shifts of value range between datasets we
-can use a <strong>Normalisation Layer</strong>, whose purpose it to scale the data
-according to the training set statistics.</p>
-<p>Denoting <span class="math inline">\(x_{i}\)</span> an input value of the normalisation layer, the output
-<span class="math inline">\(x_i&#39;\)</span> after normalisation is defined as follows:</p>
-<p><span class="math display">\[
-x&#39;_{i} = \frac{x_{i} - \mu_i}{\sigma_i}
-\]</span></p>
-<p>where <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma_i\)</span> are computed off-line based on the input
-data statistics.</p>
-<p>The samples after normalisation are shown in
-Fig.<a href="advances-in-network-architectures.html#fig:transfer-learning-vg-after-bn">7.3</a>.</p>
-<div class="figure"><span style="display:block;" id="fig:transfer-learning-vg-after-bn"></span>
-<img src="figures/domain-shift-example-after-BN.svg" alt="Domain Shift After Normalisation. " width="80%" />
-<p class="caption">
-Figure 7.3: Domain Shift After Normalisation.
-</p>
-</div>
-</div>
-<div id="batch-normalisation" class="section level3 hasAnchor" number="7.1.4">
-<h3><span class="header-section-number">7.1.4</span> Batch Normalisation<a href="advances-in-network-architectures.html#batch-normalisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>Batch Normalisation</strong> (BN) is a particular type of normalisation
-layer where the rescaling parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are chosen as
-follows.</p>
-<p>For training, <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma_i\)</span> are set as the mean value and
-standard deviation of <span class="math inline">\(x_i\)</span> over the mini-batch. That way the
-distribution of the values of <span class="math inline">\(x_i&#39;\)</span> after BN is 0 centred and with
-variance 1.</p>
-<p>For evaluation, <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma_i\)</span> are averaged over the entire
-training set.</p>
-<p>BN can help to achieve higher learning rates and be less careful about
-optimisation considerations such as initialisation or Dropout.</p>
-<blockquote>
-<p>Sergey Ioffe, Christian Szegedy. “Batch Normalization: Accelerating
-Deep Network Training by Reducing Internal Covariate Shift.” (2015)
-<a href="https://arxiv.org/abs/1502.03167" class="uri">https://arxiv.org/abs/1502.03167</a></p>
-</blockquote>
-</div>
-</div>
-<div id="going-deeper" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Going Deeper<a href="advances-in-network-architectures.html#going-deeper" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As the potential for deeper networks to generalise better became evident, a
-fervent competition to push the boundaries further began after 2012.</p>
-<p>The key hurdle in this race was that, because of vanishing gradients, sequential
-architectures like VGG couldn’t be trained for more than 14-16 layers.</p>
-<!-- There has been a general trend in recent years to design deeper -->
-<!-- networks. Deeper network are known to produce more complex features -->
-<!-- and tend to generalise better. -->
-<!-- Training deep networks is however difficult. One key recurring issue -->
-<!-- being the problem of vanishing gradients. -->
-<p>Recall the problem of vanishing gradients on this simple network:</p>
-<div class="figure">
-<img src="tikz-figures/vg-inception-1.svg" alt=" " width="60%" />
-<p class="caption">
-</p>
-</div>
-<p><span class="math display">\[
-\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
-\]</span></p>
-<p>During the gradient descent, we evaluate <span class="math inline">\(\frac{\partial e}{\partial w}\)</span>, which is a product of the intermediate derivatives. If any of
-these is zero, then <span class="math inline">\(\frac{\partial e}{\partial w}\approx 0\)</span>.</p>
-<p>Now consider the layer containing <span class="math inline">\(u_2\)</span>, and replace it with a network
-of 3 units in parallel (<span class="math inline">\(u_3\)</span>, <span class="math inline">\(u_2\)</span>, <span class="math inline">\(u_4\)</span>).</p>
-<div class="figure">
-<img src="tikz-figures/vg-inception-3.svg" alt=" " width="60%" />
-<p class="caption">
-</p>
-</div>
-<p><span class="math display">\[
-\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w} \color{gRed} + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
-\]</span></p>
-<p>It is now less likely to <span class="math inline">\(\frac{\partial e}{\partial w}\approx 0\)</span> as
-all three terms need to be null.</p>
-<p>So a simple way of mitigating vanishing gradients is to avoid a pure
-sequential architecture and introduce parallel paths in the network.</p>
-<p>This is what was proposed in GoogLeNet (2014) and ResNet (2015).</p>
-<div id="googlenet-inception" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">7.2.1</span> GoogLeNet: Inception<a href="advances-in-network-architectures.html#googlenet-inception" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>GoogLeNet was the winner of ILSVRC 2014 (the annual competition on
-ImageNet) with a top 5 error rate of 6.7% (human error rate is around
-5%).</p>
-<p>The CNN is 22 layer deep (compared to the 16 layers of VGG).</p>
-<blockquote>
-<p>Szegedy et al. “Going Deeper with Convolutions”, \
-CVPR 2015. (paper link: <a href="https://goo.gl/QTCe66" class="uri">https://goo.gl/QTCe66</a>)</p>
-</blockquote>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-77"></span>
-<img src="figures/GoogLeNet2.png" alt="GoogLeNet" width="80%" />
-<p class="caption">
-Figure 7.4: GoogLeNet
-</p>
-</div>
-<p>The architecture resembles the one of VGG, except that instead of a
-sequence of convolution layers, we have a sequence of inception layers
-(eg. green box).</p>
-<p>An inception layer is a sub-network (hence the name inception) that
-produces 4 different types of convolutions filters, which are then
-concatenated (see this video: <a href="https://youtu.be/VxhSouuSZDY" class="uri">https://youtu.be/VxhSouuSZDY</a>).</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-78"></span>
-<img src="figures/inception-subnetwork.png" alt="GoogLeNet Inception Sub-Network" width="80%" />
-<p class="caption">
-Figure 7.5: GoogLeNet Inception Sub-Network
-</p>
-</div>
-<p>The inception network creates parallel paths that help with the
-vanishing gradient problem and allow for a deeper architecture.</p>
-</div>
-<div id="resnet-residual-network" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">7.2.2</span> ResNet: Residual Network<a href="advances-in-network-architectures.html#resnet-residual-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>ResNet is a 152 (yes, 152!!) layer network architecture developed at
-Microsoft Research that won ILSVRC 2015 with an error rate of 3.6%
-(better than human performance).</p>
-<blockquote>
-<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”.
-<a href="https://goo.gl/Zs6G6X" class="uri">https://goo.gl/Zs6G6X</a></p>
-</blockquote>
-<p>Similarly to GoogLeNet, at the heart of ResNet is the idea of creating
-parallel connections between deeper layers and shallower layers. The
-connection is simply done by adding the result of a previous layer to
-the result after 2 convolutions layers:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
-<img src="figures/resnet-subnetwork.png" alt="ResNet Sub-Network" width="80%" />
-<p class="caption">
-Figure 7.6: ResNet Sub-Network
-</p>
-</div>
-<p>The idea is very simple but allows for a very deep and very efficient
-architecture.</p>
-<p>The ResNet architecture has been hugely successful. Many ResNet
-variants, pre-trained on ImageNet, can be found, such as the
-ResNet-18/34/50/101/151 models.</p>
-</div>
-</div>
-<div id="a-modern-training-pipeline" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> A Modern Training Pipeline<a href="advances-in-network-architectures.html#a-modern-training-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="data-augmentation" class="section level3 hasAnchor" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Data Augmentation<a href="advances-in-network-architectures.html#data-augmentation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is often possible to naturally increase your dataset by generating variants
-of your input data.</p>
-<p>For instance, with images, we know that minor image
-processing operations, such as crop, flip, rotation, zoom, contrast change, JPEG
-compression, noise, <em>etc.</em> should not change the outcome.</p>
-<p>Therefore these variants allow us to expand our dataset for free.</p>
-<blockquote>
-<p>see <a href="https://keras.io/api/layers/preprocessing_layers/image_augmentation/" class="uri">https://keras.io/api/layers/preprocessing_layers/image_augmentation/</a></p>
-</blockquote>
-<p>Similar ideas can be applied in other domains. For instance, in audio, you can
-also add noise, compression, reverb, <em>etc.</em></p>
-<p>Sometimes a good way to get data is to synthesise data through a similuation
-model (<em>e.g.</em> using game engine). Be mindful, however, that this artificial data
-is a simplified model of the real-world problem, and thus can lead to
-overfitting. Also, synthetic data tends to have slightly different
-characteristics from real data, and we will need to be careful with domain
-adaptation issues.</p>
-<p>Generative DNNs (see later chapter) can also be used to sytnthesise data (<em>e.g.</em>
-you can use ChatGTP to generate text for your dataset, or dialogue interactions
-for your bots).</p>
-</div>
-<div id="initialisation" class="section level3 hasAnchor" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> Initialisation<a href="advances-in-network-architectures.html#initialisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Initialisation needs to be considered carefully. Starting at <span class="math inline">\(w=0\)</span> is probably
-not a good idea, as you are likely to be stuck into some special local minimum,
-with the gradient being zero right from the start.</p>
-<p>The idea would then be to start at random. We need, however to be careful, and
-control the output at each layer to avoid a situation where gradients would
-explode or vanish through the different layers.</p>
-<p>For ReLU, a popular initialisation is He’s initialisation. For each layer <span class="math inline">\(l\)</span>,
-the bias <span class="math inline">\(b\)</span> and weights <span class="math inline">\(w\)</span> are initialised as <span class="math inline">\(b_l=0, w_l\sim \mathcal{N}(0, \sqrt{2/n_{l-1}})\)</span>, where <span class="math inline">\(n_{l-1}\)</span> is the number of neurons in prev
-layer. Using this guarantees stable gradients throughout the network (at least
-at the start of the training).</p>
-<blockquote>
-<p>see <a href="https://keras.io/api/layers/initializers/" class="uri">https://keras.io/api/layers/initializers/</a></p>
-</blockquote>
-<blockquote>
-<p>More Detailed Explanations and very nice Demos
-<a href="https://www.deeplearning.ai/ai-notes/initialization/" class="uri">https://www.deeplearning.ai/ai-notes/initialization/</a></p>
-</blockquote>
-<blockquote>
-<p>Kaiming He et al. Delving Deep into Rectifiers
-<a href="https://arxiv.org/abs/1502.01852" class="uri">https://arxiv.org/abs/1502.01852</a></p>
-</blockquote>
-<p>Here is a quick overview of how this works (non-examinable material).</p>
-<p>Consider a sequence of conv or dense layers (indexed <span class="math inline">\(l\)</span>). The logits and
-ReLU activations can be derived as follows:
-<span class="math display">\[
-    {\bf y}_l = {\bf W}_l {\bf x}_l \quad \text{and} \quad {\bf x}_l = \max({\bf
-      y}_{l-1},0).
-\]</span></p>
-<p>Assuming independence and weights and biases with zero mean:</p>
-<p><span class="math display">\[
-  \mathrm{Var}[y_l] = n_l \mathrm{Var}[w_lx_l] = n_l \mathrm{Var}[w_l]E[x_l^2].
-\]</span></p>
-<p>For ReLU, <span class="math inline">\(x_l =0\)</span> for <span class="math inline">\(y_{l-1} &lt; 0\)</span>, thus <span class="math inline">\(E[x_l^2] = \frac{1}{2}\mathrm{Var}[y_{l-1}]\)</span>, and</p>
-<p><span class="math display">\[
-  \mathrm{Var}[y_l] = \frac{1}{2}n_l \mathrm{Var}[w_l] \mathrm{Var}[y_{l-1}].
-\]</span></p>
-<p>One way to avoid an increase/decrease of the variance throughout the layers is to set:
-<span class="math display">\[
-  \mathrm{Var}[w_l] = \frac{2}{n_l},
-  \]</span>
-which we can achieve by sampling <span class="math inline">\(w_l\)</span> from <span class="math inline">\(\mathcal{N}(0, \sqrt{2/n_l})\)</span>.</p>
-</div>
-<div id="optimisation-1" class="section level3 hasAnchor" number="7.3.3">
-<h3><span class="header-section-number">7.3.3</span> Optimisation<a href="advances-in-network-architectures.html#optimisation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As we have seen in previous chapters, a number of optimisation techniques are
-available to us for training. Papers in the literature tend to gravitate around
-Adam or SGD. Adam seems to be the fastest out of the box, but best-in-class
-models tend to be trained on SGD with momentum, as they find local minima that
-generalise better than the ones found by Adam.</p>
-<p>Since then, an improved version of Adam, AdamW, was proposed and seems to fix
-Adam’s shortcomings.</p>
-<p>Another aspect of the optimisation is the scheduling of the learning rate. We
-know that we should probably reduced the learning rate as we approach the local
-minimum.</p>
-<p>In 2017 was popularised the idea of warm restarts, which periodically raise the
-learning rate to temporary diverge and allow to hop over hills. A variant of
-this scheme is the cosine annealing schedule:</p>
-<div class="figure"><span style="display:block;" id="fig:ch7-cosineannealing"></span>
-<img src="figures/LR-cosine-annealing.svg" alt="AlexNet" width="80%" />
-<p class="caption">
-Figure 7.7: AlexNet
-</p>
-</div>
-<p>An example of a reasonably modern optimiser scheme would look like this in
-Keras:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="advances-in-network-architectures.html#cb9-1" tabindex="-1"></a>  cosine_decay_scheduler <span class="op">=</span> optimizers.schedules.CosineDecay(</span>
-<span id="cb9-2"><a href="advances-in-network-architectures.html#cb9-2" tabindex="-1"></a>       initial_learning_rate, decay_steps, alpha<span class="op">=</span><span class="fl">0.0</span>, name<span class="op">=</span><span class="va">None</span>)</span>
-<span id="cb9-3"><a href="advances-in-network-architectures.html#cb9-3" tabindex="-1"></a>  optimizer <span class="op">=</span> optimizers.AdamW(learning_rate<span class="op">=</span>cosine_decay_scheduler)</span>
-<span id="cb9-4"><a href="advances-in-network-architectures.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="advances-in-network-architectures.html#cb9-5" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, ...)</span></code></pre></div>
-</div>
-<div id="take-away-6" class="section level3 hasAnchor" number="7.3.4">
-<h3><span class="header-section-number">7.3.4</span> Take Away<a href="advances-in-network-architectures.html#take-away-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>It is typical for modern convolution networks to enhance the original
-convolution/activation block with a combination of normalisation layers and
-residual connections. The new blocks are much more resilient to the vanishing
-gradient problem, and allows both 1) to go much deeper, and 2) to be efficiently
-used for transfer learning.</p>
-<p>Modern training pipelines typically include some data augmentation step, a
-dedicated initialisation strategy (eg. He or Xavier), a careful consideration of
-the optimisation (eg. AdamW) and of the learning rate schedule (eg. cosine
-annealing), with sometimes a transfer-learning/fine-tuning approach to kick
-start the training.</p>
-<p>Keep in mind that there are no universal truth here. These are popular
-techniques but they might not be optimal for your problem.</p>
+<div id="conclusion" class="section level1 unnumbered hasAnchor">
+<h1>Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
 </div>
-</div>
+
+
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="convolutional-neural-networks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="recurrent-neural-networks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="large-language-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="notes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -831,7 +504,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/chapter-07-advances-in-network-architectures.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/chapter-11-LLMs.Rmd",
 "text": "Edit"
 },
 "history": {

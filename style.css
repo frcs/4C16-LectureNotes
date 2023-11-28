@@ -79,6 +79,14 @@ h1.title {
 	}
 
 
+.promptAI {
+	background: #eee;
+	border-left: 10px solid rgba(91, 91, 91, 1);
+	margin: 1.5em 0 1.5em 0em;
+	padding: 0.5em 10px;
+}
+
+
 .example {
 	background: #f9fcf9;
 	border-left: 10px solid rgba(91, 183, 87, 0.5);

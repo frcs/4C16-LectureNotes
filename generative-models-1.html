@@ -23,7 +23,7 @@
 <meta name="author" content="François Pitié" />
 
 
-<meta name="date" content="2023-11-06" />
+<meta name="date" content="2023-11-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="recurrent-neural-networks.html"/>
-<link rel="next" href="notes.html"/>
+<link rel="next" href="attention-mechanism-and-transformers.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -376,6 +376,61 @@ div.csl-indent {
 <li class="chapter" data-level="9.3" data-path="generative-models-1.html"><a href="generative-models-1.html#deep-auto-regressive-models"><i class="fa fa-check"></i><b>9.3</b> Deep Auto-Regressive Models</a></li>
 <li class="chapter" data-level="9.4" data-path="generative-models-1.html"><a href="generative-models-1.html#take-away-8"><i class="fa fa-check"></i><b>9.4</b> Take Away</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html"><i class="fa fa-check"></i><b>10</b> Attention Mechanism and Transformers</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#motivation"><i class="fa fa-check"></i><b>10.1</b> Motivation</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#the-problem-with-cnns-and-rnns"><i class="fa fa-check"></i><b>10.1.1</b> The Problem with CNNs and RNNs</a></li>
+<li class="chapter" data-level="10.1.2" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#the-problem-with-positional-dependencies"><i class="fa fa-check"></i><b>10.1.2</b> The Problem with Positional Dependencies</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#attention-mechanism"><i class="fa fa-check"></i><b>10.2</b> Attention Mechanism</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#core-mechanism-of-a-dot-product-attention-layer"><i class="fa fa-check"></i><b>10.2.1</b> Core Mechanism of a Dot-Product Attention Layer</a></li>
+<li class="chapter" data-level="10.2.2" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#no-trainable-parameters"><i class="fa fa-check"></i><b>10.2.2</b> No-Trainable Parameters</a></li>
+<li class="chapter" data-level="10.2.3" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#self-attention"><i class="fa fa-check"></i><b>10.2.3</b> Self-Attention</a></li>
+<li class="chapter" data-level="10.2.4" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#computational-complexity"><i class="fa fa-check"></i><b>10.2.4</b> Computational Complexity</a></li>
+<li class="chapter" data-level="10.2.5" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#a-perfect-tool-for-multi-modal-processing"><i class="fa fa-check"></i><b>10.2.5</b> A Perfect Tool for Multi-Modal Processing</a></li>
+<li class="chapter" data-level="10.2.6" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#the-multi-head-attention-layer"><i class="fa fa-check"></i><b>10.2.6</b> The Multi-Head Attention Layer</a></li>
+<li class="chapter" data-level="10.2.7" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#take-away-attention-mechanism"><i class="fa fa-check"></i><b>10.2.7</b> Take Away (Attention Mechanism)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#transformers"><i class="fa fa-check"></i><b>10.3</b> Transformers</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#an-encoder-decoder-architecture"><i class="fa fa-check"></i><b>10.3.1</b> an Encoder-Decoder Architecture</a></li>
+<li class="chapter" data-level="10.3.2" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#positional-encoder"><i class="fa fa-check"></i><b>10.3.2</b> Positional Encoder</a></li>
+<li class="chapter" data-level="10.3.3" data-path="attention-mechanism-and-transformers.html"><a href="attention-mechanism-and-transformers.html#take-away-transformers"><i class="fa fa-check"></i><b>10.3.3</b> Take Away (Transformers)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="large-language-models.html"><a href="large-language-models.html"><i class="fa fa-check"></i><b>11</b> Large Language Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="large-language-models.html"><a href="large-language-models.html#basic-principle"><i class="fa fa-check"></i><b>11.1</b> Basic Principle</a></li>
+<li class="chapter" data-level="11.2" data-path="large-language-models.html"><a href="large-language-models.html#building-your-own-llm-in-3-easy-steps"><i class="fa fa-check"></i><b>11.2</b> Building Your Own LLM (in 3 easy steps)</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="large-language-models.html"><a href="large-language-models.html#scrape-the-internet"><i class="fa fa-check"></i><b>11.2.1</b> Scrape the Internet</a></li>
+<li class="chapter" data-level="11.2.2" data-path="large-language-models.html"><a href="large-language-models.html#tokenisation"><i class="fa fa-check"></i><b>11.2.2</b> Tokenisation</a></li>
+<li class="chapter" data-level="11.2.3" data-path="large-language-models.html"><a href="large-language-models.html#architecture-all-you-need-is-attention"><i class="fa fa-check"></i><b>11.2.3</b> Architecture: All You Need is Attention</a></li>
+<li class="chapter" data-level="11.2.4" data-path="large-language-models.html"><a href="large-language-models.html#training-all-you-need-is-6000-gpus-and-2m"><i class="fa fa-check"></i><b>11.2.4</b> Training: All You Need is 6,000 GPUs and $2M</a></li>
+<li class="chapter" data-level="11.2.5" data-path="large-language-models.html"><a href="large-language-models.html#fine-tuning-training-the-assistant-model"><i class="fa fa-check"></i><b>11.2.5</b> Fine-Tuning: Training the Assistant Model</a></li>
+<li class="chapter" data-level="11.2.6" data-path="large-language-models.html"><a href="large-language-models.html#summary-how-to-make-a-multi-billion-dollar-company"><i class="fa fa-check"></i><b>11.2.6</b> Summary: How to Make a Multi-Billion Dollar Company</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="large-language-models.html"><a href="large-language-models.html#safety-prompt-engineering"><i class="fa fa-check"></i><b>11.3</b> Safety, Prompt Engineering</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="large-language-models.html"><a href="large-language-models.html#measuring-bias-and-toxicity"><i class="fa fa-check"></i><b>11.3.1</b> Measuring Bias and Toxicity</a></li>
+<li class="chapter" data-level="11.3.2" data-path="large-language-models.html"><a href="large-language-models.html#prompt-hacking"><i class="fa fa-check"></i><b>11.3.2</b> Prompt Hacking</a></li>
+<li class="chapter" data-level="11.3.3" data-path="large-language-models.html"><a href="large-language-models.html#prompt-engineering"><i class="fa fa-check"></i><b>11.3.3</b> Prompt Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="large-language-models.html"><a href="large-language-models.html#emergent-features"><i class="fa fa-check"></i><b>11.4</b> Emergent Features</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="large-language-models.html"><a href="large-language-models.html#emergent-features-an-illusion-of-scale"><i class="fa fa-check"></i><b>11.4.1</b> Emergent Features: An Illusion of Scale?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="large-language-models.html"><a href="large-language-models.html#the-future-of-llms"><i class="fa fa-check"></i><b>11.5</b> The Future of LLMs</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="large-language-models.html"><a href="large-language-models.html#scaling-laws"><i class="fa fa-check"></i><b>11.5.1</b> Scaling Laws</a></li>
+<li class="chapter" data-level="11.5.2" data-path="large-language-models.html"><a href="large-language-models.html#artificial-generate-intelligence"><i class="fa fa-check"></i><b>11.5.2</b> Artificial Generate Intelligence</a></li>
+<li class="chapter" data-level="11.5.3" data-path="large-language-models.html"><a href="large-language-models.html#the-future-of-llms-climate-change"><i class="fa fa-check"></i><b>11.5.3</b> The Future of LLMs: Climate Change</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="large-language-models.html"><a href="large-language-models.html#take-away-9"><i class="fa fa-check"></i><b>11.6</b> Take Away</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="notes.html"><a href="notes.html"><i class="fa fa-check"></i><b>A</b> Notes</a>
 <ul>
@@ -544,29 +599,29 @@ and are taken from the following link:</p>
 <p><a href="https://blog.keras.io/building-autoencoders-in-keras.html" class="uri">https://blog.keras.io/building-autoencoders-in-keras.html</a></p>
 </blockquote>
 <p>Here is an example of autoencoder using FC layers:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="generative-models-1.html#cb13-1" aria-hidden="true" tabindex="-1"></a>encoding_dim <span class="op">=</span> <span class="dv">32</span>  </span>
-<span id="cb13-2"><a href="generative-models-1.html#cb13-2" aria-hidden="true" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
-<span id="cb13-3"><a href="generative-models-1.html#cb13-3" aria-hidden="true" tabindex="-1"></a>encoded <span class="op">=</span> Dense(encoding_dim, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(input_img)</span>
-<span id="cb13-4"><a href="generative-models-1.html#cb13-4" aria-hidden="true" tabindex="-1"></a>decoded <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(encoded)</span>
-<span id="cb13-5"><a href="generative-models-1.html#cb13-5" aria-hidden="true" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="generative-models-1.html#cb13-1" tabindex="-1"></a>encoding_dim <span class="op">=</span> <span class="dv">32</span>  </span>
+<span id="cb13-2"><a href="generative-models-1.html#cb13-2" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
+<span id="cb13-3"><a href="generative-models-1.html#cb13-3" tabindex="-1"></a>encoded <span class="op">=</span> Dense(encoding_dim, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(input_img)</span>
+<span id="cb13-4"><a href="generative-models-1.html#cb13-4" tabindex="-1"></a>decoded <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(encoded)</span>
+<span id="cb13-5"><a href="generative-models-1.html#cb13-5" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span></code></pre></div>
 <p>Here is an example of a convolutional autoencoder:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="generative-models-1.html#cb14-1" aria-hidden="true" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
-<span id="cb14-2"><a href="generative-models-1.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="generative-models-1.html#cb14-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(input_img)</span>
-<span id="cb14-4"><a href="generative-models-1.html#cb14-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb14-5"><a href="generative-models-1.html#cb14-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb14-6"><a href="generative-models-1.html#cb14-6" aria-hidden="true" tabindex="-1"></a>encoded <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb14-7"><a href="generative-models-1.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="generative-models-1.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># at this point the representation is (7, 7, 32)</span></span>
-<span id="cb14-9"><a href="generative-models-1.html#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="generative-models-1.html#cb14-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(encoded)</span>
-<span id="cb14-11"><a href="generative-models-1.html#cb14-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
-<span id="cb14-12"><a href="generative-models-1.html#cb14-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb14-13"><a href="generative-models-1.html#cb14-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
-<span id="cb14-14"><a href="generative-models-1.html#cb14-14" aria-hidden="true" tabindex="-1"></a>decoded <span class="op">=</span> Conv2D(<span class="dv">1</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
-<span id="cb14-15"><a href="generative-models-1.html#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="generative-models-1.html#cb14-16" aria-hidden="true" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span>
-<span id="cb14-17"><a href="generative-models-1.html#cb14-17" aria-hidden="true" tabindex="-1"></a>autoencoder.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&#39;adadelta&#39;</span>, loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="generative-models-1.html#cb14-1" tabindex="-1"></a>input_img <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
+<span id="cb14-2"><a href="generative-models-1.html#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="generative-models-1.html#cb14-3" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(input_img)</span>
+<span id="cb14-4"><a href="generative-models-1.html#cb14-4" tabindex="-1"></a>x <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb14-5"><a href="generative-models-1.html#cb14-5" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb14-6"><a href="generative-models-1.html#cb14-6" tabindex="-1"></a>encoded <span class="op">=</span> MaxPooling2D((<span class="dv">2</span>, <span class="dv">2</span>), padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb14-7"><a href="generative-models-1.html#cb14-7" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="generative-models-1.html#cb14-8" tabindex="-1"></a><span class="co"># at this point the representation is (7, 7, 32)</span></span>
+<span id="cb14-9"><a href="generative-models-1.html#cb14-9" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="generative-models-1.html#cb14-10" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(encoded)</span>
+<span id="cb14-11"><a href="generative-models-1.html#cb14-11" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
+<span id="cb14-12"><a href="generative-models-1.html#cb14-12" tabindex="-1"></a>x <span class="op">=</span> Conv2D(<span class="dv">32</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb14-13"><a href="generative-models-1.html#cb14-13" tabindex="-1"></a>x <span class="op">=</span> UpSampling2D((<span class="dv">2</span>, <span class="dv">2</span>))(x)</span>
+<span id="cb14-14"><a href="generative-models-1.html#cb14-14" tabindex="-1"></a>decoded <span class="op">=</span> Conv2D(<span class="dv">1</span>, (<span class="dv">3</span>, <span class="dv">3</span>), activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>, padding<span class="op">=</span><span class="st">&#39;same&#39;</span>)(x)</span>
+<span id="cb14-15"><a href="generative-models-1.html#cb14-15" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="generative-models-1.html#cb14-16" tabindex="-1"></a>autoencoder <span class="op">=</span> Model(input_img, decoded)</span>
+<span id="cb14-17"><a href="generative-models-1.html#cb14-17" tabindex="-1"></a>autoencoder.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">&#39;adadelta&#39;</span>, loss<span class="op">=</span><span class="st">&#39;binary_crossentropy&#39;</span>)</span></code></pre></div>
 <p>Note that we use <code>UpSampling2D</code> to upsample the tensor in the decoder
 part. This upsampling stage is sometimes called <strong>up-convolution</strong>,
 <strong>deconvolution</strong> or <strong>transposed convolution</strong>. This step upsamples
@@ -630,11 +685,11 @@ extreme mappings. Still, we have little control over the latent space itself,
 which could end up being skewed and hard to make sense of.</p>
 <p>Let’s see that on an example for MNIST with a 2D latent space with the
 following network:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="generative-models-1.html#cb15-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
-<span id="cb15-2"><a href="generative-models-1.html#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(inputs)</span>
-<span id="cb15-3"><a href="generative-models-1.html#cb15-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> Dense(<span class="dv">2</span>, name<span class="op">=</span><span class="st">&#39;latent_variables&#39;</span>)(x)</span>
-<span id="cb15-4"><a href="generative-models-1.html#cb15-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(z)</span>
-<span id="cb15-5"><a href="generative-models-1.html#cb15-5" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(x)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="generative-models-1.html#cb15-1" tabindex="-1"></a>inputs <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
+<span id="cb15-2"><a href="generative-models-1.html#cb15-2" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(inputs)</span>
+<span id="cb15-3"><a href="generative-models-1.html#cb15-3" tabindex="-1"></a>z <span class="op">=</span> Dense(<span class="dv">2</span>, name<span class="op">=</span><span class="st">&#39;latent_variables&#39;</span>)(x)</span>
+<span id="cb15-4"><a href="generative-models-1.html#cb15-4" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">512</span>, activation<span class="op">=</span><span class="st">&#39;relu&#39;</span>)(z)</span>
+<span id="cb15-5"><a href="generative-models-1.html#cb15-5" tabindex="-1"></a>outputs <span class="op">=</span> Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">&#39;sigmoid&#39;</span>)(x)</span></code></pre></div>
 <p>The bottleneck layer only contains 2 units. Thus the input <span class="math inline">\(28 \times 28\)</span> image
 is mapped into two latent variables <span class="math inline">\(z_1, z_2\)</span>. Fig. <a href="generative-models-1.html#fig:AE-mean">9.9</a> shows
 the 2D scatter plot of the latent variable <span class="math inline">\((z_1,z_2)\)</span>, coloured by class
@@ -789,34 +844,17 @@ dataset is simply <span class="math inline">\(p({\bf z}) = \mathcal{N}(0, Id)\)<
 <div id="deep-auto-regressive-models" class="section level2 hasAnchor" number="9.3">
 <h2><span class="header-section-number">9.3</span> Deep Auto-Regressive Models<a href="generative-models-1.html#deep-auto-regressive-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This is something we already looked at in RNNs. The idea is to forecast future
-behavior based on past behavior data. In othwer words, we try to model this probability:
-<span class="math display">\[
-p(x_i | x_1, \dots, x_{i-1})
+behavior based on past behavior data:</p>
+<p><span class="math display">\[
+  p(x_i | x_1, \dots, x_{i-1})
 \]</span></p>
-<p>Generally we restrict ourselves to a context window of size <span class="math inline">\(k\)</span> and end up with
-something
-like a Markov chain:
-<span class="math display">\[
-p(x_i | x_1, \dots, x_{i-1}) = p(x_i | x_{i-k}, \dots, x_{i-1})
+<p>Generally we restrict ourselves to a context window and end up with something
+like a Markov chain:</p>
+<p><span class="math display">\[
+    p(x_i | x_1, \dots, x_{i-1}) = p(x_i | x_{i-k}, \dots, x_{i-1})
 \]</span></p>
-<p>This is an idea that we already explored in the handout on RNNs for text
-generation. This is also the basis for large language models (see later
-handout).</p>
-<p>The notion of auto-regressive is, of course, borrowed from signal processing. In
-signal processing, an autoregressive (AR) model of order <span class="math inline">\(k\)</span> is defined as <span class="math inline">\(AR(k)\)</span>:
-<span class="math display">\[
-{\bf x}_i = \sum_{l=1}^{k} w_l {\bf x}_{i-l}
-\]</span></p>
-<p>The idea is now to extend the linear relationship to a DNN:
-<span class="math display">\[
- p(x_i | x_{i-k}, \dots, x_{i-1})  = DNN({\bf x}_{i-k}, \dots, {\bf x}_{i-1})
-\]</span></p>
-<p>Notable early deep autoregressive models include PixelCNN and WaveNet by Google
-DeepMind’s team. The seminal Transformer model (“attention is all you need”
-paper) by Google Brain, and all following Large Language Models (<em>eg.</em> BERT,
-GTP, Llama, etc.) are also autoregressive models.</p>
-<p>Yet again, note that we use a cheap labelling: the labelling is simply given by
-the data itself.</p>
+<p>See handout on RNNs how to use it for text generation. This is also the basis
+for large language models (see Chapter).</p>
 </div>
 <div id="take-away-8" class="section level2 hasAnchor" number="9.4">
 <h2><span class="header-section-number">9.4</span> Take Away<a href="generative-models-1.html#take-away-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -835,17 +873,13 @@ use, then assign trivial labels to it.</p>
 
 </div>
 </div>
-
-
-
-</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="recurrent-neural-networks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="notes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="attention-mechanism-and-transformers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
