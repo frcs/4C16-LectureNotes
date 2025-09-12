@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Advances in Network Architectures – 4C16 - Deep Learning and its Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter-08-recurrent-neural-networks.html" rel="next">
+<link href="./chapter-06-convolutional-neural-networks.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">4C16 - Deep Learning and its Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module Descriptor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-00-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-01-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-02-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Logistic Regression: From Lines to Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-03-classic-classifiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Tour of Classic Classifiers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-04-evaluating-classifier-performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluating Classifier Performance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations of Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-05-deep-feedforward-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-06-convolutional-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Modern Architectures and Techniques</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-07-advances-in-network-architectures.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-08-recurrent-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-09-generative-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-10-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-11-LLMs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Relationship between Error, Loss Function and Maximum Likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-02-universal-approximation-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Universal Approximation Theorem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-03-l1-induces-sparsity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Why Does <span class="math inline">L_1</span> Regularisation Induce Sparsity?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#transfer-learning" id="toc-transfer-learning" class="nav-link active" data-scroll-target="#transfer-learning"><span class="header-section-number">7.1</span> Transfer Learning</a>
+  <ul class="collapse">
+  <li><a href="#re-using-pre-trained-networks" id="toc-re-using-pre-trained-networks" class="nav-link" data-scroll-target="#re-using-pre-trained-networks"><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks</a></li>
+  <li><a href="#domain-adaptation-and-vanishing-gradients" id="toc-domain-adaptation-and-vanishing-gradients" class="nav-link" data-scroll-target="#domain-adaptation-and-vanishing-gradients"><span class="header-section-number">7.1.2</span> Domain Adaptation and Vanishing Gradients</a></li>
+  <li><a href="#normalisation-layers" id="toc-normalisation-layers" class="nav-link" data-scroll-target="#normalisation-layers"><span class="header-section-number">7.1.3</span> Normalisation Layers</a></li>
+  <li><a href="#batch-normalisation" id="toc-batch-normalisation" class="nav-link" data-scroll-target="#batch-normalisation"><span class="header-section-number">7.1.4</span> Batch Normalisation</a></li>
+  </ul></li>
+  <li><a href="#going-deeper" id="toc-going-deeper" class="nav-link" data-scroll-target="#going-deeper"><span class="header-section-number">7.2</span> Going Deeper</a>
+  <ul class="collapse">
+  <li><a href="#googlenet-the-inception-module" id="toc-googlenet-the-inception-module" class="nav-link" data-scroll-target="#googlenet-the-inception-module"><span class="header-section-number">7.2.1</span> GoogLeNet: The Inception Module</a></li>
+  <li><a href="#resnet-residual-connections" id="toc-resnet-residual-connections" class="nav-link" data-scroll-target="#resnet-residual-connections"><span class="header-section-number">7.2.2</span> ResNet: Residual Connections</a></li>
+  </ul></li>
+  <li><a href="#a-modern-training-pipeline" id="toc-a-modern-training-pipeline" class="nav-link" data-scroll-target="#a-modern-training-pipeline"><span class="header-section-number">7.3</span> A Modern Training Pipeline</a>
+  <ul class="collapse">
+  <li><a href="#data-augmentation" id="toc-data-augmentation" class="nav-link" data-scroll-target="#data-augmentation"><span class="header-section-number">7.3.1</span> Data Augmentation</a></li>
+  <li><a href="#initialisation" id="toc-initialisation" class="nav-link" data-scroll-target="#initialisation"><span class="header-section-number">7.3.2</span> Initialisation</a></li>
+  <li><a href="#optimisation" id="toc-optimisation" class="nav-link" data-scroll-target="#optimisation"><span class="header-section-number">7.3.3</span> Optimisation</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">7.3.4</span> Takeaways</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Between 2012 and 2015, significant advances in network architectures emerged, addressing key challenges in deep neural networks, particularly the vanishing gradient problem that hinders the training of deeper models. This chapter highlights some of the pivotal developments and typical components of a modern architecture and training pipeline.</p>
+<section id="transfer-learning" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="transfer-learning"><span class="header-section-number">7.1</span> Transfer Learning</h2>
+<section id="re-using-pre-trained-networks" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="re-using-pre-trained-networks"><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks</h3>
+<p><strong>Transfer learning</strong> is a powerful technique that involves reusing knowledge gained from one task to improve performance on a related but different task.</p>
+<p>Imagine you are tasked with developing a deep learning application to recognise pelicans in images. Training a state-of-the-art Convolutional Neural Network (CNN) from scratch would require a massive dataset, potentially hundreds of thousands of images, and weeks of training time. If you only have access to a few thousand images, this approach is impractical.</p>
+<p>This is where transfer learning offers a solution. Instead of starting from scratch, you can leverage existing, pre-trained networks. Consider the architecture of AlexNet, as shown in <a href="#fig-ch7-alexnet" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>.</p>
+<div id="fig-ch7-alexnet" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch7-alexnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/alexnet-annotated.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch7-alexnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: AlexNet Architecture (2012).
+</figcaption>
+</figure>
+</div>
+<p>In broad terms, the convolutional layers (up to C5) are responsible for learning and extracting visual features from the input images. The final dense layers (FC6, FC7, and FC8) then use these features to perform classification.</p>
+<p>Networks like AlexNet, VGG, ResNet, and GoogLeNet have been trained on vast datasets such as ImageNet, which contains millions of images across thousands of categories. As a result, the filters learned by their convolutional layers are highly generic and effective for a wide range of visual tasks. These features can be repurposed for your specific application.</p>
+<p>Instead of training a new network to learn visual features, you can reuse the ones from a pre-trained model. The process involves taking a pre-trained network, removing its final classification layers, and replacing them with your own, specialised layers designed for your specific task.</p>
+<!-- Broadly speaking the convolutional layers (up to C5) build visual -->
+<!-- features whilst the last dense layers (FC6, FC7 and FC8) perform -->
+<!-- classification based on these visual features. -->
+<!-- AlexNet (and any of the popular off-the-shelf networks such as VGG, -->
+<!-- ResNet or GoogLeNet) was trained on millions of images and thousands -->
+<!-- of classes. The network is thus able to deal with a great variety of -->
+<!-- problems and the trained filters produce very generic features that -->
+<!-- are relevant to most visual applications. -->
+<!-- Therefore AlexNet's visual features could be very effective for your -->
+<!-- particular task and maybe there is no need to train new visual -->
+<!-- features: just reuse these existing ones. -->
+<p>Depending on the size of your training dataset, you might choose to redesign only the final layer (e.g., FC8) or several of the later layers (e.g., C5, FC6, FC7, FC8). Redesigning more layers requires a larger amount of training data.</p>
+<p>If you have a sufficient number of training samples, you can also <em>fine-tune</em> the imported layers by allowing backpropagation to update their weights. This adapts the pre-trained features to better suit your specific application. If your dataset is small, it is generally better to <em>freeze</em> the weights of the imported layers to prevent overfitting.</p>
+<p>In Keras, you can freeze the weights of a layer by setting the <code>trainable</code> argument to <code>False</code>:</p>
+<!-- The only task left is to design and train the classification part of -->
+<!-- the network (eg. the dense layers). -->
+<!-- Your application looks like this: copy/paste a pre-trained network, -->
+<!-- cut away the last few layers and replace them with your own -->
+<!-- specialised network. -->
+<!-- Depending on the amount of training data available to you, you may -->
+<!-- decide to only redesign the last layer (_ie._ FC8), or a handful of -->
+<!-- layers (_eg._ C5, FC6, FC7, FC8). Keep in mind that redesigning more -->
+<!-- layers will necessitate more training data. -->
+<!-- If you have enough samples, you might want to allow backpropagation to -->
+<!-- update some of the imported layers, so as to fine tune the features -->
+<!-- for your specific application. If you don't have enough data, you -->
+<!-- probably should freeze the values of the imported weights. -->
+<!-- In Keras you can freeze the update of parameters using the  `trainable=False` argument. For instance: -->
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For most image-based applications, it is highly recommended to start by reusing an off-the-shelf network. Research has shown that these generic visual features provide a strong baseline and can achieve state-of-the-art performance in many applications.</p>
+<!-- In most image based applications you should first consider reusing -->
+<!-- off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been -->
+<!-- shown (see link below) that using such generic visual features yield -->
+<!-- state of the art performances in most applications. -->
+<blockquote class="blockquote">
+<p>Razavian et al.&nbsp;``CNN Features off-the-shelf: an Astounding Baseline for Recognition’’. 2014. https://arxiv.org/abs/1403.6382</p>
+</blockquote>
+</section>
+<section id="domain-adaptation-and-vanishing-gradients" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="domain-adaptation-and-vanishing-gradients"><span class="header-section-number">7.1.2</span> Domain Adaptation and Vanishing Gradients</h3>
+<p>Reusing networks on new datasets can present challenges. Consider a single neuron with a <span class="math inline">\mathrm{tanh}</span> activation function, <span class="math inline">f(x_i, w) = \mathrm{tanh}(x_i+w)</span>. Suppose the original network was trained on images taken on sunny days. The input values, <span class="math inline">x_i</span> (red dots in <a href="#fig-transfer-learning-vg" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>), are centred around 0, and the learned weight is <span class="math inline">\hat{w}=0</span>.</p>
+<!-- Let's see why re-using networks on new training sets can be difficult. -->
+<!-- Consider a single neuron and assume a $\mathrm{tanh}$ activation -->
+<!-- function $f(x_i, w) = \mathrm{tanh}(x_i+w)$. The training samples -->
+<!-- shown in Fig.\@ref(fig:transfer-learning-vg) are images taken on a -->
+<!-- sunny day. The input values $x_i$ (red dots) are centred about $0$ and -->
+<!-- the estimated $w$ is $\hat{w}=0$. -->
+<div id="fig-transfer-learning-vg" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transfer-learning-vg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/domain-shift-example.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transfer-learning-vg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: Domain Shift Example.
+</figcaption>
+</figure>
+</div>
+<p>Now, we want to fine-tune this network with new images taken on cloudy days. The input values for these new samples, <span class="math inline">x_i</span> (green crosses), are now centred around 5. In this input range, the derivative of the <span class="math inline">\mathrm{tanh}</span> function is close to zero, leading to the problem of vanishing gradients. This makes it extremely difficult to update the network weights effectively.</p>
+<!-- We want to fine tune the training with new images taken on cloudy -->
+<!-- days. The new samples values $x_i$ (green crosses) are centred around -->
+<!-- $5$. For that input range, the derivative of $\mathrm{tanh}$ is almost -->
+<!-- zero, which means we have a problem of vanishing gradients. It will be -->
+<!-- difficult to update the network weights. -->
+</section>
+<section id="normalisation-layers" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="normalisation-layers"><span class="header-section-number">7.1.3</span> Normalisation Layers</h3>
+<p>To address this, it is crucial to ensure that the input data is within an appropriate value range. <strong>Normalisation Layers</strong> are used to scale the data according to the statistics of the training set, mitigating the effects of domain shift.</p>
+<p>The output <span class="math inline">x_i'</span> of a normalisation layer is given by:</p>
+<!-- It is thus critical for the input data to be in the correct value -->
+<!-- range. To cope with possible shifts of value range between datasets we -->
+<!-- can use a **Normalisation Layer**, whose purpose it to scale the data -->
+<!-- according to the training set statistics. -->
+<!-- Denoting $x_{i}$ an input value of the normalisation layer, the output -->
+<!-- $x_i'$ after normalisation is defined as follows: -->
+<p><span class="math display">
+x'_{i} = \frac{x_{i} - \mu_i}{\sigma_i}
+</span></p>
+<p>where <span class="math inline">\mu_i</span> and <span class="math inline">\sigma_i</span> are the mean and standard deviation of the input data, computed offline.</p>
+<!-- where $\mu_i$ and $\sigma_i$ are computed off-line based on the input -->
+<!-- data statistics. -->
+<p>After normalisation, the new samples are centred around 0, as shown in <a href="#fig-transfer-learning-vg-after-bn" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>, placing them in a region where the gradient of the activation function is large enough for effective learning.</p>
+<div id="fig-transfer-learning-vg-after-bn" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transfer-learning-vg-after-bn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/domain-shift-example-after-BN.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transfer-learning-vg-after-bn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.3: Domain Shift after Normalisation.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="batch-normalisation" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="batch-normalisation"><span class="header-section-number">7.1.4</span> Batch Normalisation</h3>
+<p><strong>Batch Normalisation</strong> (BN) is a specific type of normalisation layer where the scaling parameters, <span class="math inline">\mu</span> and <span class="math inline">\sigma</span>, are determined as follows:</p>
+<ul>
+<li>During training, <span class="math inline">\mu_i</span> and <span class="math inline">\sigma_i</span> are the mean and standard deviation of the input <span class="math inline">x_i</span> over the current mini-batch. This ensures that the output <span class="math inline">x_i'</span> has a mean of 0 and a variance of 1.</li>
+<li>During evaluation, <span class="math inline">\mu_i</span> and <span class="math inline">\sigma_i</span> are the mean and standard deviation computed over the entire training set.</li>
+</ul>
+<p>Batch Normalisation allows for higher learning rates and makes the network less sensitive to initialisation and other optimisation choices, such as Dropout.</p>
+<blockquote class="blockquote">
+<p>Sergey Ioffe, Christian Szegedy. “Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift.” (2015) https://arxiv.org/abs/1502.03167</p>
+</blockquote>
+</section>
+</section>
+<section id="going-deeper" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="going-deeper"><span class="header-section-number">7.2</span> Going Deeper</h2>
+<p>The realisation that deeper networks could generalise better sparked a race to build increasingly deep architectures after 2012. The primary obstacle was the vanishing gradient problem, which made it difficult to train sequential architectures like VGG beyond 14-16 layers.</p>
+<p>Consider a simple network where the gradient of the error with respect to a weight <span class="math inline">w</span> is a product of intermediate derivatives:</p>
+<!-- As the potential for deeper networks to generalise better became evident, a -->
+<!-- fervent competition to push the boundaries further began after 2012. -->
+<!-- The key hurdle in this race was that, because of vanishing gradients, sequential -->
+<!-- architectures like VGG couldn't be trained for more than 14-16 layers. -->
+<!-- There has been a general trend in recent years to design deeper -->
+<!-- networks. Deeper network are known to produce more complex features -->
+<!-- and tend to generalise better. -->
+<!-- Training deep networks is however difficult. One key recurring issue -->
+<!-- being the problem of vanishing gradients. -->
+<!-- Recall the problem of vanishing gradients on this simple network: -->
+<div id="fig-vg-inception-1" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vg-inception-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/vg-inception-1.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-vg-inception-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4
+</figcaption>
+</figure>
+</div>
+<p><span class="math display">
+\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
+</span></p>
+<p>If any of these intermediate derivatives is close to zero, the overall gradient <span class="math inline">\frac{\partial e}{\partial w}</span> will also be close to zero, halting the learning process.</p>
+<!-- During the gradient descent, we evaluate $\frac{\partial e}{\partial -->
+<!-- w}$, which is a product of the intermediate derivatives. If any of -->
+<!-- these is zero, then $\frac{\partial e}{\partial w}\approx 0$. -->
+<p>Now, let us replace the layer containing <span class="math inline">u_2</span> with a network of three units in parallel (<span class="math inline">u_2</span>, <span class="math inline">u_3</span>, <span class="math inline">u_4</span>):</p>
+<!-- Now consider the layer containing $u_2$, and replace it with a network -->
+<!-- of 3 units in parallel ($u_3$, $u_2$, $u_4$). -->
+<div id="fig-vg-inception-3" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/vg-inception-3.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.5
+</figcaption>
+</figure>
+</div>
+<p>The gradient is now a sum of the gradients through these parallel paths:</p>
+<p><span class="math display">
+\frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}  + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
+</span></p>
+<p>With this architecture, it is much less likely that the overall gradient will vanish, as all three terms would need to be null simultaneously. This principle of introducing parallel paths is a key innovation in modern deep learning and was central to the designs of GoogLeNet (2014) and ResNet (2015).</p>
+<section id="googlenet-the-inception-module" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="googlenet-the-inception-module"><span class="header-section-number">7.2.1</span> GoogLeNet: The Inception Module</h3>
+<p>GoogLeNet, the winner of the ILSVRC 2014 competition, achieved a top-5 error rate of 6.7%, which was close to human-level performance at the time. This 22-layer deep CNN introduced the <strong>Inception module</strong>, a sub-network that processes the input through multiple parallel convolutional pathways.</p>
+<blockquote class="blockquote">
+<p>Szegedy et al.&nbsp;“Going Deeper with Convolutions”, \ CVPR 2015. (paper link: https://goo.gl/QTCe66)</p>
+</blockquote>
+<p>Instead of a simple sequence of convolutional layers, GoogLeNet uses a series of Inception modules (as highlighted by the green boxe in Figure below).</p>
+<div id="fig-GoogLeNet2" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-GoogLeNet2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/GoogLeNet2.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-GoogLeNet2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.6: GoogLeNet Architecture (2015)
+</figcaption>
+</figure>
+</div>
+<p>Each inception layer is a sub-network (hence the name inception) that produces 4 different types of convolutions filters, which are then concatenated (see this video: https://youtu.be/VxhSouuSZDY for more explanations).</p>
+<div id="fig-inception-subnetwork" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-inception-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/inception-subnetwork.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inception-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.7: GoogLeNet Inception Sub-Network
+</figcaption>
+</figure>
+</div>
+<p>The Inception module creates parallel paths that mitigate the vanishing gradient problem, allowing us to go a bit deeper.</p>
+</section>
+<section id="resnet-residual-connections" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="resnet-residual-connections"><span class="header-section-number">7.2.2</span> ResNet: Residual Connections</h3>
+<p>ResNet is a 152 (yes, 152!!) layer network architecture that won the ILSVRC 2015 competition with an error rate of just 3.6%, surpassing human performance.</p>
+<blockquote class="blockquote">
+<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”. https://goo.gl/Zs6G6X</p>
+</blockquote>
+<p>Similar to GoogLeNet, ResNet introduces parallel connections, but in a much simpler way. It uses <strong>residual connections</strong>, or <em>skip connections</em>, which add the input of a block of layers to its output.</p>
+<div id="fig-resnet-subnet" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-resnet-subnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/resnet-subnetwork.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resnet-subnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.8: ResNet Sub-Network
+</figcaption>
+</figure>
+</div>
+<p>The idea is very simple but allows for a very deep and very efficient architecture.</p>
+<p>The ResNet architecture has been highly influential, and many pre-trained variants, such as ResNet-18, ResNet-34, and ResNet-50, are still widely used today.</p>
+<p>Residual connections have also stuck</p>
+</section>
+</section>
+<section id="a-modern-training-pipeline" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="a-modern-training-pipeline"><span class="header-section-number">7.3</span> A Modern Training Pipeline</h2>
+<section id="data-augmentation" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">7.3.1</span> Data Augmentation</h3>
+<p>It is often possible to artificially expand your dataset by generating variations of your existing input data. For images, common augmentation techniques include cropping, flipping, rotating, zooming, and adjusting contrast. These operations should not change the class of the image, so they provide a free and effective way to increase the size and diversity of the training set.</p>
+<!-- It is often possible to naturally increase your dataset by generating variants -->
+<!-- of your input data.  -->
+<!-- For instance, with images, we know that minor image -->
+<!-- processing operations, such as crop, flip, rotation, zoom, contrast change, JPEG -->
+<!-- compression, noise, _etc._ should not change the outcome. -->
+<!-- Therefore these variants allow us to expand our dataset for free. -->
+<blockquote class="blockquote">
+<p>see https://keras.io/api/layers/preprocessing_layers/image_augmentation/</p>
+</blockquote>
+<p>Similar techniques can be applied in other domains, such as adding noise, reverb, or compression to audio data.</p>
+<p>Another approach is to synthesise data using simulation models, such as game engines. However, be aware that synthetic data is a simplified model of the real world and can lead to overfitting. It also tends to have different characteristics from real data, which can cause domain adaptation issues.</p>
+<p>Generative models, such as those discussed in later chapters, can also be used to create synthetic data. For example, you could use a large language model to generate text for a natural language processing task.</p>
+</section>
+<section id="initialisation" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="initialisation"><span class="header-section-number">7.3.2</span> Initialisation</h3>
+<p>Initialisation needs to be considered carefully. Starting with all weights at zero is generally a bad idea, as it can lead to being stuck in a local minimum with zero gradients from the outset. A better approach is to initialise the weights randomly. We need, however to be careful, and control the output at each layer to avoid a situation where gradients would explode or vanish through the different layers.</p>
+<p>For networks using the ReLU activation function, <strong>He initialisation</strong> is a popular choice. For each layer <span class="math inline">l</span>, the bias <span class="math inline">b</span> and weights <span class="math inline">w</span> are initialised as <span class="math inline">b_l=0, w_l\sim \mathcal{N}(0,
+\sqrt{2/n_{l-1}})</span>, where <span class="math inline">n_{l-1}</span> is the number of neurons in the previous layer. This helps to maintain a stable gradient flow throughout the network, at least at the beginning of training.</p>
+<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>see https://keras.io/api/layers/initializers/</li>
+<li>see https://www.deeplearning.ai/ai-notes/initialization/</li>
+<li>Kaiming He et al.&nbsp;Delving Deep into Rectifiers (see <a href="paper">https://arxiv.org/abs/1502.01852</a>)</li>
+<li>A quick overview of how this works is presented in <a href="note-05-He-initialisation.html" class="quarto-xref"><span>Appendix E</span></a>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="optimisation" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="optimisation"><span class="header-section-number">7.3.3</span> Optimisation</h3>
+<p>As discussed in previous chapters, various optimisation techniques are available for training. Adam and SGD with momentum are two of the most common choices. While Adam often converges faster, SGD with momentum has been shown to find local minima that generalise better. An improved version of Adam, called AdamW, has been proposed to address some of Adam’s shortcomings.</p>
+<!-- As we have seen in previous chapters, a number of optimisation techniques are -->
+<!-- available to us for training. Papers in the literature tend to gravitate around -->
+<!-- Adam or SGD. Adam seems to be the fastest out of the box, but best-in-class -->
+<!-- models tend to be trained on SGD with momentum, as they find local minima that -->
+<!-- generalise better than the ones found by Adam. -->
+<!-- Since then, an improved version of Adam, AdamW, was proposed and seems to fix -->
+<!-- Adam's shortcomings. -->
+<p>Another important aspect of optimisation is the <strong>learning rate schedule</strong>. Another aspect of the optimisation is the scheduling of the learning rate. It is generally beneficial to decrease the learning rate as the training progresses and the model approaches a local minimum.</p>
+<p>In 2017 was popularised the idea of warm restarts, which periodically raise the learning rate to temporary diverge and allow to hop over hills. A variant of this scheme is the <strong>cosine annealing</strong> schedule shown in <a href="#fig-ch7-cosineannealing" class="quarto-xref">Figure&nbsp;<span>7.9</span></a>.</p>
+<div id="fig-ch7-cosineannealing" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ch7-cosineannealing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/LR-cosine-annealing.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch7-cosineannealing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.9: Learning rate schedule using cosine annealing (2017).
+</figcaption>
+</figure>
+</div>
+<p>An example of a reasonably modern optimiser setup in Keras might look like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  cosine_decay_scheduler <span class="op">=</span> optimizers.schedules.CosineDecay(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       initial_learning_rate, decay_steps, alpha<span class="op">=</span><span class="fl">0.0</span>, name<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  optimizer <span class="op">=</span> optimizers.AdamW(learning_rate<span class="op">=</span>cosine_decay_scheduler)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  model.<span class="bu">compile</span>(optimizer<span class="op">=</span>optimizer, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="takeaways" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">7.3.4</span> Takeaways</h3>
+<p>Modern convolutional neural networks typically enhance the basic convolution-activation block with a combination of normalisation layers and residual connections. These additions make the networks more resilient to the vanishing gradient problem, enabling them to be much deeper and more effective for transfer learning.</p>
+<p>A modern training pipeline usually includes data augmentation, an initialisation strategy (such as He or Xavier initialisation), a well-chosen optimiser (like AdamW), and a dynamic learning rate schedule (such as cosine annealing). Often, a transfer learning approach is used to kick-start the training process.</p>
+<p>It is important to remember that there are no universal truths in deep learning. These are popular and proven techniques, but they may not be optimal for your particular application. Remember that experimentation and careful evaluation are part of your daily grind as a deep learning practitioner.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapter-06-convolutional-neural-networks.html" class="pagination-link" aria-label="Convolutional Neural Networks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter-08-recurrent-neural-networks.html" class="pagination-link" aria-label="Recurrent Neural Networks">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, François Pitié</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

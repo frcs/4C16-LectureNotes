@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; An Introduction to Generative Models – 4C16 - Deep Learning and its Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter-10-transformers.html" rel="next">
+<link href="./chapter-08-recurrent-neural-networks.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-09-generative-models.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">4C16 - Deep Learning and its Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module Descriptor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-00-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-01-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-02-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Logistic Regression: From Lines to Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-03-classic-classifiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Tour of Classic Classifiers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-04-evaluating-classifier-performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluating Classifier Performance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations of Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-05-deep-feedforward-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-06-convolutional-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Modern Architectures and Techniques</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-07-advances-in-network-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-08-recurrent-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-09-generative-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-10-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-11-LLMs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Relationship between Error, Loss Function and Maximum Likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-02-universal-approximation-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Universal Approximation Theorem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-03-l1-induces-sparsity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Why Does <span class="math inline">L_1</span> Regularisation Induce Sparsity?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#generative-adversarial-networks-gans" id="toc-generative-adversarial-networks-gans" class="nav-link active" data-scroll-target="#generative-adversarial-networks-gans"><span class="header-section-number">9.1</span> Generative Adversarial Networks (GANs)</a></li>
+  <li><a href="#autoencoders-learning-to-compress-and-reconstruct" id="toc-autoencoders-learning-to-compress-and-reconstruct" class="nav-link" data-scroll-target="#autoencoders-learning-to-compress-and-reconstruct"><span class="header-section-number">9.2</span> Autoencoders: Learning to Compress and Reconstruct</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-of-the-latent-space" id="toc-the-problem-of-the-latent-space" class="nav-link" data-scroll-target="#the-problem-of-the-latent-space"><span class="header-section-number">9.2.1</span> The Problem of the Latent Space</a></li>
+  <li><a href="#variational-autoencoders-vaes" id="toc-variational-autoencoders-vaes" class="nav-link" data-scroll-target="#variational-autoencoders-vaes"><span class="header-section-number">9.2.2</span> Variational Autoencoders (VAEs)</a></li>
+  </ul></li>
+  <li><a href="#deep-auto-regressive-models" id="toc-deep-auto-regressive-models" class="nav-link" data-scroll-target="#deep-auto-regressive-models"><span class="header-section-number">9.3</span> Deep Auto-Regressive Models</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">9.4</span> Takeaways</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-09-generative-models.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Until now, our focus has primarily been on <strong>discriminative models</strong>. These models are trained to learn the boundary between different classes of data. Their goal is to estimate the conditional probability <span class="math inline">P(Y | X)</span>: given an input <span class="math inline">X</span>, what is the probability of the label <span class="math inline">Y</span>? Logistic regression, SVMs, and standard feed-forward classifiers are all examples of discriminative models. They are the workhorses of <strong>supervised learning</strong>, where we learn from a dataset of inputs <span class="math inline">{\bf X}</span> that have been explicitly paired with ground-truth labels <span class="math inline">{\bf y}</span>.</p>
+<div class="{example}">
+<p><strong>A Discriminative Task:</strong> Given a dataset of images labelled as either ‘face’ or ‘not face’, train a model to detect whether a <em>new</em> image contains a face.</p>
+</div>
+<p>In this chapter, we shift our focus to a different paradigm: <strong>generative models</strong>. Instead of learning to distinguish between classes, generative models aim to learn the underlying probability distribution of the data itself. Their goal is to model <span class="math inline">P(X)</span> (the distribution of the data) or <span class="math inline">P(X | Y)</span> (the distribution of data belonging to a specific class). The ultimate objective is to <strong>synthesise new data</strong> that is statistically similar to the data the model was trained on.</p>
+<p>Because the goal is to learn the inherent structure of the data without relying on explicit labels, generative modelling is often a form of <strong>unsupervised learning</strong>.</p>
+<div class="{example}">
+<p><strong>A Generative Task:</strong> Given a large dataset of human faces, train a model that can generate new, realistic-looking faces of people who do not exist.</p>
+</div>
+<p>Deep learning has given rise to several powerful families of generative models, including:</p>
+<ul>
+<li><strong>Generative Adversarial Networks (GANs)</strong></li>
+<li><strong>Autoencoders (AEs)</strong> and <strong>Variational Autoencoders (VAEs)</strong></li>
+<li><strong>Auto-Regressive Models</strong> (e.g., GPT-3, GPT-4)</li>
+<li><strong>Diffusion Models</strong> (the technology behind popular image generation tools like Midjourney and DALL-E)</li>
+</ul>
+<p>In this module, we will provide an introduction to GANs, Autoencoders, and Auto-Regressive Models.</p>
+<section id="generative-adversarial-networks-gans" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="generative-adversarial-networks-gans"><span class="header-section-number">9.1</span> Generative Adversarial Networks (GANs)</h2>
+<p>For several years, Generative Adversarial Networks were the dominant force in generative modelling, producing stunningly realistic images. The core idea, introduced by Ian Goodfellow and his colleagues in 2014, is both elegant and powerful. It frames the learning process as a two-player game.</p>
+<blockquote class="blockquote">
+<p>Ian Goodfellow et al.&nbsp;(2014). “Generative Adversarial Networks”. <a href="https://arxiv.org/abs/1406.2661">https://arxiv.org/abs/1406.2661</a></p>
+</blockquote>
+<p>A GAN consists of two neural networks that are trained in opposition to one another:</p>
+<ol type="1">
+<li><p>The <strong>Generator (<span class="math inline">G</span>)</strong>: Its job is to create fake data. It takes a random noise vector (a ‘seed’) as input and tries to transform it into a sample that looks like it could have come from the real dataset.</p></li>
+<li><p>The <strong>Discriminator (<span class="math inline">D</span>)</strong>: Its job is to be a detective. It is a standard binary classifier that takes a sample (either a real one from the training set or a fake one from the generator) and must determine whether it is real or fake.</p></li>
+</ol>
+<div id="fig-gan-architecture" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gan-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/GAN-network.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gan-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: The architecture of a Generative Adversarial Network (GAN).
+</figcaption>
+</figure>
+</div>
+<p>The training process is an adversarial game:</p>
+<ul>
+<li>The <strong>Generator</strong> wants to fool the Discriminator. Its loss is low when the Discriminator incorrectly classifies its fake images as real. So, it learns to produce increasingly realistic images.</li>
+<li>The <strong>Discriminator</strong> wants to correctly identify the fakes. Its loss is low when it correctly distinguishes between real and fake images. As the Generator gets better, the Discriminator must learn to spot ever more subtle flaws.</li>
+</ul>
+<p>This creates an arms race. The Generator and Discriminator are trained alternately. A better Discriminator provides a more informative loss signal for the Generator, pushing it to create better fakes. In turn, a better Generator provides more challenging training data for the Discriminator. When this process reaches equilibrium, the Generator is producing samples that are so realistic that the Discriminator can do no better than random guessing.</p>
+<p>Training GANs is notoriously difficult and unstable, but the results can be spectacular. They have been used to generate hyper-realistic images, artwork, and even music.</p>
+<div id="fig-gan-nvidia" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gan-nvidia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/GAN-NVIDIA.jpg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gan-nvidia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Examples of fake celebrity portraits generated by a GAN developed by NVIDIA (2017). (Source: <a href="https://arxiv.org/abs/1710.10196">https://arxiv.org/abs/1710.10196</a>)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="autoencoders-learning-to-compress-and-reconstruct" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="autoencoders-learning-to-compress-and-reconstruct"><span class="header-section-number">9.2</span> Autoencoders: Learning to Compress and Reconstruct</h2>
+<p><strong>Autoencoders</strong> are a form of unsupervised learning where the learning signal comes from the data itself. The goal is simple: train a network to reconstruct its own input as faithfully as possible. While this sounds like a trivial task (the identity function would solve it perfectly), the key is that we force the data to pass through a <strong>bottleneck</strong> layer with a much lower dimensionality than the input.</p>
+<p>An autoencoder consists of two parts:</p>
+<ol type="1">
+<li>The <strong>Encoder</strong>: This part of the network takes the high-dimensional input data <span class="math inline">{\bf x}</span> and compresses it into a low-dimensional <strong>latent representation</strong> <span class="math inline">{\bf z}</span>.</li>
+<li>The <strong>Decoder</strong>: This part takes the latent representation <span class="math inline">{\bf z}</span> and attempts to reconstruct the original input data, producing <span class="math inline">{\bf \hat{x}}</span>.</li>
+</ol>
+<div id="fig-AE-example-generic" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AE-example-generic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/ae_example_generic.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-example-generic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: The general architecture of an Autoencoder.
+</figcaption>
+</figure>
+</div>
+<p>The network is trained to minimise a <strong>reconstruction loss</strong>, which measures the difference between the original input <span class="math inline">{\bf x}</span> and the reconstructed output <span class="math inline">{\bf \hat{x}}</span>. For continuous data like images, this is typically the Mean Squared Error (L2 loss). For categorical data, it would be the cross-entropy loss.</p>
+<p>By forcing the network to squeeze all the necessary information through the low-dimensional bottleneck, we compel it to learn a meaningful, compressed representation of the data. This process is a form of non-linear dimensionality reduction, similar in spirit to Principal Component Analysis (PCA).</p>
+<section id="the-problem-of-the-latent-space" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="the-problem-of-the-latent-space"><span class="header-section-number">9.2.1</span> The Problem of the Latent Space</h3>
+<p>While autoencoders are excellent for tasks like denoising or dimensionality reduction, they are not inherently good generative models. The reason lies in the structure of the <strong>latent space</strong>—the space of all possible latent vectors <span class="math inline">{\bf z}</span>.</p>
+<p>A standard autoencoder makes no guarantees about the structure of this space. The encoder might learn to map input images to disconnected clusters in the latent space, with large gaps in between. If we were to pick a point <span class="math inline">{\bf z}</span> from one of these gaps and feed it to the decoder, the resulting reconstruction <span class="math inline">{\bf \hat{x}}</span> would likely be a blurry, meaningless mess, because the decoder was never trained on such a point.</p>
+<div id="fig-AE-mean" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AE-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/ae_mean.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: A scatter plot of the MNIST dataset in the 2D latent space of a standard autoencoder. The clusters for each digit are irregularly shaped and have gaps between them.
+</figcaption>
+</figure>
+</div>
+<div id="fig-AE-digits-over-latent" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AE-digits-over-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/ae_digits_over_latent.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-digits-over-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Decoding points from the latent space. In the gaps between clusters, the reconstructions are not valid digits.
+</figcaption>
+</figure>
+</div>
+<p>To build a true generative model, we need a latent space that is smooth, continuous, and well-structured, so that we can sample any point <span class="math inline">{\bf z}</span> and be confident that the decoder will produce a valid output. This is the problem that Variational Autoencoders were designed to solve.</p>
+</section>
+<section id="variational-autoencoders-vaes" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="variational-autoencoders-vaes"><span class="header-section-number">9.2.2</span> Variational Autoencoders (VAEs)</h3>
+<p><strong>Variational Autoencoders (VAEs)</strong> are a more sophisticated type of autoencoder that makes them suitable for generation. They do this by introducing a probabilistic spin on the encoder and adding a new term to the loss function that enforces a regular structure on the latent space.</p>
+<p>Instead of mapping an input <span class="math inline">{\bf x}</span> to a single point <span class="math inline">{\bf z}</span> in the latent space, the VAE encoder maps it to a <strong>probability distribution</strong>— specifically, a Gaussian distribution defined by a mean vector <span class="math inline">\boldsymbol{\mu}</span> and a variance vector <span class="math inline">\boldsymbol{\sigma}^2</span>. The latent vector <span class="math inline">{\bf z}</span> is then <em>sampled</em> from this distribution.</p>
+<div id="fig-AE-vae" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AE-vae-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/ae_variational.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-vae-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: The architecture of a Variational Autoencoder (VAE).
+</figcaption>
+</figure>
+</div>
+<p>The VAE loss function has two components:</p>
+<ol type="1">
+<li><p>The <strong>Reconstruction Loss</strong>: This is the same as in a standard AE. It pushes the model to accurately reconstruct the input.</p></li>
+<li><p>The <strong>Kullback-Leibler (KL) Divergence Loss</strong>: This is the key addition. It measures how much the distribution produced by the encoder (<span class="math inline">\mathcal{N}(\boldsymbol{\mu},\boldsymbol{\sigma}^2)</span>) differs from a standard normal distribution (<span class="math inline">\mathcal{N}(\mathbf{0},\mathbf{I})</span>). This loss term acts as a regulariser, forcing the encoder to learn distributions that are centred around the origin and have unit variance. This ensures that the latent space is continuous and densely packed, without the gaps we saw in the standard AE.</p></li>
+</ol>
+<p>By balancing these two losses, the VAE learns a smooth, structured latent space that is ideal for generation. To create a new sample, we no longer need an input image. We simply sample a random point <span class="math inline">{\bf z}</span> from the standard normal distribution (<span class="math inline">\mathcal{N}(\mathbf{0}, \mathbf{I})</span>) and pass it to the decoder.</p>
+<div id="fig-AE-vae-mean" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AE-vae-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/vae_mean.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-vae-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: The latent space of a VAE. The clusters are now much more regular and compact, resembling a Gaussian distribution.
+</figcaption>
+</figure>
+</div>
+<div id="fig-AE-vae-digits-over-latent" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AE-vae-digits-over-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/vae_digits_over_latent.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-vae-digits-over-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Decoding from the VAE’s latent space. The transitions between digits are smooth, and there are no major gaps.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="deep-auto-regressive-models" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="deep-auto-regressive-models"><span class="header-section-number">9.3</span> Deep Auto-Regressive Models</h2>
+<p>Auto-regressive models are another powerful class of generative models that we have already encountered in the context of RNNs. The core idea is to model the probability distribution of a sequence by decomposing it using the chain rule of probability. The probability of a given element in the sequence is conditioned on all the elements that came before it:</p>
+<p><span class="math display">\begin{equation}
+  p(x_1, \dots, x_T) = \prod_{t=1}^T p(x_t | x_1, \dots, x_{t-1})
+\end{equation}</span></p>
+<p>This is exactly the principle behind character-level RNNs and the massive <strong>Large Language Models (LLMs)</strong> like GPT-3 and GPT-4. They are trained to predict <span class="math inline">p(x_t | x_1, \dots, x_{t-1})</span>, the probability of the next word (or token) in a sequence given the preceding context.</p>
+<p>By repeatedly sampling from the model’s predicted distribution and feeding the result back as input, they can generate coherent and sophisticated text, one token at a time.</p>
+</section>
+<section id="takeaways" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">9.4</span> Takeaways</h2>
+<ul>
+<li><p>Generative models learn the underlying distribution of a dataset in order to <strong>synthesise new data</strong>.</p></li>
+<li><p><strong>Generative Adversarial Networks (GANs)</strong> use a two-player game between a <strong>Generator</strong> and a <strong>Discriminator</strong> to produce highly realistic samples.</p></li>
+<li><p><strong>Autoencoders (AEs)</strong> are unsupervised models that learn a compressed <strong>latent representation</strong> of data by trying to reconstruct their own input from a low-dimensional bottleneck.</p></li>
+<li><p><strong>Variational Autoencoders (VAEs)</strong> improve upon AEs for generation by enforcing a regular, continuous structure on the latent space, allowing for meaningful sampling.</p></li>
+<li><p><strong>Auto-regressive models</strong>, such as those used in LLMs, generate data sequentially, with each new element conditioned on the ones that came before it.</p></li>
+<li><p>The power of these unsupervised and self-supervised techniques lies in their ability to learn from vast quantities of unlabelled data, finding structure and patterns without human guidance.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapter-08-recurrent-neural-networks.html" class="pagination-link" aria-label="Recurrent Neural Networks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter-10-transformers.html" class="pagination-link" aria-label="Attention Mechanism and Transformers">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, François Pitié</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

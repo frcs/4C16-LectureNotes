@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Feedforward Neural Networks – 4C16 - Deep Learning and its Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter-06-convolutional-neural-networks.html" rel="next">
+<link href="./chapter-04-evaluating-classifier-performance.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html">Foundations of Deep Neural Networks</a></li><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">4C16 - Deep Learning and its Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module Descriptor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-00-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-01-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-02-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Logistic Regression: From Lines to Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-03-classic-classifiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Tour of Classic Classifiers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-04-evaluating-classifier-performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluating Classifier Performance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations of Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-05-deep-feedforward-networks.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-06-convolutional-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Modern Architectures and Techniques</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-07-advances-in-network-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-08-recurrent-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-09-generative-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-10-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-11-LLMs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Relationship between Error, Loss Function and Maximum Likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-02-universal-approximation-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Universal Approximation Theorem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-03-l1-induces-sparsity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Why Does <span class="math inline">L_1</span> Regularisation Induce Sparsity?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-feed-forward-neural-network" id="toc-what-is-a-feed-forward-neural-network" class="nav-link active" data-scroll-target="#what-is-a-feed-forward-neural-network"><span class="header-section-number">5.1</span> What is a Feed-Forward Neural Network?</a>
+  <ul class="collapse">
+  <li><a href="#a-graph-of-differentiable-operations" id="toc-a-graph-of-differentiable-operations" class="nav-link" data-scroll-target="#a-graph-of-differentiable-operations"><span class="header-section-number">5.1.1</span> A Graph of Differentiable Operations</a></li>
+  <li><a href="#units-and-artificial-neurons" id="toc-units-and-artificial-neurons" class="nav-link" data-scroll-target="#units-and-artificial-neurons"><span class="header-section-number">5.1.2</span> Units and Artificial Neurons</a></li>
+  </ul></li>
+  <li><a href="#biological-neurons" id="toc-biological-neurons" class="nav-link" data-scroll-target="#biological-neurons"><span class="header-section-number">5.2</span> Biological Neurons</a></li>
+  <li><a href="#deep-neural-networks" id="toc-deep-neural-networks" class="nav-link" data-scroll-target="#deep-neural-networks"><span class="header-section-number">5.3</span> Deep Neural Networks</a></li>
+  <li><a href="#universal-approximation-theorem" id="toc-universal-approximation-theorem" class="nav-link" data-scroll-target="#universal-approximation-theorem"><span class="header-section-number">5.4</span> Universal Approximation Theorem</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">5.5</span> Example</a></li>
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training"><span class="header-section-number">5.6</span> Training</a></li>
+  <li><a href="#backpropagation" id="toc-backpropagation" class="nav-link" data-scroll-target="#backpropagation"><span class="header-section-number">5.7</span> Backpropagation</a>
+  <ul class="collapse">
+  <li><a href="#computing-the-gradient" id="toc-computing-the-gradient" class="nav-link" data-scroll-target="#computing-the-gradient"><span class="header-section-number">5.7.1</span> Computing the Gradient</a></li>
+  <li><a href="#the-chain-rule" id="toc-the-chain-rule" class="nav-link" data-scroll-target="#the-chain-rule"><span class="header-section-number">5.7.2</span> The Chain Rule</a></li>
+  <li><a href="#back-propagating-with-the-chain-rule" id="toc-back-propagating-with-the-chain-rule" class="nav-link" data-scroll-target="#back-propagating-with-the-chain-rule"><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule</a></li>
+  <li><a href="#vanishing-gradients" id="toc-vanishing-gradients" class="nav-link" data-scroll-target="#vanishing-gradients"><span class="header-section-number">5.7.4</span> Vanishing Gradients</a></li>
+  </ul></li>
+  <li><a href="#optimisations-for-training-deep-neural-networks" id="toc-optimisations-for-training-deep-neural-networks" class="nav-link" data-scroll-target="#optimisations-for-training-deep-neural-networks"><span class="header-section-number">5.8</span> Optimisations for Training Deep Neural Networks</a>
+  <ul class="collapse">
+  <li><a href="#mini-batch-and-stochastic-gradient-descent" id="toc-mini-batch-and-stochastic-gradient-descent" class="nav-link" data-scroll-target="#mini-batch-and-stochastic-gradient-descent"><span class="header-section-number">5.8.1</span> Mini-Batch and Stochastic Gradient Descent</a></li>
+  <li><a href="#more-advanced-gradient-descent-optimizers" id="toc-more-advanced-gradient-descent-optimizers" class="nav-link" data-scroll-target="#more-advanced-gradient-descent-optimizers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimizers</a></li>
+  </ul></li>
+  <li><a href="#constraints-and-regularisers" id="toc-constraints-and-regularisers" class="nav-link" data-scroll-target="#constraints-and-regularisers"><span class="header-section-number">5.9</span> Constraints and Regularisers</a>
+  <ul class="collapse">
+  <li><a href="#l2-regularisation" id="toc-l2-regularisation" class="nav-link" data-scroll-target="#l2-regularisation"><span class="header-section-number">5.9.1</span> L2 Regularisation</a></li>
+  <li><a href="#l1-regularisation" id="toc-l1-regularisation" class="nav-link" data-scroll-target="#l1-regularisation"><span class="header-section-number">5.9.2</span> L1 Regularisation</a></li>
+  </ul></li>
+  <li><a href="#dropout-noise" id="toc-dropout-noise" class="nav-link" data-scroll-target="#dropout-noise"><span class="header-section-number">5.10</span> Dropout &amp; Noise</a></li>
+  <li><a href="#monitoring-and-training-diagnostics" id="toc-monitoring-and-training-diagnostics" class="nav-link" data-scroll-target="#monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">5.12</span> Takeaways</a></li>
+  <li><a href="#useful-resources" id="toc-useful-resources" class="nav-link" data-scroll-target="#useful-resources"><span class="header-section-number">5.13</span> Useful Resources</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html">Foundations of Deep Neural Networks</a></li><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We have now arrived at the core of this module: <strong>neural networks</strong>. The models we have explored so far, from least squares to logistic regression, are not just historical context; they are the actual building blocks of the networks we are about to construct.</p>
+<p>Recall the logistic regression model, where the output was given by:</p>
+<p><span class="math display">
+    h_{\bf w}({\bf x}) = \frac{1}{1 + e^{-{\bf x}^{\top}{\bf w}}}
+</span></p>
+<p>This model can be considered our first and simplest example of a neural network.</p>
+<p>A neural network, in its simplest form, is what happens when we start stacking these building blocks. Instead of the output of one logistic unit being the final answer, we will use it as an <em>input</em> to another, creating layers of computation. Let’s dive in.</p>
+<!-- Recall the logistic regression model. It performed two key steps: -->
+<!-- 1.  It calculated a linear score from the inputs: $z = \mathbf{x}^\top \mathbf{w} + b$. -->
+<!-- 2.  It passed this score through a non-linear activation function (the sigmoid) to produce a probability: $p = \sigma(z)$. -->
+<!-- A neural network, in its simplest form, is what happens when we start stacking these building blocks. Instead of the output of one logistic unit being the final answer, we use it as an *input* to another, creating layers of computation. Let's dive in. -->
+<!-- --- -->
+<!-- ### Option 2 (Conceptual "Limitations" Approach) -->
+<!-- This version frames neural networks as a solution to the limitations of the models studied previously. -->
+<!-- --- -->
+<!-- ## Feed-Forward Neural Networks -->
+<!-- Having covered linear models like logistic regression and classic classifiers, you might be wondering: what are their limits? While powerful, these models are fundamentally **linear** at their core; they define a single, straight decision boundary to separate data. What happens when the relationship between our inputs and outputs is more complex? -->
+<!-- This is where we transition from single-story structures to skyscrapers. We are now ready to explore **neural networks**, models designed to learn highly complex, non-linear patterns. We will see how the simple computational units from logistic regression can be organised into layers, allowing them to collectively learn intricate decision boundaries that are impossible for a single linear model to capture. -->
+<!-- --- -->
+<!-- ### Option 3 (Concise & Punchy) -->
+<!-- A shorter, more direct transition. -->
+<!-- --- -->
+<!-- ## Feed-Forward Neural Networks -->
+<!-- Everything we've studied so far—least squares, logistic regression, and classification metrics—has been leading to this. We're now ready to combine these ideas to build our first **neural network**. -->
+<!-- Think of a logistic regression unit as a single "neuron". It takes inputs, -->
+<!-- computes a weighted sum, and applies an activation function. A neural network is -->
+<!-- simply what we get when we arrange many of these neurons into interconnected -->
+<!-- layers. By doing this, we move from simple linear decision-makers to powerful, -->
+<!-- non-linear learning machines. Let's see how it's done. -->
+<section id="what-is-a-feed-forward-neural-network" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="what-is-a-feed-forward-neural-network"><span class="header-section-number">5.1</span> What is a Feed-Forward Neural Network?</h2>
+<section id="a-graph-of-differentiable-operations" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="a-graph-of-differentiable-operations"><span class="header-section-number">5.1.1</span> A Graph of Differentiable Operations</h3>
+<p>To understand why logistic regression can be viewed as a neural network, let us consider a simple case with two input features, <span class="math inline">x_1</span> and <span class="math inline">x_2</span>. The prediction function can be visualised as a network of operations, as depicted in <a href="#fig-nn-dag-sigmoid" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>.</p>
+<div id="fig-nn-dag-sigmoid" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nn-dag-sigmoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-dag-sigmoid.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nn-dag-sigmoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Logistic Regression Model as a DAG
+</figcaption>
+</figure>
+</div>
+<p>This type of model is known as a <strong>feed-forward</strong> neural network because it can be represented as a <strong>directed acyclic graph</strong> (DAG). This graph describes how a set of differentiable operations are composed to form the overall function.</p>
+<p>Each node within this graph is referred to as a <strong>unit</strong>. The initial nodes, or the leaves of the graph, represent either the <strong>input values</strong> (e.g., <span class="math inline">x_1</span>, <span class="math inline">x_2</span>) or the <strong>model parameters</strong> (e.g., <span class="math inline">{w_0}</span>, <span class="math inline">{w_1}</span>, <span class="math inline">{w_2}</span>). All subsequent units, such as <span class="math inline">u_1</span> and <span class="math inline">u_2</span>, represent the outputs of functions that operate on the preceding units. In this example, <span class="math inline">u_1</span> is the output of a linear combination, <span class="math inline">u_1 = f_1(x_1,x_2,w_0,w_1,w_2)
+= w_0 + w_1x_1 + w_2x_2</span>, and <span class="math inline">u_2</span> is the output of the sigmoid function, <span class="math inline">u_2=f_2(u_1) = 1/(1 + \mathrm{exp}(-u_1))</span>.</p>
+<p>While feed-forward neural networks are defined by their directed acyclic graph structure, it is worth noting that other types of neural networks exist. For example, Hopfield networks <span class="citation" data-cites="wikiHopfieldNetwork">(<a href="references.html#ref-wikiHopfieldNetwork" role="doc-biblioref">Wikipedia 2025</a>)</span> are based on graphs that contain cycles, leading to recurrent connections. However, these will not be covered in this module. For our purposes, we will focus exclusively on feed-forward neural networks, which cover 99.9% of current research and applications.</p>
+</section>
+<section id="units-and-artificial-neurons" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="units-and-artificial-neurons"><span class="header-section-number">5.1.2</span> Units and Artificial Neurons</h3>
+<p>The term <em>neural</em> in “neural network” originates from the design of the network’s fundamental units, which are inspired by biological neurons.</p>
+<p>An <strong>artificial neuron</strong> is a specific type of unit that performs a two-step computation. First, it calculates a weighted sum of its inputs (a linear combination). Second, it applies a non-linear function, known as an <strong>activation function</strong>, to this sum.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-dag-neuron.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Neuron Model
+</figcaption>
+</figure>
+</div>
+<p>A variety of activation functions can be used. Some of the most popular are shown in <a href="#fig-activation-functions" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> and include the <strong>ReLU</strong>, <strong>sigmoid</strong>, and <strong>tanh</strong> Activation Functions.</p>
+<div id="fig-activation-functions" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-activation-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="figures/activation-sigmoid.svg" class="img-fluid figure-img"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="figures/activation-tanh.svg" class="img-fluid figure-img"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="figures/activation-relu.svg" class="img-fluid figure-img"></p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-activation-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Sigmoid, tanh, and Relu Activation Functions. Note that the Relu activation function (<span class="math inline">z\mapsto \max(0,z)</span>) is not differentiable at <span class="math inline">z=0</span>, but this is generally not a problem in practice.
+</figcaption>
+</figure>
+</div>
+<p>Although ReLU, sigmoid, and tanh are historically the most common activation functions, many others exist. In recent years, ReLU and its variants, such as Leaky ReLU, GELU, ELU (Exponential Linear Unit), and Softplus, have become the preferred choice for many deep learning applications.</p>
+<p>It is crucial to understand that the units in a network do not have to be neuron-like. As we will explore later, <strong>any differentiable function can serve as a unit</strong>. Historically, research focused on neuron-type units, which proved to be effective and versatile building blocks. Consequently, much of the literature is based on them. However, the modern definition of a neural network is more general: it is simply a DAG of differentiable functions. Modern deep learning frameworks reflect this by allowing developers to define custom units, provided that their gradients can be computed.</p>
+</section>
+</section>
+<section id="biological-neurons" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="biological-neurons"><span class="header-section-number">5.2</span> Biological Neurons</h2>
+<p>The original concept of artificial neurons was an attempt to create a simplified mathematical model of their biological counterparts. In a biological neuron, signals received by the dendrites are aggregated. This combined signal must then reach a certain threshold to trigger an output spike, a process that bears a resemblance to the behaviour of a ReLU activation function.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/actual-neuron.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Representation of a Biological Neuron
+</figcaption>
+</figure>
+</div>
+<p>Numerous mathematical models have been proposed to capture the complex electrical dynamics of a neuron. One of the most well-known is the <strong>Leaky Integrate-and-Fire (LIF)</strong> model. It describes the relationship between the input current, <span class="math inline">I(t)</span>, and the change in the neuron’s membrane voltage, <span class="math inline">V_m(t)</span>, over time:</p>
+<p><span class="math display">
+C_{\mathrm {m} }{\frac {dV_{\mathrm {m} }(t)}{dt}}=I(t)-{\frac {V_{\mathrm {m} }(t)}{R_{\mathrm {m} }}}
+</span></p>
+<p>In the LIF model, the membrane voltage increases as the neuron receives input current from connected neurons. If the voltage reaches a specific threshold, the neuron “fires,” producing an output voltage spike. Immediately after firing, the membrane potential is reset to a lower resting value. Models that exhibit this behaviour are known as <strong>spiking neuron models</strong>. <a href="#fig-LIFcircuit" class="quarto-xref">Figure&nbsp;<span>5.5</span></a> provides a schematic of the LIF model as an electrical circuit (left) and illustrates how the membrane potential responds to a constant input current (right).</p>
+<div id="fig-LIFcircuit" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-LIFcircuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/LIFmodel-circuit.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LIFcircuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: The leaky Integrate-and-Fire model. On the left, a circuit representing the neuron. On the right, an illustration of the neuron membrane voltage response under a constant input intensity. The voltage builds up, up to a <span class="math inline">v_{th}</span> threshold, at which point the neuron will output a spike and reset its membrane potential.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-LIFmodel" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> illustrates the dynamics of a network of spiking neurons. Each neuron in the network receives sequences of voltage spikes from its connected peers. It integrates these incoming signals, causing its own membrane potential to rise. Once its potential reaches the firing threshold, it emits its own spike, which is then transmitted to other neurons.</p>
+<div id="fig-LIFmodel" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-LIFmodel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/LIFmodel.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LIFmodel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: Overview of the spiking neuron models.
+</figcaption>
+</figure>
+</div>
+<p>A key feature of the LIF model is the “leaky” nature of the membrane: in the absence of sufficient input stimuli, the membrane potential gradually decays back to its resting state. This implies that the input signal must have a certain minimum intensity to make the neuron fire. For example, in <a href="#fig-LIFmodel" class="quarto-xref">Figure&nbsp;<span>5.6</span></a>, the spikes arriving after time <span class="math inline">t_1</span> are not frequent or strong enough to trigger an output.</p>
+<p><a href="#fig-LIF-IvR" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> shows the neuron’s output firing rate as a function of a constant input intensity, for different levels of noise. This plot clearly shows two operational regimes: below a certain input threshold, the firing rate is close to zero; above the threshold, the rate increases approximately linearly with the input intensity.</p>
+<div id="fig-LIF-IvR" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-LIF-IvR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/LIF-IvsRate.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LIF-IvR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: Output Fire rate as a function of the input intensity for different levels of noise (see https://arxiv.org/abs/1706.03609).
+</figcaption>
+</figure>
+</div>
+<p>This thresholding behaviour is precisely what artificial activation functions aim to capture. The response curves in <a href="#fig-LIF-IvR" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> are strikingly similar in shape to common activation functions like ReLU, Leaky ReLU, and Softplus. The figure also reveals that the precise shape of this response curve is influenced by the characteristics of the input signal, such as its noise level.</p>
+<p>This highlights a functional equivalence between the abstract models used in deep learning and the dynamics of biological spiking neurons. It is possible to convert a conventional Deep Neural Network (DNN) into an equivalent Spiking Neural Network (SNN). This is an active area of research, driven by the potential for SNNs to be implemented in highly energy-efficient hardware.</p>
+<p>The main takeaway is that the artificial neurons used in DNNs are reasonable functional approximations of their biological counterparts. However, it is important to remember that this biological connection is primarily an inspiration. For the purposes of this module, it is most productive to view DNNs from a mathematical perspective: as graphs of differentiable operations that allow you to build complex, learnable functions.</p>
+</section>
+<section id="deep-neural-networks" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="deep-neural-networks"><span class="header-section-number">5.3</span> Deep Neural Networks</h2>
+<p>Having defined the basic unit, we can now combine multiple units to construct a network. One of the earliest and most fundamental network <strong>architectures</strong> is the <strong>Multi-Layer Perceptron (MLP)</strong>, as illustrated in <a href="#fig-ml-perceptron" class="quarto-xref">Figure&nbsp;<span>5.8</span></a>.</p>
+<div id="fig-ml-perceptron" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ml-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-dag-ml-perceptron.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ml-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: Neural Network made of neuron units, arranged in a Multi-Layer Perceptron Layout.
+</figcaption>
+</figure>
+</div>
+<p>In this diagram, each blue circle represents a neuron, which includes its own activation function. Any unit that is not an input or an output is referred to as a <strong>hidden</strong> unit. These hidden units can be interpreted as learned intermediate representations of the input data.</p>
+<p>Neural networks are commonly, though not exclusively, organised into <strong>layers</strong>. In a layered architecture, the outputs of all units in one layer typically serve as the inputs for the subsequent layer.</p>
+<div id="fig-FC-layer2" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-FC-layer2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-dag-deep-ml-perceptron.svg" class="img-fluid figure-img" style="width:79.4%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-FC-layer2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.9: Deep Neural Network or neuron units in a Multi-Layer Perceptron Layout. Each layer is defined as a <strong>Fully Connected Layer</strong>.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a> shows a network with two hidden layers arranged sequentially. When every unit in a layer is connected to every unit in the preceding layer, it is known as a <strong>Dense Layer</strong> or a <strong>Fully Connected Layer</strong>. This is a common but not the only type of layer. In the next chapter, we will introduce another important type: the convolutional layer.</p>
+<p>A network with two or more hidden layers, such as the one in <a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>, is classified as a <strong>deep feed-forward neural network</strong>. The exact point at which a network becomes “deep” is not universally agreed upon. However, the distinction is historically significant because, before the development of the backpropagation algorithm (which we will discuss shortly), there was no effective method for training networks with more than one hidden layer.</p>
+</section>
+<section id="universal-approximation-theorem" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="universal-approximation-theorem"><span class="header-section-number">5.4</span> Universal Approximation Theorem</h2>
+<p>The <strong>Universal Approximation Theorem</strong> (Hornik, 1991) is a foundational result in the theory of neural networks. It states that:</p>
+<blockquote class="blockquote">
+<p>A neural network with just one hidden layer and a linear output unit can approximate any continuous function to an arbitrary degree of accuracy, provided the hidden layer has a sufficient number of units.</p>
+</blockquote>
+<p>This powerful result holds for a wide range of activation functions, including sigmoid and tanh. For an intuitive explanation of why this theorem holds, please refer to <a href="note-02-universal-approximation-theorem.html" class="quarto-xref"><span>Appendix B</span></a>.</p>
+<p>The theorem provides a powerful guarantee: neural networks are, in principle, capable of modelling almost any continuous relationship in data. It suggests that we can always improve the model’s accuracy by simply adding more hidden units.</p>
+<p>However, while the theorem guarantees that a single hidden layer is <em>sufficient</em>, modern practice has shown that <strong>deeper networks</strong> (with multiple hidden layers) are often far more efficient. They can typically achieve the same or better performance with significantly fewer total parameters and often generalise better to unseen data.</p>
+<p>Therefore, rather than simply increasing the number of units in a single layer (a “wide” network), it is often more effective to carefully design the network’s <strong>architecture</strong>. This involves deciding on the number of layers (the “depth”), the number of units in each layer, and how these units are interconnected.</p>
+<p>This field of network design, known as neural architecture search, is a major area of contemporary research. We know that neural networks are universal approximators; the central challenge now is to design architectures that are not only powerful but also efficient to train and that generalise well to new, unseen data.</p>
+</section>
+<section id="example" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="example"><span class="header-section-number">5.5</span> Example</h2>
+<p>Let us explore a practical example using the TensorFlow Playground (playground.tensorflow.org). <a href="#fig-playground-1" class="quarto-xref">Figure&nbsp;<span>5.10</span></a> shows a network designed to solve a non-linear classification problem. The network has three hidden layers with 8, 8, and 2 units, respectively.</p>
+<div id="fig-playground-1" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-playground-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/playground-tensorflow.001.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-playground-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.10: Screenshot from the Tensorflow Playground page.
+</figcaption>
+</figure>
+</div>
+<p>The input features are the raw x and y coordinates. As we can see by inspecting the outputs of the units, the network learns progressively more complex features. The units in the first hidden layer learn to create simple linear decision boundaries.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/playground-tensorflow.002.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.11: Screenshot from the Tensorflow Playground page. Output of one of the Layer 1 neurons.
+</figcaption>
+</figure>
+</div>
+<p>The second hidden layer then combines these linear boundaries to form more complex, non-linear regions.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/playground-tensorflow.003.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.12: Screenshot from the Tensorflow Playground page. Output of one of the Layer 2 neurons.
+</figcaption>
+</figure>
+</div>
+<p>Finally, the third hidden layer constructs even more sophisticated features.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/playground-tensorflow.004.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.13: Screenshot from the Tensorflow Playground page. Output of one of the Layer 3 neurons.
+</figcaption>
+</figure>
+</div>
+<p>This hierarchical learning ultimately allows the network to capture the intricate spiral pattern of the data and produce the correct classification.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/playground-tensorflow.005.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.14: Screenshot from the Tensorflow Playground page. Output of the final unit.
+</figcaption>
+</figure>
+</div>
+<p>This example illustrates one of the key properties of deep neural networks: their ability to automatically learn a <strong>hierarchy of features</strong>. As data propagates through the network, the features become progressively more abstract and complex. This is why deep networks, despite being potentially harder to train, are often more powerful and tend to generalise better than their shallow counterparts.</p>
+</section>
+<section id="training" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="training"><span class="header-section-number">5.6</span> Training</h2>
+<p>At its core, a neural network implements a function <span class="math inline">f</span> that maps an input vector <span class="math inline">{\bf x} = (x_1, \dots, x_p)</span> to an output vector <span class="math inline">{\bf y} = (y_1,
+\dots, y_r)</span>. This mapping is determined by a set of learnable parameters, or weights, <span class="math inline">{\bf w} = (w_1, \dots, w_q)</span>:</p>
+<p><span class="math display">
+f(x_1, \cdots, x_p, w_1, \cdots, w_q) = (y_1,\cdots, y_r)
+</span></p>
+<p><a href="#fig-nn-dag-evaluation" class="quarto-xref">Figure&nbsp;<span>5.15</span></a> shows an example of a computation graph for <strong>evaluating</strong> such a model. To illustrate the generality of this framework, the units in this graph are not restricted to be standard neurons but can be arbitrary differentiable functions. For example, one could define <span class="math inline">u_7</span> as <span class="math inline">u_7: (u_1,u_2,u_3,u_4) \mapsto
+\cos(u_1+u_2+u_3)\exp(-2u_4)</span> and <span class="math inline">u_8</span> as <span class="math inline">u_8: (u_1,u_2,u_3,u_4) \mapsto
+\sin(u_1+u_2+u_3)\exp(-3u_4)</span>.</p>
+<p>To emphasise the uniformity of the graph representation, all values in this example—inputs, weights, and intermediate outputs—are denoted by <span class="math inline">u_j</span>, where <span class="math inline">j</span> is the unit’s index. In this specific graph, an input feature vector <span class="math inline">{\bf x}_i=[u_1,u_2,u_3]^{\top}</span> is processed using weights <span class="math inline">{\bf
+w}=[u_4,u_5]^{\top}</span> to produce the output vector <span class="math inline">f({\bf x}_i, {\bf
+w})=[u_{12},u_{13},u_{14}]</span>.</p>
+<div id="fig-nn-dag-evaluation" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nn-dag-evaluation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-evaluation-0.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nn-dag-evaluation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.15: Example of a graph of operations for neural net evaluation.
+</figcaption>
+</figure>
+</div>
+<p>The goal of <strong>training</strong> is to find the optimal set of weights <span class="math inline">{\bf w}</span> that makes the network’s predictions accurate. This is achieved by first evaluating the network’s output <span class="math inline">f({\bf x}_i, {\bf w})</span> for a given input <span class="math inline">{\bf x}_i</span> from the training data. This prediction is then compared to the true, observed result <span class="math inline">{\bf y}_i</span> using a <strong>loss function</strong>, <span class="math inline">E</span>, which quantifies the error.</p>
+<p>Typically, the total loss is aggregated over the entire dataset of <span class="math inline">n</span> observations: <span class="math display">
+E({\bf w}) = \sum_{i=1}^n e(f({\bf x}_i, {\bf w}), {\bf y}_i),
+</span> where <span class="math inline">e(\cdot, \cdot)</span> is the loss function for a single observation.</p>
+<p>The computation graph for training on a single observation can now be constructed, as shown in <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>. This graph is an extension of the evaluation graph, with the network’s output units now connected to a final unit that computes the loss.</p>
+<div id="fig-nn-graph-training" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nn-graph-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-training-0.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nn-graph-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.16: Example of a graph of operations for neural net training.
+</figcaption>
+</figure>
+</div>
+<p>To be precise, <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span>5.16</span></a> depicts the computation for a single observation. The graph for the entire training process would involve replicating this structure for all observations and aggregating their individual losses to compute the total loss, <span class="math inline">E</span>.</p>
+<p>To find the optimal weights <span class="math inline">{\bf w}</span>, we use an iterative optimisation algorithm, most commonly <strong>gradient descent</strong>. Starting from a random initial set of weights <span class="math inline">{\bf w}^{(0)}</span>, the algorithm repeatedly updates them in the direction that minimises the loss:</p>
+<p><span class="math display">
+{\bf w}^{(m+1)} = {\bf w}^{(m)} - \eta \frac{\partial E}{\partial {\bf
+w}}({\bf w}^{(m)})
+</span> Here, <span class="math inline">\frac{\partial E}{\partial {\bf w}}</span> is the gradient of the total loss with respect to the weights. It indicates the direction of steepest ascent of the loss function. The scalar <span class="math inline">\eta</span> is a hyperparameter called the <strong>learning rate</strong>, which controls the size of the step we take in the opposite direction of the gradient. Choosing an appropriate learning rate is crucial for successful training.</p>
+<p>Therefore, any neural network can be trained using gradient descent, provided we have an efficient method for computing the gradient of the loss function with respect to every weight in the network, <span class="math inline">\frac{\partial
+e}{\partial {\bf w}}</span>. This is precisely the problem that the <strong>backpropagation</strong> algorithm solves.</p>
+</section>
+<section id="backpropagation" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="backpropagation"><span class="header-section-number">5.7</span> Backpropagation</h2>
+<p>The backpropagation algorithm, often shortened to “backprop”, was popularised in a seminal 1986 paper by David Rumelhart, Geoffrey Hinton, and Ronald Williams. It provides an efficient way to compute the gradients required for training.</p>
+<blockquote class="blockquote">
+<p>Rumelhart, David E., Geoffrey E. Hinton, and Ronald J. Williams. “Learning representations by back-propagating errors.” <em>Cognitive Modeling</em> 5.3 (1988): 1.</p>
+</blockquote>
+<section id="computing-the-gradient" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="computing-the-gradient"><span class="header-section-number">5.7.1</span> Computing the Gradient</h3>
+<p>Why do we need a special algorithm for computing the gradient? A naive approach would be to compute the partial derivative with respect to each weight <span class="math inline">w_{i}</span> individually using numerical differentiation (the finite difference method): <span class="math display">
+\frac{\partial e}{\partial w_{i}} \approx \frac{e(\cdots, w_{i}+\varepsilon, \cdots) - e(\cdots, w_{i}, \cdots)}{\varepsilon}
+</span> where <span class="math inline">\varepsilon</span> is a very small number. While this method is simple to implement, its computational cost makes it impractical for neural networks.</p>
+<p>A modern deep neural network can easily have hundreds of millions of parameters. To compute the full gradient using this numerical approach, we would need to evaluate the entire network once for each parameter. For a network with 100 million parameters, this would mean 100 million forward passes through the network just to perform a single weight update. Clearly, this is computationally infeasible.</p>
+<p>In contrast, backpropagation can compute the exact gradient for all parameters simultaneously in approximately the time it takes to perform just two forward passes. The efficiency of backpropagation is what transformed neural networks from a theoretical curiosity into a practical and powerful machine learning technique.</p>
+<p>The process of computing the output of a network for a given input is called <strong>forward propagation</strong> (or a forward pass). Information flows from the input layer, through the hidden units, to the output layer. During training, the forward pass extends all the way to the final loss unit, producing a scalar error value <span class="math inline">e({\bf w})</span>.</p>
+<p>The backpropagation algorithm then begins. It uses the <strong>chain rule</strong> from calculus to efficiently propagate gradient information backwards, starting from the final loss unit and moving all the way back to the network’s weights.</p>
+</section>
+<section id="the-chain-rule" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="the-chain-rule"><span class="header-section-number">5.7.2</span> The Chain Rule</h3>
+<p>Let us briefly recall the chain rule. For a simple composition of functions, such as <span class="math inline">z = f(y)</span> where <span class="math inline">y = g(x)</span>, the derivative of <span class="math inline">z</span> with respect to <span class="math inline">x</span> is found by multiplying the derivatives of the constituent functions: <span class="math display">
+\frac{dz}{dx} = \frac{dz}{dy}\frac{dy}{dx} = f'(y)g'(x) = f'(g(x))g'(x)
+</span></p>
+<p>For multivariate functions, the chain rule is slightly more complex. Suppose <span class="math inline">z</span> is a function of several variables, <span class="math inline">z=f(u_1, \dots, u_n)</span>, where each <span class="math inline">u_k</span> is itself a function of <span class="math inline">x</span>, <span class="math inline">u_k=g_k(x)</span>. The derivative of <span class="math inline">z</span> with respect to <span class="math inline">x</span> is then the sum of the contributions from each path:</p>
+<p><span class="math display">
+\frac{\partial z}{\partial x} = \sum_k \frac{\partial z}{\partial u_k} \frac{\partial u_k}{\partial x}
+</span></p>
+<div id="exm-chain-rule-circle" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.1 (Chain-Rule)</strong></span> Assume that <span class="math inline">u(x, y) = x^2 + y^2</span>, <span class="math inline">y(r, t) = r \sin(t)</span> and <span class="math inline">x(r,t) = r
+\cos(t)</span>, then we can compute <span class="math inline">{\frac  {\partial u}{\partial r}}</span> as follows:</p>
+<p><span id="eq-chain-rule-1"><span class="math display">
+\begin{split}
+{\frac  {\partial u}{\partial r}} &amp;={\frac  {\partial u}{\partial x}}{\frac  {\partial x}{\partial r}}+{\frac  {\partial u}{\partial y}}{\frac  {\partial y}{\partial r}} \\ &amp;=(2x)(\cos(t))+(2y)(\sin(t)) \\ &amp;=2r(\sin ^{2}(t)+\cos^2(t))\\&amp;= 2r
+\end{split}
+\tag{5.1}</span></span></p>
+</div>
+</section>
+<section id="back-propagating-with-the-chain-rule" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="back-propagating-with-the-chain-rule"><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule</h3>
+<p>Let us now apply the chain rule to our neural network example to see how backpropagation works.</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-training-1.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.17: Backpropagation starts with all the nodes that are directely required to compute the loss function. In this case: <span class="math inline">u_{12}, u_{13}, u_{14}</span>.
+</figcaption>
+</figure>
+</div>
+<p>The process starts after a full forward pass has been completed, meaning all unit values, including the final loss <span class="math inline">e</span>, have been computed. The first step of backpropagation is to compute the gradient of the loss with respect to the inputs of the loss function unit. In our example, these are <span class="math inline">\frac{\partial e}{\partial u_{12}}</span>, <span class="math inline">\frac{\partial e}{\partial u_{13}}</span>, and <span class="math inline">\frac{\partial e}{\partial u_{14}}</span>. Since <span class="math inline">e</span> is a direct function of <span class="math inline">u_{12}, u_{13}, u_{14}</span>, these initial gradients are straightforward to compute.</p>
+<p>For instance, if the loss function is the squared error <span class="math display">
+e(u_{12},u_{13},u_{14}) = (u_{12}-a)^2 + (u_{13}-b)^2 + (u_{14}-c)^2,
+</span> then the partial derivatives are simply: <span class="math display">
+\frac{\partial e}{\partial u_{12}} = 2(u_{12} - a) \quad, \frac{\partial e}{\partial u_{13}} = 2(u_{13} - b)
+\quad, \frac{\partial e}{\partial u_{14}} = 2(u_{14} - c).
+</span></p>
+<p>Now that we have the gradients “at the end” of the network, we can work backwards. For instance, how can we compute the gradient with respect to an earlier unit, such as <span class="math inline">\frac{\partial e}{\partial u_{10}}</span>?</p>
+<p>We use the chain rule as in <a href="#eq-chain-rule-1" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>. In our graph, unit <span class="math inline">u_{10}</span> is an input to units <span class="math inline">u_{12}</span>, <span class="math inline">u_{13}</span>, and <span class="math inline">u_{14}</span>. Therefore, its gradient is: <span class="math display">
+\frac{\partial e}{\partial u_{10}} =
+\frac{\partial u_{12}}{\partial u_{10}} \frac{\partial e}{\partial u_{12}} +
+\frac{\partial u_{13}}{\partial u_{10}} \frac{\partial e}{\partial u_{13}} +
+\frac{\partial u_{14}}{\partial u_{10}} \frac{\partial e}{\partial u_{14}}
+</span></p>
+<p>The term <span class="math inline">\frac{\partial u_{14}}{\partial u_{10}}</span> is the <em>local</em> gradient of the unit <span class="math inline">u_{14}</span> with respect to its input <span class="math inline">u_{10}</span>. If, for example, the function for <span class="math inline">u_{14}</span> was a linear combination <span class="math inline">u_{14} = u_5 + 0.2
+u_{10} + \dots</span>, then this local gradient would simply be <span class="math inline">0.2</span>.</p>
+<p>By repeatedly applying this process, we can propagate the gradients backwards through the network, computing the gradient for each node one layer at a time.</p>
+<!-- ::: {#fig-} -->
+<!-- ![](tikz-figures/nn-training-3.svg){width="60%" } -->
+<!-- Backpropagation. -->
+<!-- ::: -->
+<!-- ::: {#fig-} -->
+<!-- ![](tikz-figures/nn-training-4.svg){width="60%" } -->
+<!-- Backpropagation. -->
+<!-- ::: -->
+<div id="callout-ex-gradient" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Backpropagation Algorithm
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Backpropagation can be viewed as a form of dynamic programming. It proceeds by induction. Assume we have already computed the gradient <span class="math inline">\frac{\partial
+e}{\partial u_j}</span> for all units <span class="math inline">u_j</span> in a set <span class="math inline">\mathcal{K}</span>. We can then compute the gradient for any node <span class="math inline">u_i</span> whose outputs are all in <span class="math inline">\mathcal{K}</span> by applying the chain rule:</p>
+<p><span class="math display">\begin{equation}
+\frac{\partial e}{\partial u_i} = \sum_{j \in \mathrm{Outputs}(i) } \frac{\partial e}{\partial u_j} \frac{\partial u_j}{\partial u_i}
+\end{equation}</span></p>
+<p>The gradient of the loss <span class="math inline">e</span> with respect to an arbitrary unit <span class="math inline">u_i</span> is thus the sum of the gradients flowing back from all the units that <span class="math inline">u_i</span> is an input to.</p>
+<p>Since the values of <span class="math inline">\frac{\partial e}{\partial u_j}</span> (the “upstream” gradients) are already known, we only need to compute the “local” gradients, <span class="math inline">\frac{\partial u_j}{\partial u_i}</span>, which involves differentiating the function for unit <span class="math inline">u_j</span> with respect to its input <span class="math inline">u_i</span>. This backward pass continues until the gradients have been computed for all the parameters (weights) of the network.</p>
+</div>
+</div>
+<p>Backpropagation is a remarkably efficient algorithm for computing the gradient of a scalar-valued function with respect to all inputs of a computation graph. The computational complexity of backpropagation is proportional to the number of operations in the forward pass. For most common network architectures, this is a linear function of the number of units, making it extremely scalable. It is this efficiency that makes training deep neural networks with millions of parameters computationally feasible.</p>
+</section>
+<section id="vanishing-gradients" class="level3" data-number="5.7.4">
+<h3 data-number="5.7.4" class="anchored" data-anchor-id="vanishing-gradients"><span class="header-section-number">5.7.4</span> Vanishing Gradients</h3>
+<p>Despite the efficiency of backpropagation, a significant challenge arises when training very deep networks: the <strong>vanishing gradient problem</strong>.</p>
+<blockquote class="blockquote">
+<p>Hochreiter, S. (1991). Untersuchungen zu dynamischen neuronalen Netzen (PDF) (diploma thesis). Technical University Munich, Institute of Computer Science.</p>
+</blockquote>
+<p>Consider a deep network with many layers, for instance, the 6-layer network shown below:</p>
+<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tikz-figures/nn-vanishing-gradients.svg" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.18: Backpropagation.
+</figcaption>
+</figure>
+</div>
+<p>To compute the gradient of the loss with respect to an early weight <span class="math inline">w</span>, the chain rule involves a long product of derivatives from each subsequent layer: <span class="math display">
+\frac{de}{dw} = \frac{de}{du_6}\frac{du_6}{du_5}\frac{du_5}{du_4}\frac{du_4}{du_3}\frac{du_3}{du_2}\frac{du_2}{du_1}\frac{du_1}{dw}
+</span> If any of the terms in this product are small (i.e., less than 1), the overall product will shrink exponentially as it is propagated backwards. This can cause the gradient to become extremely small, or “vanish,” by the time it reaches the early layers of the network.</p>
+<div id="fig-activation-derivatives" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-activation-derivatives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-activation-derivatives" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-derivative-sigmoid" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-derivative-sigmoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/derivative-activation-sigmoid.svg" id="fig-derivative-sigmoid" class="img-fluid figure-img" data-ref-parent="fig-activation-derivatives">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-derivative-sigmoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-activation-derivatives" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-derivative-tanh" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-derivative-tanh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/derivative-activation-tanh.svg" id="fig-derivative-tanh" class="img-fluid figure-img" data-ref-parent="fig-activation-derivatives">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-derivative-tanh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-activation-derivatives" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-derivative-relu" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-derivative-relu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/derivative-activation-relu.svg" id="fig-derivative-relu" class="img-fluid figure-img" data-ref-parent="fig-activation-derivatives">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-derivative-relu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-activation-derivatives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.19: Derivatives of common activation functions.
+</figcaption>
+</figure>
+</div>
+<p>As shown in <a href="#fig-activation-derivatives" class="quarto-xref">Figure&nbsp;<span>5.19</span></a>, the derivatives for the sigmoid and tanh functions are close to zero for most of their input range. When a neuron’s input falls into this “saturated” region, its local gradient will be close to zero. During backpropagation, this small gradient will be multiplied with others, increasing the risk of the overall gradient vanishing. When the gradient <span class="math inline">\frac{de}{dw}</span> becomes close to zero, the weight updates become negligible, and the network effectively stops learning.</p>
+<p>The vanishing gradient problem is a fundamental obstacle in training deep networks. It is one of the primary reasons that the ReLU activation function has become popular. Since the derivative of ReLU is 1 for all positive inputs, it is less prone to causing gradients to shrink. Many modern network architectures, such as Residual Networks (ResNets) and Long Short-Term Memory networks (LSTMs), incorporate specific mechanisms designed to mitigate the vanishing gradient problem.</p>
+</section>
+</section>
+<section id="optimisations-for-training-deep-neural-networks" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="optimisations-for-training-deep-neural-networks"><span class="header-section-number">5.8</span> Optimisations for Training Deep Neural Networks</h2>
+<p>We have established that network weights can be trained using gradient descent, with the gradients being computed efficiently by the backpropagation algorithm. However, a major challenge remains: the resulting objective functions to be optimised are highly complex and non-convex. Standard gradient descent is not guaranteed to find a global minimum; it can get stuck in poor local minima or saddle points.</p>
+<p>Consequently, tuning the training process is a critical part of developing any neural network application. There is no single “best” set of hyperparameters; finding a good combination often requires experimentation and a degree of trial and error. Fortunately, a range of optimisation strategies and regularisation techniques have been developed to improve the speed and stability of the training process.</p>
+<section id="mini-batch-and-stochastic-gradient-descent" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="mini-batch-and-stochastic-gradient-descent"><span class="header-section-number">5.8.1</span> Mini-Batch and Stochastic Gradient Descent</h3>
+<p>Recall that the total loss is typically the average of the individual losses over all <span class="math inline">n</span> observations in the training set:</p>
+<p><span class="math display">
+  E({\bf w}) = \frac{1}{n} \sum_{i=1}^n e(f({\bf x}_i, {\bf w}), {\bf y}_i)
+</span></p>
+<p>To compute the true gradient of the total loss <span class="math inline">E</span>, we must average the individual gradients over the entire dataset. This approach becomes computationally expensive and slow when the dataset is large, as it requires processing every single sample before making one update to the weights.</p>
+<p>A more practical and widely used approach is <strong>mini-batch gradient descent</strong>. Instead of the entire dataset, the gradient is estimated using a small, random subset of the data called a <strong>mini-batch</strong>. For example, with a <strong>batch size</strong> of 16, the gradient is approximated using the average over just 16 samples. The weights are updated, and then the gradient is computed for the next mini-batch.</p>
+<p>In the extreme case where the batch size is 1, the gradient is estimated based on a single sample at a time. This method is known as <strong>Stochastic Gradient Descent (SGD)</strong>.</p>
+<p>Smaller batch sizes allow for more frequent weight updates, which can speed up convergence. The gradient estimate is also “noisier” because it is based on fewer samples. This noise can be beneficial, as it can help the optimiser escape from sharp, poor local minima. However, it can also make the convergence path erratic and prevent the optimiser from settling into a good minimum.</p>
+<p>An <strong>epoch</strong> is defined as one full pass through the entire training dataset. For a dataset of size <span class="math inline">n</span> and a batch size of <span class="math inline">B</span>, one epoch consists of <span class="math inline">n/B</span> gradient descent steps (or iterations). It is standard practice to shuffle the training data at the beginning of every epoch to ensure that the mini-batches are different each time, preventing cyclical behaviour and improving convergence.</p>
+</section>
+<section id="more-advanced-gradient-descent-optimizers" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="more-advanced-gradient-descent-optimizers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimizers</h3>
+<p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span>5.20</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
+<div id="fig-SGD-ravine" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-SGD-ravine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/SGD-example.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SGD-ravine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.20: Illustration of a Stochastic Gradient Descent converging poorly.
+</figcaption>
+</figure>
+</div>
+<p>As illustrated in the figure, the direction of steepest descent (the negative gradient) does not always point directly towards the minimum, leading to an inefficient, zig-zagging path.</p>
+<p>One common technique to improve convergence is to use a <strong>learning rate schedule</strong>, where the learning rate <span class="math inline">\eta</span> is gradually decreased over the course of training. This allows for larger steps at the beginning and smaller, more precise steps as the optimiser approaches a minimum.</p>
+<p>Another powerful approach is to incorporate <strong>momentum</strong>. This technique helps to accelerate progress along shallow gradients and dampen oscillations. It achieves this by adding a fraction of the previous update vector to the current one, creating an exponentially weighted moving average of the gradients: <span class="math display">\begin{align*}
+    {\bf v}^{(m+1)} &amp;= \mu {\bf v}^{(m)} - \eta \frac{\partial E}{\partial {\bf
+w}}({\bf w}^{(m)}) \\
+    {\bf w}^{(m+1)} &amp;= {\bf w}^{(m)} + {\bf v}^{(m+1)}
+  \end{align*}</span> with <span class="math inline">\mu\approx 0.9</span> controlling the moving average.</p>
+<p>Many other, more sophisticated optimisation algorithms have been developed, each with its own strategy for adapting the learning rate or update rule. Popular examples include Nesterov Accelerated Gradient (NAG), Adagrad, RMSprop, and Adam.</p>
+<p><strong>Adam</strong> (Adaptive Moment Estimation) and its variant Nadam are currently among the most widely used and effective optimisers, often providing good results with little hyperparameter tuning. However, the best choice of optimiser is problem-dependent, so it is always good practice to experiment with a few different ones.</p>
+<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="http://cs231n.github.io/neural-networks-3/">http://cs231n.github.io/neural-networks-3/</a></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="constraints-and-regularisers" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="constraints-and-regularisers"><span class="header-section-number">5.9</span> Constraints and Regularisers</h2>
+<section id="l2-regularisation" class="level3" data-number="5.9.1">
+<h3 data-number="5.9.1" class="anchored" data-anchor-id="l2-regularisation"><span class="header-section-number">5.9.1</span> L2 Regularisation</h3>
+<p><strong>L2 regularisation</strong> is the most common form of regularisation. It is the Tikhonov regularisation used in linear regression. It works by adding a penalty term to the loss function that is proportional to the square of the weights:</p>
+<p><span class="math display">
+  E'({\bf w}) = E({\bf w}) + \lambda \sum_i w_i^2
+</span></p>
+<p>This penalty discourages very large weights, leading to a “simpler” model that is less likely to overfit.</p>
+</section>
+<section id="l1-regularisation" class="level3" data-number="5.9.2">
+<h3 data-number="5.9.2" class="anchored" data-anchor-id="l1-regularisation"><span class="header-section-number">5.9.2</span> L1 Regularisation</h3>
+<p><strong>L1 regularisation</strong> is another common technique. It penalises the absolute value of the weights:</p>
+<p><span class="math display">
+  E'({\bf w}) = E({\bf w}) + \lambda \sum_i |w_i|
+</span></p>
+<p>A key property of L1 regularisation is that it encourages sparsity; that is, it tends to drive many of the weights to become exactly zero. This can be useful for feature selection and for simplifying the network model (see <a href="note-03-l1-induces-sparsity.html" class="quarto-xref"><span>Appendix C</span></a>).</p>
+<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://keras.io/api/layers/regularization_layers/">https://keras.io/api/layers/regularization_layers/</a></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="dropout-noise" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="dropout-noise"><span class="header-section-number">5.10</span> Dropout &amp; Noise</h2>
+<p>One of the most effective ways to combat overfitting is to train on more data. When collecting more data is not feasible, we can artificially augment the existing dataset. A simple way to do this is to create new training examples by adding a small amount of random noise (e.g., from a Gaussian distribution) to the input features of the original samples.</p>
+<p>This idea can be taken a step further by injecting noise not just at the input layer, but also to the activations of the hidden units during the training process.</p>
+<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://keras.io/api/layers/regularization_layers/gaussian_noise/">https://keras.io/api/layers/regularization_layers/gaussian_noise/</a></li>
+</ul>
+</div>
+</div>
+<p>A very effective and widely used regularisation technique that builds on this idea is <strong>dropout</strong>. During each training step, dropout randomly sets the output of a fraction of the units in a layer to zero. This is equivalent to training a large ensemble of smaller networks that share weights, which prevents complex co-adaptations between neurons and forces the network to learn more robust features.</p>
+<div id="callout-Dropout-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://keras.io/api/layers/regularization_layers/dropout/">https://keras.io/api/layers/regularization_layers/dropout/</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="monitoring-and-training-diagnostics" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
+<p>Training a deep neural network can be a lengthy process, taking anywhere from hours to several days or even weeks. It is therefore essential to carefully monitor the process to ensure it is proceeding correctly. Tracking metrics like the loss function over time is crucial for diagnosing potential problems.</p>
+<p>As we saw with simpler models, the training loss curve can reveal a lot about the learning process. A rapidly fluctuating or increasing loss suggests that the learning rate is too high, causing the optimiser to overshoot minima or even diverge. Conversely, a very slowly decreasing loss indicates that the learning rate is too low, and the training will be impractically slow (see <a href="#fig-learning-rate-effect" class="quarto-xref">Figure&nbsp;<span>5.21</span></a>).</p>
+<div id="fig-learning-rate-effect" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-learning-rate-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/learning_rate.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-learning-rate-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.21: Possible effects of the Learning Rate on the training.
+</figcaption>
+</figure>
+</div>
+<p>Furthermore, it is vital to monitor performance on a separate validation set. A significant gap between the training performance and the validation performance is a clear indicator of <strong>overfitting</strong>: the model has learned the training data too well, including its noise, and has failed to generalise to new, unseen data. <a href="#fig-overfitting-accuracy" class="quarto-xref">Figure&nbsp;<span>5.22</span></a> illustrates this phenomenon.</p>
+<div id="fig-overfitting-accuracy" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overfitting-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/overfitting_accuracy.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overfitting-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.22: Detecting Overfitting in Training.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="takeaways" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">5.12</span> Takeaways</h2>
+<p>Deep Neural Networks provide a powerful framework for learning complex functions by composing simple, neuron-like units into a layered network.</p>
+<p>The Universal Approximation Theorem guarantees that even a single-layer network is, in principle, sufficient to approximate any continuous function.</p>
+<p>However, modern practice shows that deep architectures are more parameter-efficient and generalise better. A key research challenge is designing network architectures that are both powerful and trainable, overcoming issues like the vanishing gradient problem.</p>
+<p>The network’s weights are trained using gradient-based optimisation, where the computationally expensive gradient calculation is made feasible by the efficient backpropagation algorithm.</p>
+<p>Training is a complex process. The non-convex nature of the resulting loss functions means that convergence to a good solution is not guaranteed. Careful monitoring, along with the use of advanced optimisation and regularisation techniques, is essential. Ultimately, training deep networks often involves a significant amount of experimentation.</p>
+</section>
+<section id="useful-resources" class="level2" data-number="5.13">
+<h2 data-number="5.13" class="anchored" data-anchor-id="useful-resources"><span class="header-section-number">5.13</span> Useful Resources</h2>
+<ul>
+<li><a href="https://www.deeplearningbook.org">Deep Learning (MIT press)</a> from Ian Goodfellow et al.&nbsp;See chapters 6, 7 &amp; 8.</li>
+<li><a href="https://youtu.be/ILsA4nyG7I0">Brandon Rohrer YouTube channel</a></li>
+<li>3Blue1Brown YouTube video (2017): <a href="https://youtu.be/aircAruvnKk">But what is a neural network? | Deep learning chapter 1</a></li>
+<li>3Blue1Brown YouTube video (2017) <a href="https://youtu.be/IHZwWFHWa-w">Gradient descent, how neural networks learn | Deep Learning Chapter 2</a></li>
+<li><a href="http://cs231n.github.io">Stanford CS class CS231n</a></li>
+<li><a href="https://playground.tensorflow.org">Tensorflow playground</a></li>
+<li><a href="http://neuralnetworksanddeeplearning.com/">Michael Nielsen’s webpage</a></li>
+</ul>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-05-binary-neurons-invariance" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.1</strong></span> Consider a feedforward neural network composed entirely of binary neurons. A binary neuron, as defined, uses a step activation function:</p>
+<p><span class="math display">
+\text{output} = [ \mathbf{x}^{\top}\mathbf{w} &gt; 0 ] = \begin{cases} 1 &amp; \text{if } \mathbf{x}^{\top}\mathbf{w} &gt; 0
+\\ 0 &amp; \text{if } \mathbf{x}^{\top}\mathbf{w} \le 0 \end{cases}
+</span></p>
+<p>where <span class="math inline">\mathbf{x}</span> is the input vector and <span class="math inline">\mathbf{w}</span> is the weight and bias vector.</p>
+<p>▶ Demonstrate that if all the weights and biases <span class="math inline">\mathbf{w}</span> in such a network are multiplied by a positive constant <span class="math inline">c &gt; 0</span>, the overall output behavior of the network remains unchanged.</p>
+</div>
+<div id="exr-05-binary-sigmoid-neurons" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.2</strong></span> Consider a deep neural network (DNN) where all neurons are binary neurons, each employing the step activation function defined in Exercise 1.</p>
+<p>Now, imagine replacing every binary neuron in this DNN with a <strong>sigmoid neuron</strong>, which has an output given by:</p>
+<p><span class="math display">
+\text{output} = \frac{1}{1 + \exp(-\mathbf{x}^{\top}\mathbf{w})}
+</span></p>
+<p>▶ Show that by multiplying the weights and biases of each sigmoid neuron by a sufficiently large positive constant <span class="math inline">c &gt; 0</span>, the behavior of the new sigmoid-based DNN can arbitrarily approximate the original binary neuron DNN.</p>
+</div>
+<div id="exr-05-bitwise-representation" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.3</strong></span> Consider a pre-trained three-layer neural network designed to classify single digits (0-9). The third layer (output layer of the original network) has 10 neurons, where each neuron’s activation corresponds to the probability or confidence of a specific digit. We are given that for a correctly classified digit, the corresponding output neuron has an activation of at least <span class="math inline">0.99</span>, while all other incorrect output neurons have activations less than <span class="math inline">0.01</span>.</p>
+<p>▶ Design an <em>additional output layer</em> (the “bitwise representation layer”) that converts the output of the third layer into a <strong>4-bit binary representation</strong> of the recognised digit.</p>
+</div>
+<div id="exr-05-xor" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.4</strong></span> Consider the <strong>Exclusive OR (XOR)</strong> logical operation. It outputs <span class="math inline">1</span> if the inputs are different, and <span class="math inline">0</span> if they are the same. The truth table for XOR with two binary inputs (<span class="math inline">x_1, x_2 \in \{0, 1\}</span>) is:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">x_1</span></th>
+<th style="text-align: left;"><span class="math inline">x_2</span></th>
+<th style="text-align: left;">Output (XOR)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+</tr>
+</tbody>
+</table>
+<p>▶ Prove that a single binary neuron cannot correctly compute the XOR function.</p>
+<p>▶ Design a small feedforward neural network using only binary neurons that <em>can</em> compute the XOR function. Specify the number of layers, the number of neurons in each layer, and provide a set of weights and biases for all connections.</p>
+</div>
+<div id="exr-05-uat" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.5</strong></span> Briefly explain why the Universal Approximation theorem requires the hidden layer neurons to have <strong>non-linear activation functions</strong>. What would happen if all neurons in the network used only <strong>linear</strong> activation functions?</p>
+</div>
+<div id="exr-05-gradient-descent" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.6</strong></span> Consider a single sigmoid neuron with input <span class="math inline">x</span>, weight <span class="math inline">w</span>, and bias <span class="math inline">b</span>. The output <span class="math inline">\hat{y}</span> is given by:</p>
+<p><span class="math display">
+\hat{y} = \sigma(wx + b) = \frac{1}{1 + \exp(-(wx + b))}
+</span></p>
+<p>Suppose we are training this neuron to predict a target value <span class="math inline">y \in \{0,
+1\}</span>. We use the L2 loss function:</p>
+<p><span class="math display">
+E = (\hat{y} - y)^2
+</span></p>
+<p>Our goal is to adjust <span class="math inline">w</span> and <span class="math inline">b</span> to minimize <span class="math inline">E</span> using <strong>gradient descent</strong>.</p>
+<p>▶ Derive the partial derivative of the cost function <span class="math inline">E</span> with respect to the weight <span class="math inline">w</span>, i.e., calculate <span class="math inline">\frac{\partial E}{\partial w}</span></p>
+<p>▶ Derive the partial derivative of the cost function <span class="math inline">E</span> with respect to the bias <span class="math inline">b</span>, i.e., calculate <span class="math inline">\frac{\partial E}{\partial b}</span>.</p>
+<p>▶ Write down the update rules for <span class="math inline">w</span> and <span class="math inline">b</span> using gradient descent with a learning rate <span class="math inline">\eta</span>.</p>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-wikiHopfieldNetwork" class="csl-entry" role="listitem">
+Wikipedia. 2025. <span>“<span class="nocase">Hopfield network</span> — <span>W</span>ikipedia<span>,</span> the Free Encyclopedia.”</span> <a href="http://en.wikipedia.org/w/index.php?title=Hopfield%20network&amp;oldid=1291715818" class="uri">http://en.wikipedia.org/w/index.php?title=Hopfield%20network&amp;oldid=1291715818</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapter-04-evaluating-classifier-performance.html" class="pagination-link" aria-label="Evaluating Classifier Performance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluating Classifier Performance</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter-06-convolutional-neural-networks.html" class="pagination-link" aria-label="Convolutional Neural Networks">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, François Pitié</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
