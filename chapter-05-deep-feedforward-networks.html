@@ -928,58 +928,25 @@ See Also
   E'({\bf w}) = E({\bf w}) + \lambda \sum_i |w_i|
 </span></p>
 <p>A key property of L1 regularisation is that it encourages sparsity; that is, it tends to drive many of the weights to become exactly zero. This can be useful for feature selection and for simplifying the network model (see <a href="note-03-l1-induces-sparsity.html" class="quarto-xref"><span>Appendix C</span></a>).</p>
-<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://keras.io/api/layers/regularization_layers/">https://keras.io/api/layers/regularization_layers/</a></li>
-</ul>
-</div>
-</div>
+<!-- ::: {#callout-GD-seealso .callout-note icon=false } -->
+<!-- ## See Also -->
+<!-- *  [https://keras.io/api/layers/regularization_layers/](https://keras.io/api/layers/regularization_layers/) -->
+<!-- ::: -->
 </section>
 </section>
 <section id="dropout-noise" class="level2" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="dropout-noise"><span class="header-section-number">5.10</span> Dropout &amp; Noise</h2>
 <p>One of the most effective ways to combat overfitting is to train on more data. When collecting more data is not feasible, we can artificially augment the existing dataset. A simple way to do this is to create new training examples by adding a small amount of random noise (e.g., from a Gaussian distribution) to the input features of the original samples.</p>
 <p>This idea can be taken a step further by injecting noise not just at the input layer, but also to the activations of the hidden units during the training process.</p>
-<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://keras.io/api/layers/regularization_layers/gaussian_noise/">https://keras.io/api/layers/regularization_layers/gaussian_noise/</a></li>
-</ul>
-</div>
-</div>
+<!-- ::: {#callout-GD-seealso .callout-note icon=false } -->
+<!-- ## See Also -->
+<!-- *  [https://keras.io/api/layers/regularization_layers/gaussian_noise/](https://keras.io/api/layers/regularization_layers/gaussian_noise/) -->
+<!-- ::: -->
 <p>A very effective and widely used regularisation technique that builds on this idea is <strong>dropout</strong>. During each training step, dropout randomly sets the output of a fraction of the units in a layer to zero. This is equivalent to training a large ensemble of smaller networks that share weights, which prevents complex co-adaptations between neurons and forces the network to learn more robust features.</p>
-<div id="callout-Dropout-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://keras.io/api/layers/regularization_layers/dropout/">https://keras.io/api/layers/regularization_layers/dropout/</a></li>
-</ul>
-</div>
-</div>
+<!-- ::: {#callout-Dropout-seealso .callout-note icon=false } -->
+<!-- ## See Also -->
+<!-- *  [https://keras.io/api/layers/regularization_layers/dropout/](https://keras.io/api/layers/regularization_layers/dropout/) -->
+<!-- ::: -->
 </section>
 <section id="monitoring-and-training-diagnostics" class="level2" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
