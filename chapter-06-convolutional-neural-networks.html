@@ -414,7 +414,7 @@ window.Quarto = {
 <h2 data-number="6.1" class="anchored" data-anchor-id="convolution-filters"><span class="header-section-number">6.1</span> Convolution Filters</h2>
 <section id="a-smarter-way-to-process-grid-type-tensors" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="a-smarter-way-to-process-grid-type-tensors">A Smarter Way to Process Grid-Type Tensors</h3>
-<p>Recall that in dense layers, as in <a href="#fig-nn-dag-deep-ml-perceptron" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-nn-dag-deep-ml-perceptron</span></a>, every unit in the layer is connected to every unit in the adjacent layers.</p>
+<p>Recall that in dense layers, as in <a href="#fig-nn-dag-deep-ml-perceptron" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>, every unit in the layer is connected to every unit in the adjacent layers.</p>
 <div id="fig-nn-dag-deep-ml-perceptron" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nn-dag-deep-ml-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -470,7 +470,7 @@ f\left( \mathrm{logit}_{i,j,k,n} \right)
 \mathrm{logit}_{i, j, n} = u_{i+1,j,n-1} + u_{i-1,j,n-1} + u_{i,j+1,n-1} +
 u_{i,j-1,n-1} - 4 u_{i,j,n-1}
 </span></p>
-<p>The weights can be arranged as a weight <em>mask</em> (also called <em>kernel</em>) that is applied at each pixel location (see <a href="#fig-convoutput" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-convoutput</span></a>).</p>
+<p>The weights can be arranged as a weight <em>mask</em> (also called <em>kernel</em>) that is applied at each pixel location (see <a href="#fig-convoutput" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>).</p>
 <div id="fig-convoutput" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-convoutput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -568,7 +568,7 @@ Figure&nbsp;6.5: Example of convolution outputs
 </section>
 <section id="padding" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="padding"><span class="header-section-number">6.2</span> Padding</h2>
-<p>At the picture boundaries, not all neighbours are defined and padding strategy must be implemented to specify what to do for these pixels at the edge. <a href="#fig-padding-1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-padding-1</span></a> shows this on a <span class="math inline">3 \times 3</span> convolution. Pixels outside the image domain are marked with <code>'?'</code> but could be required in the computation of the convolution.</p>
+<p>At the picture boundaries, not all neighbours are defined and padding strategy must be implemented to specify what to do for these pixels at the edge. This is shown on <a href="#fig-padding-1" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> for a <span class="math inline">3 \times 3</span> convolution. Pixels outside the image domain are marked with <code>'?'</code> but could be required in the computation of the convolution.</p>
 <div id="fig-padding-1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-padding-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
