@@ -360,16 +360,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#convolution-filters" id="toc-convolution-filters" class="nav-link active" data-scroll-target="#convolution-filters"><span class="header-section-number">6.1</span> Convolution Filters</a></li>
-  <li><a href="#padding" id="toc-padding" class="nav-link" data-scroll-target="#padding"><span class="header-section-number">6.2</span> Padding</a>
+  <li><a href="#convolution-filters" id="toc-convolution-filters" class="nav-link active" data-scroll-target="#convolution-filters"><span class="header-section-number">6.1</span> Convolution Filters</a>
   <ul class="collapse">
+  <li><a href="#a-smarter-way-to-process-grid-type-tensors" id="toc-a-smarter-way-to-process-grid-type-tensors" class="nav-link" data-scroll-target="#a-smarter-way-to-process-grid-type-tensors">A Smarter Way to Process Grid-Type Tensors</a></li>
+  <li><a href="#signal-processing-connections" id="toc-signal-processing-connections" class="nav-link" data-scroll-target="#signal-processing-connections">Signal Processing Connections</a></li>
   <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   </ul></li>
+  <li><a href="#padding" id="toc-padding" class="nav-link" data-scroll-target="#padding"><span class="header-section-number">6.2</span> Padding</a></li>
   <li><a href="#reducing-the-tensor-size" id="toc-reducing-the-tensor-size" class="nav-link" data-scroll-target="#reducing-the-tensor-size"><span class="header-section-number">6.3</span> Reducing the Tensor Size</a>
   <ul class="collapse">
   <li><a href="#stride" id="toc-stride" class="nav-link" data-scroll-target="#stride"><span class="header-section-number">6.3.1</span> Stride</a></li>
   <li><a href="#max-pooling" id="toc-max-pooling" class="nav-link" data-scroll-target="#max-pooling"><span class="header-section-number">6.3.2</span> Max Pooling</a></li>
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example</a></li>
   </ul></li>
   <li><a href="#increasing-the-tensor-size" id="toc-increasing-the-tensor-size" class="nav-link" data-scroll-target="#increasing-the-tensor-size"><span class="header-section-number">6.4</span> Increasing the Tensor Size</a></li>
   <li><a href="#architecture-design" id="toc-architecture-design" class="nav-link" data-scroll-target="#architecture-design"><span class="header-section-number">6.5</span> Architecture Design</a></li>
@@ -411,7 +412,9 @@ window.Quarto = {
 <p>Convnets gained popularity with LeNet-5, a pioneering 7-level convolutional network by LeCun et al.&nbsp;(1998) that was successfully applied on the MNIST dataset. They were also at the heart of Alexnet, AlexNet (Alex Krizhevsky et al., 2012), the network that started the deep learning revolution.</p>
 <section id="convolution-filters" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="convolution-filters"><span class="header-section-number">6.1</span> Convolution Filters</h2>
-<p>Recall that in dense layers, as in <a href="#fig-nn-dag-deep-ml-perceptron" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>, every unit in the layer is connected to every unit in the adjacent layers.</p>
+<section id="a-smarter-way-to-process-grid-type-tensors" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="a-smarter-way-to-process-grid-type-tensors">A Smarter Way to Process Grid-Type Tensors</h3>
+<p>Recall that in dense layers, as in <a href="#fig-nn-dag-deep-ml-perceptron" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-nn-dag-deep-ml-perceptron</span></a>, every unit in the layer is connected to every unit in the adjacent layers.</p>
 <div id="fig-nn-dag-deep-ml-perceptron" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nn-dag-deep-ml-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -422,9 +425,10 @@ Figure&nbsp;6.1: Deep Neural Network in a Multi-Layer Perceptron Layout.
 </figcaption>
 </figure>
 </div>
-<p>When the input is an image (as in the MNIST dataset), each pixel in the input image corresponds to a unit in the input layer. For an input image of dimension <code>width</code> by <code>height</code> pixels and 3 colour channels, the input layer will be a multidimensional array, or <strong>tensor</strong>, containing <code>width</code> <span class="math inline">\times</span> <code>height</code> <span class="math inline">\times</span> 3 input units.</p>
-<p>If the next layer is of the same size, then there are up to <span class="math inline">({\tt
-width}\times {\tt height}\times 3)^2</span> weights to train, which can become very large very quickly.</p>
+<p>When the input is an image (as in the MNIST dataset), each pixel in the input image corresponds to a unit in the input layer. For an input image of dimension <code>width</code> by <code>height</code> pixels and 3 colour channels, the input layer will be a multidimensional array, or <strong>tensor</strong>, containing <span class="math inline">(3 \times {\tt height}\times
+{\tt width})</span> input units.</p>
+<p>If the next layer is of the same size, then there are up to <span class="math inline">(3 \times
+{\tt height}\times {\tt width})^2</span> weights to train, which can become very large very quickly.</p>
 <div id="fig-cnn-intro1.svg" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cnn-intro1.svg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -466,7 +470,7 @@ f\left( \mathrm{logit}_{i,j,k,n} \right)
 \mathrm{logit}_{i, j, n} = u_{i+1,j,n-1} + u_{i-1,j,n-1} + u_{i,j+1,n-1} +
 u_{i,j-1,n-1} - 4 u_{i,j,n-1}
 </span></p>
-<p>The weights can be arranged as a weight <em>mask</em> (also called <em>kernel</em>) that is applied at each pixel location (see <a href="#fig-convoutput" class="quarto-xref">Figure&nbsp;<span>6.6</span></a>).</p>
+<p>The weights can be arranged as a weight <em>mask</em> (also called <em>kernel</em>) that is applied at each pixel location (see <a href="#fig-convoutput" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-convoutput</span></a>).</p>
 <div id="fig-convoutput" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-convoutput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -487,46 +491,28 @@ Figure&nbsp;6.4: The convolution kernel defines the relationships between a poin
 </figcaption>
 </figure>
 </div>
+</section>
+<section id="signal-processing-connections" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="signal-processing-connections">Signal Processing Connections</h3>
 <p>Note that convolution is a fundamental consequence of working on grid-type data. Indeed, as may have already been seen in a signal processing module, convolution naturally arises when trying to design operations on signals that follow the constraints of linearity and shift-invariance.</p>
-<p><strong>Linearity</strong> means that <span class="math inline">a x(i,j) + b x(i,j) \rightarrow a y(i,j) + b
+<p>An operator with input <span class="math inline">x</span> and output <span class="math inline">y</span> is <strong>linear</strong> if <span class="math inline">a x(i,j) + b x(i,j) \rightarrow a y(i,j) + b
 y(i,j)</span>. Linearity is something already present with the neurons thanks to the linear combination of the inputs. <strong>Shift invariance</strong> (or time-invariance for time series) means that <span class="math inline">x(i-a, j-b) \rightarrow y(i-a, j-b)</span>, which is also a very reasonable assumption. One would expect indeed that shifting the input tensor to the left has the only effect of shifting the output tensor to the left.</p>
-<p>In this case, the response <span class="math inline">y</span> of the system to an arbitrary input <span class="math inline">x</span> can be found directly using convolution: <span class="math inline">y = x * h</span>, where <span class="math inline">h</span> is the system’s impulse response defined by the kernel mask. This makes convolution ineluctable in neural networks that have this kind of grid structure.</p>
+<p>If a system is both linear and sift-invariant, then it can be expressed directly using convolution: <span class="math inline">y = x * h</span>, where <span class="math inline">h</span> is the system’s impulse response defined by the kernel mask. This makes convolution ineluctable in neural networks that have this kind of grid structure.</p>
 <p>Note also that the examples given here are for 2D images, but it is also possible to do convolution for 1D data (eg. time series or text processing), and ND data (eg. fluid simulation, 3D reconstruction, etc.).</p>
 </section>
-<section id="padding" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="padding"><span class="header-section-number">6.2</span> Padding</h2>
-<p>At the picture boundaries, not all neighbours are defined (see <a href="#fig-padding-1" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>) and padding strategy must be implemented to specify what to do for these pixels at the edge.</p>
-<div id="fig-padding-1" class="quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-padding-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/padding-1.svg" class="img-fluid figure-img" style="width:50.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-padding-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.5: The padding strategy defines how neighbours that are outside the image domain (here marked with a <code>?</code>) should be treated.
-</figcaption>
-</figure>
-</div>
-<p>In Keras two <strong>padding</strong> strategies are possible:</p>
-<p><code>padding='same'</code> means that the values outside of image domain are extrapolated to zero.</p>
-<p><code>padding='valid'</code> means that the pixels that need neighbours outside of the image domain are not computed. This means that the picture is slightly cropped.</p>
-<p>Input layer. Pixels outside the image domain are marked with <code>'?'</code>. After <span class="math inline">{\tt 3}\times{\tt 3}</span> convolution. Boundary pixels require out of domain neighbours.</p>
-<p>Each convolutional layer defines a number of convolution filters and the output of a layer is thus a new image, where each channel is the result of a convolution filter followed by activation.</p>
 <section id="example" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="example">Example</h3>
-<p>Next is a colour picture with a tensor of size <span class="math inline">{\tt 443}\times {\tt
-592}\times {\tt 3}</span> (width=<span class="math inline">{\tt 443}</span>, height=<span class="math inline">{\tt 592}</span>, number of channels=<span class="math inline">{\tt 3}</span>). The convolutional layer used has a kernel of size <span class="math inline">{\tt 5}\times {\tt 5}</span>, and produces <span class="math inline">{\tt 6}</span> different filters. The padding strategy is set to <code>valid</code> thus 2 pixels are lost on each side. The output tensor of the convolutional layer is a picture of size <span class="math inline">{\tt 439}\times {\tt 588}\times {\tt 6}</span>.</p>
+<p>Next is a colour picture with a tensor of size <span class="math inline">3 \times 592 \times 443</span> (width=<span class="math inline">443</span>, height=<span class="math inline">592</span>, number of channels=<span class="math inline">3</span>). The convolutional layer used has a kernel of size <span class="math inline">5\times 5</span>, and produces <span class="math inline">6</span> different filters. The padding strategy is set to <code>valid</code> thus 2 pixels are lost on each side. The output tensor of the convolutional layer is a picture of size <span class="math inline">6 \times 588 \times 439</span>.</p>
 <p>In PyTorch, the equivalent code would be:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PyTorch uses NCHW format: (batch, channels, height, width)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">443</span>, <span class="dv">592</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># in_channels=3, out_channels=6, kernel_size=5</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> nn.functional.relu(conv(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that PyTorch and Keras have different conventions for the tensor shapes. Keras uses the channel-last convention (NHWC), whereas PyTorch uses the channel-first convention (NCHW). The activation function is also applied separately in PyTorch.</p>
-<p>This convolution layer is defined by <span class="math inline">{\tt 3}\times {\tt 6}\times {\tt 5}\times
-{\tt 5} = {\tt 450}</span> weights (to which one needs to add the 6 biases, with 1 for each filter, so 456 parameters in total). This is only a fraction of what would be required in a dense layer.</p>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">592</span>, <span class="dv">443</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, in_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> nn.functional.relu(conv(x))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape) <span class="co"># returns torch.Size([1, 6, 588, 439])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that PyTorch uses uses the channel-first convention (also known as NCHW) and I will try to stick to this notation system too. NCHW is a common data format for image data, where <span class="math inline">N</span> represents the batch size, <span class="math inline">C</span> the number of channels, <span class="math inline">H</span> the image height, and <span class="math inline">W</span> the image width. This order specifies that the channels dimension is followed by the height and width. This order typically results in a better memory layout for convolution operations on he GPU.</p>
+<p>This convolution layer is defined by <span class="math inline">3 \times 6 \times 5 \times 5 = 450</span> weights (to which one needs to add the 6 biases, with 1 for each filter, so 456 parameters in total). This is only a fraction of what would be required in a dense layer.</p>
 <div id="fig-convoutput" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-convoutput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -539,33 +525,69 @@ Figure&nbsp;6.5: The padding strategy defines how neighbours that are outside th
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
 <p><img src="figures/bird-noresize-block1_conv1-5.jpg" class="img-fluid figure-img"></p>
+<figcaption>conv1</figcaption>
+</figure>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
 <p><img src="figures/bird-noresize-block1_conv1-10.jpg" class="img-fluid figure-img"></p>
+<figcaption>conv2</figcaption>
+</figure>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
 <p><img src="figures/bird-noresize-block1_conv1-20.jpg" class="img-fluid figure-img"></p>
+<figcaption>conv3</figcaption>
+</figure>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: center;">
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 20.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
 <p><img src="figures/bird-noresize-block1_conv1-30.jpg" class="img-fluid figure-img"></p>
+<figcaption>conv4</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-convoutput-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.6: Example of convolution outputs
+Figure&nbsp;6.5: Example of convolution outputs
 </figcaption>
 </figure>
 </div>
 </section>
 </section>
+<section id="padding" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="padding"><span class="header-section-number">6.2</span> Padding</h2>
+<p>At the picture boundaries, not all neighbours are defined and padding strategy must be implemented to specify what to do for these pixels at the edge. <a href="#fig-padding-1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-padding-1</span></a> shows this on a <span class="math inline">3 \times 3</span> convolution. Pixels outside the image domain are marked with <code>'?'</code> but could be required in the computation of the convolution.</p>
+<div id="fig-padding-1" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-padding-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/padding-1.svg" class="img-fluid figure-img" style="width:17em">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-padding-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.6: The padding strategy defines how neighbours that are outside the image domain (here marked with a <code>?</code>) should be treated.
+</figcaption>
+</figure>
+</div>
+<p>In PyTorch two basic padding strategies are possible:</p>
+<p><code>padding='same'</code> means that the values outside of image domain are extrapolated to zero.</p>
+<p><code>padding='valid'</code> means that the pixels that need neighbours outside of the image domain are not computed. This means that the picture is slightly cropped.</p>
+<p>You can also explicitely set the padding to be single number or a tuple (<code>padH</code>, <code>padW</code>).</p>
+</section>
 <section id="reducing-the-tensor-size" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="reducing-the-tensor-size"><span class="header-section-number">6.3</span> Reducing the Tensor Size</h2>
 <p>If convolution filters offer a way of reducing the number of weights in the network, the number of units still remains high.</p>
-<p>For instance, applying <code>Conv2D(16, (5,5))</code> to an input tensor image of size <span class="math inline">{\tt 2000} \times {\tt 2000} \times {\tt 3}</span> only requires <span class="math inline">{\tt
-5}\times {\tt 5}\times {\tt 3}\times {\tt 16} = {\tt 1200}</span> weights to train, but still produces <span class="math inline">{\tt 2000} \times {\tt 2000} \times {\tt
-16} = {\tt 64}</span> million units.</p>
+<p>For instance, applying <code>Conv2d(in_channels=3, out_channels=5, kernel_size=16)</code> to an input tensor image of size <span class="math inline">3\times 2000 \times 2000</span> only requires <span class="math inline">5 \times 5 \times 3 \times 16 = 1200</span> weights to train, but still produces <span class="math inline">2000 \times 2000 \times 16 = 64</span> million units.</p>
 <p>In this section, it will be seen how <strong>stride</strong> and <strong>pooling</strong> can be used to downsample the images and thus reduce the number of units.</p>
 <section id="stride" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="stride"><span class="header-section-number">6.3.1</span> Stride</h3>
@@ -573,10 +595,12 @@ Figure&nbsp;6.6: Example of convolution outputs
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">16</span>, <span class="dv">16</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># in_channels=1, out_channels=1, kernel_size=3, stride=2</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, stride<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> conv(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, stride<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">16</span>, <span class="dv">16</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> conv(x)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape) <span class="co"># torch.Size([1, 1, 7, 7])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
@@ -609,10 +633,7 @@ Figure&nbsp;6.6: Example of convolution outputs
 <section id="max-pooling" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="max-pooling"><span class="header-section-number">6.3.2</span> Max Pooling</h3>
 <p>Whereas stride is set on the convolution layer itself, <strong>Pooling</strong> is a separate node that is appended after the conv layer. The Pooling layer operates a sub-sampling of the picture.</p>
-<p>Different sub-sampling strategies are possible: average pooling, max pooling, stochastic pooling.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that Keras’ <code>pool_size</code> is equivalent to <code>kernel_size</code> in PyTorch. When the <code>strides</code> argument is not provided in Keras’ <code>MaxPooling2D</code>, it defaults to the <code>pool_size</code>.</p>
-<p>The maximum of each block is kept.</p>
+<p>Different sub-sampling strategies are possible: average pooling, max pooling, stochastic pooling. Here is example of max pooling on blocks of size <span class="math inline">2 \times 2</span>. The maximum of each block is kept:</p>
 <div id="fig-maxpooling" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-maxpooling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -630,21 +651,19 @@ Figure&nbsp;6.7: MaxPooling example on a 4x4 tensor
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="example-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="example-1">Example</h3>
-<p>In the following PyTorch code:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">32</span>, <span class="dv">32</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># padding='same' in Keras with stride=1 can be achieved with padding=(kernel_size-1)/2</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># For a 5x5 kernel, padding is (5-1)/2 = 2</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(<span class="dv">3</span>, <span class="dv">16</span>, <span class="dv">5</span>, padding<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> nn.functional.relu(conv(x))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pool(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>the original image is of size <span class="math inline">32\times 32\times 3</span> and is transformed into a new image of size <span class="math inline">32\times 32\times 16</span>. Each of the 16 output image channels are obtained through their own <span class="math inline">5\times 5\times 3</span> convolution filter.</p>
+<p>For example, in the following PyTorch code:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">32</span>, <span class="dv">32</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(<span class="dv">3</span>, <span class="dv">16</span>, <span class="dv">5</span>, padding<span class="op">=</span><span class="st">'same'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> nn.functional.relu(conv(x))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape) <span class="co"># torch.Size([1, 16, 32, 32])</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pool(x)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape) <span class="co"># torch.Size([1, 16, 16, 16])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>the original image is of size <span class="math inline">3 \times 32\times 32</span> and is transformed into a new image of size <span class="math inline">16 \times 32\times 32</span>. Each of the 16 output image channels are obtained through their own <span class="math inline">3 \times 5\times 5</span> convolution filter.</p>
 <p>Then maxpooling reduces the image size to <span class="math inline">16\times 16\times 16</span>.</p>
 </section>
 </section>
@@ -653,16 +672,16 @@ Figure&nbsp;6.7: MaxPooling example on a 4x4 tensor
 <p>Similarly it is possible to increase the horizontal and vertical dimensions of a tensor using an upsampling operation. This step is sometimes called <strong>up-convolution</strong>, <strong>deconvolution</strong> or <strong>transposed convolution</strong>.</p>
 <p>This step is equivalent to first upsampling the tensor by inserting zeros in-between the input samples and then applying a convolution layer. More on this is discussed <a href="https://towardsdatascience.com/types-of-convolutions-in-deep-learning-717013397f4d">here</a>.</p>
 <p>In PyTorch:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># NCHW format</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">4</span>, <span class="dv">128</span>, <span class="dv">10</span>, <span class="dv">8</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>nfilters <span class="op">=</span> <span class="dv">32</span><span class="op">;</span> kernel_size <span class="op">=</span> (<span class="dv">3</span>,<span class="dv">3</span>)<span class="op">;</span> stride <span class="op">=</span> (<span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>deconv <span class="op">=</span> nn.ConvTranspose2d(<span class="dv">128</span>, nfilters, kernel_size, stride)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> deconv(x)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.shape) <span class="co"># torch.Size([4, 32, 21, 17])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that <em>deconvolution</em> is a very unfortunate term for this step as this term is already used in signal processing and refers to trying to estimate the input signal/tensor from the output signal. (eg. trying to recover the original image from an blurred image).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">4</span>, <span class="dv">128</span>, <span class="dv">10</span>, <span class="dv">8</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>nfilters <span class="op">=</span> <span class="dv">32</span><span class="op">;</span> kernel_size <span class="op">=</span> (<span class="dv">3</span>,<span class="dv">3</span>)<span class="op">;</span> stride <span class="op">=</span> (<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>deconv <span class="op">=</span> nn.ConvTranspose2d(<span class="dv">128</span>, nfilters, kernel_size, stride)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> deconv(x)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.shape) <span class="co"># torch.Size([4, 32, 21, 17])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that <em>deconvolution</em> is a very unfortunate term for this step as this term is already used in signal processing and refers to trying to estimate the input signal/tensor from the output signal. (eg. trying to recover the original image from an blurred image). So please, don’t use that term.</p>
 </section>
 <section id="architecture-design" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="architecture-design"><span class="header-section-number">6.5</span> Architecture Design</h2>
@@ -724,73 +743,72 @@ Figure&nbsp;6.11: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer
 <h2 data-number="6.6" class="anchored" data-anchor-id="example-vgg16"><span class="header-section-number">6.6</span> Example: VGG16</h2>
 <p>Below is the code for the network definition of VGG16 in PyTorch.</p>
 <p>In PyTorch, models are defined as classes that inherit from <code>torch.nn.Module</code>. The layers of the network are defined in the <code>__init__</code> method, and the forward pass is defined in the <code>forward</code> method. The <code>torch.nn.Sequential</code> container is a convenient way to group layers that are applied in sequence.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VGG16(nn.Module):</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_classes<span class="op">=</span><span class="dv">1000</span>):</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(VGG16, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.features <span class="op">=</span> nn.Sequential(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 1</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">3</span>, <span class="dv">64</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">64</span>, <span class="dv">64</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 2</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">64</span>, <span class="dv">128</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">128</span>, <span class="dv">128</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 3</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">128</span>, <span class="dv">256</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">256</span>, <span class="dv">256</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">256</span>, <span class="dv">256</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 4</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">256</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 5</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.avgpool <span class="op">=</span> nn.AdaptiveAvgPool2d((<span class="dv">7</span>, <span class="dv">7</span>))</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.classifier <span class="op">=</span> nn.Sequential(</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">512</span> <span class="op">*</span> <span class="dv">7</span> <span class="op">*</span> <span class="dv">7</span>, <span class="dv">4096</span>),</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">4096</span>, <span class="dv">4096</span>),</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">4096</span>, num_classes),</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.features(x)</span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.avgpool(x)</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> torch.flatten(x, <span class="dv">1</span>)</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.classifier(x)</span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: In PyTorch, the softmax activation is often applied in the loss function</span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co"># (e.g., `nn.CrossEntropyLoss`) for better numerical stability, so it is not</span></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co"># always included in the model's forward pass. If needed, it can be applied</span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co"># using `nn.functional.softmax(x, dim=1)`.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VGG16(nn.Module):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_classes<span class="op">=</span><span class="dv">1000</span>):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(VGG16, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.features <span class="op">=</span> nn.Sequential(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 1</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">3</span>, <span class="dv">64</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">64</span>, <span class="dv">64</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 2</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">64</span>, <span class="dv">128</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">128</span>, <span class="dv">128</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 3</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">128</span>, <span class="dv">256</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">256</span>, <span class="dv">256</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">256</span>, <span class="dv">256</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 4</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">256</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Block 5</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>            nn.Conv2d(<span class="dv">512</span>, <span class="dv">512</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>            nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>, stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.avgpool <span class="op">=</span> nn.AdaptiveAvgPool2d((<span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.classifier <span class="op">=</span> nn.Sequential(</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">512</span> <span class="op">*</span> <span class="dv">7</span> <span class="op">*</span> <span class="dv">7</span>, <span class="dv">4096</span>),</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">4096</span>, <span class="dv">4096</span>),</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(inplace<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>            nn.Linear(<span class="dv">4096</span>, num_classes),</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.features(x)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.avgpool(x)</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> torch.flatten(x, <span class="dv">1</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.classifier(x)</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: In PyTorch, the softmax activation is often applied in the loss function</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="co"># (e.g., `nn.CrossEntropyLoss`) for better numerical stability, so it is not</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co"># always included in the model's forward pass. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As can be seen the network definition is rather compact. The convolutional layers are laid out in sequence. After <code>block1_pool</code>, the image tensor contains 64 channels but is halved in width and height. As the process goes deeper, the width and height is further halved and the number of channels/features increase. At <code>block5_pool</code>, the tensor width and height is <span class="math inline">32</span> times smaller than the original but the number of channels/features per pixel is 512.</p>
 <p>The last dense layers (<code>FC1</code>, <code>FC2</code>) perform the classification task based on the visual features of <code>block5_pool</code>.</p>
-<p>Let us take the following input image (tensor size <span class="math inline">224\times 224 \times 3</span>, image has been resized to match that dimension):</p>
+<p>Let us take the following input image (tensor size <span class="math inline">3 \times 224 \times 224</span>, image has been resized to match that dimension):</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="figures/bird-crop.jpg" class="img-fluid figure-img" style="width:20.0%"></p>
@@ -834,7 +852,7 @@ Figure&nbsp;6.11: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block1-conv2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.12: A few output images from the 64 filters of <code>block1_conv2</code> (size <span class="math inline">224 \times 224  \times 64</span>)
+Figure&nbsp;6.12: A few output images from the 64 filters of <code>block1_conv2</code> (size <span class="math inline">64 \times 224 \times 224</span>)
 </figcaption>
 </figure>
 </div>
@@ -874,7 +892,7 @@ Figure&nbsp;6.12: A few output images from the 64 filters of <code>block1_conv2<
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block2-conv2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.13: A few output images from the 64 filters of <code>block2_conv2</code> (size <span class="math inline">224 \times 224  \times 64</span>)
+Figure&nbsp;6.13: A few output images from the 128 filters of <code>block2_conv2</code> (size $112 $)
 </figcaption>
 </figure>
 </div>
@@ -914,7 +932,7 @@ Figure&nbsp;6.13: A few output images from the 64 filters of <code>block2_conv2<
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block3-conv3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.14: A few output images from the 64 filters of <code>block3_conv3</code> (size <span class="math inline">224 \times 224  \times 64</span>)
+Figure&nbsp;6.14: A few output images from the 256 filters of <code>block3_conv3</code> (size <span class="math inline">56 \times 56</span>)
 </figcaption>
 </figure>
 </div>
@@ -954,7 +972,7 @@ Figure&nbsp;6.14: A few output images from the 64 filters of <code>block3_conv3<
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block4-conv3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.15: A few output images from the 64 filters of <code>block4_conv3</code> (size <span class="math inline">224 \times 224  \times 64</span>)
+Figure&nbsp;6.15: A few output images from the 512 filters of <code>block4_conv3</code> (size <span class="math inline">28 \times 28</span>)
 </figcaption>
 </figure>
 </div>
@@ -994,7 +1012,7 @@ Figure&nbsp;6.15: A few output images from the 64 filters of <code>block4_conv3<
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block5-conv3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.16: A few output images from the 64 filters of <code>block5_conv3</code> (size <span class="math inline">224 \times 224  \times 64</span>)
+Figure&nbsp;6.16: A few output images from the 512 filters of <code>block5_conv3</code> (size <span class="math inline">14 \times 14</span>)
 </figcaption>
 </figure>
 </div>

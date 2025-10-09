@@ -425,7 +425,7 @@ window.Quarto = {
 <section id="a-feedforward-network-unrolled-over-time" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="a-feedforward-network-unrolled-over-time"><span class="header-section-number">8.1</span> A Feedforward Network Unrolled Over Time</h2>
 <p>Sequential data appears in many domains. Obvious examples include time series such as audio signals, stock market prices, or a vehicle’s trajectory. Text, which is a sequence of words or characters, is another prime example. In fact, RNNs were particularly successful in machine translation tasks during the early phase of the deep learning revolution.</p>
-<p>At its core, an RNN works by recursively applying a function to each element of a sequence. The network maintains a hidden state, or context, which is updated at each step. This context captures information from all previous steps. As shown in <a href="#fig-rnn-rec-def" class="quarto-xref">Figure&nbsp;<span>8.1</span></a>, this architecture is traditionally represented using a feedback loop in the graph.</p>
+<p>At its core, an RNN works by recursively applying a function to each element of a sequence. The network maintains a hidden state, or context, which is updated at each step. This context captures information from all previous steps. As shown in <a href="#fig-rnn-rec-def" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-rec-def</span></a>, this architecture is traditionally represented using a feedback loop in the graph.</p>
 <div id="fig-rnn-rec-def" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-rec-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -438,7 +438,7 @@ Figure&nbsp;8.1: A Recurrent Neural Network shown in its compact, recursive form
 </div>
 <p>The input stream, denoted by <span class="math inline">{\bf x}</span>, feeds into the context layer, denoted by <span class="math inline">{\bf h}</span>. This layer then re-uses the previously computed context, <span class="math inline">{\bf h}_{t-1}</span>, along with the current input, <span class="math inline">{\bf x}_t</span>, to compute the new context, <span class="math inline">{\bf h}_t</span>, and the output, <span class="math inline">{\bf y}_t</span>.</p>
 <p>For those with a background in signal processing, an analogy can be drawn: if convolutional layers are akin to Finite Impulse Response (FIR) filters, then RNNs are similar to Infinite Impulse Response (IIR) filters, as they incorporate feedback from previous states.</p>
-<p>To better understand how an RNN operates, we can “unroll” or “unfold” the recursive loop (see <a href="#fig-rnn-def-unrolled" class="quarto-xref">Figure&nbsp;<span>8.2</span></a>). This reveals a deep feedforward network where each layer corresponds to a single time step in the sequence.</p>
+<p>To better understand how an RNN operates, we can “unroll” or “unfold” the recursive loop (see <a href="#fig-rnn-def-unrolled" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-def-unrolled</span></a>). This reveals a deep feedforward network where each layer corresponds to a single time step in the sequence.</p>
 <div id="fig-rnn-def-unrolled" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-def-unrolled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -460,7 +460,7 @@ Figure&nbsp;8.3: In a simple RNN, the hidden layer is a standard fully connected
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-SimpleRNN" class="quarto-xref">Figure&nbsp;<span>8.3</span></a> shows an RNN in its most basic form, often called a <strong>simple RNN</strong> or an <strong>Elman network</strong>, where the hidden layer is simply a dense layer of neurons with a <span class="math inline">\mathrm{tanh}</span> activation function.</p>
+<p><a href="#fig-SimpleRNN" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-SimpleRNN</span></a> shows an RNN in its most basic form, often called a <strong>simple RNN</strong> or an <strong>Elman network</strong>, where the hidden layer is simply a dense layer of neurons with a <span class="math inline">\mathrm{tanh}</span> activation function.</p>
 <p>We typically use a <span class="math inline">\mathrm{tanh}</span> activation because its output ranges from -1 to 1. This allows the hidden state’s values to both increase and decrease.</p>
 <p>The governing equations for a simple RNN at a time step <span class="math inline">t</span> are:</p>
 <p><span class="math display">\begin{equation}
@@ -476,7 +476,7 @@ b}_{h})\\
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(osize, activation<span class="op">=</span><span class="st">'softmax'</span>)(h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <code>return_sequences</code> parameter dictates whether the RNN layer returns the full sequence of hidden states (one for each time step) or only the final hidden state.</p>
-<p><a href="#fig-rnn-return-sequence" class="quarto-xref">Figure&nbsp;<span>8.4</span></a> illustrates the configuration when <code>return_sequences=True</code>. The SimpleRNN layer outputs the hidden state for each time step. This is useful for sequence-to-sequence tasks, such as machine translation or speech recognition, where we need an output at each step of the sequence.</p>
+<p><a href="#fig-rnn-return-sequence" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-return-sequence</span></a> illustrates the configuration when <code>return_sequences=True</code>. The SimpleRNN layer outputs the hidden state for each time step. This is useful for sequence-to-sequence tasks, such as machine translation or speech recognition, where we need an output at each step of the sequence.</p>
 <div id="fig-rnn-return-sequence" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-return-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -487,7 +487,7 @@ Figure&nbsp;8.4: An unrolled RNN layer that returns the full sequence of hidden 
 </figcaption>
 </figure>
 </div>
-<p>The default behaviour in Keras is <code>return_sequences=False</code>, as shown in <a href="#fig-rnn-no-return-sequence" class="quarto-xref">Figure&nbsp;<span>8.5</span></a>. Here, the RNN layer outputs only the hidden state from the very last time step. This is common when we need a single summary representation of the entire sequence, for instance, in a classification task where this final state is fed into a dense layer to predict a label for the whole sequence.</p>
+<p>The default behaviour in Keras is <code>return_sequences=False</code>, as shown in <a href="#fig-rnn-no-return-sequence" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-no-return-sequence</span></a>. Here, the RNN layer outputs only the hidden state from the very last time step. This is common when we need a single summary representation of the entire sequence, for instance, in a classification task where this final state is fed into a dense layer to predict a label for the whole sequence.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(os, activation<span class="op">=</span><span class="st">'softmax'</span>)(h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -506,7 +506,7 @@ Figure&nbsp;8.5: An unrolled RNN layer that returns only the final hidden state 
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(os, activation<span class="op">=</span><span class="st">'softmax'</span>)(k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This results in the deep architecture illustrated in <a href="#fig-rnn-stacking" class="quarto-xref">Figure&nbsp;<span>8.6</span></a>.</p>
+<p>This results in the deep architecture illustrated in <a href="#fig-rnn-stacking" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-stacking</span></a>.</p>
 <div id="fig-rnn-stacking" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-stacking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -541,7 +541,7 @@ Figure&nbsp;8.7: An unrolled RNN used for next-character prediction.
 </section>
 <section id="inference" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="inference">Inference</h3>
-<p>Once the RNN is trained, we can use it to generate new text, one character at a time. This process is known as inference or sampling. We begin by providing the network with an initial “seed” sequence (e.g., a few characters or words). The RNN processes this seed and outputs a probability distribution for the next character, as shown in <a href="#fig-rnn-LLM" class="quarto-xref">Figure&nbsp;<span>8.8</span></a>.</p>
+<p>Once the RNN is trained, we can use it to generate new text, one character at a time. This process is known as inference or sampling. We begin by providing the network with an initial “seed” sequence (e.g., a few characters or words). The RNN processes this seed and outputs a probability distribution for the next character, as shown in <a href="#fig-rnn-LLM" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-LLM</span></a>.</p>
 <p>To generate the next character, we sample from this probability distribution. This means characters with a higher predicted probability are more likely to be chosen, but there is still an element of randomness. The newly generated character is then appended to the sequence, and this new, longer sequence is fed back into the RNN to generate the character after that. This process is repeated to generate entire sentences or even paragraphs of text.</p>
 <div id="fig-rnn-LLM" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -559,7 +559,7 @@ Figure&nbsp;8.8: The process of generating text one character at a time using a 
 <section id="training-back-propagation-through-time" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="training-back-propagation-through-time"><span class="header-section-number">8.3</span> Training: Back-Propagation Through Time</h2>
 <p>To train an RNN, we need a method to calculate the gradients of the loss function with respect to the network’s parameters. Since the parameters are shared across all time steps, the gradient at a particular time step depends on all previous time steps.</p>
-<p>The standard algorithm for this is <strong>Back-Propagation Through Time (BPTT)</strong>. It works by first unrolling the RNN into a deep feedforward network, as shown in <a href="#fig-rnn-fig-rnn-BPTT" class="quarto-xref">Figure&nbsp;<span>8.9</span></a>. Once unrolled, we can apply the standard back-propagation algorithm to calculate the gradients. The total gradient for a given parameter is the sum of the gradients for that parameter at each time step.</p>
+<p>The standard algorithm for this is <strong>Back-Propagation Through Time (BPTT)</strong>. It works by first unrolling the RNN into a deep feedforward network, as shown in <a href="#fig-rnn-fig-rnn-BPTT" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-fig-rnn-BPTT</span></a>. Once unrolled, we can apply the standard back-propagation algorithm to calculate the gradients. The total gradient for a given parameter is the sum of the gradients for that parameter at each time step.</p>
 <div id="fig-rnn-fig-rnn-BPTT" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-fig-rnn-BPTT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -571,7 +571,7 @@ Figure&nbsp;8.9: Back-Propagation Through Time (BPTT) involves unrolling the RNN
 </figure>
 </div>
 <p>However, BPTT has its challenges. Unrolling the network for a long sequence can result in a very deep computational graph, which can consume a large amount of GPU memory. Furthermore, the process is inherently sequential, making it difficult to parallelise and slow to train.</p>
-<p>To mitigate these issues, a common strategy is to split the long sequence into smaller chunks and apply BPTT only on these truncated parts. This approach is called <strong>Truncated Back-Propagation Through Time (TBPTT)</strong>, illustrated in <a href="#fig-rnn-truncated-BPTT" class="quarto-xref">Figure&nbsp;<span>8.10</span></a>. While this makes training more manageable, it comes at the cost of the network’s ability to learn dependencies that span longer than the chunk size.</p>
+<p>To mitigate these issues, a common strategy is to split the long sequence into smaller chunks and apply BPTT only on these truncated parts. This approach is called <strong>Truncated Back-Propagation Through Time (TBPTT)</strong>, illustrated in <a href="#fig-rnn-truncated-BPTT" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-truncated-BPTT</span></a>. While this makes training more manageable, it comes at the cost of the network’s ability to learn dependencies that span longer than the chunk size.</p>
 <div id="fig-rnn-truncated-BPTT" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-truncated-BPTT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -589,7 +589,7 @@ Figure&nbsp;8.10: In Truncated BPTT, the RNN is unrolled for only a fixed number
 <p>For this reason, the simple RNN architecture is rarely used in practice. Instead, we resort to more sophisticated RNN architectures that were specifically designed to address this issue, namely Long Short-Term Memory (LSTM) and Gated Recurrent Units (GRU).</p>
 <section id="lstm" class="level3" data-number="8.4.1">
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="lstm"><span class="header-section-number">8.4.1</span> LSTM</h3>
-<p>The <strong>Long Short-Term Memory (LSTM)</strong> architecture was introduced in 1997 by Sepp Hochreiter and Jürgen Schmidhuber <span class="citation" data-cites="lstm">(<a href="references.html#ref-lstm" role="doc-biblioref">Hochreiter and Schmidhuber 1997</a>)</span> precisely to combat the vanishing and exploding gradient problems. LSTM cells (see <a href="#fig-rnn-lstm" class="quarto-xref">Figure&nbsp;<span>8.11</span></a>) replace the simple hidden layer of a standard RNN. They introduce a more complex internal structure that includes a separate cell state and a series of “gates” that regulate the flow of information.</p>
+<p>The <strong>Long Short-Term Memory (LSTM)</strong> architecture was introduced in 1997 by Sepp Hochreiter and Jürgen Schmidhuber <span class="citation" data-cites="lstm">(<a href="#ref-lstm" role="doc-biblioref">Hochreiter and Schmidhuber 1997</a>)</span> precisely to combat the vanishing and exploding gradient problems. LSTM cells (see <a href="#fig-rnn-lstm" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-lstm</span></a>) replace the simple hidden layer of a standard RNN. They introduce a more complex internal structure that includes a separate cell state and a series of “gates” that regulate the flow of information.</p>
 <p>These gates—the forget gate, input gate, and output gate—allow the network to selectively add or remove information from the cell state, enabling it to remember information for very long periods. After their potential was realised around 2014, major technology companies like Google, Apple, and Microsoft began using LSTMs extensively in products for speech recognition and machine translation.</p>
 <div id="fig-rnn-lstm" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -622,8 +622,8 @@ See Also
 </section>
 <section id="gru" class="level3" data-number="8.4.2">
 <h3 data-number="8.4.2" class="anchored" data-anchor-id="gru"><span class="header-section-number">8.4.2</span> GRU</h3>
-<p>The <strong>Gated Recurrent Unit (GRU)</strong> was introduced in 2014 <span class="citation" data-cites="gru">(<a href="references.html#ref-gru" role="doc-biblioref">Chung et al. 2014</a>)</span> as a simpler alternative to the LSTM. GRUs combine the forget and input gates into a single “update gate” and merge the cell state and hidden state. This results in a model that is computationally more efficient (faster to train) because it has fewer parameters than an LSTM.</p>
-<p>The performance of GRUs is often comparable to that of LSTMs. They may perform slightly better on smaller datasets but can be outperformed by LSTMs on larger, more complex problems. The architecture is shown in <a href="#fig-rnn-gru" class="quarto-xref">Figure&nbsp;<span>8.12</span></a>.</p>
+<p>The <strong>Gated Recurrent Unit (GRU)</strong> was introduced in 2014 <span class="citation" data-cites="gru">(<a href="#ref-gru" role="doc-biblioref">Chung et al. 2014</a>)</span> as a simpler alternative to the LSTM. GRUs combine the forget and input gates into a single “update gate” and merge the cell state and hidden state. This results in a model that is computationally more efficient (faster to train) because it has fewer parameters than an LSTM.</p>
+<p>The performance of GRUs is often comparable to that of LSTMs. They may perform slightly better on smaller datasets but can be outperformed by LSTMs on larger, more complex problems. The architecture is shown in <a href="#fig-rnn-gru" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-gru</span></a>.</p>
 <div id="fig-rnn-gru" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-gru-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -697,12 +697,12 @@ See Also
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A neural image caption generator’’ <a href="https://arxiv.org/abs/1411.4555">original paper</a> <span class="citation" data-cites="showandtell">(<a href="references.html#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span></li>
+<li>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A neural image caption generator’’ <a href="https://arxiv.org/abs/1411.4555">original paper</a> <span class="citation" data-cites="showandtell">(<a href="#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span></li>
 <li>Google Research Blog <a href="https://goo.gl/U88bDQ">post</a></li>
 </ul>
 </div>
 </div>
-<p>The process begins (see <a href="#fig-rnn-captioning" class="quarto-xref">Figure&nbsp;<span>8.14</span></a>) by using a pre-trained Convolutional Neural Network (CNN), such as VGG or ResNet, to extract a rich set of visual features from the input image.</p>
+<p>The process begins (see <a href="#fig-rnn-captioning" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-rnn-captioning</span></a>) by using a pre-trained Convolutional Neural Network (CNN), such as VGG or ResNet, to extract a rich set of visual features from the input image.</p>
 <p>We typically remove the final classification layer of the CNN, as we are interested in the high-level feature representation from one of the last fully connected layers, not the final class prediction.</p>
 <div id="fig-rnn-captioning" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -726,7 +726,7 @@ Figure&nbsp;8.14: Image Captioning. First the input impage is mapped into a vect
 <h2 data-number="8.7" class="anchored" data-anchor-id="limitations-of-rnns-and-the-rise-of-transformers"><span class="header-section-number">8.7</span> Limitations of RNNs and the Rise of Transformers</h2>
 <p>Despite their success, RNNs have fundamental limitations. Their inherently recurrent nature, processing data one step at a time, prevents effective parallelisation. This makes them slow to train on very long sequences.</p>
 <p>Perhaps more critically, RNNs and LSTMs are not well-suited for transfer learning in the same way as CNNs. It is difficult to pre-train a general-purpose RNN on a massive dataset and then fine-tune it for a new task. Consequently, most RNN applications require training from scratch, which demands large amounts of task-specific data and significant computational resources.</p>
-<p>The 2017 landmark paper “Attention Is All You Need” <span class="citation" data-cites="attention">(<a href="references.html#ref-attention" role="doc-biblioref">Vaswani et al. 2017</a>)</span> introduced the <strong>Transformer</strong> architecture, which has since ended the predominance of RNNs in natural language processing. Transformers, built upon the <strong>Attention Mechanism</strong>, dispense with recurrence entirely. Their design allows for massive parallelisation and has proven exceptionally effective for transfer learning. This has enabled the creation of powerful pre-trained models like BERT and GPT, which can be adapted to a wide range of tasks with minimal fine-tuning. This is why we will cover these in the next chapters.</p>
+<p>The 2017 landmark paper “Attention Is All You Need” <span class="citation" data-cites="attention">(<a href="#ref-attention" role="doc-biblioref">Vaswani et al. 2017</a>)</span> introduced the <strong>Transformer</strong> architecture, which has since ended the predominance of RNNs in natural language processing. Transformers, built upon the <strong>Attention Mechanism</strong>, dispense with recurrence entirely. Their design allows for massive parallelisation and has proven exceptionally effective for transfer learning. This has enabled the creation of powerful pre-trained models like BERT and GPT, which can be adapted to a wide range of tasks with minimal fine-tuning. This is why we will cover these in the next chapters.</p>
 <p>… but good ideas never die. Recurrent approaches made a comeback in late 2023 with <em>Mamba</em>, an architecture demonstrating that state-space models with recurrent properties can compete with, and sometimes outperform, Transformers, particularly in terms of computational efficiency during inference. This shows that the principles of recurrence remain an active and evolving area of research.</p>
 <div id="seealso-lstm" class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -746,7 +746,7 @@ See Also
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-gru" class="csl-entry" role="listitem">
 Chung, Junyoung, Caglar Gulcehre, Kyunghyun Cho, and Yoshua Bengio. 2014. <span>“Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling.”</span> In <em>NIPS 2014 Workshop on Deep Learning, December 2014</em>.
 </div>

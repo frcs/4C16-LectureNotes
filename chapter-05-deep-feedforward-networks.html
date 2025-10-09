@@ -435,7 +435,7 @@ window.Quarto = {
 <h2 data-number="5.1" class="anchored" data-anchor-id="what-is-a-feed-forward-neural-network"><span class="header-section-number">5.1</span> What is a Feed-Forward Neural Network?</h2>
 <section id="a-graph-of-differentiable-operations" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="a-graph-of-differentiable-operations"><span class="header-section-number">5.1.1</span> A Graph of Differentiable Operations</h3>
-<p>To understand why logistic regression can be viewed as a neural network, let us consider a simple case with two input features, <span class="math inline">x_1</span> and <span class="math inline">x_2</span>. The prediction function can be visualised as a network of operations, as depicted in <a href="#fig-nn-dag-sigmoid" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>.</p>
+<p>To understand why logistic regression can be viewed as a neural network, let us consider a simple case with two input features, <span class="math inline">x_1</span> and <span class="math inline">x_2</span>. The prediction function can be visualised as a network of operations, as depicted in <a href="#fig-nn-dag-sigmoid" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-nn-dag-sigmoid</span></a>.</p>
 <div id="fig-nn-dag-sigmoid" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nn-dag-sigmoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -449,7 +449,7 @@ Figure&nbsp;5.1: Logistic Regression Model as a DAG
 <p>This type of model is known as a <strong>feed-forward</strong> neural network because it can be represented as a <strong>directed acyclic graph</strong> (DAG). This graph describes how a set of differentiable operations are composed to form the overall function.</p>
 <p>Each node within this graph is referred to as a <strong>unit</strong>. The initial nodes, or the leaves of the graph, represent either the <strong>input values</strong> (e.g., <span class="math inline">x_1</span>, <span class="math inline">x_2</span>) or the <strong>model parameters</strong> (e.g., <span class="math inline">{w_0}</span>, <span class="math inline">{w_1}</span>, <span class="math inline">{w_2}</span>). All subsequent units, such as <span class="math inline">u_1</span> and <span class="math inline">u_2</span>, represent the outputs of functions that operate on the preceding units. In this example, <span class="math inline">u_1</span> is the output of a linear combination, <span class="math inline">u_1 = f_1(x_1,x_2,w_0,w_1,w_2)
 = w_0 + w_1x_1 + w_2x_2</span>, and <span class="math inline">u_2</span> is the output of the sigmoid function, <span class="math inline">u_2=f_2(u_1) = 1/(1 + \mathrm{exp}(-u_1))</span>.</p>
-<p>While feed-forward neural networks are defined by their directed acyclic graph structure, it is worth noting that other types of neural networks exist. For example, Hopfield networks <span class="citation" data-cites="wikiHopfieldNetwork">(<a href="references.html#ref-wikiHopfieldNetwork" role="doc-biblioref">Wikipedia 2025</a>)</span> are based on graphs that contain cycles, leading to recurrent connections. However, these will not be covered in this module. For our purposes, we will focus exclusively on feed-forward neural networks, which cover 99.9% of current research and applications.</p>
+<p>While feed-forward neural networks are defined by their directed acyclic graph structure, it is worth noting that other types of neural networks exist. For example, Hopfield networks <span class="citation" data-cites="wikiHopfieldNetwork">(<a href="#ref-wikiHopfieldNetwork" role="doc-biblioref">Wikipedia 2025</a>)</span> are based on graphs that contain cycles, leading to recurrent connections. However, these will not be covered in this module. For our purposes, we will focus exclusively on feed-forward neural networks, which cover 99.9% of current research and applications.</p>
 </section>
 <section id="units-and-artificial-neurons" class="level3" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="units-and-artificial-neurons"><span class="header-section-number">5.1.2</span> Units and Artificial Neurons</h3>
@@ -465,7 +465,7 @@ Figure&nbsp;5.2: Neuron Model
 </figcaption>
 </figure>
 </div>
-<p>A variety of activation functions can be used. Some of the most popular are shown in <a href="#fig-activation-functions" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> and include the <strong>ReLU</strong>, <strong>sigmoid</strong>, and <strong>tanh</strong> Activation Functions.</p>
+<p>A variety of activation functions can be used. Some of the most popular are shown in <a href="#fig-activation-functions" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-activation-functions</span></a> and include the <strong>ReLU</strong>, <strong>sigmoid</strong>, and <strong>tanh</strong> Activation Functions.</p>
 <div id="fig-activation-functions" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-activation-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -507,7 +507,7 @@ Figure&nbsp;5.4: Representation of a Biological Neuron
 <p><span class="math display">
 C_{\mathrm {m} }{\frac {dV_{\mathrm {m} }(t)}{dt}}=I(t)-{\frac {V_{\mathrm {m} }(t)}{R_{\mathrm {m} }}}
 </span></p>
-<p>In the LIF model, the membrane voltage increases as the neuron receives input current from connected neurons. If the voltage reaches a specific threshold, the neuron “fires,” producing an output voltage spike. Immediately after firing, the membrane potential is reset to a lower resting value. Models that exhibit this behaviour are known as <strong>spiking neuron models</strong>. <a href="#fig-LIFcircuit" class="quarto-xref">Figure&nbsp;<span>5.5</span></a> provides a schematic of the LIF model as an electrical circuit (left) and illustrates how the membrane potential responds to a constant input current (right).</p>
+<p>In the LIF model, the membrane voltage increases as the neuron receives input current from connected neurons. If the voltage reaches a specific threshold, the neuron “fires,” producing an output voltage spike. Immediately after firing, the membrane potential is reset to a lower resting value. Models that exhibit this behaviour are known as <strong>spiking neuron models</strong>. <a href="#fig-LIFcircuit" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-LIFcircuit</span></a> provides a schematic of the LIF model as an electrical circuit (left) and illustrates how the membrane potential responds to a constant input current (right).</p>
 <div id="fig-LIFcircuit" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-LIFcircuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -518,7 +518,7 @@ Figure&nbsp;5.5: The leaky Integrate-and-Fire model. On the left, a circuit repr
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-LIFmodel" class="quarto-xref">Figure&nbsp;<span>5.6</span></a> illustrates the dynamics of a network of spiking neurons. Each neuron in the network receives sequences of voltage spikes from its connected peers. It integrates these incoming signals, causing its own membrane potential to rise. Once its potential reaches the firing threshold, it emits its own spike, which is then transmitted to other neurons.</p>
+<p><a href="#fig-LIFmodel" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-LIFmodel</span></a> illustrates the dynamics of a network of spiking neurons. Each neuron in the network receives sequences of voltage spikes from its connected peers. It integrates these incoming signals, causing its own membrane potential to rise. Once its potential reaches the firing threshold, it emits its own spike, which is then transmitted to other neurons.</p>
 <div id="fig-LIFmodel" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-LIFmodel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -529,8 +529,8 @@ Figure&nbsp;5.6: Overview of the spiking neuron models.
 </figcaption>
 </figure>
 </div>
-<p>A key feature of the LIF model is the “leaky” nature of the membrane: in the absence of sufficient input stimuli, the membrane potential gradually decays back to its resting state. This implies that the input signal must have a certain minimum intensity to make the neuron fire. For example, in <a href="#fig-LIFmodel" class="quarto-xref">Figure&nbsp;<span>5.6</span></a>, the spikes arriving after time <span class="math inline">t_1</span> are not frequent or strong enough to trigger an output.</p>
-<p><a href="#fig-LIF-IvR" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> shows the neuron’s output firing rate as a function of a constant input intensity, for different levels of noise. This plot clearly shows two operational regimes: below a certain input threshold, the firing rate is close to zero; above the threshold, the rate increases approximately linearly with the input intensity.</p>
+<p>A key feature of the LIF model is the “leaky” nature of the membrane: in the absence of sufficient input stimuli, the membrane potential gradually decays back to its resting state. This implies that the input signal must have a certain minimum intensity to make the neuron fire. For example, in <a href="#fig-LIFmodel" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-LIFmodel</span></a>, the spikes arriving after time <span class="math inline">t_1</span> are not frequent or strong enough to trigger an output.</p>
+<p><a href="#fig-LIF-IvR" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-LIF-IvR</span></a> shows the neuron’s output firing rate as a function of a constant input intensity, for different levels of noise. This plot clearly shows two operational regimes: below a certain input threshold, the firing rate is close to zero; above the threshold, the rate increases approximately linearly with the input intensity.</p>
 <div id="fig-LIF-IvR" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-LIF-IvR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -541,13 +541,13 @@ Figure&nbsp;5.7: Output Fire rate as a function of the input intensity for diffe
 </figcaption>
 </figure>
 </div>
-<p>This thresholding behaviour is precisely what artificial activation functions aim to capture. The response curves in <a href="#fig-LIF-IvR" class="quarto-xref">Figure&nbsp;<span>5.7</span></a> are strikingly similar in shape to common activation functions like ReLU, Leaky ReLU, and Softplus. The figure also reveals that the precise shape of this response curve is influenced by the characteristics of the input signal, such as its noise level.</p>
+<p>This thresholding behaviour is precisely what artificial activation functions aim to capture. The response curves in <a href="#fig-LIF-IvR" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-LIF-IvR</span></a> are strikingly similar in shape to common activation functions like ReLU, Leaky ReLU, and Softplus. The figure also reveals that the precise shape of this response curve is influenced by the characteristics of the input signal, such as its noise level.</p>
 <p>This highlights a functional equivalence between the abstract models used in deep learning and the dynamics of biological spiking neurons. It is possible to convert a conventional Deep Neural Network (DNN) into an equivalent Spiking Neural Network (SNN). This is an active area of research, driven by the potential for SNNs to be implemented in highly energy-efficient hardware.</p>
 <p>The main takeaway is that the artificial neurons used in DNNs are reasonable functional approximations of their biological counterparts. However, it is important to remember that this biological connection is primarily an inspiration. For the purposes of this module, it is most productive to view DNNs from a mathematical perspective: as graphs of differentiable operations that allow you to build complex, learnable functions.</p>
 </section>
 <section id="deep-neural-networks" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="deep-neural-networks"><span class="header-section-number">5.3</span> Deep Neural Networks</h2>
-<p>Having defined the basic unit, we can now combine multiple units to construct a network. One of the earliest and most fundamental network <strong>architectures</strong> is the <strong>Multi-Layer Perceptron (MLP)</strong>, as illustrated in <a href="#fig-ml-perceptron" class="quarto-xref">Figure&nbsp;<span>5.8</span></a>.</p>
+<p>Having defined the basic unit, we can now combine multiple units to construct a network. One of the earliest and most fundamental network <strong>architectures</strong> is the <strong>Multi-Layer Perceptron (MLP)</strong>, as illustrated in <a href="#fig-ml-perceptron" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ml-perceptron</span></a>.</p>
 <div id="fig-ml-perceptron" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ml-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -570,8 +570,8 @@ Figure&nbsp;5.9: Deep Neural Network or neuron units in a Multi-Layer Perceptron
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a> shows a network with two hidden layers arranged sequentially. When every unit in a layer is connected to every unit in the preceding layer, it is known as a <strong>Dense Layer</strong> or a <strong>Fully Connected Layer</strong>. This is a common but not the only type of layer. In the next chapter, we will introduce another important type: the convolutional layer.</p>
-<p>A network with two or more hidden layers, such as the one in <a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>, is classified as a <strong>deep feed-forward neural network</strong>. The exact point at which a network becomes “deep” is not universally agreed upon. However, the distinction is historically significant because, before the development of the backpropagation algorithm (which we will discuss shortly), there was no effective method for training networks with more than one hidden layer.</p>
+<p><a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-FC-layer2</span></a> shows a network with two hidden layers arranged sequentially. When every unit in a layer is connected to every unit in the preceding layer, it is known as a <strong>Dense Layer</strong> or a <strong>Fully Connected Layer</strong>. This is a common but not the only type of layer. In the next chapter, we will introduce another important type: the convolutional layer.</p>
+<p>A network with two or more hidden layers, such as the one in <a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-FC-layer2</span></a>, is classified as a <strong>deep feed-forward neural network</strong>. The exact point at which a network becomes “deep” is not universally agreed upon. However, the distinction is historically significant because, before the development of the backpropagation algorithm (which we will discuss shortly), there was no effective method for training networks with more than one hidden layer.</p>
 </section>
 <section id="universal-approximation-theorem" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="universal-approximation-theorem"><span class="header-section-number">5.4</span> Universal Approximation Theorem</h2>
@@ -579,7 +579,7 @@ Figure&nbsp;5.9: Deep Neural Network or neuron units in a Multi-Layer Perceptron
 <blockquote class="blockquote">
 <p>A neural network with just one hidden layer and a linear output unit can approximate any continuous function to an arbitrary degree of accuracy, provided the hidden layer has a sufficient number of units.</p>
 </blockquote>
-<p>This powerful result holds for a wide range of activation functions, including sigmoid and tanh. For an intuitive explanation of why this theorem holds, please refer to <a href="note-02-universal-approximation-theorem.html" class="quarto-xref"><span>Appendix B</span></a>.</p>
+<p>This powerful result holds for a wide range of activation functions, including sigmoid and tanh. For an intuitive explanation of why this theorem holds, please refer to <a href="#sec-note-uat" class="quarto-xref"><span class="quarto-unresolved-ref">sec-note-uat</span></a>.</p>
 <p>The theorem provides a powerful guarantee: neural networks are, in principle, capable of modelling almost any continuous relationship in data. It suggests that we can always improve the model’s accuracy by simply adding more hidden units.</p>
 <p>However, while the theorem guarantees that a single hidden layer is <em>sufficient</em>, modern practice has shown that <strong>deeper networks</strong> (with multiple hidden layers) are often far more efficient. They can typically achieve the same or better performance with significantly fewer total parameters and often generalise better to unseen data.</p>
 <p>Therefore, rather than simply increasing the number of units in a single layer (a “wide” network), it is often more effective to carefully design the network’s <strong>architecture</strong>. This involves deciding on the number of layers (the “depth”), the number of units in each layer, and how these units are interconnected.</p>
@@ -587,7 +587,7 @@ Figure&nbsp;5.9: Deep Neural Network or neuron units in a Multi-Layer Perceptron
 </section>
 <section id="example" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="example"><span class="header-section-number">5.5</span> Example</h2>
-<p>Let us explore a practical example using the TensorFlow Playground (playground.tensorflow.org). <a href="#fig-playground-1" class="quarto-xref">Figure&nbsp;<span>5.10</span></a> shows a network designed to solve a non-linear classification problem. The network has three hidden layers with 8, 8, and 2 units, respectively.</p>
+<p>Let us explore a practical example using the TensorFlow Playground (playground.tensorflow.org). <a href="#fig-playground-1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-playground-1</span></a> shows a network designed to solve a non-linear classification problem. The network has three hidden layers with 8, 8, and 2 units, respectively.</p>
 <div id="fig-playground-1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-playground-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -611,7 +611,7 @@ Figure&nbsp;5.10: Screenshot from the Tensorflow Playground page.
 <p><span class="math display">
 f(x_1, \cdots, x_p, w_1, \cdots, w_q) = (y_1,\cdots, y_r)
 </span></p>
-<p><a href="#fig-nn-dag-evaluation" class="quarto-xref">Figure&nbsp;<span>5.11</span></a> shows an example of a computation graph for <strong>evaluating</strong> such a model. To illustrate the generality of this framework, the units in this graph are not restricted to be standard neurons but can be arbitrary differentiable functions. For example, one could define <span class="math inline">u_7</span> as <span class="math inline">u_7: (u_1,u_2,u_3,u_4) \mapsto
+<p><a href="#fig-nn-dag-evaluation" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-nn-dag-evaluation</span></a> shows an example of a computation graph for <strong>evaluating</strong> such a model. To illustrate the generality of this framework, the units in this graph are not restricted to be standard neurons but can be arbitrary differentiable functions. For example, one could define <span class="math inline">u_7</span> as <span class="math inline">u_7: (u_1,u_2,u_3,u_4) \mapsto
 \cos(u_1+u_2+u_3)\exp(-2u_4)</span> and <span class="math inline">u_8</span> as <span class="math inline">u_8: (u_1,u_2,u_3,u_4) \mapsto
 \sin(u_1+u_2+u_3)\exp(-3u_4)</span>.</p>
 <p>To emphasise the uniformity of the graph representation, all values in this example—inputs, weights, and intermediate outputs—are denoted by <span class="math inline">u_j</span>, where <span class="math inline">j</span> is the unit’s index. In this specific graph, an input feature vector <span class="math inline">{\bf x}_i=[u_1,u_2,u_3]^{\top}</span> is processed using weights <span class="math inline">{\bf
@@ -631,7 +631,7 @@ Figure&nbsp;5.11: Example of a graph of operations for neural net evaluation.
 <p>Typically, the total loss is aggregated over the entire dataset of <span class="math inline">n</span> observations: <span class="math display">
 E({\bf w}) = \sum_{i=1}^n e(f({\bf x}_i, {\bf w}), {\bf y}_i),
 </span> where <span class="math inline">e(\cdot, \cdot)</span> is the loss function for a single observation.</p>
-<p>The computation graph for training on a single observation can now be constructed, as shown in <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span>5.12</span></a>. This graph is an extension of the evaluation graph, with the network’s output units now connected to a final unit that computes the loss.</p>
+<p>The computation graph for training on a single observation can now be constructed, as shown in <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-nn-graph-training</span></a>. This graph is an extension of the evaluation graph, with the network’s output units now connected to a final unit that computes the loss.</p>
 <div id="fig-nn-graph-training" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nn-graph-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -642,7 +642,7 @@ Figure&nbsp;5.12: Example of a graph of operations for neural net training.
 </figcaption>
 </figure>
 </div>
-<p>To be precise, <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span>5.12</span></a> depicts the computation for a single observation. The graph for the entire training process would involve replicating this structure for all observations and aggregating their individual losses to compute the total loss, <span class="math inline">E</span>.</p>
+<p>To be precise, <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-nn-graph-training</span></a> depicts the computation for a single observation. The graph for the entire training process would involve replicating this structure for all observations and aggregating their individual losses to compute the total loss, <span class="math inline">E</span>.</p>
 <p>To find the optimal weights <span class="math inline">{\bf w}</span>, we use an iterative optimisation algorithm, most commonly <strong>gradient descent</strong>. Starting from a random initial set of weights <span class="math inline">{\bf w}^{(0)}</span>, the algorithm repeatedly updates them in the direction that minimises the loss:</p>
 <p><span class="math display">
 {\bf w}^{(m+1)} = {\bf w}^{(m)} - \eta \frac{\partial E}{\partial {\bf
@@ -707,7 +707,7 @@ e(u_{12},u_{13},u_{14}) = (u_{12}-a)^2 + (u_{13}-b)^2 + (u_{14}-c)^2,
 \quad, \frac{\partial e}{\partial u_{14}} = 2(u_{14} - c).
 </span></p>
 <p>Now that we have the gradients “at the end” of the network, we can work backwards. For instance, how can we compute the gradient with respect to an earlier unit, such as <span class="math inline">\frac{\partial e}{\partial u_{10}}</span>?</p>
-<p>We use the chain rule as in <a href="#eq-chain-rule-1" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>. In our graph, unit <span class="math inline">u_{10}</span> is an input to units <span class="math inline">u_{12}</span>, <span class="math inline">u_{13}</span>, and <span class="math inline">u_{14}</span>. Therefore, its gradient is: <span class="math display">
+<p>We use the chain rule as in <a href="#eq-chain-rule-1" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-chain-rule-1</span></a>. In our graph, unit <span class="math inline">u_{10}</span> is an input to units <span class="math inline">u_{12}</span>, <span class="math inline">u_{13}</span>, and <span class="math inline">u_{14}</span>. Therefore, its gradient is: <span class="math display">
 \frac{\partial e}{\partial u_{10}} =
 \frac{\partial u_{12}}{\partial u_{10}} \frac{\partial e}{\partial u_{12}} +
 \frac{\partial u_{13}}{\partial u_{10}} \frac{\partial e}{\partial u_{13}} +
@@ -812,7 +812,7 @@ Figure&nbsp;5.15: Derivatives of common activation functions.
 </figcaption>
 </figure>
 </div>
-<p>As shown in <a href="#fig-activation-derivatives" class="quarto-xref">Figure&nbsp;<span>5.15</span></a>, the derivatives for the sigmoid and tanh functions are close to zero for most of their input range. When a neuron’s input falls into this “saturated” region, its local gradient will be close to zero. During backpropagation, this small gradient will be multiplied with others, increasing the risk of the overall gradient vanishing. When the gradient <span class="math inline">\frac{de}{dw}</span> becomes close to zero, the weight updates become negligible, and the network effectively stops learning.</p>
+<p>As shown in <a href="#fig-activation-derivatives" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-activation-derivatives</span></a>, the derivatives for the sigmoid and tanh functions are close to zero for most of their input range. When a neuron’s input falls into this “saturated” region, its local gradient will be close to zero. During backpropagation, this small gradient will be multiplied with others, increasing the risk of the overall gradient vanishing. When the gradient <span class="math inline">\frac{de}{dw}</span> becomes close to zero, the weight updates become negligible, and the network effectively stops learning.</p>
 <p>The vanishing gradient problem is a fundamental obstacle in training deep networks. It is one of the primary reasons that the ReLU activation function has become popular. Since the derivative of ReLU is 1 for all positive inputs, it is less prone to causing gradients to shrink. Many modern network architectures, such as Residual Networks (ResNets) and Long Short-Term Memory networks (LSTMs), incorporate specific mechanisms designed to mitigate the vanishing gradient problem.</p>
 </section>
 </section>
@@ -834,7 +834,7 @@ Figure&nbsp;5.15: Derivatives of common activation functions.
 </section>
 <section id="more-advanced-gradient-descent-optimizers" class="level3" data-number="5.8.2">
 <h3 data-number="5.8.2" class="anchored" data-anchor-id="more-advanced-gradient-descent-optimizers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimizers</h3>
-<p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
+<p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-SGD-ravine</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
 <div id="fig-SGD-ravine" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-SGD-ravine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -887,7 +887,7 @@ See Also
 <p><span class="math display">
   E'({\bf w}) = E({\bf w}) + \lambda \sum_i |w_i|
 </span></p>
-<p>A key property of L1 regularisation is that it encourages sparsity; that is, it tends to drive many of the weights to become exactly zero. This can be useful for feature selection and for simplifying the network model (see <a href="note-03-l1-induces-sparsity.html" class="quarto-xref"><span>Appendix C</span></a>).</p>
+<p>A key property of L1 regularisation is that it encourages sparsity; that is, it tends to drive many of the weights to become exactly zero. This can be useful for feature selection and for simplifying the network model (see <a href="#sec-note-l1-induces-sparsity" class="quarto-xref"><span class="quarto-unresolved-ref">sec-note-l1-induces-sparsity</span></a>).</p>
 <!-- ::: {#callout-GD-seealso .callout-note icon=false } -->
 <!-- ## See Also -->
 <!-- *  [https://keras.io/api/layers/regularization_layers/](https://keras.io/api/layers/regularization_layers/) -->
@@ -911,7 +911,7 @@ See Also
 <section id="monitoring-and-training-diagnostics" class="level2" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
 <p>Training a deep neural network can be a lengthy process, taking anywhere from hours to several days or even weeks. It is therefore essential to carefully monitor the process to ensure it is proceeding correctly. Tracking metrics like the loss function over time is crucial for diagnosing potential problems.</p>
-<p>As we saw with simpler models, the training loss curve can reveal a lot about the learning process. A rapidly fluctuating or increasing loss suggests that the learning rate is too high, causing the optimiser to overshoot minima or even diverge. Conversely, a very slowly decreasing loss indicates that the learning rate is too low, and the training will be impractically slow (see <a href="#fig-learning-rate-effect" class="quarto-xref">Figure&nbsp;<span>5.17</span></a>).</p>
+<p>As we saw with simpler models, the training loss curve can reveal a lot about the learning process. A rapidly fluctuating or increasing loss suggests that the learning rate is too high, causing the optimiser to overshoot minima or even diverge. Conversely, a very slowly decreasing loss indicates that the learning rate is too low, and the training will be impractically slow (see <a href="#fig-learning-rate-effect" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-learning-rate-effect</span></a>).</p>
 <div id="fig-learning-rate-effect" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-learning-rate-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -922,7 +922,7 @@ Figure&nbsp;5.17: Possible effects of the Learning Rate on the training.
 </figcaption>
 </figure>
 </div>
-<p>Furthermore, it is vital to monitor performance on a separate validation set. A significant gap between the training performance and the validation performance is a clear indicator of <strong>overfitting</strong>: the model has learned the training data too well, including its noise, and has failed to generalise to new, unseen data. <a href="#fig-overfitting-accuracy" class="quarto-xref">Figure&nbsp;<span>5.18</span></a> illustrates this phenomenon.</p>
+<p>Furthermore, it is vital to monitor performance on a separate validation set. A significant gap between the training performance and the validation performance is a clear indicator of <strong>overfitting</strong>: the model has learned the training data too well, including its noise, and has failed to generalise to new, unseen data. <a href="#fig-overfitting-accuracy" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-overfitting-accuracy</span></a> illustrates this phenomenon.</p>
 <div id="fig-overfitting-accuracy" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-overfitting-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1033,7 +1033,7 @@ E = (\hat{y} - y)^2
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-wikiHopfieldNetwork" class="csl-entry" role="listitem">
 Wikipedia. 2025. <span>“<span class="nocase">Hopfield network</span> — <span>W</span>ikipedia<span>,</span> the Free Encyclopedia.”</span> <a href="http://en.wikipedia.org/w/index.php?title=Hopfield%20network&amp;oldid=1291715818" class="uri">http://en.wikipedia.org/w/index.php?title=Hopfield%20network&amp;oldid=1291715818</a>.
 </div>
