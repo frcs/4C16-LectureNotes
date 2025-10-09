@@ -152,5 +152,25 @@
       "Foundations of Deep Neural Networks",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Convolutional Neural Networks</span>"
     ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "4C16 - Deep Learning and its Applications",
+    "section": "",
+    "text": "Module Descriptor\nThis module is an introduction course to Machine Learning (ML), with a focus on Deep Learning. The course is offered by the Electronic & Electrical Engineering department to the fourth and fith year students of Trinity College Dublin.\nAlthough Deep Learning has been around for quite a while, it has recently become a disruptive technology that has been unexpectedly taking over operations of technology companies around the world and disrupting all aspects of society. When you read or hear about AI or machine Learning successes in the news, it really means Deep Learning successes.\nThe course starts with an introduction to some essential aspects of Machine Learning, including Least Squares, Logistic Regression and a quick overview of some popular classification techniques.\nThen the course dives into the fundamentals of Neural Nets, including Feed Forward Neural Nets, Convolution Neural Nets and Recurrent Neural Nets.\nThe material has been constructed in collaboration with leading industrial practitioners including Google, YouTube and Intel, and students will have guest lectures from these companies.",
+    "crumbs": [
+      "Module Descriptor"
+    ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "4C16 - Deep Learning and its Applications",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nIt is expected that the student will be familiar with linear algebra. The mathematical material is aimed at students in their fourth or fifth year of University.\nLabs associated with this module use the Keras framework and Python. If you are not very familiar with programming, the Non-Programmer’s Tutorial for Python, is a good, gentle introduction to the programming language. Only the first 13 chapters are of interest for the course. If you prefer learning from videos, we recommend the ‘Introduction to Computer Science and Programming’ course from MIT. These don’t move too fast and are properly rigorous.\nThere is no need to install Python on your own computer. It is sufficient and simpler to use an online Python environment. For simple python code, you can try https://repl.it/languages/python3. Copy-and-paste (or type in) example code into the white pane on the left, and click ‘run’; you will see the output, if any, on the right. For running deep learning code, we recommend Google’s excellent colab, which offers a jupyter notebook environment and allows you train most networks.",
+    "crumbs": [
+      "Module Descriptor"
+    ]
   }
 ]
