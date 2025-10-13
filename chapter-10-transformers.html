@@ -883,7 +883,7 @@ Figure&nbsp;10.5: The Transformer architecture, as described in the original pap
 <p>A function that has this property is the Gaussian kernel: <span class="math display">\begin{equation}
 \phi(i)^\top \phi(j) \approx \exp( - \lambda (i-j)^2).
 \end{equation}</span></p>
-<p>Such an embedding exists: it is the (infinite) Fourier series basis (the same as in the RBF kernel in SVM). As we cannot afford the luxury of an infinite embedding, we need to truncate the series. This is what was proposed in the original Transformer paper. For a positional encoding of dimension <span class="math inline">d_{pos}</span>, they propose:</p>
+<p>So such an embedding exists: it is the (infinite) Fourier series basis (the same as in the RBF kernel in SVM). As we cannot afford the luxury of an infinite embedding, we need to truncate the series. This is what was proposed in the original Transformer paper. For a positional encoding of dimension <span class="math inline">d_{pos}</span>, they propose:</p>
 <p><span class="math display">\begin{equation}
 i \mapsto \phi(i) = \begin{bmatrix}
   \sin(\omega_1 i) \\

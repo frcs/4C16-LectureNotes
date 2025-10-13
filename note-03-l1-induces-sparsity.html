@@ -417,12 +417,12 @@ Figure&nbsp;C.3: Corresponding estimated weight values for different values of <
 <p><span class="math display">\begin{equation}
   \frac{dE_2}{dw}(0) = \frac{dE}{dw}(0).
 \end{equation}</span></p>
-<p>This is a crucial result. The <span class="math inline">L_2</span> penalty is a smooth function (<span class="math inline">w^2</span>), and its derivative at <span class="math inline">w=0</span> is zero. Consequently, it does not change the gradient of the loss function at the origin. If the original loss function had a non-zero gradient at <span class="math inline">w=0</span> (which it typically does, as seen in <a href="#fig-sparsity-Ew" class="quarto-xref">Figure&nbsp;<span>C.1</span></a>), the regularised loss will have the exact same gradient at that point. Therefore, <span class="math inline">w=0</span> cannot be a minimum.</p>
-<p>The new minimum of the regularised function occurs where <span class="math inline">\frac{dE_2}{dw}(w) = 0</span>, which gives:</p>
+<p>The <span class="math inline">L_2</span> penalty is thus a smooth function (<span class="math inline">w^2</span>), and its derivative at <span class="math inline">w=0</span> is zero. Consequently, <strong>the <span class="math inline">L_2</span> penalty cannot change the gradient of the loss function at the origin</strong>. If the original loss function had a non-zero gradient at <span class="math inline">w=0</span> (which it typically does, as seen in <a href="#fig-sparsity-Ew" class="quarto-xref">Figure&nbsp;<span>C.1</span></a>), the regularised loss will have the exact same gradient at that point. Therefore, <span class="math inline">w=0</span> cannot be a minimum.</p>
+<p>Note that <span class="math inline">L_2</span> still has the effect of pulling the minimum closer to zero. Indeed, a new minimum will occur where <span class="math inline">\frac{dE_2}{dw}(w) = 0</span>, ie. for:</p>
 <p><span class="math display">\begin{equation}
 \hat{w} = -\frac{\frac{dE}{dw}(0)}{\frac{d^2E}{dw^2}(0) + \lambda_2 }.
 \end{equation}</span></p>
-<p>From this expression, we can see that as <span class="math inline">\lambda_2 \rightarrow \infty</span>, <span class="math inline">\hat{w} \rightarrow 0</span>. The weight is shrunk towards zero, but never becomes exactly zero. Thus, <span class="math inline">L_2</span> regularisation does not induce sparsity.</p>
+<p>From this expression, we can see that as <span class="math inline">\lambda_2 \rightarrow \infty</span>, <span class="math inline">\hat{w} \rightarrow 0</span>. <strong>The weight is indeed shrunk towards zero, but never becomes exactly zero</strong>. Thus, <span class="math inline">L_2</span> regularisation cannot induce sparsity.</p>
 </section>
 <section id="l_1-regularisation" class="level2" data-number="C.2">
 <h2 data-number="C.2" class="anchored" data-anchor-id="l_1-regularisation"><span class="header-section-number">C.2</span> <span class="math inline">L_1</span> Regularisation</h2>
@@ -434,7 +434,7 @@ Figure&nbsp;C.3: Corresponding estimated weight values for different values of <
 <div id="fig-sparsity-Ew1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sparsity-Ew1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/sparsity-wopt1.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/sparsity-Ew1.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sparsity-Ew1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;C.4: <span class="math inline">L_1</span> regularised loss function <span class="math inline">E_1(w)</span> for different values of <span class="math inline">\lambda_1</span>.’
@@ -464,7 +464,7 @@ Figure&nbsp;C.5: Corresponding estimated weight values for different values of <
 <p><span class="math display">\begin{equation}
 \lambda_1 &gt; \left| \frac{dE}{dw}(0)  \right|.
 \end{equation}</span></p>
-<p>This result is profound. Unlike the <span class="math inline">L_2</span> case, the <span class="math inline">L_1</span> penalty introduces a constant force, <span class="math inline">\lambda_1</span>, that pulls the weight towards zero. If this force is stronger than the gradient of the original loss function at the origin, <span class="math inline">|\frac{dE}{dw}(0)|</span>, then the optimal solution for the weight becomes exactly zero. This is why <span class="math inline">L_1</span> regularisation induces sparsity.</p>
+<p>So, unlike the <span class="math inline">L_2</span> case, the <span class="math inline">L_1</span> penalty introduces a constant force, <span class="math inline">\lambda_1</span>, that pulls the weight towards zero. If this force is stronger than the gradient of the original loss function at the origin, <span class="math inline">|\frac{dE}{dw}(0)|</span>, then the optimal solution for the weight becomes exactly zero. This is why <span class="math inline">L_1</span> regularisation induces sparsity.</p>
 <!-- #### A Geometric Interpretation {-} -->
 <!-- The difference between $L_1$ and $L_2$ regularisation can also be understood -->
 <!-- from a geometric perspective. Consider a model with two weights, $w_1$ and -->
