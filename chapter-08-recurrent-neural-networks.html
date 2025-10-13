@@ -471,41 +471,113 @@ b}_{h})\\
 \end{aligned}
 \end{equation}</span></p>
 <p>Here, <span class="math inline">{\bf x}_t</span> is the input vector at time <span class="math inline">t</span>, <span class="math inline">{\bf h}_t</span> is the hidden state vector, and <span class="math inline">{\bf y}_t</span> is the output vector. The matrices <span class="math inline">{\bf W}_{h}</span>, <span class="math inline">{\bf U}_{h}</span>, and <span class="math inline">{\bf W}_{y}</span>, along with the bias vectors <span class="math inline">{\bf b}_{h}</span> and <span class="math inline">{\bf b}_{y}</span>, are the parameters that the network learns. Note that these parameters are the same for all time steps. <span class="math inline">\sigma_y</span> is the activation function for the output layer, chosen based on the specific task (e.g., softmax for classification).</p>
-<p>In Keras, we can define a simple RNN layer as follows. The input shape is typically <code>(n, p)</code>, where <code>n</code> is the number of time steps in the sequence and <code>p</code> is the number of features at each time step.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hsize, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(osize, activation<span class="op">=</span><span class="st">'softmax'</span>)(h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>return_sequences</code> parameter dictates whether the RNN layer returns the full sequence of hidden states (one for each time step) or only the final hidden state.</p>
-<p><a href="#fig-rnn-return-sequence" class="quarto-xref">Figure&nbsp;<span>8.4</span></a> illustrates the configuration when <code>return_sequences=True</code>. The SimpleRNN layer outputs the hidden state for each time step. This is useful for sequence-to-sequence tasks, such as machine translation or speech recognition, where we need an output at each step of the sequence.</p>
+<p>In PyTorch, we can define a simple RNN layer with <code>nn.RNN</code>. The input shape is typically <code>(n, p)</code>, where <code>n</code> is the number of time steps in the sequence and <code>p</code> is the number of features at each time step.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rnn <span class="op">=</span> nn.RNN(input_size<span class="op">=</span><span class="dv">10</span>, hidden_size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> torch.randn(<span class="dv">30</span>, <span class="dv">10</span>) <span class="co"># seq length = 30, nb features = 10</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>h0 <span class="op">=</span> torch.randn( <span class="dv">1</span>, <span class="dv">20</span>)    <span class="co"># context vector size = 20</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>output, hn <span class="op">=</span> rnn(<span class="bu">input</span>, h0) </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>output.shape                <span class="co"># torch.Size([30, 20]) </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># output seq has length 30, with 20 features</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In practice, we would define it through a class as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimpleRNNModel(nn.Module):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, p, hsize, osize):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(SimpleRNNModel, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define the RNN and Linear layers</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rnn <span class="op">=</span> nn.RNN(p, hsize, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Linear(hsize, osize)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># returns the hidden state for every time step.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        output_sequence, _ <span class="op">=</span> <span class="va">self</span>.rnn(x)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pass the full sequence to the linear layer</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> <span class="va">self</span>.fc(output_sequence)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> F.softmax(output, dim<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage:</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># model = SimpleRNNModel(p=p, hsize=hsize, osize=osize)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here the RNN layer returns the full sequence of hidden states, ie. one for each time step. <a href="#fig-rnn-return-sequence" class="quarto-xref">Figure&nbsp;<span>8.4</span></a> illustrates this. The SimpleRNN layer outputs the hidden state for each time step. This is useful for sequence-to-sequence tasks, such as machine translation or speech recognition, where we need an output at each step of the sequence.</p>
 <div id="fig-rnn-return-sequence" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-return-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/rnn-2.svg" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn-return-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.4: An unrolled RNN layer that returns the full sequence of hidden states (<code>return_sequences=True</code>).
+Figure&nbsp;8.4: An unrolled RNN layer that returns the full sequence of hidden states.
 </figcaption>
 </figure>
 </div>
-<p>The default behaviour in Keras is <code>return_sequences=False</code>, as shown in <a href="#fig-rnn-no-return-sequence" class="quarto-xref">Figure&nbsp;<span>8.5</span></a>. Here, the RNN layer outputs only the hidden state from the very last time step. This is common when we need a single summary representation of the entire sequence, for instance, in a classification task where this final state is fed into a dense layer to predict a label for the whole sequence.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">False</span>)(<span class="bu">input</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(os, activation<span class="op">=</span><span class="st">'softmax'</span>)(h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>An alternative shown in <a href="#fig-rnn-no-return-sequence" class="quarto-xref">Figure&nbsp;<span>8.5</span></a> is when the RNN layer outputs only the hidden state from the very last time step. This is common when we need a single summary representation of the entire sequence, for instance, in a classification task where this final state is fed into a dense layer to predict a label for the whole sequence.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimpleRNNModel2(nn.Module):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, p, hs, os):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(SimpleRNNModel2, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rnn <span class="op">=</span> nn.RNN(p, hs, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Linear(hs, os)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The RNN layer gives us the full sequence</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        output_sequence, _ <span class="op">=</span> <span class="va">self</span>.rnn(x)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Here we select the output of the final time step.</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># `[:, -1, :]` does this.</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        last_hidden_state <span class="op">=</span> output_sequence[:, <span class="op">-</span><span class="dv">1</span>, :]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pass only the final hidden state to the linear layer</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> <span class="va">self</span>.fc(last_hidden_state)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> F.softmax(output, dim<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage:</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># model = SimpleRNNModel2(p=p, hs=hs, os=os)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-rnn-no-return-sequence" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rnn-no-return-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/rnn-1.svg" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rnn-no-return-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.5: An unrolled RNN layer that returns only the final hidden state (<code>return_sequences=False</code>).
+Figure&nbsp;8.5: An unrolled RNN layer that returns only the final hidden state.
 </figcaption>
 </figure>
 </div>
-<p>By setting <code>return_sequences=True</code>, we can stack multiple RNN layers, much like we stack convolutional layers in a CNN. The final RNN layer in the stack might have <code>return_sequences=False</code> if the goal is to produce a single output for the entire sequence.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">input</span> <span class="op">=</span> Input(shape<span class="op">=</span>(n, p)) </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> SimpleRNN(hs, return_sequences<span class="op">=</span><span class="va">True</span>)(<span class="bu">input</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> SimpleRNN(ks, return_sequences<span class="op">=</span><span class="va">False</span>)(h)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(os, activation<span class="op">=</span><span class="st">'softmax'</span>)(k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that we can stack multiple RNN layers, much like we stack convolutional layers in a CNN. For instance:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> StackedRNNModel(nn.Module):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, p, hs, ks, os):</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(StackedRNNModel, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define the two RNN layers and the final linear layer</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rnn1 <span class="op">=</span> nn.RNN(p, hs, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rnn2 <span class="op">=</span> nn.RNN(hs, ks, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.fc <span class="op">=</span> nn.Linear(ks, os)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the full output sequence from the first RNN layer</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        output1, _ <span class="op">=</span> <span class="va">self</span>.rnn1(x)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pass that sequence to the second RNN layer</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        output2, _ <span class="op">=</span> <span class="va">self</span>.rnn2(output1)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Take the final hidden state from the last layer's output</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        last_hidden_state <span class="op">=</span> output2[:, <span class="op">-</span><span class="dv">1</span>, :]</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pass it to the linear layer for classification</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> <span class="va">self</span>.fc(last_hidden_state)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> F.softmax(output, dim<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage:</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># model = StackedRNNModel(p=feature_size, hs=hs, ks=ks, os=os)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This results in the deep architecture illustrated in <a href="#fig-rnn-stacking" class="quarto-xref">Figure&nbsp;<span>8.6</span></a>.</p>
 <div id="fig-rnn-stacking" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
