@@ -526,27 +526,18 @@ Figure&nbsp;7.3: Domain Shift after Normalisation.
 <section id="going-deeper" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="going-deeper"><span class="header-section-number">7.2</span> Going Deeper</h2>
 <p>The realisation that deeper networks could generalise better sparked a race to build increasingly deep architectures after 2012. The primary obstacle was the vanishing gradient problem, which made it difficult to train sequential architectures like VGG beyond 14-16 layers.</p>
-<p>Consider a simple network where the gradient of the error with respect to a weight <span class="math inline">w</span> is a product of intermediate derivatives:</p>
-<!-- As the potential for deeper networks to generalise better became evident, a -->
-<!-- fervent competition to push the boundaries further began after 2012. -->
-<!-- The key hurdle in this race was that, because of vanishing gradients, sequential -->
-<!-- architectures like VGG couldn't be trained for more than 14-16 layers. -->
-<!-- There has been a general trend in recent years to design deeper -->
-<!-- networks. Deeper network are known to produce more complex features -->
-<!-- and tend to generalise better. -->
-<!-- Training deep networks is however difficult. One key recurring issue -->
-<!-- being the problem of vanishing gradients. -->
-<!-- Recall the problem of vanishing gradients on this simple network: -->
-<div id="fig-vg-inception-1" class="quarto-float quarto-figure quarto-figure-left anchored">
+<p>To better understand the key to mitaging this problem, consider the simple sequential network of <a href="#fig-vg-deeper-1" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>.</p>
+<div id="fig-vg-deeper-1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-vg-inception-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-vg-deeper-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="tikz-figures/vg-inception-1.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-vg-inception-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.4
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vg-deeper-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4: A simple sequential network.
 </figcaption>
 </figure>
 </div>
+<p>The gradient of the error with respect to a weight <span class="math inline">w</span> is a product of intermediate derivatives:</p>
 <p><span class="math display">
 \frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
 </span></p>
@@ -562,8 +553,8 @@ Figure&nbsp;7.4
 <div aria-describedby="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="tikz-figures/vg-inception-3.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.5
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.5: The same sequential network, with parallel pathes.
 </figcaption>
 </figure>
 </div>
@@ -571,12 +562,13 @@ Figure&nbsp;7.5
 <p><span class="math display">
 \frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}  + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
 </span></p>
-<p>With this architecture, it is much less likely that the overall gradient will vanish, as all three terms would need to be null simultaneously. This principle of introducing parallel paths is a key innovation in modern deep learning and was central to the designs of GoogLeNet (2014) and ResNet (2015).</p>
+<p>With this architecture, it is much less likely that the overall gradient will vanish, as all three terms would need to be null simultaneously.</p>
+<p>This principle of introducing parallel paths is a key innovation in modern deep learning and was central to the designs of GoogLeNet (2014) and ResNet (2015).</p>
 <section id="googlenet-the-inception-module" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="googlenet-the-inception-module"><span class="header-section-number">7.2.1</span> GoogLeNet: The Inception Module</h3>
 <p>GoogLeNet, the winner of the ILSVRC 2014 competition, achieved a top-5 error rate of 6.7%, which was close to human-level performance at the time. This 22-layer deep CNN introduced the <strong>Inception module</strong>, a sub-network that processes the input through multiple parallel convolutional pathways.</p>
 <blockquote class="blockquote">
-<p>Szegedy et al.&nbsp;“Going Deeper with Convolutions”, \ CVPR 2015. (paper link: https://goo.gl/QTCe66)</p>
+<p>Szegedy et al.&nbsp;“Going Deeper with Convolutions”, CVPR 2015 (<a href="https://goo.gl/QTCe66">paper link</a>)</p>
 </blockquote>
 <p>Instead of a simple sequence of convolutional layers, GoogLeNet uses a series of Inception modules (as highlighted by the green boxe in Figure below).</p>
 <div id="fig-GoogLeNet2" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -585,18 +577,18 @@ Figure&nbsp;7.5
 <img src="figures/GoogLeNet2.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-GoogLeNet2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.6: GoogLeNet Architecture (2015)
+Figure&nbsp;7.6: GoogLeNet Architecture (2015). The network is made of a sequence of inception modules (first one being highlighted in green).
 </figcaption>
 </figure>
 </div>
-<p>Each inception layer is a sub-network (hence the name inception) that produces 4 different types of convolutions filters, which are then concatenated (see this video: https://youtu.be/VxhSouuSZDY for more explanations).</p>
+<p>Each inception layer is a sub-network (hence the name inception) that produces 4 different types of convolutions filters, which are then concatenated (see <a href="https://youtu.be/VxhSouuSZDY">this video</a> for more explanations).</p>
 <div id="fig-inception-subnetwork" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-inception-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/inception-subnetwork.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inception-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.7: GoogLeNet Inception Sub-Network
+Figure&nbsp;7.7: GoogLeNet Inception Sub-Network. Each module introduces 4 different parallel pathes.
 </figcaption>
 </figure>
 </div>
@@ -606,7 +598,7 @@ Figure&nbsp;7.7: GoogLeNet Inception Sub-Network
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="resnet-residual-connections"><span class="header-section-number">7.2.2</span> ResNet: Residual Connections</h3>
 <p>ResNet is a 152 (yes, 152!!) layer network architecture that won the ILSVRC 2015 competition with an error rate of just 3.6%, surpassing human performance.</p>
 <blockquote class="blockquote">
-<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”. https://goo.gl/Zs6G6X</p>
+<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”. (<a href="https://goo.gl/Zs6G6X">paper link</a>)</p>
 </blockquote>
 <p>Similar to GoogLeNet, ResNet introduces parallel connections, but in a much simpler way. It uses <strong>residual connections</strong>, or <em>skip connections</em>, which add the input of a block of layers to its output.</p>
 <div id="fig-resnet-subnet" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -615,13 +607,12 @@ Figure&nbsp;7.7: GoogLeNet Inception Sub-Network
 <img src="figures/resnet-subnetwork.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resnet-subnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.8: ResNet Sub-Network
+Figure&nbsp;7.8: ResNet Sub-Network. A direct path between the input and the output is formed through a <strong>Residual Connection</strong>.
 </figcaption>
 </figure>
 </div>
-<p>The idea is very simple but allows for a very deep and very efficient architecture.</p>
+<p>The idea is very simple but allows for a very deep and very efficient architecture. Skip connections can not only skip individual convolution blocks, but also entire parts of the network.</p>
 <p>The ResNet architecture has been highly influential, and many pre-trained variants, such as ResNet-18, ResNet-34, and ResNet-50, are still widely used today.</p>
-<p>Residual connections have also stuck</p>
 </section>
 </section>
 <section id="a-modern-training-pipeline" class="level2" data-number="7.3">
@@ -629,14 +620,8 @@ Figure&nbsp;7.8: ResNet Sub-Network
 <section id="data-augmentation" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">7.3.1</span> Data Augmentation</h3>
 <p>It is often possible to artificially expand your dataset by generating variations of your existing input data. For images, common augmentation techniques include cropping, flipping, rotating, zooming, and adjusting contrast. These operations should not change the class of the image, so they provide a free and effective way to increase the size and diversity of the training set.</p>
-<!-- It is often possible to naturally increase your dataset by generating variants -->
-<!-- of your input data.  -->
-<!-- For instance, with images, we know that minor image -->
-<!-- processing operations, such as crop, flip, rotation, zoom, contrast change, JPEG -->
-<!-- compression, noise, _etc._ should not change the outcome. -->
-<!-- Therefore these variants allow us to expand our dataset for free. -->
 <blockquote class="blockquote">
-<p>see https://docs.pytorch.org/vision/0.21/transforms.html</p>
+<p>see <a href="https://docs.pytorch.org/vision/0.21/transforms.html">PyTorch documentation</a></p>
 </blockquote>
 <p>Similar techniques can be applied in other domains, such as adding noise, reverb, or compression to audio data.</p>
 <p>Another approach is to synthesise data using simulation models, such as game engines. However, be aware that synthetic data is a simplified model of the real world and can lead to overfitting. It also tends to have different characteristics from real data, which can cause domain adaptation issues.</p>
@@ -658,9 +643,9 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>see https://docs.pytorch.org/docs/stable/nn.init.html</li>
-<li>see https://www.deeplearning.ai/ai-notes/initialization/</li>
-<li>Kaiming He et al.&nbsp;Delving Deep into Rectifiers (see <a href="paper">https://arxiv.org/abs/1502.01852</a>)</li>
+<li>see <a href="https://docs.pytorch.org/docs/stable/nn.init.html">PyTorch docs</a></li>
+<li>see <a href="https://www.deeplearning.ai/ai-notes/initialization/">https://www.deeplearning.ai/ai-notes/initialization</a></li>
+<li>Kaiming He et al.&nbsp;Delving Deep into Rectifiers (see <a href="https://arxiv.org/abs/1502.01852">paper</a>)</li>
 <li>A quick overview of how this works is presented in <a href="note-05-He-initialisation.html" class="quarto-xref"><span>Appendix E</span></a>.</li>
 </ul>
 </div>
