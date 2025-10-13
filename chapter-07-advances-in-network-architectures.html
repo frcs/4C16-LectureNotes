@@ -425,20 +425,14 @@ Figure&nbsp;7.1: AlexNet Architecture (2012).
 <p>In broad terms, the convolutional layers (up to C5) are responsible for learning and extracting visual features from the input images. The final dense layers (FC6, FC7, and FC8) then use these features to perform classification.</p>
 <p>Networks like AlexNet, VGG, ResNet, and GoogLeNet have been trained on vast datasets such as ImageNet, which contains millions of images across thousands of categories. As a result, the filters learned by their convolutional layers are highly generic and effective for a wide range of visual tasks. These features can be repurposed for your specific application.</p>
 <p>Instead of training a new network to learn visual features, you can reuse the ones from a pre-trained model. The process involves taking a pre-trained network, removing its final classification layers, and replacing them with your own, specialised layers designed for your specific task.</p>
-<!-- Broadly speaking the convolutional layers (up to C5) build visual -->
-<!-- features whilst the last dense layers (FC6, FC7 and FC8) perform -->
-<!-- classification based on these visual features. -->
-<!-- AlexNet (and any of the popular off-the-shelf networks such as VGG, -->
-<!-- ResNet or GoogLeNet) was trained on millions of images and thousands -->
-<!-- of classes. The network is thus able to deal with a great variety of -->
-<!-- problems and the trained filters produce very generic features that -->
-<!-- are relevant to most visual applications. -->
-<!-- Therefore AlexNet's visual features could be very effective for your -->
-<!-- particular task and maybe there is no need to train new visual -->
-<!-- features: just reuse these existing ones. -->
 <p>Depending on the size of your training dataset, you might choose to redesign only the final layer (e.g., FC8) or several of the later layers (e.g., C5, FC6, FC7, FC8). Redesigning more layers requires a larger amount of training data.</p>
 <p>If you have a sufficient number of training samples, you can also <em>fine-tune</em> the imported layers by allowing backpropagation to update their weights. This adapts the pre-trained features to better suit your specific application. If your dataset is small, it is generally better to <em>freeze</em> the weights of the imported layers to prevent overfitting.</p>
-<p>In Keras, you can freeze the weights of a layer by setting the <code>trainable</code> argument to <code>False</code>:</p>
+<p>In PyTorch, you can freeze the weights of a layer by instructing PyTorch not to update the weights during backprobagation. For instance, the following code freezes the all the weights in <code>layer3</code> of <code>model</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Freeze weights in layer named `layer3`</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, layer <span class="kw">in</span> model.named_children():</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="kw">in</span> [<span class="st">'layer3'</span>]:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> param <span class="kw">in</span> layer.parameters():</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            param.requires_grad <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <!-- The only task left is to design and train the classification part of -->
 <!-- the network (eg. the dense layers). -->
 <!-- Your application looks like this: copy/paste a pre-trained network, -->
@@ -453,7 +447,6 @@ Figure&nbsp;7.1: AlexNet Architecture (2012).
 <!-- for your specific application. If you don't have enough data, you -->
 <!-- probably should freeze the values of the imported weights. -->
 <!-- In Keras you can freeze the update of parameters using the  `trainable=False` argument. For instance: -->
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>currLayer <span class="op">=</span> Dense(<span class="dv">32</span>, trainable<span class="op">=</span><span class="va">False</span>)(prevLayer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For most image-based applications, it is highly recommended to start by reusing an off-the-shelf network. Research has shown that these generic visual features provide a strong baseline and can achieve state-of-the-art performance in many applications.</p>
 <!-- In most image based applications you should first consider reusing -->
 <!-- off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been -->
@@ -643,7 +636,7 @@ Figure&nbsp;7.8: ResNet Sub-Network
 <!-- compression, noise, _etc._ should not change the outcome. -->
 <!-- Therefore these variants allow us to expand our dataset for free. -->
 <blockquote class="blockquote">
-<p>see https://keras.io/api/layers/preprocessing_layers/image_augmentation/</p>
+<p>see https://docs.pytorch.org/vision/0.21/transforms.html</p>
 </blockquote>
 <p>Similar techniques can be applied in other domains, such as adding noise, reverb, or compression to audio data.</p>
 <p>Another approach is to synthesise data using simulation models, such as game engines. However, be aware that synthetic data is a simplified model of the real world and can lead to overfitting. It also tends to have different characteristics from real data, which can cause domain adaptation issues.</p>
@@ -665,7 +658,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>see https://keras.io/api/layers/initializers/</li>
+<li>see https://docs.pytorch.org/docs/stable/nn.init.html</li>
 <li>see https://www.deeplearning.ai/ai-notes/initialization/</li>
 <li>Kaiming He et al.&nbsp;Delving Deep into Rectifiers (see <a href="paper">https://arxiv.org/abs/1502.01852</a>)</li>
 <li>A quick overview of how this works is presented in <a href="note-05-He-initialisation.html" class="quarto-xref"><span>Appendix E</span></a>.</li>
@@ -695,7 +688,7 @@ Figure&nbsp;7.9: Learning rate schedule using cosine annealing (2017).
 </figcaption>
 </figure>
 </div>
-<p>An example of a reasonably modern optimiser setup in Keras might look like this:</p>
+<p>An example of a reasonably modern optimiser setup in PyTorch might look like this:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
@@ -704,7 +697,7 @@ Figure&nbsp;7.9: Learning rate schedule using cosine annealing (2017).
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have your model defined and initial_learning_rate and decay_steps</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For demonstration, let's assume some values</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>initial_learning_rate <span class="op">=</span> <span class="fl">1e-3</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>decay_steps <span class="op">=</span> <span class="dv">1000</span> <span class="co"># This will be the T_max in PyTorch</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>decay_steps <span class="op">=</span> <span class="dv">1000</span> </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define your model</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># model = MyModel(...)</span></span>
@@ -714,25 +707,16 @@ Figure&nbsp;7.9: Learning rate schedule using cosine annealing (2017).
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Define the learning rate scheduler</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># T_max is the number of iterations for the first half of the cosine cycle.</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case, it's equivalent to decay_steps.</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>scheduler <span class="op">=</span> CosineAnnealingLR(optimizer, T_max<span class="op">=</span>decay_steps, eta_min<span class="op">=</span><span class="dv">0</span>) </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># The alpha=0.0 in Keras corresponds to eta_min=0 in PyTorch, </span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># meaning the learning rate will decay to 0.</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Training loop (simplified)</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># for epoch in range(num_epochs):</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     for batch in dataloader:</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.zero_grad()</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Forward pass, calculate loss</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#         loss.backward()</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.step()</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#         scheduler.step() # Call scheduler.step() after optimizer.step()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<!-- ```python -->
-<!--   cosine_decay_scheduler = optimizers.schedules.CosineDecay( -->
-<!--        initial_learning_rate, decay_steps, alpha=0.0, name=None) -->
-<!--   optimizer = optimizers.AdamW(learning_rate=cosine_decay_scheduler) -->
-<!--   model.compile(optimizer=optimizer, ...) -->
-<!-- ``` -->
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>scheduler <span class="op">=</span> CosineAnnealingLR(optimizer, T_max<span class="op">=</span>decay_steps, eta_min<span class="op">=</span><span class="dv">0</span>) </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Training loop (simplified)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># for epoch in range(num_epochs):</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#     for batch in dataloader:</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.zero_grad()</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Forward pass, calculate loss</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#         loss.backward()</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.step()</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         scheduler.step() # Call scheduler.step() after optimizer.step()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="takeaways" class="level3" data-number="7.3.4">
 <h3 data-number="7.3.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">7.3.4</span> Takeaways</h3>

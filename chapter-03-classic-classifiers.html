@@ -388,7 +388,7 @@ window.Quarto = {
 <section id="k-nearest-neighbours-k-nn" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="k-nearest-neighbours-k-nn"><span class="header-section-number">3.1</span> k-Nearest Neighbours (<span class="math inline">k</span>-NN)</h2>
 <p>The <span class="math inline">k</span>-nearest neighbours (<span class="math inline">k</span>-NN) algorithm is a simple yet powerful non-parametric method. To classify a new data point, <span class="math inline">{\bf x}</span>, the algorithm identifies the <span class="math inline">k</span> closest data points in the training set (its “neighbours”). The new data point is then assigned to the class that is most common among its <span class="math inline">k</span> neighbours. The confidence of the prediction can be expressed as the proportion of neighbours belonging to the majority class.</p>
-<p>For example, in <a href="#fig-knn-illustration" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-knn-illustration</span></a>, if we use <span class="math inline">k=3</span>, the prediction for the new data point (with the question mark) would be the positive class (red cross) with 66% confidence. However, if we use <span class="math inline">k=5</span>, the prediction would be the negative class (blue circle) with 60% confidence.</p>
+<p>For example, in <a href="#fig-knn-illustration" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, if we use <span class="math inline">k=3</span>, the prediction for the new data point (with the question mark) would be the positive class (red cross) with 66% confidence. However, if we use <span class="math inline">k=5</span>, the prediction would be the negative class (blue circle) with 60% confidence.</p>
 <div id="fig-knn-illustration" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-knn-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -399,7 +399,7 @@ Figure&nbsp;3.1: An illustration of <span class="math inline">k</span>-NN with <
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-db-kNN</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The color shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
+<p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The color shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
 <div id="fig-db-kNN" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -425,7 +425,7 @@ Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN o
 </section>
 <section id="decision-trees" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="decision-trees"><span class="header-section-number">3.2</span> Decision Trees</h2>
-<p><strong>Decision trees</strong> <span class="citation" data-cites="decisiontrees">(<a href="#ref-decisiontrees" role="doc-biblioref">Breiman et al. 1984</a>)</span> and their more advanced variants, like Random Forests and AdaBoost, are another popular class of algorithms. A decision tree partitions the input space into a set of rectangular regions, following a “divide and conquer” strategy, as illustrated in <a href="#fig-diag-decisiontree" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-diag-decisiontree</span></a>.</p>
+<p><strong>Decision trees</strong> <span class="citation" data-cites="decisiontrees">(<a href="references.html#ref-decisiontrees" role="doc-biblioref">Breiman et al. 1984</a>)</span> and their more advanced variants, like Random Forests and AdaBoost, are another popular class of algorithms. A decision tree partitions the input space into a set of rectangular regions, following a “divide and conquer” strategy, as illustrated in <a href="#fig-diag-decisiontree" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>.</p>
 <div id="fig-diag-decisiontree" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -437,8 +437,8 @@ Figure&nbsp;3.3: The principle of a decision tree.
 </figure>
 </div>
 <p>At each internal node of the tree, a decision is made based on a simple test, such as “is feature <span class="math inline">x_2</span> less than 3?”. This process is repeated until a leaf node is reached, which corresponds to a specific class label.</p>
-<p>While a single decision tree does not produce probabilistic predictions, ensemble methods like <strong>AdaBoost</strong> <span class="citation" data-cites="adaboost">(<a href="#ref-adaboost" role="doc-biblioref">Freund and Schapire 1995</a>)</span> and <strong>Random Forests</strong> <span class="citation" data-cites="randomforests">(<a href="#ref-randomforests" role="doc-biblioref">Ho 1995</a>)</span> combine the outputs of multiple decision trees to generate probabilities, similar to how we can get a confidence score with <span class="math inline">k</span>-NN.</p>
-<p>As shown in <a href="#fig-db-decisiontrees" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-db-decisiontrees</span></a>, the decision boundaries of these models are composed of vertical and horizontal lines, aligned with the axes of the input space and corresponding to the tests performed (eg. <span class="math inline">x_2 &gt; 3</span>, <span class="math inline">x_1 &gt; 2</span>, etc. )</p>
+<p>While a single decision tree does not produce probabilistic predictions, ensemble methods like <strong>AdaBoost</strong> <span class="citation" data-cites="adaboost">(<a href="references.html#ref-adaboost" role="doc-biblioref">Freund and Schapire 1995</a>)</span> and <strong>Random Forests</strong> <span class="citation" data-cites="randomforests">(<a href="references.html#ref-randomforests" role="doc-biblioref">Ho 1995</a>)</span> combine the outputs of multiple decision trees to generate probabilities, similar to how we can get a confidence score with <span class="math inline">k</span>-NN.</p>
+<p>As shown in <a href="#fig-db-decisiontrees" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>, the decision boundaries of these models are composed of vertical and horizontal lines, aligned with the axes of the input space and corresponding to the tests performed (eg. <span class="math inline">x_2 &gt; 3</span>, <span class="math inline">x_1 &gt; 2</span>, etc. )</p>
 <div id="fig-db-decisiontrees" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-decisiontrees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -449,7 +449,7 @@ Figure&nbsp;3.4: Decision boundaries for a single Decision Tree, AdaBoost, and R
 </figcaption>
 </figure>
 </div>
-<p>Random Forests were particularly popular before the widespread adoption of neural networks due to their computational efficiency. A notable application was the real-time body part tracking in the Microsoft Kinect <span class="citation" data-cites="mskinect">(<a href="#ref-mskinect" role="doc-biblioref">Shotton et al. 2013</a>)</span> (see <a href="https://goo.gl/UTM6s1">demo page</a>).</p>
+<p>Random Forests were particularly popular before the widespread adoption of neural networks due to their computational efficiency. A notable application was the real-time body part tracking in the Microsoft Kinect <span class="citation" data-cites="mskinect">(<a href="references.html#ref-mskinect" role="doc-biblioref">Shotton et al. 2013</a>)</span> (see <a href="https://goo.gl/UTM6s1">demo page</a>).</p>
 <p><strong>Pros:</strong></p>
 <ul>
 <li><strong>Fast and efficient:</strong> Decision trees are relatively fast to train and use for prediction.</li>
@@ -457,7 +457,7 @@ Figure&nbsp;3.4: Decision boundaries for a single Decision Tree, AdaBoost, and R
 </ul>
 <p><strong>Cons:</strong></p>
 <ul>
-<li><strong>Axis-aligned splits:</strong> Decision trees can only create splits that are parallel to the feature axes. This can be inefficient if the true decision boundary is diagonal. For instance, the tree decomposition from <a href="#fig-db-decisiontrees" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-db-decisiontrees</span></a> would have been more efficient if we used a diagonal split with <span class="math inline">x_1 &lt; x_2</span> as shown in <a href="#fig-decisiontree-issue" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-decisiontree-issue</span></a>.</li>
+<li><strong>Axis-aligned splits:</strong> Decision trees can only create splits that are parallel to the feature axes. This can be inefficient if the true decision boundary is diagonal. For instance, the tree decomposition from <a href="#fig-db-decisiontrees" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> would have been more efficient if we used a diagonal split with <span class="math inline">x_1 &lt; x_2</span> as shown in <a href="#fig-decisiontree-issue" class="quarto-xref">Figure&nbsp;<span>3.5</span></a>.</li>
 </ul>
 <div id="fig-decisiontree-issue" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -499,7 +499,7 @@ y = [ {\bf x}^{\top}{\bf w} &gt; 0 ]
 L_{SVM}( {\bf w}) = \sum_{i=1}^N [y_i=0]\max(0, 1 + {\bf x}_i^{\top} {\bf w}) + [y_i=1]\max(0, 1 - {\bf x}_i^{\top}
 {\bf w})
 </span></p>
-<p>Geometrically, the hinge loss encourages the model to find a hyperplane that maximizes the margin, or the distance, between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-diag-svm</span></a>).</p>
+<p>Geometrically, the hinge loss encourages the model to find a hyperplane that maximizes the margin, or the distance, between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>).</p>
 <div id="fig-diag-svm" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -516,7 +516,7 @@ Figure&nbsp;3.6: SVM aims to find the hyperplane that maximizes the margin betwe
 <h2 data-number="3.4" class="anchored" data-anchor-id="the-no-free-lunch-theorem"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem</h2>
 <p>It is important to note that there is no single best classifier for all problems. The performance of a classifier depends heavily on the nature of the data.</p>
 <p>Recall that the choice of loss function directly relates to assumptions you make about the distribution of the prediction errors, and thus about the dataset of your problem).</p>
-<p>This is formalised by the <strong>No-Free-Lunch Theorem</strong> <span class="citation" data-cites="WolpMacr97">(<a href="#ref-WolpMacr97" role="doc-biblioref">Wolpert and Macready 1997</a>)</span>, which states that, when averaged over all possible problems, all classifiers perform equally well. In other words, the choice of classifier should always be guided by the specific characteristics of the problem at hand.</p>
+<p>This is formalised by the <strong>No-Free-Lunch Theorem</strong> <span class="citation" data-cites="WolpMacr97">(<a href="references.html#ref-WolpMacr97" role="doc-biblioref">Wolpert and Macready 1997</a>)</span>, which states that, when averaged over all possible problems, all classifiers perform equally well. In other words, the choice of classifier should always be guided by the specific characteristics of the problem at hand.</p>
 <div id="fig-no-free-lunch-theorem" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-no-free-lunch-theorem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -538,7 +538,7 @@ Figure&nbsp;3.7: Illustration of the No-Free-Lunch Theorem.
 \phi ({x}) = \left( \begin{matrix} 1 \\ x \\ x^2 \\ x^3 \\ \vdots
 \end{matrix} \right)
 </span></p>
-<p>Feature transformation is a fundamental concept in machine learning. The original features are often not sufficient to linearly separate the classes, and it is not always clear how to best transform them (see <a href="#fig-diag-mapping" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-diag-mapping</span></a>).</p>
+<p>Feature transformation is a fundamental concept in machine learning. The original features are often not sufficient to linearly separate the classes, and it is not always clear how to best transform them (see <a href="#fig-diag-mapping" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>).</p>
 <div id="fig-diag-mapping" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -555,7 +555,7 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 </section>
 <section id="step-1-re-parameterization" class="level3" data-number="3.5.2">
 <h3 data-number="3.5.2" class="anchored" data-anchor-id="step-1-re-parameterization"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterization</h3>
-<p>In many machine learning algorithms, the loss function depends on the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">{\bf x}^{\top}{\bf w}</span>. It can be shown (see <a href="#sec-note-kernel-trick" class="quarto-xref"><span class="quarto-unresolved-ref">sec-note-kernel-trick</span></a>) that the optimal weight vector, <span class="math inline">\hat{\bf w}</span>, can be expressed as a linear combination of the input feature vectors:</p>
+<p>In many machine learning algorithms, the loss function depends on the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">{\bf x}^{\top}{\bf w}</span>. It can be shown (see <a href="note-04-kernel-trick.html" class="quarto-xref"><span>Appendix D</span></a>) that the optimal weight vector, <span class="math inline">\hat{\bf w}</span>, can be expressed as a linear combination of the input feature vectors:</p>
 <p><span class="math display">
 \hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
 </span></p>
@@ -580,8 +580,8 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 <p>The key here is that we can often define and compute the kernel function <span class="math inline">\kappa</span> without ever explicitly defining or computing the feature mapping <span class="math inline">\phi</span>. The theory of Reproducing Kernel Hilbert Spaces (RKHS) guarantees that for a wide class of kernel functions, a corresponding mapping <span class="math inline">\phi</span> does indeed exist.</p>
 <p>Many different kernel functions are available. For example, the <strong>polynomial kernel</strong> is defined as: <span class="math display">
 \kappa({\bf u}, {\bf v}) = (r - \gamma {\bf u}^{\top} {\bf v})^d
-</span> This kernel is equivalent to the polynomial feature mapping of degree <span class="math inline">d</span> we discussed earlier (see <span class="citation" data-cites="wikiPolynomialkernel">(<a href="#ref-wikiPolynomialkernel" role="doc-biblioref">Wikipedia 2025a</a>)</span>), but it avoids the computational explosion in dimensionality.</p>
-<p>The most commonly used kernel is the <strong>Radial Basis Function (RBF) kernel</strong> (see <span class="citation" data-cites="wikiRBFKernel">(<a href="#ref-wikiRBFKernel" role="doc-biblioref">Wikipedia 2025b</a>)</span>): <span class="math display">
+</span> This kernel is equivalent to the polynomial feature mapping of degree <span class="math inline">d</span> we discussed earlier (see <span class="citation" data-cites="wikiPolynomialkernel">(<a href="references.html#ref-wikiPolynomialkernel" role="doc-biblioref">Wikipedia 2025a</a>)</span>), but it avoids the computational explosion in dimensionality.</p>
+<p>The most commonly used kernel is the <strong>Radial Basis Function (RBF) kernel</strong> (see <span class="citation" data-cites="wikiRBFKernel">(<a href="references.html#ref-wikiRBFKernel" role="doc-biblioref">Wikipedia 2025b</a>)</span>): <span class="math display">
 \kappa({\bf u}, {\bf v}) = e^{- \gamma \| {\bf u} - {\bf
       v}\|^2 }
 </span></p>
@@ -616,7 +616,7 @@ v}\|^2 }</span> acts as a measure of similarity between two data points. If <spa
 <section id="support-vectors" class="level3" data-number="3.5.5">
 <h3 data-number="3.5.5" class="anchored" data-anchor-id="support-vectors"><span class="header-section-number">3.5.5</span> Support Vectors</h3>
 <p>In an SVM, the optimal values of <span class="math inline">\hat{\alpha}_i</span> are found by minimising the hinge loss. This is a constrained optimisation problem that can be solved using off-the-shelf solvers. The solution has the property that many of the <span class="math inline">\alpha_i</span> values are actually zero.</p>
-<p>The data points for which <span class="math inline">\alpha_i</span> is non-zero are called <strong>support vectors</strong>. These are typically the points that lie closest to the decision boundary (see <a href="#fig-kernel-trick-alpha-rbf" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-kernel-trick-alpha-rbf</span></a>). Only these support vectors are needed to make predictions, which can make the prediction process more efficient.</p>
+<p>The data points for which <span class="math inline">\alpha_i</span> is non-zero are called <strong>support vectors</strong>. These are typically the points that lie closest to the decision boundary (see <a href="#fig-kernel-trick-alpha-rbf" class="quarto-xref">Figure&nbsp;<span>3.9</span></a>). Only these support vectors are needed to make predictions, which can make the prediction process more efficient.</p>
 <div id="fig-kernel-trick-alpha-rbf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kernel-trick-alpha-rbf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -627,7 +627,7 @@ Figure&nbsp;3.9: An SVM with an RBF kernel. The support vectors are the data poi
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-decision-boundary-SVM-poly" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-decision-boundary-SVM-poly</span></a> shows the decision boundaries for SVMs with different polynomial kernels. As you can see, the decision boundaries are ellipses or hyperbolas. Examples of decision boundaries for the RBF kernel are shown in <a href="#fig-decision-boundary-SVM-RBF" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-decision-boundary-SVM-RBF</span></a>. We can clearly see how the gamma parameter controls the smoothness of the boundary.</p>
+<p><a href="#fig-decision-boundary-SVM-poly" class="quarto-xref">Figure&nbsp;<span>3.10</span></a> shows the decision boundaries for SVMs with different polynomial kernels. As you can see, the decision boundaries are ellipses or hyperbolas. Examples of decision boundaries for the RBF kernel are shown in <a href="#fig-decision-boundary-SVM-RBF" class="quarto-xref">Figure&nbsp;<span>3.11</span></a>. We can clearly see how the gamma parameter controls the smoothness of the boundary.</p>
 <div id="fig-decision-boundary-SVM-poly" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-decision-boundary-SVM-poly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -656,7 +656,7 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 <li>A major drawback of kernel methods is that the computational cost of making predictions scales with the number of training examples (like with <span class="math inline">k</span>-NN)</li>
 <li>The training time for kernel methods can also be high for large datasets (e.g., tens of thousands of data points).</li>
 </ul>
-<p>Evidence that deep learning could outperform kernel SVMs on large datasets began to emerge in 2006. The real turning point came in 2012 with the success of AlexNet <span class="citation" data-cites="alexnet">(<a href="#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> in the ImageNet competition.</p>
+<p>Evidence that deep learning could outperform kernel SVMs on large datasets began to emerge in 2006. The real turning point came in 2012 with the success of AlexNet <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> in the ImageNet competition.</p>
 </section>
 </section>
 <section id="takeaways" class="level2" data-number="3.6">
@@ -686,7 +686,7 @@ See Also
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-decisiontrees" class="csl-entry" role="listitem">
 Breiman, L., J. H. Friedman, R. A. Olshen, and C. J. Stone. 1984. <em>Classification and Regression Trees</em>. Monterey, CA: Wadsworth; Brooks.
 </div>

@@ -194,3 +194,13 @@ font-size: 0.9em;
 	margin-top: 1.25em;	
 }
 
+
+
+<!-- .quarto-layout-cell {
+     margin-right: 5px;
+	 } -->
+
+
+.quarto-layout-cell p {
+    margin: 0;
+}
