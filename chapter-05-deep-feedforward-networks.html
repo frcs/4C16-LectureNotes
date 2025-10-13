@@ -570,7 +570,7 @@ Figure&nbsp;5.9: Deep Neural Network or neuron units in a Multi-Layer Perceptron
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a> shows a network with two hidden layers arranged sequentially. When every unit in a layer is connected to every unit in the preceding layer, it is known as a <strong>Dense Layer</strong> or a <strong>Fully Connected Layer</strong>. This is a common but not the only type of layer. In the next chapter, we will introduce another important type: the convolutional layer.</p>
+<p><a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a> shows a network with two hidden layers arranged sequentially. When every unit in a layer is connected to every unit in the preceding layer, it is known as a <strong>Dense Layer</strong> or a <strong>Fully Connected Layer</strong> (FCL), and also referred to as a <strong>Linear Layer</strong> in PyTorch (<code>torch.nn.Linear</code>). This is a common but not the only type of layer. In the next chapter, we will introduce another important type: the convolutional layer.</p>
 <p>A network with two or more hidden layers, such as the one in <a href="#fig-FC-layer2" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>, is classified as a <strong>deep feed-forward neural network</strong>. The exact point at which a network becomes “deep” is not universally agreed upon. However, the distinction is historically significant because, before the development of the backpropagation algorithm (which we will discuss shortly), there was no effective method for training networks with more than one hidden layer.</p>
 </section>
 <section id="universal-approximation-theorem" class="level2" data-number="5.4">
@@ -828,7 +828,7 @@ Figure&nbsp;5.15: Derivatives of common activation functions.
 </span></p>
 <p>To compute the true gradient of the total loss <span class="math inline">E</span>, we must average the individual gradients over the entire dataset. This approach becomes computationally expensive and slow when the dataset is large, as it requires processing every single sample before making one update to the weights.</p>
 <p>A more practical and widely used approach is <strong>mini-batch gradient descent</strong>. Instead of the entire dataset, the gradient is estimated using a small, random subset of the data called a <strong>mini-batch</strong>. For example, with a <strong>batch size</strong> of 16, the gradient is approximated using the average over just 16 samples. The weights are updated, and then the gradient is computed for the next mini-batch.</p>
-<p>In the extreme case where the batch size is 1, the gradient is estimated based on a single sample at a time. This method is known as <strong>Stochastic Gradient Descent (SGD)</strong>.</p>
+<p>In the extreme case where the batch size is 1, the gradient is estimated based on a single sample at a time. This method is known as <strong>Stochastic Gradient Descent (SGD)</strong> (see <code>torch.optim.SGD</code> in PyTorch).</p>
 <p>Smaller batch sizes allow for more frequent weight updates, which can speed up convergence. The gradient estimate is also “noisier” because it is based on fewer samples. This noise can be beneficial, as it can help the optimiser escape from sharp, poor local minima. However, it can also make the convergence path erratic and prevent the optimiser from settling into a good minimum.</p>
 <p>An <strong>epoch</strong> is defined as one full pass through the entire training dataset. For a dataset of size <span class="math inline">n</span> and a batch size of <span class="math inline">B</span>, one epoch consists of <span class="math inline">n/B</span> gradient descent steps (or iterations). It is standard practice to shuffle the training data at the beginning of every epoch to ensure that the mini-batches are different each time, preventing cyclical behaviour and improving convergence.</p>
 </section>
@@ -866,6 +866,7 @@ See Also
 <div class="callout-body-container callout-body">
 <ul>
 <li><a href="http://cs231n.github.io/neural-networks-3/">http://cs231n.github.io/neural-networks-3/</a></li>
+<li><a href="https://docs.pytorch.org/docs/stable/optim.html">PyTorch optimisers</a></li>
 </ul>
 </div>
 </div>
@@ -903,10 +904,21 @@ See Also
 <!-- *  [https://keras.io/api/layers/regularization_layers/gaussian_noise/](https://keras.io/api/layers/regularization_layers/gaussian_noise/) -->
 <!-- ::: -->
 <p>A very effective and widely used regularisation technique that builds on this idea is <strong>dropout</strong>. During each training step, dropout randomly sets the output of a fraction of the units in a layer to zero. This is equivalent to training a large ensemble of smaller networks that share weights, which prevents complex co-adaptations between neurons and forces the network to learn more robust features.</p>
-<!-- ::: {#callout-Dropout-seealso .callout-note icon=false } -->
-<!-- ## See Also -->
-<!-- *  [https://keras.io/api/layers/regularization_layers/dropout/](https://keras.io/api/layers/regularization_layers/dropout/) -->
-<!-- ::: -->
+<div id="callout-Dropout-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Dropout.html">PyTorch docs for Dropout</a></li>
+</ul>
+</div>
+</div>
 </section>
 <section id="monitoring-and-training-diagnostics" class="level2" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
