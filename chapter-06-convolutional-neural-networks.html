@@ -508,10 +508,10 @@ y(i,j)</span>. Linearity is something already present with the neurons thanks to
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">592</span>, <span class="dv">443</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, in_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> nn.functional.relu(conv(x))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape) <span class="co"># returns torch.Size([1, 6, 588, 439])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that PyTorch uses uses the channel-first convention (also known as NCHW) and in this lecture notes, I will try to stick to this notation system too. NCHW is a common data format for image data, where <span class="math inline">N</span> represents the batch size, <span class="math inline">C</span> the number of channels, <span class="math inline">H</span> the image height, and <span class="math inline">W</span> the image width. This order specifies that the channels dimension is followed by the height and width. This typically results in a better memory layout for convolution operations on he GPU.</p>
+<p>Note that PyTorch uses uses the channel-first convention (also known as NCHW) and in this lecture notes, I will try to stick to this notation system too. NCHW is a common data format for image data, where <span class="math inline">N</span> represents the batch size, <span class="math inline">C</span> the number of channels, <span class="math inline">H</span> the image height, and <span class="math inline">W</span> the image width. This order specifies that the channels dimension is followed by the height and width. This typically results in a better memory layout for convolution operations on the GPU.</p>
 <p>This convolution layer is defined by <span class="math inline">3 \times 6 \times 5 \times 5 = 450</span> weights (to which one needs to add the 6 biases, with 1 for each filter, so 456 parameters in total). This is only a fraction of what would be required in a dense layer.</p>
 <div id="fig-convoutput" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -587,7 +587,7 @@ Figure&nbsp;6.6: The padding strategy defines how neighbours that are outside th
 <section id="reducing-the-tensor-size" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="reducing-the-tensor-size"><span class="header-section-number">6.3</span> Reducing the Tensor Size</h2>
 <p>If convolution filters offer a way of reducing the number of weights in the network, the number of units still remains high.</p>
-<p>For instance, applying <code>Conv2d(in_channels=3, out_channels=5, kernel_size=16)</code> to an input tensor image of size <span class="math inline">3\times 2000 \times 2000</span> only requires <span class="math inline">5 \times 5 \times 3 \times 16 = 1200</span> weights to train, but still produces <span class="math inline">2000 \times 2000 \times 16 = 64</span> million units.</p>
+<p>For instance, applying <code>Conv2d(in_channels=3, out_channels=16, kernel_size=5)</code> to an input tensor image of size <span class="math inline">3\times 2000 \times 2000</span> only requires <span class="math inline">5 \times 5 \times 3 \times 16 = 1200</span> weights to train, but still produces <span class="math inline">16 \times 2000 \times 2000 = 64</span> million units.</p>
 <p>In this section, it will be seen how <strong>stride</strong> and <strong>pooling</strong> can be used to downsample the images and thus reduce the number of units.</p>
 <section id="stride" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="stride"><span class="header-section-number">6.3.1</span> Stride</h3>
@@ -607,14 +607,6 @@ Figure&nbsp;6.6: The padding strategy defines how neighbours that are outside th
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="figures/stride-01.svg" class="img-fluid figure-img"></p>
-<figcaption>stride of 1</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="figures/stride-02.svg" class="img-fluid figure-img"></p>
 <figcaption>stride of 2</figcaption>
 </figure>
 </div>
@@ -622,8 +614,16 @@ Figure&nbsp;6.6: The padding strategy defines how neighbours that are outside th
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="figures/stride-03.svg" class="img-fluid figure-img"></p>
+<p><img src="figures/stride-02.svg" class="img-fluid figure-img"></p>
 <figcaption>stride of 3</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/stride-03.svg" class="img-fluid figure-img"></p>
+<figcaption>stride of 4</figcaption>
 </figure>
 </div>
 </div>
