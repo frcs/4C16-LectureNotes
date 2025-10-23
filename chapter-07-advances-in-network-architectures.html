@@ -702,6 +702,12 @@ Figure&nbsp;7.9: Learning rate schedule using cosine annealing (2017).
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#         loss.backward()</span></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.step()</span></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         scheduler.step() # Call scheduler.step() after optimizer.step()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- lr_scheduler.ReduceLROnPlateau : Reduce learning rate when a metric has stopped improving.
+
+lr_scheduler.StepLR
+Decays the learning rate of each parameter group by gamma every step_size epochs.
+
+ -->
 </section>
 <section id="takeaways" class="level3" data-number="7.3.4">
 <h3 data-number="7.3.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">7.3.4</span> Takeaways</h3>

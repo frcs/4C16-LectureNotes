@@ -802,10 +802,14 @@ Exercise
 <p>In Transformers, a set of <span class="math inline">\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)</span> matrices is called an <strong>attention head</strong>. A <strong>Multi-Head Attention</strong> layer is simply a layer that contains multiple attention heads. The outputs of these heads are concatenated and then linearly transformed back to the expected dimension.</p>
 <p>The number of heads is a hyperparameter, analogous to the number of filters in a convolutional layer. Each head can learn to focus on different types of relationships between words. For example, one head might learn to capture syntactic dependencies, while another might focus on semantic similarity.</p>
 <p>Below is an example in Keras of a self-attention layer with two heads:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x  <span class="op">=</span> tf.keras.layers.MultiHeadAttention(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         num_heads<span class="op">=</span><span class="dv">2</span>, key_dim<span class="op">=</span><span class="dv">2</span>, value_dim<span class="op">=</span><span class="dv">3</span>)(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         query<span class="op">=</span>x, key<span class="op">=</span>x, value<span class="op">=</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Here, we would define two sets of <span class="math inline">\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)</span> matrices, with <span class="math inline">d_k=2</span> and <span class="math inline">d_v=3</span> for each head.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>mha <span class="op">=</span> nn.MultiheadAttention(embed_dim<span class="op">=</span><span class="dv">4</span>, num_heads<span class="op">=</span><span class="dv">2</span>, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>y, attn <span class="op">=</span> mha(query<span class="op">=</span>x, key<span class="op">=</span>x, value<span class="op">=</span>x)  <span class="co"># y: [B, T, 4]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- Here, we would define two sets of -->
+<!-- $\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)$ matrices, with $d_k=2$ -->
+<!-- and $d_v=3$ for each head. -->
 </section>
 <section id="takeaways-attention-mechanism" class="level3" data-number="10.2.8">
 <h3 data-number="10.2.8" class="anchored" data-anchor-id="takeaways-attention-mechanism"><span class="header-section-number">10.2.8</span> Takeaways (Attention Mechanism)</h3>
@@ -853,25 +857,38 @@ Figure&nbsp;10.5: The Transformer architecture, as described in the original pap
 <p>The first part of the network (highlighted in magenta) is an <strong>encoder</strong>, which is a sub-network that transforms the input sequence into a meaningful, compact tensor representation. Think of it as being analogous to the VGG network, which transforms an image into a compact <span class="math inline">4096 \times 1</span> feature vector. As with VGG, the idea is that this pre-trained encoder can be reused for other tasks through transfer learning.</p>
 <p>The Encoder itself is made of a stack of identical blocks. At the core of each of these blocks is a Multi-Head Attention layer, followed by a simple feed-forward network.</p>
 <p>Below is an example of what an implementation of that encoder could look like.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encoder_block(inputs):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Multi-head self-attention</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> MultiHeadAttention(num_heads<span class="op">=</span><span class="dv">2</span>, key_dim<span class="op">=</span><span class="dv">2</span>)(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>          query<span class="op">=</span>inputs, key<span class="op">=</span>inputs, value<span class="op">=</span>inputs)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> Dropout(<span class="fl">0.1</span>)(x)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Residual connection and layer normalisation</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    attn <span class="op">=</span> LayerNormalization()(inputs <span class="op">+</span> x)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Feed Forward layer (a simple 1x1 convolution)</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> Conv1D(filters<span class="op">=</span>ff_dim, kernel_size<span class="op">=</span><span class="dv">1</span>, activation<span class="op">=</span><span class="st">"relu"</span>)(attn)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> Dropout(dropout)(x)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> Conv1D(filters<span class="op">=</span>inputs.shape[<span class="op">-</span><span class="dv">1</span>], kernel_size<span class="op">=</span><span class="dv">1</span>)(x)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Residual connection and layer normalisation</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> LayerNormalization()(attn <span class="op">+</span> x)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encoder(x, n_blocks):</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_blocks):</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> encoder_block(x)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EncoderBlock(nn.Module):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, d_model, ff_dim, heads<span class="op">=</span><span class="dv">2</span>, p<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attn <span class="op">=</span> nn.MultiheadAttention(d_model, heads, dropout<span class="op">=</span>p, batch_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ln1 <span class="op">=</span> nn.LayerNorm(d_model)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ff <span class="op">=</span> nn.Sequential(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            nn.Linear(d_model, ff_dim),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            nn.ReLU(),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            nn.Dropout(p),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            nn.Linear(ff_dim, d_model))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ln2 <span class="op">=</span> nn.LayerNorm(d_model)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.do <span class="op">=</span> nn.Dropout(p)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, attn_mask<span class="op">=</span><span class="va">None</span>, key_padding_mask<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        a, _ <span class="op">=</span> <span class="va">self</span>.attn(x, x, x,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                         attn_mask<span class="op">=</span>attn_mask,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                         key_padding_mask<span class="op">=</span>key_padding_mask,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                         need_weights<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.ln1(x <span class="op">+</span> <span class="va">self</span>.do(a))</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.ln2(x <span class="op">+</span> <span class="va">self</span>.ff(x))</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Encoder(nn.Module):</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Stacks multiple EncoderBlocks. Input/Output: (B, S, D)."""</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_layers, d_model, ff_dim, heads<span class="op">=</span><span class="dv">2</span>, p<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_layers <span class="op">=</span> num_layers</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.blocks <span class="op">=</span> nn.ModuleList([EncoderBlock(d_model, ff_dim, heads, p) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_layers)])</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, attn_mask<span class="op">=</span><span class="va">None</span>, key_padding_mask<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> block <span class="kw">in</span> <span class="va">self</span>.blocks:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> block(x, attn_mask<span class="op">=</span>attn_mask, key_padding_mask<span class="op">=</span>key_padding_mask)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <strong>Decoder</strong>, also highlighted in magenta, is also made of a stack of blocks containing Multi-Head Attention layers. Its job is to take the encoder’s output and generate the target sequence.</p>
 </section>
 <section id="positional-encoding" class="level3" data-number="10.3.2">
