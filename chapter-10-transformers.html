@@ -769,17 +769,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
     Q}_{\text{audio}}, {\bf K}_{\text{text}},  {\bf V}_{\text{text}})
 \end{equation}</span></p>
 <p>The sources do not need to be perfectly synchronised. That is, the text key and value vectors do not need to align perfectly with the audio query vectors (see exercise below). In fact, the sources do not even need to be of the same length (<span class="math inline">L_q \neq L_k</span>). For these reasons, Attention is very well suited for combining multi-modal inputs.</p>
-<div id="callout-ex-cross-attention" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Show that the output of the Attention layer is the same if the entries of the keys and values tensors are permuted in the same way, e.g.:</p>
+<div id="exr-10-cross-attention" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 10.1</strong></span> Show that the output of the Attention layer is the same if the entries of the keys and values tensors are permuted in the same way, e.g.:</p>
 <p><span class="math display">\begin{equation}
 \begin{split}
 \text{Attention}(
@@ -793,7 +784,6 @@ Exercise
      [{\bf v}_{L_k}, {\bf v}_{{L_k}-1}, \dots,{{\bf v}_1} ])
 \end{split}
 \end{equation}</span></p>
-</div>
 </div>
 </section>
 <section id="the-multi-head-attention-layer" class="level3" data-number="10.2.7">
@@ -922,9 +912,9 @@ i \mapsto \phi(i) = \begin{bmatrix}
 <p>There is obviously a lot more to know about Transformers, but we have covered the main ideas here.</p>
 <ul>
 <li><p>The Transformer model is an <strong>encoder-decoder</strong> architecture based on blocks of Attention layers.</p></li>
-<li><p>The positional information, which is lost in the attention mechanism, is re-introduced by adding a positional encoding to the input vectors.</p></li>
-<li><p>Transformers benefit from the efficiency of the Attention Mechanism, requiring fewer parameters than RNNs for similar performance, and can be easily parallelised.</p></li>
-<li><p>Transformers are the backbone of modern NLP networks such as ChatGPT. They are also the backbone of many models that handle multiple modalities (e.g., text, images, speech).</p></li>
+<li><p>The <strong>positional information</strong>, which is lost in the attention mechanism, is re-introduced by adding a positional encoding to the input vectors.</p></li>
+<li><p>Transformers benefit from the efficiency of the Attention Mechanism, <strong>requiring fewer parameters than RNNs</strong> for similar performance, and can be easily parallelised.</p></li>
+<li><p><strong>Transformers are the backbone of modern NLP networks such as ChatGPT</strong>. They are also the backbone of many models that handle multiple modalities (e.g., text, images, speech).</p></li>
 </ul>
 
 
