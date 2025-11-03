@@ -655,8 +655,11 @@ e}{\partial {\bf w}}</span>. This is precisely the problem that the <strong>back
 <h2 data-number="5.7" class="anchored" data-anchor-id="backpropagation"><span class="header-section-number">5.7</span> Backpropagation</h2>
 <p>The backpropagation algorithm, often shortened to “backprop”, was popularised in a seminal 1986 paper by David Rumelhart, Geoffrey Hinton, and Ronald Williams. It provides an efficient way to compute the gradients required for training.</p>
 <blockquote class="blockquote">
-<p>Rumelhart, David E., Geoffrey E. Hinton, and Ronald J. Williams. “Learning representations by back-propagating errors.” <em>Cognitive Modeling</em> 5.3 (1988): 1.</p>
+<p>Rumelhart, D., Hinton, G. &amp; Williams, R. Learning representations by back-propagating errors. Nature 323, 533–536 (1986). https://doi.org/10.1038/323533a0</p>
 </blockquote>
+<!-- > Rumelhart, David E., Geoffrey E. Hinton, and Ronald -->
+<!-- > J. Williams. “Learning representations by back-propagating errors.” -->
+<!-- > *Cognitive Modeling* 5.3 (1988): 1. -->
 <section id="computing-the-gradient" class="level3" data-number="5.7.1">
 <h3 data-number="5.7.1" class="anchored" data-anchor-id="computing-the-gradient"><span class="header-section-number">5.7.1</span> Computing the Gradient</h3>
 <p>Why do we need a special algorithm for computing the gradient? A naive approach would be to compute the partial derivative with respect to each weight <span class="math inline">w_{i}</span> individually using numerical differentiation (the finite difference method): <span class="math display">
