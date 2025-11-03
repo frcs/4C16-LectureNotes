@@ -204,3 +204,69 @@ font-size: 0.9em;
 .quarto-layout-cell p {
     margin: 0;
 }
+
+
+
+.agent-chat {
+  /* Box around the chat */
+	border-left: 3px solid #ccc; 
+	padding-top: 0em;
+	padding-left: 1em;
+	
+	/* border-radius: 5px; */
+	font-size: 80%;
+  background-color: #f9f9f9;
+  font-family: monospace; /* Optional: keeps it looking like a terminal/code */
+  white-space: pre-wrap; /* Ensures long lines wrap */
+}
+
+/* Optional: to make the content stand out further */
+.agent-chat strong {
+  color: #0056b3; /* A distinct color for the labels */
+  font-weight: bold;
+}
+
+.agent-chat ol {
+	margin: 0em;
+	/* padding: 0em; */
+	
+}
+
+.agent-chat p {
+	margin: 0em;
+	padding: 0em;
+
+	/* max-width: 600px; */
+}
+
+
+.agent-chat .prompt  {
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    border-radius: 18px; /* Rounded corners for a modern chat bubble look */
+    /* line-height: 1.5; */
+    max-width: 80%; /* Messages don't span the full width */
+    word-wrap: break-word; /* Ensures long words don't overflow */
+
+    background-color: #dcf8c6; /* A light green, common for user messages */
+    color: #000;
+    margin-left: auto; /* Pushes the bubble to the right */
+    border-bottom-right-radius: 4px; /* Slightly less rounded at the bottom-right for a "tail" effect */
+
+}
+
+.agent-chat .answer  {
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    border-radius: 18px; /* Rounded corners for a modern chat bubble look */
+    /* line-height: 1.4; */
+    max-width: 80%; /* Messages don't span the full width */
+    word-wrap: break-word; /* Ensures long words don't overflow */
+
+    background-color: #f1f0f0; /* A light gray, common for agent/system messages */
+    color: #000;
+    margin-right: auto; /* Pushes the bubble to the left */
+    border-bottom-left-radius: 4px; /* Slightly less rounded at the bottom-left for a "tail" effect */
+
+}
+
