@@ -791,7 +791,7 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <p>You can think of an Attention layer as a replacement for a convolution layer. Just as you can chain multiple convolutional layers, you can also chain multiple Attention layers.</p>
 <p>In Transformers, a set of <span class="math inline">\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)</span> matrices is called an <strong>attention head</strong>. A <strong>Multi-Head Attention</strong> layer is simply a layer that contains multiple attention heads. The outputs of these heads are concatenated and then linearly transformed back to the expected dimension.</p>
 <p>The number of heads is a hyperparameter, analogous to the number of filters in a convolutional layer. Each head can learn to focus on different types of relationships between words. For example, one head might learn to capture syntactic dependencies, while another might focus on semantic similarity.</p>
-<p>Below is an example in Keras of a self-attention layer with two heads:</p>
+<p>Below is an example in PyTorch of a self-attention layer with two heads:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> </span>
