@@ -658,6 +658,22 @@ Figure&nbsp;8.10: In Truncated BPTT, the RNN is unrolled for only a fixed number
 <section id="dealing-with-long-sequences" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="dealing-with-long-sequences"><span class="header-section-number">8.4</span> Dealing with Long Sequences</h2>
 <p>When unrolled, recurrent networks can become very deep. As with any deep network, training with gradient descent is susceptible to the <strong>vanishing and exploding gradient problems</strong>. As the error is propagated back through many time steps, the gradients can either shrink exponentially until they become negligible (vanish) or grow exponentially until they become unstable (explode). This makes it very difficult for simple RNNs to learn long-range dependencies in the data.</p>
+<p>To visualise this consider a simplified case where the <code>tanh</code> activation is replaced with a linear activation (note this is a valid approximation if the weights are small or the logits close to zero). Let’s unroll the governing equations for a particular choice of weights <span class="math inline">{\bf U}</span>, <span class="math inline">{\bf W}</span>, <span class="math inline">{\bf b}</span>:</p>
+<p><span class="math display">\begin{equation}
+\begin{aligned}
+{\bf h}_{1}&amp;={\bf W}{\bf x}_{1}+{\bf b}\\
+{\bf h}_{2}&amp;={\bf U} \left( {\bf W}{\bf x}_{1}+{\bf b}\right) + {\bf W}{\bf
+x}_{2}+{\bf b} \\
+{\bf h}_{3}&amp;={\bf U}^2 \left( {\bf W}{\bf x}_{1}+{\bf b}\right) + {\bf U}
+\left( {\bf W}{\bf x}_{2}+{\bf b}\right) + {\bf W}{\bf
+x}_{3}+{\bf b} \\
+&amp; \vdots \\
+{\bf h}_{t}&amp;={\bf U}^{t-1} \left( {\bf W}{\bf x}_{1}+{\bf b}\right) + \cdots +
+{\bf U}^{t-2} \left( {\bf W}{\bf x}_{2}+{\bf b}\right) + \cdots + \left({\bf W}{\bf
+x}_{t}+{\bf b}\right) \\
+\end{aligned}
+\end{equation}</span></p>
+<p>Somehow the matrix exponentiation of <span class="math inline">{\bf U}</span> needs to remain stable, even large values of <span class="math inline">t</span>. This is in theory possible, but, very difficult to achieve in training, with a random initialisation of <span class="math inline">U</span>.</p>
 <p>For this reason, the simple RNN architecture is rarely used in practice. Instead, we resort to more sophisticated RNN architectures that were specifically designed to address this issue, namely Long Short-Term Memory (LSTM) and Gated Recurrent Units (GRU).</p>
 <section id="lstm" class="level3" data-number="8.4.1">
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="lstm"><span class="header-section-number">8.4.1</span> LSTM</h3>
