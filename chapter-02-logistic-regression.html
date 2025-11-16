@@ -461,7 +461,7 @@ x}^{\top}{\bf w}</span> match <span class="math inline">y</span>, when we should
 <p><span class="math display">
   y = [ {\bf x}^{\top}{\bf w} + \epsilon &gt; 0  ]
 </span></p>
-<p>The term <span class="math inline">{\bf x}^{\top}{\bf w}</span>, often called the <strong>logit</strong> or <strong>score</strong>, provides a measure of evidence for the positive class. The score can range from <span class="math inline">-\infty</span> (very likely to be <span class="math inline">y=-1</span>) to <span class="math inline">+\infty</span> (very likely to be <span class="math inline">y=1</span>). A score of 0 indicates that we are undecided between both options.</p>
+<p>The term <span class="math inline">{\bf x}^{\top}{\bf w}</span>, often called the <strong>logit</strong> or <strong>score</strong>, provides a measure of evidence for the positive class. The score can range from <span class="math inline">-\infty</span> (very likely to be <span class="math inline">y=0</span>) to <span class="math inline">+\infty</span> (very likely to be <span class="math inline">y=1</span>). A score of 0 indicates that we are undecided between both options.</p>
 <p>In our toy example, the risk score is just a re-scaled version of the number of hours studied. For instance, if you study less than 1 hour your are very likely to fail. In the general case, the risk operates a <em>dimensional reduction</em>. That is, it combines multiple input values into a single score, that can then be used for comparison. Think of a buyer’s guide that combines multiple evaluations to form a single score.</p>
 <p>The key to general linear models is the idea that the uncertainty (<span class="math inline">\varepsilon</span>) is on the risk score itself, not directly on the outcome. That is, the error on the risk score might move the ultimate decision to either side of the threshold boundary.</p>
 <p>We can now, like in Least Squares, take a probabilistic view of the problem and try to model/approximate the distribution of <span class="math inline">\epsilon</span> with a known distribution.</p>
@@ -475,7 +475,6 @@ x}^{\top}{\bf w}</span> match <span class="math inline">y</span>, when we should
 </section>
 <section id="logistic-model" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="logistic-model"><span class="header-section-number">2.4</span> Logistic Model</h2>
-<p>From now on, we’ll only look at the logistic model. Note that similar derivations could be made for any other model.</p>
 <p>Consider <span class="math inline">p(y=1|{\bf x},{\bf w})</span>, the <strong>likelihood</strong> that the output is a success given the input features and model parameters:</p>
 <p><span class="math display">
   \begin{aligned}

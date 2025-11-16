@@ -874,6 +874,7 @@ y' = w_1 x_1' + \epsilon'
 \epsilon' \approx \frac{\epsilon}{x_1^{w_1}}
 </span> The new error term <span class="math inline">\epsilon'</span> is no longer independent of the features and weights, and its variance is not constant. This violates the assumptions of standard Least Squares, and applying it to the transformed problem is likely to produce biased estimates.</p>
 <p>So, while feature transformations are a powerful tool, it is important to remember that they can alter the statistical properties of the noise, potentially leading to unexpected biases in the results.</p>
+<p>In practice, Machine Learning practitioners often adopt a pragmatic approach. While these deviations from the classical assumptions introduce theoretical risks, the method’s simplicity, robustness and performance in many real-world scenarios often outweigh these statistical drawbacks. The key takeaway is to be aware of the risks and to use diagnostic plots (e.g., residual plots) to identify and potentially address severe assumption breaches.</p>
 </section>
 </section>
 <section id="takeaways" class="level2" data-number="1.9">
