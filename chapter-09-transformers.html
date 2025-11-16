@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Attention Mechanism and Transformers – 4C16 - Deep Learning and its Applications</title>
+<title>9&nbsp; Attention Mechanism and Transformers – 4C16 - Deep Learning and its Applications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,15 +85,15 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chapter-11-LLMs.html" rel="next">
-<link href="./chapter-09-generative-models.html" rel="prev">
+<link href="./chapter-10-generative-models.html" rel="next">
+<link href="./chapter-08-recurrent-neural-networks.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -181,7 +181,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-10-transformers.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-09-transformers.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -305,14 +305,25 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter-09-generative-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  <a href="./chapter-09-transformers.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter-10-transformers.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  <a href="./chapter-10-generative-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -331,13 +342,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
@@ -380,27 +391,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">10.1</span> Motivation</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">9.1</span> Motivation</a>
   <ul class="collapse">
-  <li><a href="#the-problem-with-cnns-and-rnns" id="toc-the-problem-with-cnns-and-rnns" class="nav-link" data-scroll-target="#the-problem-with-cnns-and-rnns"><span class="header-section-number">10.1.1</span> The Problem with CNNs and RNNs</a></li>
-  <li><a href="#the-problem-with-positional-dependencies" id="toc-the-problem-with-positional-dependencies" class="nav-link" data-scroll-target="#the-problem-with-positional-dependencies"><span class="header-section-number">10.1.2</span> The Problem with Positional Dependencies</a></li>
+  <li><a href="#the-problem-with-cnns-and-rnns" id="toc-the-problem-with-cnns-and-rnns" class="nav-link" data-scroll-target="#the-problem-with-cnns-and-rnns"><span class="header-section-number">9.1.1</span> The Problem with CNNs and RNNs</a></li>
+  <li><a href="#the-problem-with-positional-dependencies" id="toc-the-problem-with-positional-dependencies" class="nav-link" data-scroll-target="#the-problem-with-positional-dependencies"><span class="header-section-number">9.1.2</span> The Problem with Positional Dependencies</a></li>
   </ul></li>
-  <li><a href="#the-attention-mechanism" id="toc-the-attention-mechanism" class="nav-link" data-scroll-target="#the-attention-mechanism"><span class="header-section-number">10.2</span> The Attention Mechanism</a>
+  <li><a href="#the-attention-mechanism" id="toc-the-attention-mechanism" class="nav-link" data-scroll-target="#the-attention-mechanism"><span class="header-section-number">9.2</span> The Attention Mechanism</a>
   <ul class="collapse">
-  <li><a href="#core-mechanism-of-a-dot-product-attention-layer" id="toc-core-mechanism-of-a-dot-product-attention-layer" class="nav-link" data-scroll-target="#core-mechanism-of-a-dot-product-attention-layer"><span class="header-section-number">10.2.1</span> Core Mechanism of a Dot-Product Attention Layer</a></li>
-  <li><a href="#the-attention-mechanism-as-a-fuzzy-dictionary-lookup" id="toc-the-attention-mechanism-as-a-fuzzy-dictionary-lookup" class="nav-link" data-scroll-target="#the-attention-mechanism-as-a-fuzzy-dictionary-lookup"><span class="header-section-number">10.2.2</span> The Attention Mechanism as a Fuzzy Dictionary Lookup</a></li>
-  <li><a href="#no-trainable-parameters" id="toc-no-trainable-parameters" class="nav-link" data-scroll-target="#no-trainable-parameters"><span class="header-section-number">10.2.3</span> No Trainable Parameters</a></li>
-  <li><a href="#self-attention" id="toc-self-attention" class="nav-link" data-scroll-target="#self-attention"><span class="header-section-number">10.2.4</span> Self-Attention</a></li>
-  <li><a href="#computational-complexity" id="toc-computational-complexity" class="nav-link" data-scroll-target="#computational-complexity"><span class="header-section-number">10.2.5</span> Computational Complexity</a></li>
-  <li><a href="#a-perfect-tool-for-multi-modal-processing" id="toc-a-perfect-tool-for-multi-modal-processing" class="nav-link" data-scroll-target="#a-perfect-tool-for-multi-modal-processing"><span class="header-section-number">10.2.6</span> A Perfect Tool for Multi-Modal Processing</a></li>
-  <li><a href="#the-multi-head-attention-layer" id="toc-the-multi-head-attention-layer" class="nav-link" data-scroll-target="#the-multi-head-attention-layer"><span class="header-section-number">10.2.7</span> The Multi-Head Attention Layer</a></li>
-  <li><a href="#takeaways-attention-mechanism" id="toc-takeaways-attention-mechanism" class="nav-link" data-scroll-target="#takeaways-attention-mechanism"><span class="header-section-number">10.2.8</span> Takeaways (Attention Mechanism)</a></li>
+  <li><a href="#core-mechanism-of-a-dot-product-attention-layer" id="toc-core-mechanism-of-a-dot-product-attention-layer" class="nav-link" data-scroll-target="#core-mechanism-of-a-dot-product-attention-layer"><span class="header-section-number">9.2.1</span> Core Mechanism of a Dot-Product Attention Layer</a></li>
+  <li><a href="#the-attention-mechanism-as-a-fuzzy-dictionary-lookup" id="toc-the-attention-mechanism-as-a-fuzzy-dictionary-lookup" class="nav-link" data-scroll-target="#the-attention-mechanism-as-a-fuzzy-dictionary-lookup"><span class="header-section-number">9.2.2</span> The Attention Mechanism as a Fuzzy Dictionary Lookup</a></li>
+  <li><a href="#no-trainable-parameters" id="toc-no-trainable-parameters" class="nav-link" data-scroll-target="#no-trainable-parameters"><span class="header-section-number">9.2.3</span> No Trainable Parameters</a></li>
+  <li><a href="#self-attention" id="toc-self-attention" class="nav-link" data-scroll-target="#self-attention"><span class="header-section-number">9.2.4</span> Self-Attention</a></li>
+  <li><a href="#computational-complexity" id="toc-computational-complexity" class="nav-link" data-scroll-target="#computational-complexity"><span class="header-section-number">9.2.5</span> Computational Complexity</a></li>
+  <li><a href="#a-perfect-tool-for-multi-modal-processing" id="toc-a-perfect-tool-for-multi-modal-processing" class="nav-link" data-scroll-target="#a-perfect-tool-for-multi-modal-processing"><span class="header-section-number">9.2.6</span> A Perfect Tool for Multi-Modal Processing</a></li>
+  <li><a href="#the-multi-head-attention-layer" id="toc-the-multi-head-attention-layer" class="nav-link" data-scroll-target="#the-multi-head-attention-layer"><span class="header-section-number">9.2.7</span> The Multi-Head Attention Layer</a></li>
+  <li><a href="#takeaways-attention-mechanism" id="toc-takeaways-attention-mechanism" class="nav-link" data-scroll-target="#takeaways-attention-mechanism"><span class="header-section-number">9.2.8</span> Takeaways (Attention Mechanism)</a></li>
   </ul></li>
-  <li><a href="#transformers" id="toc-transformers" class="nav-link" data-scroll-target="#transformers"><span class="header-section-number">10.3</span> Transformers</a>
+  <li><a href="#transformers" id="toc-transformers" class="nav-link" data-scroll-target="#transformers"><span class="header-section-number">9.3</span> Transformers</a>
   <ul class="collapse">
-  <li><a href="#an-encoder-decoder-architecture" id="toc-an-encoder-decoder-architecture" class="nav-link" data-scroll-target="#an-encoder-decoder-architecture"><span class="header-section-number">10.3.1</span> An Encoder-Decoder Architecture</a></li>
-  <li><a href="#positional-encoding" id="toc-positional-encoding" class="nav-link" data-scroll-target="#positional-encoding"><span class="header-section-number">10.3.2</span> Positional Encoding</a></li>
-  <li><a href="#takeaways-transformers" id="toc-takeaways-transformers" class="nav-link" data-scroll-target="#takeaways-transformers"><span class="header-section-number">10.3.3</span> Takeaways (Transformers)</a></li>
+  <li><a href="#an-encoder-decoder-architecture" id="toc-an-encoder-decoder-architecture" class="nav-link" data-scroll-target="#an-encoder-decoder-architecture"><span class="header-section-number">9.3.1</span> An Encoder-Decoder Architecture</a></li>
+  <li><a href="#positional-encoding" id="toc-positional-encoding" class="nav-link" data-scroll-target="#positional-encoding"><span class="header-section-number">9.3.2</span> Positional Encoding</a></li>
+  <li><a href="#takeaways-transformers" id="toc-takeaways-transformers" class="nav-link" data-scroll-target="#takeaways-transformers"><span class="header-section-number">9.3.3</span> Takeaways (Transformers)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -408,9 +419,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-10-transformers.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-09-transformers.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></h1>
 </div>
 
 
@@ -429,11 +440,11 @@ window.Quarto = {
 
 <p>The <strong>Attention Mechanism</strong> (2015) and the <strong>Transformer model</strong> (2017), which is built upon it, have revolutionised the field of Natural Language Processing (NLP). Their influence has been so profound that they have been widely adopted in almost all Deep Learning applications, from computer vision to speech recognition.</p>
 <p>In this chapter, we will look in detail at the Attention Mechanism and the Transformer model. As these architectures originated in the field of NLP, we will introduce them in the context of text processing, which provides a natural and intuitive setting for understanding their core concepts.</p>
-<section id="motivation" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">10.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">9.1</span> Motivation</h2>
 <p>To understand why Transformers and Attention have had such an impact, we first need to appreciate the limitations of the models that came before them, namely Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs).</p>
-<section id="the-problem-with-cnns-and-rnns" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="the-problem-with-cnns-and-rnns"><span class="header-section-number">10.1.1</span> The Problem with CNNs and RNNs</h3>
+<section id="the-problem-with-cnns-and-rnns" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="the-problem-with-cnns-and-rnns"><span class="header-section-number">9.1.1</span> The Problem with CNNs and RNNs</h3>
 <p>Recurrent Neural Networks (such as LSTMs and GRUs) were, for a long time, the model of choice for sequence processing tasks. Their recurrent nature makes them a natural fit for handling variable-length inputs like sentences. However, they have several drawbacks:</p>
 <ul>
 <li>The sequential nature of RNNs prohibits parallelisation. Each step depends on the previous one, making them slow to train on long sequences.</li>
@@ -453,8 +464,8 @@ window.Quarto = {
 <li>The dependencies they capture are at fixed positions relative to the current word, which is a rigid assumption for language.</li>
 </ul>
 </section>
-<section id="the-problem-with-positional-dependencies" class="level3" data-number="10.1.2">
-<h3 data-number="10.1.2" class="anchored" data-anchor-id="the-problem-with-positional-dependencies"><span class="header-section-number">10.1.2</span> The Problem with Positional Dependencies</h3>
+<section id="the-problem-with-positional-dependencies" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="the-problem-with-positional-dependencies"><span class="header-section-number">9.1.2</span> The Problem with Positional Dependencies</h3>
 <p>Let us examine the issue of fixed positional dependencies more closely. Consider a simple 1D convolution on a sequence of feature vectors <span class="math inline">{\bf x}_i</span> with a kernel size of 5. To simplify the argument, we will ignore cross-channel interactions:</p>
 <p><span class="math display">\begin{equation}
   \text{output}_i = w_{-2} {\bf x}_{i-2} + w_{-1} {\bf x}_{i-1} + w_{0} {\bf x}_{i} + w_{1}
@@ -470,10 +481,10 @@ window.Quarto = {
 <div id="fig-sentence-dependency-graph" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sentence-dependency-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures-tikz/sentence-dependency-graph.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="tikz-figures/sentence-dependency-graph.svg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sentence-dependency-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.1: Example of a Sentence Dependency Graph
+Figure&nbsp;9.1: Example of a Sentence Dependency Graph
 </figcaption>
 </figure>
 </div>
@@ -483,12 +494,12 @@ Figure&nbsp;10.1: Example of a Sentence Dependency Graph
 <p>This is where the <strong>Attention Mechanism</strong> comes to the rescue. It provides a way to learn these dependencies dynamically.</p>
 </section>
 </section>
-<section id="the-attention-mechanism" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="the-attention-mechanism"><span class="header-section-number">10.2</span> The Attention Mechanism</h2>
+<section id="the-attention-mechanism" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="the-attention-mechanism"><span class="header-section-number">9.2</span> The Attention Mechanism</h2>
 <p>The Attention Mechanism was originally introduced in the context of machine translation and image captioning, where it was used to align different parts of an image with words in a sentence <span class="citation" data-cites="pmlr-v37-xuc15">(<a href="references.html#ref-pmlr-v37-xuc15" role="doc-biblioref">Xu et al. 2015</a>)</span>. The idea was quickly adapted to model relationships between words within a single sentence <span class="citation" data-cites="BahdanauCB14">Luong, Pham, and Manning (<a href="references.html#ref-luong-etal-2015-effective" role="doc-biblioref">2015</a>)</span>.</p>
 <p>Since its inception, the Attention Mechanism has been iterated upon in many papers, leading to various forms (e.g., Bahdanau Attention, Luong Attention). Here, we will focus on the <em>Scaled Dot-Product Attention</em> used in the Transformer model, as it is arguably the most popular and influential.</p>
-<section id="core-mechanism-of-a-dot-product-attention-layer" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="core-mechanism-of-a-dot-product-attention-layer"><span class="header-section-number">10.2.1</span> Core Mechanism of a Dot-Product Attention Layer</h3>
+<section id="core-mechanism-of-a-dot-product-attention-layer" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="core-mechanism-of-a-dot-product-attention-layer"><span class="header-section-number">9.2.1</span> Core Mechanism of a Dot-Product Attention Layer</h3>
 <p>Let us revisit the formulation of a Dense layer:</p>
 <p><span class="math display">\begin{equation}
   \text{output}_i = \sum_{j=1}^L w_{i,j} {\bf x}_{j} + b,
@@ -513,7 +524,7 @@ w_{\text{is},\text{hearing}} = f({\bf x}_\text{is},
 <img src="figures/attention-mechanism-animation-03.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-attention-mechanism-animation-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.2
+Figure&nbsp;9.2
 </figcaption>
 </figure>
 </div>
@@ -540,7 +551,7 @@ Figure&nbsp;10.2
 <img src="figures/attention-mechanism-animation-06.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-attention-mechanism-animation-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.3
+Figure&nbsp;9.3
 </figcaption>
 </figure>
 </div>
@@ -551,7 +562,7 @@ Figure&nbsp;10.3
 <img src="figures/attention-mechanism-animation-08.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-attention-mechanism-animation-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.4
+Figure&nbsp;9.4
 </figcaption>
 </figure>
 </div>
@@ -592,8 +603,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 \end{equation}</span></p></li>
 </ol>
 </section>
-<section id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup"><span class="header-section-number">10.2.2</span> The Attention Mechanism as a Fuzzy Dictionary Lookup</h3>
+<section id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup"><span class="header-section-number">9.2.2</span> The Attention Mechanism as a Fuzzy Dictionary Lookup</h3>
 <p>Now that the mechanic is understood, let’s revisit the retrieval analogy. The attention mechanism can be understood as a differentiable, “fuzzy” version of a key-value lookup, such as one performed with a Python dictionary.</p>
 <p>Consider a simple dictionary named <code>capital</code> that maps countries to their capital cities:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>capital <span class="op">=</span> {</span>
@@ -627,8 +638,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <p>This perfectly mimics the dictionary lookup.</p>
 <p>The actual attention mechanism is a “soft” or “fuzzy” lookup. By using similarity measure (like the our dot product) between vector representations, a query for <code>'French Republic'</code> might result in high, but not absolute, similarity to <code>'France'</code>, yielding attention weights like <span class="math inline">(0.95, 0.03, 0.02)</span>. The resulting output would be a blend of the values, heavily weighted towards <code>'Paris'</code>. This allows the model to relax the requirement to have a single exact match.</p>
 </section>
-<section id="no-trainable-parameters" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="no-trainable-parameters"><span class="header-section-number">10.2.3</span> No Trainable Parameters</h3>
+<section id="no-trainable-parameters" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="no-trainable-parameters"><span class="header-section-number">9.2.3</span> No Trainable Parameters</h3>
 <p>As we loop through the queries and keys, the number of similarity scores to compute is <span class="math inline">L_q \times L_k</span>. Each similarity calculation takes <span class="math inline">\mathcal{O}(d_k)</span> operations, so the overall computational complexity is <span class="math inline">\mathcal{O}(L_q \times L_k \times d_k)</span>. This is very similar in complexity to a dense layer (except that we do not try to have cross-channel weights).</p>
 <p>Importantly, because we have a formula to compute the weights, the <strong>Attention mechanism itself does not have any trainable parameters</strong>. This becomes apparent when we write down the full mathematical formula in matrix form:</p>
 <p><span class="math display">\begin{equation} \small \text{Attention}({\bf Q}, {\bf K}, {\bf V}) =
@@ -636,8 +647,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 \end{equation}</span></p>
 <p>where the <span class="math inline">\mathrm{softmax}</span> function is applied row-wise.</p>
 </section>
-<section id="self-attention" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="self-attention"><span class="header-section-number">10.2.4</span> Self-Attention</h3>
+<section id="self-attention" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="self-attention"><span class="header-section-number">9.2.4</span> Self-Attention</h3>
 <p>Self-Attention is a special case of the Attention mechanism where the queries, keys, and values are all derived from a single input tensor, <span class="math inline">{\bf X} = [{\bf x}_1, {\bf x}_2, \cdots, {\bf x}_L]^{\top}</span> of size <span class="math inline">L \times d</span>. This is achieved by using three separate linear transformations to project the input tensor into the query, key, and value spaces:</p>
 <p><span class="math display">\begin{equation}
 {\bf q}_i = {\bf W}_Q^{\top} {\bf x}_i,
@@ -694,8 +705,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attention_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="computational-complexity" class="level3" data-number="10.2.5">
-<h3 data-number="10.2.5" class="anchored" data-anchor-id="computational-complexity"><span class="header-section-number">10.2.5</span> Computational Complexity</h3>
+<section id="computational-complexity" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="computational-complexity"><span class="header-section-number">9.2.5</span> Computational Complexity</h3>
 <p>Since each feature vector in the sequence is compared to all other feature vectors, the computational complexity is <strong>quadratic</strong> in the input sequence length, <span class="math inline">L</span>. This is similar to a dense layer.</p>
 <table class="caption-top table">
 <colgroup>
@@ -761,8 +772,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 </tbody>
 </table>
 </section>
-<section id="a-perfect-tool-for-multi-modal-processing" class="level3" data-number="10.2.6">
-<h3 data-number="10.2.6" class="anchored" data-anchor-id="a-perfect-tool-for-multi-modal-processing"><span class="header-section-number">10.2.6</span> A Perfect Tool for Multi-Modal Processing</h3>
+<section id="a-perfect-tool-for-multi-modal-processing" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="a-perfect-tool-for-multi-modal-processing"><span class="header-section-number">9.2.6</span> A Perfect Tool for Multi-Modal Processing</h3>
 <p>Attention is a versatile tool that allows for great flexibility in the design of the input tensors <span class="math inline">{\bf Q}</span>, <span class="math inline">{\bf K}</span>, and <span class="math inline">{\bf V}</span>. For instance, if we have one tensor derived from text and another from audio, we can fuse them using <strong>Cross-Attention</strong>:</p>
 <p><span class="math display">\begin{equation}
   {\bf V}_{\text{audio}/\text{text}} = \text{Attention}({\bf
@@ -770,7 +781,7 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 \end{equation}</span></p>
 <p>The sources do not need to be perfectly synchronised. That is, the text key and value vectors do not need to align perfectly with the audio query vectors (see exercise below). In fact, the sources do not even need to be of the same length (<span class="math inline">L_q \neq L_k</span>). For these reasons, Attention is very well suited for combining multi-modal inputs.</p>
 <div id="exr-10-cross-attention" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 10.1</strong></span> Show that the output of the Attention layer is the same if the entries of the keys and values tensors are permuted in the same way, e.g.:</p>
+<p><span class="theorem-title"><strong>Exercise 9.1</strong></span> Show that the output of the Attention layer is the same if the entries of the keys and values tensors are permuted in the same way, e.g.:</p>
 <p><span class="math display">\begin{equation}
 \begin{split}
 \text{Attention}(
@@ -786,8 +797,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 \end{equation}</span></p>
 </div>
 </section>
-<section id="the-multi-head-attention-layer" class="level3" data-number="10.2.7">
-<h3 data-number="10.2.7" class="anchored" data-anchor-id="the-multi-head-attention-layer"><span class="header-section-number">10.2.7</span> The Multi-Head Attention Layer</h3>
+<section id="the-multi-head-attention-layer" class="level3" data-number="9.2.7">
+<h3 data-number="9.2.7" class="anchored" data-anchor-id="the-multi-head-attention-layer"><span class="header-section-number">9.2.7</span> The Multi-Head Attention Layer</h3>
 <p>You can think of an Attention layer as a replacement for a convolution layer. Just as you can chain multiple convolutional layers, you can also chain multiple Attention layers.</p>
 <p>In Transformers, a set of <span class="math inline">\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)</span> matrices is called an <strong>attention head</strong>. A <strong>Multi-Head Attention</strong> layer is simply a layer that contains multiple attention heads. The outputs of these heads are concatenated and then linearly transformed back to the expected dimension.</p>
 <p>The number of heads is a hyperparameter, analogous to the number of filters in a convolutional layer. Each head can learn to focus on different types of relationships between words. For example, one head might learn to capture syntactic dependencies, while another might focus on semantic similarity.</p>
@@ -801,8 +812,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <!-- $\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)$ matrices, with $d_k=2$ -->
 <!-- and $d_v=3$ for each head. -->
 </section>
-<section id="takeaways-attention-mechanism" class="level3" data-number="10.2.8">
-<h3 data-number="10.2.8" class="anchored" data-anchor-id="takeaways-attention-mechanism"><span class="header-section-number">10.2.8</span> Takeaways (Attention Mechanism)</h3>
+<section id="takeaways-attention-mechanism" class="level3" data-number="9.2.8">
+<h3 data-number="9.2.8" class="anchored" data-anchor-id="takeaways-attention-mechanism"><span class="header-section-number">9.2.8</span> Takeaways (Attention Mechanism)</h3>
 <ul>
 <li><p>RNNs do not parallelise well, and Convolutions assume fixed positional relationships, which is not ideal for text.</p></li>
 <li><p>The <strong>Attention Mechanism</strong> resolves these issues by defining a formula to dynamically compute the weights between any two positions, <span class="math inline">i</span> and <span class="math inline">j</span>, based on the alignment (dot-product) between a <em>query</em> vector for <span class="math inline">i</span> and a <em>key</em> vector for <span class="math inline">j</span>.</p></li>
@@ -813,8 +824,8 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 </ul>
 </section>
 </section>
-<section id="transformers" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="transformers"><span class="header-section-number">10.3</span> Transformers</h2>
+<section id="transformers" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="transformers"><span class="header-section-number">9.3</span> Transformers</h2>
 <p>In 2017, Vaswani et al.&nbsp;proposed the Transformer, a simple yet powerful network architecture based solely on attention layers. This architecture has fundamentally impacted not only text processing but the entire field of deep learning.</p>
 <div id="seealso-allyouneed" class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -831,16 +842,16 @@ Attention Is All You Need
 </div>
 </div>
 <p>The original publication has generated over 57,000 citations as of 2022 (for reference, a paper is considered highly successful if it has over 100 citations).</p>
-<section id="an-encoder-decoder-architecture" class="level3" data-number="10.3.1">
-<h3 data-number="10.3.1" class="anchored" data-anchor-id="an-encoder-decoder-architecture"><span class="header-section-number">10.3.1</span> An Encoder-Decoder Architecture</h3>
-<p>The Transformer architecture, as described in the original paper, is an encoder-decoder model, as shown in <a href="#fig-transformers-annotate-architecture" class="quarto-xref">Figure&nbsp;<span>10.5</span></a>.</p>
+<section id="an-encoder-decoder-architecture" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="an-encoder-decoder-architecture"><span class="header-section-number">9.3.1</span> An Encoder-Decoder Architecture</h3>
+<p>The Transformer architecture, as described in the original paper, is an encoder-decoder model, as shown in <a href="#fig-transformers-annotate-architecture" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>.</p>
 <div id="fig-transformers-annotate-architecture" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-transformers-annotate-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/transformers-annotate-architecture.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transformers-annotate-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.5: The Transformer architecture, as described in the original paper (with the encoder and decoder parts highlighted in magenta).
+Figure&nbsp;9.5: The Transformer architecture, as described in the original paper (with the encoder and decoder parts highlighted in magenta).
 </figcaption>
 </figure>
 </div>
@@ -884,8 +895,8 @@ Figure&nbsp;10.5: The Transformer architecture, as described in the original pap
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The <strong>Decoder</strong>, also highlighted in magenta, is also made of a stack of blocks containing Multi-Head Attention layers. Its job is to take the encoder’s output and generate the target sequence.</p>
 </section>
-<section id="positional-encoding" class="level3" data-number="10.3.2">
-<h3 data-number="10.3.2" class="anchored" data-anchor-id="positional-encoding"><span class="header-section-number">10.3.2</span> Positional Encoding</h3>
+<section id="positional-encoding" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="positional-encoding"><span class="header-section-number">9.3.2</span> Positional Encoding</h3>
 <p>Note the presence of a <em>Positional Encoding</em> layer at the input. As the Attention mechanism itself is permutation-invariant, it does not have any notion of word order. To remedy this, the Transformer architecture proposes to encode the position of each word as a vector and add it to the input embedding.</p>
 <p>The positional encoding is a function <span class="math inline">\phi: i \mapsto \phi(i)</span> that maps a position <span class="math inline">i</span> to a vector. This vector is then simply appended to the word embedding: <span class="math inline">{\bf x}'_i = [{\bf x}_i; \phi(i)]</span>.</p>
 <p>Why do we need a special encoding for this? Why not simply use the index of the word as a feature, i.e., <span class="math inline">\phi(i) = i</span>?</p>
@@ -907,8 +918,8 @@ i \mapsto \phi(i) = \begin{bmatrix}
 \end{equation}</span></p>
 <p>The advantage of using a positional encoding, as opposed to hard-coding positional relationships as in a CNN, is that the position is treated as just another piece of information. It can be transformed, combined with other features, or even ignored by the network. It is up to the training process to learn how to best use this information.</p>
 </section>
-<section id="takeaways-transformers" class="level3" data-number="10.3.3">
-<h3 data-number="10.3.3" class="anchored" data-anchor-id="takeaways-transformers"><span class="header-section-number">10.3.3</span> Takeaways (Transformers)</h3>
+<section id="takeaways-transformers" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="takeaways-transformers"><span class="header-section-number">9.3.3</span> Takeaways (Transformers)</h3>
 <p>There is obviously a lot more to know about Transformers, but we have covered the main ideas here.</p>
 <ul>
 <li><p>The Transformer model is an <strong>encoder-decoder</strong> architecture based on blocks of Attention layers.</p></li>
@@ -1334,13 +1345,13 @@ Xu, Kelvin, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhu
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chapter-09-generative-models.html" class="pagination-link" aria-label="An Introduction to Generative Models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span>
+      <a href="./chapter-08-recurrent-neural-networks.html" class="pagination-link" aria-label="Recurrent Neural Networks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapter-11-LLMs.html" class="pagination-link" aria-label="Large Language Models">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chapter-10-generative-models.html" class="pagination-link" aria-label="An Introduction to Generative Models">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

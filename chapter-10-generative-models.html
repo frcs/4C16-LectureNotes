@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; An Introduction to Generative Models – 4C16 - Deep Learning and its Applications</title>
+<title>10&nbsp; An Introduction to Generative Models – 4C16 - Deep Learning and its Applications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,15 +30,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chapter-10-transformers.html" rel="next">
-<link href="./chapter-08-recurrent-neural-networks.html" rel="prev">
+<link href="./chapter-11-LLMs.html" rel="next">
+<link href="./chapter-09-transformers.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -126,7 +126,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-09-generative-models.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-10-generative-models.html">Generative AI</a></li><li class="breadcrumb-item"><a href="./chapter-10-generative-models.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -250,14 +250,25 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter-09-generative-models.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  <a href="./chapter-09-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter-10-transformers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  <a href="./chapter-10-generative-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -276,13 +287,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
@@ -325,23 +336,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#generative-adversarial-networks-gans" id="toc-generative-adversarial-networks-gans" class="nav-link active" data-scroll-target="#generative-adversarial-networks-gans"><span class="header-section-number">9.1</span> Generative Adversarial Networks (GANs)</a></li>
-  <li><a href="#autoencoders-learning-to-compress-and-reconstruct" id="toc-autoencoders-learning-to-compress-and-reconstruct" class="nav-link" data-scroll-target="#autoencoders-learning-to-compress-and-reconstruct"><span class="header-section-number">9.2</span> Autoencoders: Learning to Compress and Reconstruct</a>
+  <li><a href="#generative-adversarial-networks-gans" id="toc-generative-adversarial-networks-gans" class="nav-link active" data-scroll-target="#generative-adversarial-networks-gans"><span class="header-section-number">10.1</span> Generative Adversarial Networks (GANs)</a></li>
+  <li><a href="#autoencoders-learning-to-compress-and-reconstruct" id="toc-autoencoders-learning-to-compress-and-reconstruct" class="nav-link" data-scroll-target="#autoencoders-learning-to-compress-and-reconstruct"><span class="header-section-number">10.2</span> Autoencoders: Learning to Compress and Reconstruct</a>
   <ul class="collapse">
-  <li><a href="#the-problem-of-the-latent-space" id="toc-the-problem-of-the-latent-space" class="nav-link" data-scroll-target="#the-problem-of-the-latent-space"><span class="header-section-number">9.2.1</span> The Problem of the Latent Space</a></li>
-  <li><a href="#variational-autoencoders-vaes" id="toc-variational-autoencoders-vaes" class="nav-link" data-scroll-target="#variational-autoencoders-vaes"><span class="header-section-number">9.2.2</span> Variational Autoencoders (VAEs)</a></li>
+  <li><a href="#the-problem-of-the-latent-space" id="toc-the-problem-of-the-latent-space" class="nav-link" data-scroll-target="#the-problem-of-the-latent-space"><span class="header-section-number">10.2.1</span> The Problem of the Latent Space</a></li>
+  <li><a href="#variational-autoencoders-vaes" id="toc-variational-autoencoders-vaes" class="nav-link" data-scroll-target="#variational-autoencoders-vaes"><span class="header-section-number">10.2.2</span> Variational Autoencoders (VAEs)</a></li>
   </ul></li>
-  <li><a href="#deep-auto-regressive-models" id="toc-deep-auto-regressive-models" class="nav-link" data-scroll-target="#deep-auto-regressive-models"><span class="header-section-number">9.3</span> Deep Auto-Regressive Models</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">9.4</span> Takeaways</a></li>
+  <li><a href="#deep-auto-regressive-models" id="toc-deep-auto-regressive-models" class="nav-link" data-scroll-target="#deep-auto-regressive-models"><span class="header-section-number">10.3</span> Deep Auto-Regressive Models</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">10.4</span> Takeaways</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-09-generative-models.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-10-generative-models.html">Generative AI</a></li><li class="breadcrumb-item"><a href="./chapter-10-generative-models.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></h1>
 </div>
 
 
@@ -375,8 +386,8 @@ window.Quarto = {
 <li><strong>Diffusion Models</strong> (the technology behind popular image generation tools like Midjourney and DALL-E)</li>
 </ul>
 <p>In this module, we will provide an introduction to GANs, Autoencoders, and Auto-Regressive Models.</p>
-<section id="generative-adversarial-networks-gans" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="generative-adversarial-networks-gans"><span class="header-section-number">9.1</span> Generative Adversarial Networks (GANs)</h2>
+<section id="generative-adversarial-networks-gans" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="generative-adversarial-networks-gans"><span class="header-section-number">10.1</span> Generative Adversarial Networks (GANs)</h2>
 <p>For several years, Generative Adversarial Networks were the dominant force in generative modelling, producing stunningly realistic images. The core idea, introduced by Ian Goodfellow and his colleagues in 2014, is both elegant and powerful. It frames the learning process as a two-player game.</p>
 <blockquote class="blockquote">
 <p>Ian Goodfellow et al.&nbsp;(2014). “Generative Adversarial Networks”. <a href="https://arxiv.org/abs/1406.2661">https://arxiv.org/abs/1406.2661</a></p>
@@ -392,7 +403,7 @@ window.Quarto = {
 <img src="figures/GAN-network.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gan-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: The architecture of a Generative Adversarial Network (GAN).
+Figure&nbsp;10.1: The architecture of a Generative Adversarial Network (GAN).
 </figcaption>
 </figure>
 </div>
@@ -409,13 +420,13 @@ Figure&nbsp;9.1: The architecture of a Generative Adversarial Network (GAN).
 <img src="figures/GAN-NVIDIA.jpg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gan-nvidia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.2: Examples of fake celebrity portraits generated by a GAN developed by NVIDIA (2017). (Source: <a href="https://arxiv.org/abs/1710.10196">https://arxiv.org/abs/1710.10196</a>)
+Figure&nbsp;10.2: Examples of fake celebrity portraits generated by a GAN developed by NVIDIA (2017). (Source: <a href="https://arxiv.org/abs/1710.10196">https://arxiv.org/abs/1710.10196</a>)
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="autoencoders-learning-to-compress-and-reconstruct" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="autoencoders-learning-to-compress-and-reconstruct"><span class="header-section-number">9.2</span> Autoencoders: Learning to Compress and Reconstruct</h2>
+<section id="autoencoders-learning-to-compress-and-reconstruct" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="autoencoders-learning-to-compress-and-reconstruct"><span class="header-section-number">10.2</span> Autoencoders: Learning to Compress and Reconstruct</h2>
 <p><strong>Autoencoders</strong> are a form of unsupervised learning where the learning signal comes from the data itself. The goal is simple: train a network to reconstruct its own input as faithfully as possible. While this sounds like a trivial task (the identity function would solve it perfectly), the key is that we force the data to pass through a <strong>bottleneck</strong> layer with a much lower dimensionality than the input.</p>
 <p>An autoencoder consists of two parts:</p>
 <ol type="1">
@@ -428,14 +439,14 @@ Figure&nbsp;9.2: Examples of fake celebrity portraits generated by a GAN develop
 <img src="tikz-figures/ae_example_generic.svg" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-example-generic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.3: The general architecture of an Autoencoder.
+Figure&nbsp;10.3: The general architecture of an Autoencoder.
 </figcaption>
 </figure>
 </div>
 <p>The network is trained to minimise a <strong>reconstruction loss</strong>, which measures the difference between the original input <span class="math inline">{\bf x}</span> and the reconstructed output <span class="math inline">{\bf \hat{x}}</span>. For continuous data like images, this is typically the Mean Squared Error (L2 loss). For categorical data, it would be the cross-entropy loss.</p>
 <p>By forcing the network to squeeze all the necessary information through the low-dimensional bottleneck, we compel it to learn a meaningful, compressed representation of the data. This process is a form of non-linear dimensionality reduction, similar in spirit to Principal Component Analysis (PCA).</p>
-<section id="the-problem-of-the-latent-space" class="level3" data-number="9.2.1">
-<h3 data-number="9.2.1" class="anchored" data-anchor-id="the-problem-of-the-latent-space"><span class="header-section-number">9.2.1</span> The Problem of the Latent Space</h3>
+<section id="the-problem-of-the-latent-space" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="the-problem-of-the-latent-space"><span class="header-section-number">10.2.1</span> The Problem of the Latent Space</h3>
 <p>While autoencoders are excellent for tasks like denoising or dimensionality reduction, they are not inherently good generative models. The reason lies in the structure of the <strong>latent space</strong>—the space of all possible latent vectors <span class="math inline">{\bf z}</span>.</p>
 <p>A standard autoencoder makes no guarantees about the structure of this space. The encoder might learn to map input images to disconnected clusters in the latent space, with large gaps in between. If we were to pick a point <span class="math inline">{\bf z}</span> from one of these gaps and feed it to the decoder, the resulting reconstruction <span class="math inline">{\bf \hat{x}}</span> would likely be a blurry, meaningless mess, because the decoder was never trained on such a point.</p>
 <div id="fig-AE-mean" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -444,7 +455,7 @@ Figure&nbsp;9.3: The general architecture of an Autoencoder.
 <img src="figures/ae_mean.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.4: A scatter plot of the MNIST dataset in the 2D latent space of a standard autoencoder. The clusters for each digit are irregularly shaped and have gaps between them.
+Figure&nbsp;10.4: A scatter plot of the MNIST dataset in the 2D latent space of a standard autoencoder. The clusters for each digit are irregularly shaped and have gaps between them.
 </figcaption>
 </figure>
 </div>
@@ -454,14 +465,14 @@ Figure&nbsp;9.4: A scatter plot of the MNIST dataset in the 2D latent space of a
 <img src="figures/ae_digits_over_latent.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-digits-over-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.5: Decoding points from the latent space. In the gaps between clusters, the reconstructions are not valid digits.
+Figure&nbsp;10.5: Decoding points from the latent space. In the gaps between clusters, the reconstructions are not valid digits.
 </figcaption>
 </figure>
 </div>
 <p>To build a true generative model, we need a latent space that is smooth, continuous, and well-structured, so that we can sample any point <span class="math inline">{\bf z}</span> and be confident that the decoder will produce a valid output. This is the problem that Variational Autoencoders were designed to solve.</p>
 </section>
-<section id="variational-autoencoders-vaes" class="level3" data-number="9.2.2">
-<h3 data-number="9.2.2" class="anchored" data-anchor-id="variational-autoencoders-vaes"><span class="header-section-number">9.2.2</span> Variational Autoencoders (VAEs)</h3>
+<section id="variational-autoencoders-vaes" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="variational-autoencoders-vaes"><span class="header-section-number">10.2.2</span> Variational Autoencoders (VAEs)</h3>
 <p><strong>Variational Autoencoders (VAEs)</strong> are a more sophisticated type of autoencoder that makes them suitable for generation. They do this by introducing a probabilistic spin on the encoder and adding a new term to the loss function that enforces a regular structure on the latent space.</p>
 <p>Instead of mapping an input <span class="math inline">{\bf x}</span> to a single point <span class="math inline">{\bf z}</span> in the latent space, the VAE encoder maps it to a <strong>probability distribution</strong>— specifically, a Gaussian distribution defined by a mean vector <span class="math inline">\boldsymbol{\mu}</span> and a variance vector <span class="math inline">\boldsymbol{\sigma}^2</span>. The latent vector <span class="math inline">{\bf z}</span> is then <em>sampled</em> from this distribution.</p>
 <div id="fig-AE-vae" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -470,7 +481,7 @@ Figure&nbsp;9.5: Decoding points from the latent space. In the gaps between clus
 <img src="tikz-figures/ae_variational.svg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-vae-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.6: The architecture of a Variational Autoencoder (VAE).
+Figure&nbsp;10.6: The architecture of a Variational Autoencoder (VAE).
 </figcaption>
 </figure>
 </div>
@@ -486,7 +497,7 @@ Figure&nbsp;9.6: The architecture of a Variational Autoencoder (VAE).
 <img src="figures/vae_mean.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-vae-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.7: The latent space of a VAE. The clusters are now much more regular and compact, resembling a Gaussian distribution.
+Figure&nbsp;10.7: The latent space of a VAE. The clusters are now much more regular and compact, resembling a Gaussian distribution.
 </figcaption>
 </figure>
 </div>
@@ -496,14 +507,14 @@ Figure&nbsp;9.7: The latent space of a VAE. The clusters are now much more regul
 <img src="figures/vae_digits_over_latent.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AE-vae-digits-over-latent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.8: Decoding from the VAE’s latent space. The transitions between digits are smooth, and there are no major gaps.
+Figure&nbsp;10.8: Decoding from the VAE’s latent space. The transitions between digits are smooth, and there are no major gaps.
 </figcaption>
 </figure>
 </div>
 </section>
 </section>
-<section id="deep-auto-regressive-models" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="deep-auto-regressive-models"><span class="header-section-number">9.3</span> Deep Auto-Regressive Models</h2>
+<section id="deep-auto-regressive-models" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="deep-auto-regressive-models"><span class="header-section-number">10.3</span> Deep Auto-Regressive Models</h2>
 <p>Auto-regressive models are another powerful class of generative models that we have already encountered in the context of RNNs. The core idea is to model the probability distribution of a sequence by decomposing it using the chain rule of probability. The probability of a given element in the sequence is conditioned on all the elements that came before it:</p>
 <p><span class="math display">\begin{equation}
   p(x_1, \dots, x_T) = \prod_{t=1}^T p(x_t | x_1, \dots, x_{t-1})
@@ -511,8 +522,8 @@ Figure&nbsp;9.8: Decoding from the VAE’s latent space. The transitions between
 <p>This is exactly the principle behind character-level RNNs and the massive <strong>Large Language Models (LLMs)</strong> like GPT-3 and GPT-4. They are trained to predict <span class="math inline">p(x_t | x_1, \dots, x_{t-1})</span>, the probability of the next word (or token) in a sequence given the preceding context.</p>
 <p>By repeatedly sampling from the model’s predicted distribution and feeding the result back as input, they can generate coherent and sophisticated text, one token at a time.</p>
 </section>
-<section id="takeaways" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">9.4</span> Takeaways</h2>
+<section id="takeaways" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">10.4</span> Takeaways</h2>
 <ul>
 <li><p>Generative models learn the underlying distribution of a dataset in order to <strong>synthesise new data</strong>.</p></li>
 <li><p><strong>Generative Adversarial Networks (GANs)</strong> use a two-player game between a <strong>Generator</strong> and a <strong>Discriminator</strong> to produce highly realistic samples.</p></li>
@@ -927,13 +938,13 @@ Figure&nbsp;9.8: Decoding from the VAE’s latent space. The transitions between
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chapter-08-recurrent-neural-networks.html" class="pagination-link" aria-label="Recurrent Neural Networks">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span>
+      <a href="./chapter-09-transformers.html" class="pagination-link" aria-label="Attention Mechanism and Transformers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapter-10-transformers.html" class="pagination-link" aria-label="Attention Mechanism and Transformers">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chapter-11-LLMs.html" class="pagination-link" aria-label="Large Language Models">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
