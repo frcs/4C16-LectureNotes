@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction – 4C16 - Deep Learning and its Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter-01-linear-regression.html" rel="next">
+<link href="./preface.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-00-intro.html">Introduction</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">4C16 - Deep Learning and its Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module Descriptor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-00-intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-01-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-02-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Logistic Regression: From Lines to Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-03-classic-classifiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Tour of Classic Classifiers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-04-evaluating-classifier-performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluating Classifier Performance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations of Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-05-deep-feedforward-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-06-convolutional-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Modern Architectures and Techniques</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-07-advances-in-network-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-08-recurrent-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-09-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-10-generative-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-11-LLMs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Relationship between Error, Loss Function and Maximum Likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-02-universal-approximation-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Universal Approximation Theorem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-03-l1-induces-sparsity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Why Does <span class="math inline">L_1</span> Regularisation Induce Sparsity?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#deep-learning-machine-learning-and-a.i." id="toc-deep-learning-machine-learning-and-a.i." class="nav-link active" data-scroll-target="#deep-learning-machine-learning-and-a.i.">Deep Learning, Machine Learning, and A.I.</a></li>
+  <li><a href="#main-areas-of-machine-learning" id="toc-main-areas-of-machine-learning" class="nav-link" data-scroll-target="#main-areas-of-machine-learning">Main Areas of Machine Learning</a>
+  <ul class="collapse">
+  <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning">Supervised Learning</a></li>
+  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning">Unsupervised Learning</a></li>
+  <li><a href="#reinforcement-learning" id="toc-reinforcement-learning" class="nav-link" data-scroll-target="#reinforcement-learning">Reinforcement Learning</a></li>
+  <li><a href="#generative-models" id="toc-generative-models" class="nav-link" data-scroll-target="#generative-models">Generative Models</a></li>
+  </ul></li>
+  <li><a href="#early-deep-learning-successes" id="toc-early-deep-learning-successes" class="nav-link" data-scroll-target="#early-deep-learning-successes">Early Deep Learning Successes</a>
+  <ul class="collapse">
+  <li><a href="#image-classification" id="toc-image-classification" class="nav-link" data-scroll-target="#image-classification">Image Classification</a></li>
+  <li><a href="#scene-understanding" id="toc-scene-understanding" class="nav-link" data-scroll-target="#scene-understanding">Scene Understanding</a></li>
+  <li><a href="#image-captioning" id="toc-image-captioning" class="nav-link" data-scroll-target="#image-captioning">Image Captioning</a></li>
+  <li><a href="#machine-translation" id="toc-machine-translation" class="nav-link" data-scroll-target="#machine-translation">Machine Translation</a></li>
+  <li><a href="#multimedia-content" id="toc-multimedia-content" class="nav-link" data-scroll-target="#multimedia-content">Multimedia Content</a></li>
+  <li><a href="#game-playing" id="toc-game-playing" class="nav-link" data-scroll-target="#game-playing">Game Playing</a></li>
+  </ul></li>
+  <li><a href="#reasons-for-success" id="toc-reasons-for-success" class="nav-link" data-scroll-target="#reasons-for-success">Reasons for Success</a>
+  <ul class="collapse">
+  <li><a href="#global-reach" id="toc-global-reach" class="nav-link" data-scroll-target="#global-reach">Global Reach</a></li>
+  <li><a href="#genericity-and-systematicity" id="toc-genericity-and-systematicity" class="nav-link" data-scroll-target="#genericity-and-systematicity">Genericity and Systematicity</a></li>
+  <li><a href="#simplicity-and-democratisation" id="toc-simplicity-and-democratisation" class="nav-link" data-scroll-target="#simplicity-and-democratisation">Simplicity and Democratisation</a></li>
+  <li><a href="#impact" id="toc-impact" class="nav-link" data-scroll-target="#impact">Impact</a></li>
+  </ul></li>
+  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary">In Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="deep-learning-machine-learning-and-a.i." class="level2">
+<h2 class="anchored" data-anchor-id="deep-learning-machine-learning-and-a.i.">Deep Learning, Machine Learning, and A.I.</h2>
+<p>As you begin this module, you are witnessing a pivotal moment in a technological and societal revolution, one driven by what is now universally called <strong>Artificial Intelligence (AI)</strong>. However, how we arrived at this term is a curious trajectory. Around We started around 2012-2013, with the term <strong>Deep Learning (DL)</strong>. Soon after, the broader and more established academic term <strong>Machine Learning (ML)</strong> became more common. Today, we have largely settled on <strong>AI</strong>, a catch-all term that is now globally used. Let us untangle these terms. They are not interchangeable; rather, they represent a nested hierarchy of concepts.</p>
+<p>Artificial Intelligence is the broadest and oldest concept, born in the 1950s. The original ambition was to create machines capable of human-like intelligence in its entirety—reasoning, planning, learning, and natural language understanding. For decades, the dominant approach to AI, often called “Symbolic AI” or “Good Old-Fashioned AI” (GOFAI), relied on explicitly programming computers with hand-coded rules and logic. The machine was “intelligent” because a human had manually encoded knowledge and decision-making processes into it.</p>
+<p>Beginning in the 1980s and gaining significant momentum through the 1990s and 2000s, a fundamentally different approach emerged: <strong>Machine Learning (ML)</strong>.</p>
+<p>At its heart, ML is about fitting mathematical models to data, a concept you’ve likely already encountered in statistics with good old regression. In regression, the goal is to find the parameters (e.g., the slope <span class="math inline">m</span> and intercept <span class="math inline">b</span> for a line <span class="math inline">y=mx+b</span>) that create the best possible fit to your data. Machine Learning generalises this powerful idea. Instead of just lines, we can work with far more complex models, but the principle is the same: we use data to tune the model’s parameters automatically. Rather than explicitly programming rules, we let the machine discover the rules by learning the patterns directly from examples. This data-driven approach is a significant cultural and methodological shift.</p>
+<p>While we often think of “machine learning” as a term from computer science, the underlying principles and techniques have been developed across many disciplines. For anyone working with numerical data, the need for analytical tools is universal. Many fields, including statistics and signal processing, have contributed to and benefited from the development of these methods. This interdisciplinary nature has led to some political friction. For instance, many statisticians might view much of modern ML as “applied statistics” or refer to it as <em>Statistical Learning</em>, emphasising its deep roots in their field.</p>
+<p>This brings us to the focus of this module: <strong>Deep Learning (DL)</strong>. Deep Learning is a specific subfield of Machine Learning. It is not a new idea—its core concepts have existed for decades, with scientists such as McCulloch and Pitts (1943), Rosenblatt (1958) and Joseph (1960) introducing the ideas of artificial neurons, perceptrons, and multilayer perceptrons. But it remained an essentially fringe domain for decades and it is only in the 2010s that it became a practical and dominant method.</p>
+<p>The defining feature of Deep Learning is its use of deep <strong>Artificial Neural Networks</strong>—architectures with multiple layers of interconnected nodes, loosely inspired by the structure of the human brain.</p>
+<p>The relationship between these fields can be summarised as:</p>
+<p><span class="math display">
+\text{Deep Learning} \subset \text{Machine Learning}  \subset \text{AI}
+</span></p>
+<p>Note that while deep learning was technically always a part of the broader AI research field, it was a fringe area, and its major breakthrough papers happened first in the fields of computer vision, image processing, audio processing and natural language processing, which were external to AI. Their success was so profound that it revitalised the term AI, giving it a new meaning. So much so, that whenever you hear about a AI today—whether in self-driving cars, medical diagnostics, or natural language translation—you can be almost certain that it is, in fact, powered by Deep Learning.</p>
+</section>
+<section id="main-areas-of-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="main-areas-of-machine-learning">Main Areas of Machine Learning</h2>
+<p>Machine learning itself can be broadly categorised into four main areas, each addressing different types of problems: Supervised Learning, Unsupervised Learning, Reinforcement Learning, and Generative Models. Deep Learning has had a major impact on all of them.</p>
+<section id="supervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="supervised-learning">Supervised Learning</h3>
+<p>Supervised learning is the most common type of machine learning, accounting for a vast majority of research and applications. In supervised learning, we start with a dataset that has been labelled with the correct outcomes. For example, we might have a collection of images, where each image is labeled as either a “dog” or a “cat.” The goal is to train a model that can learn the relationship between the input data (the images) and the corresponding labels.</p>
+<p>Mathematically, we have a dataset of <span class="math inline">n</span> observations, where each observation consists of a feature vector <span class="math inline">{\bf x}_i</span> (e.g., the pixels of an image) and a known outcome <span class="math inline">y_i</span> (e.g., 0 for a dog, 1 for a cat). The task is to learn a function <span class="math inline">f</span> from that labelled dataset <span class="math inline">({\bf x}_i, y_i)_{i=1,\dots,n}</span> that can predict the outcome for a new, unseen input: <span class="math inline">f({\bf x}_j, {\bf
+w})=y_j</span>. This is achieved by estimating the parameters <span class="math inline">{\bf w}</span> of the model <span class="math inline">f({\bf x}, {\bf w})</span>.</p>
+<div id="fig-intro-2" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/dogcat.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Example of Supervised Learning Task: Image Classification
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="unsupervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h3>
+<p>In unsupervised learning, the goal is to find patterns and structure in a dataset <span class="math inline">({\bf x}_i)</span> without the help of any pre-existing labels. A common application is <em>clustering</em>, where the algorithm groups similar data points together. For example, an e-commerce website could use clustering to segment its customers into different groups based on their purchasing behavior. These clusters can then be used for targeted marketing campaigns.</p>
+<div id="fig-intro-3" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/unsupervised-learning.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Example of Unsupervised Learning Task: Clustering
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="reinforcement-learning" class="level3">
+<h3 class="anchored" data-anchor-id="reinforcement-learning">Reinforcement Learning</h3>
+<p>Reinforcement learning (RL) is about training an <em>agent</em> to make a sequence of decisions in an <em>environment</em> to maximise a cumulative <em>reward</em>. The agent learns through trial and error, receiving feedback in the form of rewards or penalties for its actions. RL is the basis for training models to play games like chess and Go, as well as for robotics applications where a robot learns to navigate its surroundings. While powerful, RL can be complex and data-intensive to implement, which is why it is less common than supervised or unsupervised learning.</p>
+<div id="fig-intro-4" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/reinforcement-learning.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Reinforcement Learning
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="generative-models" class="level3">
+<h3 class="anchored" data-anchor-id="generative-models">Generative Models</h3>
+<p>Generative models are a rapidly advancing area of machine learning focused on creating new content. These models learn the underlying distribution of a dataset and can then generate new samples that are similar to the original data. This includes generating realistic images, writing human-like text, and composing music.</p>
+<p>Mathematically, we try to model the conditional probability of the observable <span class="math inline">{\bf x}</span>, given a target <span class="math inline">y</span>: <span class="math inline">{\bf x} \sim p({\bf x}| y)</span>. This is your ChatGPT, Midjourney, Stable Diffusions, etc.</p>
+<div id="fig-intro-5" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/dalle2-astronaut.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Example of Generative AI with DALLE2 (Mar 2022)
+</figcaption>
+</figure>
+</div>
+<p>Deep Learning has made major breakthroughs in all four of these fields. As a result, neural networks have become the dominant tool in virtually all areas of machine learning research.</p>
+</section>
+</section>
+<section id="early-deep-learning-successes" class="level2">
+<h2 class="anchored" data-anchor-id="early-deep-learning-successes">Early Deep Learning Successes</h2>
+<section id="image-classification" class="level3">
+<h3 class="anchored" data-anchor-id="image-classification">Image Classification</h3>
+<p>The story of Deep Learning’s success began in 2012 with <em>Image Classification</em>, also known as <em>Image Recognition</em>. This core task in Computer Vision is arguably the birthplace of modern Deep Learning. For years, image recognition was a notoriously difficult problem. The prevailing approach involved manually engineering a set of image features and then feeding them into a classification algorithm. The 2014 comic from <em>xkcd</em> illustrates this challenge:</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="https://imgs.xkcd.com/comics/tasks.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<figcaption>https://xkcd.com/1425/ (2014)</figcaption>
+</figure>
+</div>
+<p>The <a href="https://www.image-net.org">ImageNet</a> Large Scale Visual Recognition Challenge (ILSVRC) is an annual competition which benchmarks the performance of image recognition algorithms. Before 2012, methods like Support Vector Machines (SVMs) were the top performers.</p>
+<div id="fig-intro-6" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/imagenet-fig1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: ImageNet image classification challenge.
+</figcaption>
+</figure>
+</div>
+<p>In 2012, a deep learning model called AlexNet <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> dramatically reduced the error rate for object recognition, capturing the attention of the computer vision community and beyond. While neural networks had existed for decades, the scale of this improvement was undeniable. Since then, every winning entry in the ImageNet competition has been based on a deep neural network, with each year bringing further incremental progress. Today, machines have surpassed human performance on this specific task. In 2014, Andrej Karpathy, then a PhD student, manually classified a subset of the ImageNet dataset and achieved a 5% error rate. For comparison, the winning entry in 2022 had an error rate of less than 1%.</p>
+<div id="fig-ImageNetErrorRates" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ImageNetErrorRates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/ImageNet.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ImageNetErrorRates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Historical error Rates at ImageNet’s classification challenge between 2010 and 2015. (<a href="https://paperswithcode.com/sota/image-classification-on-imagenet">see full leaderboard</a>)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="scene-understanding" class="level3">
+<h3 class="anchored" data-anchor-id="scene-understanding">Scene Understanding</h3>
+<p>The advancements in image recognition quickly spread to related fields like <em>Scene Understanding</em>. The figure below shows the results of Mask R-CNN <span class="citation" data-cites="maskrcnn">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>, a deep learning model that can perform semantic segmentation. This means it can classify every pixel in an image, associating it with a specific object class like “human,” “train,” or “car.”</p>
+<div id="fig-intro-7" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/MaskRCNN.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Results from Mask R-CNN. <span class="citation" data-cites="maskrcnn">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="image-captioning" class="level3">
+<h3 class="anchored" data-anchor-id="image-captioning">Image Captioning</h3>
+<p>By 2014, researchers were combining deep learning models for vision and language to automatically generate captions for images. A single, end-to-end neural network could now take an image as input and produce a descriptive sentence as output.</p>
+<div id="fig-intro-8" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/captioning.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Results of automated image captioning <span class="citation" data-cites="showandtell">(<a href="references.html#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See <a href="https://goo.gl/U88bDQ">Google Research blog entry</a>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="machine-translation" class="level3">
+<h3 class="anchored" data-anchor-id="machine-translation">Machine Translation</h3>
+<p>The deep learning revolution also transformed the field of Natural Language Processing (NLP). By 2014, major tech companies were replacing their existing machine translation systems with deep learning models. Google, for example, had been seeing an average annual improvement of 0.4% on its translation service. Their first implementation of a deep learning-based system resulted in a 7% improvement overnight—more than the cumulative progress of a decade of work. This story is detailed in the New York Times article, <a href="https://goo.gl/DPYp6d">“The Great AI Awakening”</a>.</p>
+<p>Years of handcrafted feature engineering were rendered obsolete overnight by a simple deep learning model.</p>
+<p>Since then, the development of Large Language Models (LLMs) has further revolutionised text processing. These models, with hundreds of billions of parameters, are trained on vast amounts of text from the internet, often in multiple languages.</p>
+<p>With the release of <a href="https://openai.com/blog/gpt-3-apps/">OpenAI’s GPT-3</a> in June of 2020, the revolution went mainstream. GPT-3 became a household name and brought the capabilities of LLMs to a global audience.</p>
+</section>
+<section id="multimedia-content" class="level3">
+<h3 class="anchored" data-anchor-id="multimedia-content">Multimedia Content</h3>
+<p>Deep Learning has become a universal tool for applications that involve multiple types of media. As early as 2014, Microsoft show cased how speech recognition, machine translation, and speech synthesis could be combined into a single, seamless experience.</p>
+<div id="seealso-skype" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://www.youtube.com/embed/NhxCg2PA3ZI?start=0">Skype demo</a></li>
+<li><a href="https://goo.gl/eAuPcS">Microsoft blog post</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="game-playing" class="level3">
+<h3 class="anchored" data-anchor-id="game-playing">Game Playing</h3>
+<p>Deep learning has also been successfully applied to <em>reinforcement learning</em>, enabling the solution of complex sequential decision-making problems. This has led to remarkable achievements, such as training agents to play Atari games, controlling real-world robots, and defeating human champions at the game of Go. In March 2016, the victory of DeepMind’s AlphaGo over the world’s top Go, Lee Sedol, was a landmark event in the history of A.I.</p>
+<div id="fig-intro-9" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/alphago.jpg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-intro-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9
+</figcaption>
+</figure>
+</div>
+<div id="seealso-deepmind" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://goo.gl/cTcBJa">demo: Robots Learning how to walk</a></li>
+<li><a href="https://goo.gl/3TcCNA">DeepMind</a></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="reasons-for-success" class="level2">
+<h2 class="anchored" data-anchor-id="reasons-for-success">Reasons for Success</h2>
+<p>Neural networks have been around for decades, but by 2013 that they started to surpass all other machine learning techniques. Deep learning has become a <em><strong>disruptive</strong></em> technology that has fundamentally changed the operations of technology companies worldwide. This is not an overstatement.</p>
+<blockquote class="blockquote">
+<p>``The revolution in deep nets has been very profound, it definitely surprised me, even though I was sitting right there.’’.</p>
+<p>— Sergey Brin, Google co-founder</p>
+</blockquote>
+<p>So, why then?</p>
+<p>The key reason is that <em>Deep Learning scales</em>.</p>
+<p>Neural networks are unique in their ability to improve their performance with increasing amounts of data. As illustrated in the now classic explanation diagram of <a href="#fig-intro-10" class="quarto-xref">Figure&nbsp;<span>10</span></a>, other machine learning techniques, which were popular before, do not scale as effectively.</p>
+<div id="fig-intro-10" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/DLvsOthers.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Classic illustration showing how Deep Learning surpassed other previous classic machine learning methods on large datasets.
+</figcaption>
+</figure>
+</div>
+<p>The availability of <em>massive datasets</em> and the development of powerful, low-cost <em>computing hardware</em> (especially Graphics Processing Units, or GPUs) created the perfect conditions for deep learning to flourish. While other methods plateaued, deep learning models could continue to improve by training on billions of examples instead of just thousands.</p>
+<p>The tipping point for computer vision was in 2012, and for machine translation, it was around 2014.</p>
+<section id="global-reach" class="level3">
+<h3 class="anchored" data-anchor-id="global-reach">Global Reach</h3>
+<p>Since these early successes, deep learning has been successfully applied to a wide range of fields in research, industry, and society. Some examples include: self-driving cars, medical image analysis for cancer detection, speech recognition and synthesis, drug discovery and toxicology (see DeepMind’s <a href="https://www.deepmind.com/research/highlighted-research/alphafold">AlphaFold project</a>), customer relationship management, recommendation systems, bioinformatics, advertising, and even controlling lasers.</p>
+</section>
+<section id="genericity-and-systematicity" class="level3">
+<h3 class="anchored" data-anchor-id="genericity-and-systematicity">Genericity and Systematicity</h3>
+<p>One of the most significant advantages of deep learning is its capacity to automatically learn features directly from data. This capability often allows it to surpass the performance of traditional, approaches that require extensive time and expert knowledge to create useful features from the data. In the early days of deep learning, it was common for even a simple master’s project to beat complex, state-of-the-art algorithms from teams of world experts on its first attempt. This made deep learning a powerful and generalisable approach for solving problems across a wide range of domains.</p>
+</section>
+<section id="simplicity-and-democratisation" class="level3">
+<h3 class="anchored" data-anchor-id="simplicity-and-democratisation">Simplicity and Democratisation</h3>
+<p>Deep learning provides a relatively simple and flexible framework for defining and optimising a wide range of models. With modern deep learning libraries, programmers can train state-of-the-art neural networks without needing a decade of research experience in the field. Furthermore, modern AI toolchains, allow developers to build sophisticated software solutions using simple natural language prompts. In fact, coders might not be needed anymore, all you need to do is to write some text. This has created new opportunities for startups and has made A.I. a ubiquitous tool in the industry.</p>
+</section>
+<section id="impact" class="level3">
+<h3 class="anchored" data-anchor-id="impact">Impact</h3>
+<p>The rapid progress of A.I. raises important questions about the future of work. How long will it be before your job can be automated by an algorithm? Even creative professions are no longer immune.</p>
+<p>For example, early deep learning models (2015) could already perform <em>style transfer</em>, applying the artistic style of one image to another:</p>
+<div id="fig-intro-11" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/styletransfer-2.jpeg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Automatic style transfer, based on <span class="citation" data-cites="gatys2015neural">(<a href="references.html#ref-gatys2015neural" role="doc-biblioref">Gatys, Ecker, and Bethge 2015</a>)</span>
+</figcaption>
+</figure>
+</div>
+<p>Now large-scale models like DALL·E 2 <span class="citation" data-cites="dalle2">(<a href="references.html#ref-dalle2" role="doc-biblioref">Ramesh et al. 2022</a>)</span> can generate incredibly creative and high-quality images from text descriptions:</p>
+<div id="fig-intro-12" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/dalle2-teddybears.jpg" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: OpenAI’s <a href="https://openai.com/dall-e-2/">DALL·E 2</a>’s picture creation from a text description: “Teddy bears mixing sparkling chemicals as mad scientists as a 1990s Saturday morning cartoon” (see <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>)
+</figcaption>
+</figure>
+</div>
+<div id="seealso-00-art" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+See Also
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A Neural Algorithm of Artistic Style. L. Gatys, A. Ecker, M. Bethge. 2015. <a href="https://arxiv.org/abs/1508.06576">paper</a></li>
+<li>Does an AI need to make love to Rembrandt’s girlfriend to make art? <a href="https://goo.gl/gi7rWE">read</a></li>
+<li>Intelligent Machines: AI art is taking on the experts. <a href="https://goo.gl/2kfyXd">read</a></li>
+</ul>
+</div>
+</div>
+<p>Concerns about job displacement are serious and time will tell how the disruption will truely impact our society.</p>
+</section>
+</section>
+<section id="in-summary" class="level2">
+<h2 class="anchored" data-anchor-id="in-summary">In Summary</h2>
+<p>While fully autonomous cars are not quite yet a reality and computers have not achieved consciousness, the deep learning revolution is well underway. It is profoundly changing how we approach research and engineering, and its impact is being felt across all sectors of society. The growing awareness of the societal and ethical implications of these technologies is a testament to the significance of this transformation.</p>
+<p>In the following chapters, we will explore the essential concepts of machine learning (Part I), delve into the fundamentals of neural networks (Part II), more recent advances in the field (Part III), and finish with an introduction to generative models (Part IV).</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-gatys2015neural" class="csl-entry" role="listitem">
+Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. 2015. <span>“A Neural Algorithm of Artistic Style.”</span> <a href="http://arxiv.org/abs/1508.06576">http://arxiv.org/abs/1508.06576</a>.
+</div>
+<div id="ref-maskrcnn" class="csl-entry" role="listitem">
+He, Kaiming, Georgia Gkioxari, Piotr Dollár, and Ross B. Girshick. 2017. <span>“Mask r-CNN.”</span> <em>2017 IEEE International Conference on Computer Vision (ICCV)</em>, 2980–88.
+</div>
+<div id="ref-alexnet" class="csl-entry" role="listitem">
+Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E Hinton. 2012. <span>“ImageNet Classification with Deep Convolutional Neural Networks.”</span> In <em>Advances in Neural Information Processing Systems 25</em>, edited by F. Pereira, C. J. C. Burges, L. Bottou, and K. Q. Weinberger, 1097–1105. Curran Associates, Inc. <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf</a>.
+</div>
+<div id="ref-dalle2" class="csl-entry" role="listitem">
+Ramesh, Aditya, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen. 2022. <span>“Hierarchical Text-Conditional Image Generation with CLIP Latents.”</span> arXiv. <a href="https://doi.org/10.48550/ARXIV.2204.06125">https://doi.org/10.48550/ARXIV.2204.06125</a>.
+</div>
+<div id="ref-showandtell" class="csl-entry" role="listitem">
+Vinyals, Oriol, Alexander Toshev, Samy Bengio, and Dumitru Erhan. 2015. <span>“Show and Tell: A Neural Image Caption Generator.”</span> In <em>CVPR</em>, 3156–64. IEEE Computer Society. <a href="http://dblp.uni-trier.de/db/conf/cvpr/cvpr2015.html#VinyalsTBE15">http://dblp.uni-trier.de/db/conf/cvpr/cvpr2015.html#VinyalsTBE15</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./preface.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter-01-linear-regression.html" class="pagination-link" aria-label="Linear Regression and Least Squares">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, François Pitié</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

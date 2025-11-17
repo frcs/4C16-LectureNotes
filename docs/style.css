@@ -1,0 +1,272 @@
+/* 
+   .rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+   padding: 1em 1em 1em 4em;
+   margin-bottom: 10px;
+   background: #f5f5f5 5px center/3em no-repeat;
+   }
+   .rmdcaution {
+   background-image: url("../images/caution.png");
+   }
+   .rmdimportant {
+   background-image: url("../images/important.png");
+   }
+   .rmdnote {
+   background-image: url("../images/note.png");
+   }
+   .rmdtip {
+   background-image: url("../images/tip.png");
+   }
+   .rmdwarning {
+   background-image: url("../images/warning.png");
+   }
+   p.caption {
+   color: #777;
+   margin-top: 10px;
+   }
+ */
+/* p code {
+   white-space: inherit;
+   }
+   pre {
+   word-break: normal;
+   word-wrap: normal;
+   }
+   pre code {
+   white-space: inherit;
+   }
+   p.flushright {
+   text-align: right;
+   }
+   blockquote > p:last-child {
+   text-align: right;
+   }
+   blockquote > p:first-child {
+   text-align: inherit;
+   }
+   .header-section-number {
+   padding-right: .2em;
+   font-weight: 300;
+   }
+   .level1 .header-section-number {
+   display: inline-block;
+   //  border-bottom: 3px solid;
+   }
+   .level1 h1 {
+   border-bottom: 1px solid;
+   }
+   h1, h2, h3, h4, h5, h6 {
+   font-weight: normal;
+   }
+   h1.title {
+   font-weight: 700;
+   }
+   .book .book-body .page-wrapper .page-inner section.normal strong {
+   font-weight: 500;
+   } */
+
+
+
+.exercise {
+	background: #f9fcf9;
+	border-left: 10px solid #cdc;
+	margin: 1.5em 0 1.5em -10px;
+	padding: 0.5em 10px;
+	
+}
+
+.exercise h1 {
+	font-size: 30%
+	}
+
+
+.promptAI {
+	background: #eee;
+	border-left: 10px solid rgba(91, 91, 91, 1);
+	margin: 1.5em 0 1.5em 0em;
+	padding: 0.5em 10px;
+}
+
+
+.example {
+	background: #f9fcf9;
+	border-left: 10px solid rgba(91, 183, 87, 0.5);
+	margin: 1.5em 0 1.5em 0em;
+	padding: 0.5em 10px;
+}
+
+.example .example {
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+.exercise .exercise {
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+
+table.transparent {
+	margin: 0 !important;
+}
+
+.transparent tr 
+{
+	background-color: transparent !important;
+	border: none  !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.transparent td
+{
+	background-color: transparent  !important;
+	border: none  !important;
+	text-align: center !important;
+	padding: 0 0.1em !important;
+	margin: 0 !important;
+	color: #777 !important;
+	line-height: 1.2 !important;
+	font-size: 80%;
+}
+
+.figure .figure {
+	line-height: 1 !important;
+}
+
+.figure .figure span {
+	display:none;
+	}
+
+
+
+.goingfurther {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	
+	background-color: rgba(1, 105, 174, 0.01);
+	background-image:
+		linear-gradient(rgba(1, 105, 174, 0.05) 1px, transparent 1px),
+		linear-gradient(rgba(1, 105, 174, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(1, 105, 174, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(1, 105, 174, 0.1) 1px, transparent 1px);
+	background-size: 0.4em 0.4em, 2em 2em, 0.4em 0.4em, 2em 2em, 2em 2em;
+	padding: 1em;
+	border-left: 10px solid rgba(1, 105, 174, 0.2);
+}
+
+.goingfurther:before {
+    color: rgba(1, 105, 174, 1);
+	border-bottom: 3px solid rgba(1, 105, 174, 0.5);
+    font-weight: 600;
+    content: "Going Further (non examinable material):";
+    position: relative;
+    left: -0.7em;
+    top: -1em;
+}
+
+.cols {display: flex;   align-items: center;}
+
+
+/* .smallcaps {
+   font-variant: small-caps;
+   } */
+
+.csl-entry {
+	margin-top: 0.5em;
+    padding-left: 1em;
+    text-indent: -1em;
+}
+
+.math.display {
+  font-size: 0.9em;
+}
+
+.math.inline {
+font-size: 0.9em;
+}
+
+.quarto-title {
+	margin-bottom: 1em;
+	margin-top: 1.25em;	
+}
+
+
+
+<!-- .quarto-layout-cell {
+     margin-right: 5px;
+	 } -->
+
+
+.quarto-layout-cell p {
+    margin: 0;
+}
+
+
+
+.agent-chat {
+  /* Box around the chat */
+	border-left: 3px solid #ccc; 
+	padding-top: 0em;
+	padding-left: 1em;
+	
+	/* border-radius: 5px; */
+	font-size: 80%;
+  background-color: #f9f9f9;
+  font-family: monospace; /* Optional: keeps it looking like a terminal/code */
+  white-space: pre-wrap; /* Ensures long lines wrap */
+}
+
+/* Optional: to make the content stand out further */
+.agent-chat strong {
+  color: #0056b3; /* A distinct color for the labels */
+  font-weight: bold;
+}
+
+.agent-chat ol {
+	margin: 0em;
+	/* padding: 0em; */
+	
+}
+
+.agent-chat p {
+	margin: 0em;
+	padding: 0em;
+
+	/* max-width: 600px; */
+}
+
+
+.agent-chat .prompt  {
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    border-radius: 18px; /* Rounded corners for a modern chat bubble look */
+    /* line-height: 1.5; */
+    max-width: 80%; /* Messages don't span the full width */
+    word-wrap: break-word; /* Ensures long words don't overflow */
+
+    background-color: #dcf8c6; /* A light green, common for user messages */
+    color: #000;
+    margin-left: auto; /* Pushes the bubble to the right */
+    border-bottom-right-radius: 4px; /* Slightly less rounded at the bottom-right for a "tail" effect */
+
+}
+
+.agent-chat .answer  {
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    border-radius: 18px; /* Rounded corners for a modern chat bubble look */
+    /* line-height: 1.4; */
+    max-width: 80%; /* Messages don't span the full width */
+    word-wrap: break-word; /* Ensures long words don't overflow */
+
+    background-color: #f1f0f0; /* A light gray, common for agent/system messages */
+    color: #000;
+    margin-right: auto; /* Pushes the bubble to the left */
+    border-bottom-left-radius: 4px; /* Slightly less rounded at the bottom-left for a "tail" effect */
+
+}
+

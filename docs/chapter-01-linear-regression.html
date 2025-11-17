@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Linear Regression and Least Squares – 4C16 - Deep Learning and its Applications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapter-02-logistic-regression.html" rel="next">
+<link href="./chapter-00-intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-01-linear-regression.html">Introduction to Machine Learning</a></li><li class="breadcrumb-item"><a href="./chapter-01-linear-regression.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">4C16 - Deep Learning and its Applications</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Module Descriptor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-00-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-01-linear-regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-02-logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Logistic Regression: From Lines to Probabilities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-03-classic-classifiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Tour of Classic Classifiers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-04-evaluating-classifier-performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Evaluating Classifier Performance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations of Deep Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-05-deep-feedforward-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-06-convolutional-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Modern Architectures and Techniques</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-07-advances-in-network-architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-08-recurrent-neural-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-09-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Attention Mechanism and Transformers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative AI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-10-generative-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">An Introduction to Generative Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-11-LLMs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-01-error-loss-likelihood.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Relationship between Error, Loss Function and Maximum Likelihood</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-02-universal-approximation-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Universal Approximation Theorem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-03-l1-induces-sparsity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Why Does <span class="math inline">L_1</span> Regularisation Induce Sparsity?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-linear-model-and-notations" id="toc-the-linear-model-and-notations" class="nav-link active" data-scroll-target="#the-linear-model-and-notations"><span class="header-section-number">1.1</span> The Linear Model and Notations</a></li>
+  <li><a href="#optimisation" id="toc-optimisation" class="nav-link" data-scroll-target="#optimisation"><span class="header-section-number">1.2</span> Optimisation</a>
+  <ul class="collapse">
+  <li><a href="#matrix-notation" id="toc-matrix-notation" class="nav-link" data-scroll-target="#matrix-notation"><span class="header-section-number">1.2.1</span> Matrix Notation</a></li>
+  </ul></li>
+  <li><a href="#least-squares-in-practice" id="toc-least-squares-in-practice" class="nav-link" data-scroll-target="#least-squares-in-practice"><span class="header-section-number">1.3</span> Least Squares in Practice</a>
+  <ul class="collapse">
+  <li><a href="#a-simple-affine-example" id="toc-a-simple-affine-example" class="nav-link" data-scroll-target="#a-simple-affine-example"><span class="header-section-number">1.3.1</span> A Simple Affine Example</a></li>
+  <li><a href="#transforming-input-features" id="toc-transforming-input-features" class="nav-link" data-scroll-target="#transforming-input-features"><span class="header-section-number">1.3.2</span> Transforming Input Features</a></li>
+  <li><a href="#polynomial-fitting" id="toc-polynomial-fitting" class="nav-link" data-scroll-target="#polynomial-fitting"><span class="header-section-number">1.3.3</span> Polynomial Fitting</a></li>
+  </ul></li>
+  <li><a href="#underfitting" id="toc-underfitting" class="nav-link" data-scroll-target="#underfitting"><span class="header-section-number">1.4</span> Underfitting</a></li>
+  <li><a href="#overfitting" id="toc-overfitting" class="nav-link" data-scroll-target="#overfitting"><span class="header-section-number">1.5</span> Overfitting</a></li>
+  <li><a href="#regularisation" id="toc-regularisation" class="nav-link" data-scroll-target="#regularisation"><span class="header-section-number">1.6</span> Regularisation</a></li>
+  <li><a href="#the-maximum-likelihood-perspective" id="toc-the-maximum-likelihood-perspective" class="nav-link" data-scroll-target="#the-maximum-likelihood-perspective"><span class="header-section-number">1.7</span> The Maximum Likelihood Perspective</a></li>
+  <li><a href="#sec-loss-noise" id="toc-sec-loss-noise" class="nav-link" data-scroll-target="#sec-loss-noise"><span class="header-section-number">1.8</span> Loss, Feature Transforms, and Noise</a>
+  <ul class="collapse">
+  <li><a href="#example-1-regression-towards-the-mean" id="toc-example-1-regression-towards-the-mean" class="nav-link" data-scroll-target="#example-1-regression-towards-the-mean"><span class="header-section-number">1.8.1</span> Example 1: Regression Towards the Mean</a></li>
+  <li><a href="#example-2-non-linear-transformations" id="toc-example-2-non-linear-transformations" class="nav-link" data-scroll-target="#example-2-non-linear-transformations"><span class="header-section-number">1.8.2</span> Example 2: Non-linear Transformations</a></li>
+  </ul></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">1.9</span> Takeaways</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-01-linear-regression.html">Introduction to Machine Learning</a></li><li class="breadcrumb-item"><a href="./chapter-01-linear-regression.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression and Least Squares</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter marks the beginning of our journey into Machine Learning (ML), and we start with a familiar topic: Linear Regression, which is most commonly solved using the method of Least Squares (LS). While many of you will have encountered Least Squares before, our goal here is not so much to provide a primer. Instead, we will revisit this classical technique through the modern lens of Machine Learning.</p>
+<p>It is often forgotten, but Least Squares can be considered the original Machine Learning algorithm. By examining it, we can introduce many of the fundamental concepts that form the bedrock of modern ML. These include the distinction between training and testing data, the challenges of overfitting and underfitting, the role of regularisation, the modelling of noise and the concept of a loss function. Understanding these ideas is key, as they are central to virtually all Machine Learning techniques we will explore.</p>
+<p>The method of least squares has its origins in astronomy, where it was developed to calculate the orbits of celestial bodies. It is often credited to Carl Friedrich <strong>Gauss</strong>, who published it in 1809, but it was first described by Adrien-Marie <strong>Legendre</strong> in 1805. The priority dispute arose from Gauss’s claim to have been using the method since 1795.</p>
+<div id="fig-moindres-carres" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-moindres-carres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/sur-la-methode-des-moindres-carres-crop.jpg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moindres-carres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Legendre (1805), <em>Nouvelles méthodes pour la détermination des orbites des comètes</em>.
+</figcaption>
+</figure>
+</div>
+<section id="the-linear-model-and-notations" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="the-linear-model-and-notations"><span class="header-section-number">1.1</span> The Linear Model and Notations</h2>
+<p>Let us begin with a simple, practical example. Imagine we have collected data on the height and weight of a group of people, as shown in <a href="#fig-polyfit-regression" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>. Our goal is to build a model that can predict a person’s weight based on their height.</p>
+<div id="fig-polyfit-regression" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyfit-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/polyfit_weight_vs_height_regression.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: An example of collected data, showing a linear regression fit.
+</figcaption>
+</figure>
+</div>
+<p>In the language of Machine Learning, we define the following:</p>
+<ul>
+<li><p>The <strong>input</strong> to our predictive model is a set of features, represented by a vector <span class="math inline">(x_1, \cdots, x_p)</span>. In this simple case, we have only one feature, <span class="math inline">x_1</span>, which is a person’s height in centimetres.</p></li>
+<li><p>The <strong>output</strong> of the model is a scalar value, <span class="math inline">y</span>. Here, <span class="math inline">y</span> is the person’s weight in kilograms. It is straightforward to generalise this to a vector of outputs by treating each component as a separate scalar prediction problem.</p></li>
+<li><p>The <strong>model</strong> defines the relationship between the input features and the output. For linear regression, we assume this relationship is linear:</p></li>
+</ul>
+<p><span class="math display">
+y = w_0 + w_1 x_{1} + w_2 x_{2} + w_3 x_{3} +
+\cdots + w_p x_{p}
+</span></p>
+<p>For our height-weight example, a well-fitting model might look like this:</p>
+<p><span class="math display">
+  \mathrm{weight (kg)} = 0.972 \times \mathrm{height (cm)} - 99.5
+</span></p>
+<p>The parameters of the model, <span class="math inline">(w_0, w_1, \dots, w_p)</span>, are called the <strong>weights</strong>. The term <span class="math inline">w_0</span> is often called the <strong>bias</strong> or <strong>intercept</strong>. The mathematical notations used here are strongly established conventions in Machine Learning, and we will adhere to them throughout this module. Note, however, that ML is an interdisciplinary field, and conventions can sometimes conflict. For instance, in Statistics, the model parameters are instead denoted as <span class="math inline">\beta_0, \beta_1, \dots, \beta_p</span>.</p>
+<p>Let us formalise the problem. We have a dataset consisting of <span class="math inline">n</span> observations. For each observation <span class="math inline">i</span>, we have a vector of <span class="math inline">p</span> features <span class="math inline">(x_{i1}, x_{i2}, \dots, x_{ip})</span> and a corresponding output <span class="math inline">y_i</span>. The linear model for each observation is:</p>
+<p><span class="math display">
+  \begin{aligned}
+    y_1  &amp;= w_0 + w_1 x_{11} + w_2 x_{12} + \cdots + w_p x_{1p} +
+    \varepsilon_1 \\
+    y_2  &amp;= w_0 + w_1 x_{21} + w_2 x_{22} + \cdots + w_p x_{2p} +
+    \varepsilon_2  \\
+    &amp; \vdots &amp; \\
+    y_n  &amp;= w_0 + w_1 x_{n1} + w_2 x_{n2} + \cdots  + w_p x_{np} +
+    \varepsilon_n
+  \end{aligned}
+</span></p>
+<p>Again, we will stick to these notations throughout the module and <span class="math inline">n</span> will always represent the number of observations/number of points in your dataset, and <span class="math inline">p</span> the number of features.</p>
+<p>Since a simple linear model cannot perfectly capture the complexity of the real world, we have introduced an <strong>error term</strong>, <span class="math inline">\varepsilon_i</span>, for each observation. This term represents the difference between our model’s prediction and the actual observed value <span class="math inline">y_i</span>.</p>
+<p>Our objective is to find the set of weights <span class="math inline">(w_0, w_1, \cdots, w_p)</span> that makes the errors as small as possible. However, the errors <span class="math inline">(\varepsilon_1, \dots, \varepsilon_n)</span> form a vector, and we cannot directly minimise a vector. We need to aggregate these <span class="math inline">n</span> error values into a single scalar quantity that we can compare and use for optimisation.</p>
+<p>In Least Squares, this is achieved using the <strong>Mean Squared Error</strong> (MSE), which is the average of the squared errors:</p>
+<p><span class="math display">
+    E = \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots  + w_p x_{ip} - y_i \right)^2
+</span></p>
+<p>The choice of the Mean Squared Error is the defining aspect of Least Squares. While other metrics are possible (such as the mean absolute difference), the MSE is mathematically convenient and, as we will see, has a deep probabilistic justification. In Machine Learning, the function that measures the model’s error is called the <strong>loss function</strong>. Our goal is to find the weights that minimise this loss function.</p>
+</section>
+<section id="optimisation" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="optimisation"><span class="header-section-number">1.2</span> Optimisation</h2>
+<p>To find the optimal values for the weights <span class="math inline">(w_0, \dots, w_p)</span> that minimise the MSE, we can use calculus. The MSE, <span class="math inline">E(w_0, \dots, w_p)</span>, is a convex function of the weights. Therefore, its minimum occurs where its gradient is zero; that is, where all its partial derivatives with respect to each weight are equal to zero.</p>
+<p><span class="math display">
+  \frac{\partial E}{\partial w_0} = 0, \quad \frac{\partial E}{\partial w_1} = 0, \quad \cdots, \quad \frac{\partial E}{\partial w_p} = 0
+</span></p>
+<p>Let us compute these partial derivatives for our MSE loss function: <span class="math display">
+  E(w_0,\cdots,w_p) = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots  + w_p x_{ip} - y_i \right)^2
+</span></p>
+<p><span class="math display">
+\begin{aligned}
+    \frac{\partial E}{\partial  w_0} &amp;= \frac{2}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots + w_p x_{ip} - y_i \right) = 0
+    \\
+    \frac{\partial E}{\partial w_1} &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{i1} \left( w_0 + w_1 x_{i1} + \cdots + w_p x_{ip} - y_i \right) = 0 \\
+    &amp; \vdots   \\
+    \frac{\partial E}{\partial w_p} &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{ip}
+    \left( w_0 + w_1 x_{i1} + \cdots + w_p x_{ip} - y_i \right) = 0
+\end{aligned}
+</span></p>
+<p>Rearranging these terms and dividing by <span class="math inline">2/n</span>, we obtain a system of <span class="math inline">p+1</span> linear equations in <span class="math inline">p+1</span> unknowns <span class="math inline">(w_0, \dots, w_p)</span>:</p>
+<p><span class="math display">\begin{alignat*}{5}
+    &amp; w_0 \sum_{i=1}^n 1
+    &amp;&amp; + w_1 \sum_{i=1}^n x_{i1}
+    &amp;&amp; +\cdots
+    &amp;&amp; + w_p \sum_{i=1}^n x_{ip}
+    &amp;&amp; = \sum_{i=1}^n y_i \\
+    &amp; w_0 \sum_{i=1}^n x_{i1}
+    &amp;&amp; + w_1 \sum_{i=1}^n x_{i1}^2
+    &amp;&amp; +\cdots
+    &amp;&amp; + w_p \sum_{i=1}^n x_{i1}x_{ip}
+    &amp;&amp; = \sum_{i=1}^n x_{i1} y_i \\
+    &amp;  &amp;&amp; \vdots &amp;&amp; \vdots &amp;&amp; \vdots &amp;&amp; \vdots \\
+    &amp; w_0 \sum_{i=1}^n x_{ip}
+    &amp;&amp; + w_1 \sum_{i=1}^n x_{ip}x_{i1}
+    &amp;&amp; +\cdots
+    &amp;&amp; + w_p \sum_{i=1}^n x_{ip}^2
+    &amp;&amp; = \sum_{i=1}^n x_{ip} y_i
+\end{alignat*}</span></p>
+<p>This system of equations can be solved efficiently using standard linear algebra methods.</p>
+<section id="matrix-notation" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="matrix-notation"><span class="header-section-number">1.2.1</span> Matrix Notation</h3>
+<p>While the summation notation is explicit, it quickly becomes cumbersome. Deriving these equations using matrix notation is more elegant. By convention, we denote scalars with a lowercase letter (<span class="math inline">y</span>), vectors with a bold lowercase letter (<span class="math inline">\mathbf{w}</span>), and matrices with a bold uppercase letter (<span class="math inline">\mathbf{X}</span>).</p>
+<p>Let us define the following: <span class="math display">
+  \mathbf {y} =
+  \begin{pmatrix}
+  y_{1}\\ y_{2}\\ \vdots \\ y_{n}
+  \end{pmatrix},
+  \,
+  \mathbf {x}_i =
+  \begin{pmatrix}
+  1 \\ x_{i1}\\ x_{i2}\\ \vdots \\ x_{ip}
+  \end{pmatrix},
+  \,
+  \mathbf{w} =
+  \begin{pmatrix}
+  w_{0} \\ w_{1} \\ \vdots \\ w_{p}
+  \end{pmatrix},
+  \,
+  \boldsymbol{\varepsilon} =
+  \begin{pmatrix}
+    \varepsilon_{1}\\
+    \varepsilon_{2}\\
+    \vdots \\
+    \varepsilon_{n}
+    \end{pmatrix},
+</span></p>
+<p>To handle the bias <span class="math inline">w_0</span> as any of the other weights, we have augmented the feature vector with a made-up feature <span class="math inline">x_{i0}=1</span>. Doing this allows us to write our model in a compact way:</p>
+<p><span class="math display">
+\begin{aligned}
+y_i &amp;= w_0 \times 1 + w_1 x_{i1} + \cdots + w_p x_{ip} + \varepsilon_i \\
+&amp; = \mathbf {x}_i ^T\mathbf {w} + \varepsilon_i
+\end{aligned}
+</span></p>
+<p>We can combine this for all observations by introducing the matrix <span class="math inline">\mathbf{X}</span>, which contains all our input features for all <span class="math inline">n</span> observations:</p>
+<p><span class="math display">
+  \mathbf{X} =
+  \begin{pmatrix}
+  1 &amp; x_{11} &amp; \cdots &amp; x_{1p} \\
+  1 &amp; x_{21} &amp; \cdots &amp; x_{2p} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  1 &amp; x_{n1} &amp; \cdots &amp; x_{np}
+  \end{pmatrix}
+</span></p>
+<p>As mentioned earlier, the first column of ones is included to accommodate the bias term <span class="math inline">w_0</span>. This important matrix is known as the <strong>Design Matrix</strong>.</p>
+<p>Using these definitions, our entire system of <span class="math inline">n</span> linear equations can be written compactly as: <span class="math display">
+    \mathbf {y} = \mathbf{X} \mathbf{w} + \boldsymbol{\varepsilon}
+</span></p>
+<p>The MSE loss function can also be expressed neatly in matrix form. The sum of squared errors, <span class="math inline">\sum \varepsilon_i^2</span>, is equivalent to the squared Euclidean norm of the error vector, <span class="math inline">||\boldsymbol{\varepsilon}||^2</span>, which can be written as the dot product <span class="math inline">\boldsymbol{\varepsilon}^{\top}\boldsymbol{\varepsilon}</span>.</p>
+<p><span class="math display">
+  \begin{aligned}
+    E(\mathbf{w}) &amp;= \frac{1}{n} \sum_{i=1}^n \varepsilon_i^2 = \frac{1}{n} \boldsymbol{\varepsilon}^{\top}
+    \boldsymbol{\varepsilon} =  \frac{1}{n} || \boldsymbol{\varepsilon} ||^2 \\
+     &amp;= \frac{1}{n} ( \mathbf{X} \mathbf{w} - \mathbf {y} )^{\top} (
+    \mathbf{X} \mathbf{w} - \mathbf {y} ) \\
+    &amp;= \frac{1}{n} ( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} - 2 \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y} + \mathbf {y}^{\top}\mathbf {y} )
+  \end{aligned}
+</span></p>
+<p>To find the minimum of <span class="math inline">E(\mathbf{w})</span>, we need to compute its gradient with respect to the vector <span class="math inline">\mathbf{w}</span>, denoted <span class="math inline">\nabla_{\mathbf{w}} E</span> or <span class="math inline">\frac{\partial E}{\partial \mathbf{w}}</span>, and set it to the zero vector. <span class="math display">
+  \frac{\partial E}{\partial \mathbf{w}} = \left( \frac{\partial E}{\partial w_0}, \cdots,
+  \frac{\partial E}{\partial w_p} \right)^{\top} = \mathbf{0}
+</span></p>
+<p>Knowing a few standard results for vector calculus is very useful. Below is a list of common matrix derivative identities, assuming that <span class="math inline">\mathbf{a}, \mathbf{b}, \mathbf {A}</span> are independent of <span class="math inline">\mathbf {w}</span>.</p>
+<p><span class="math display">\begin{alignat*}{3}
+    &amp; {\frac {\partial {\mathbf{a}}^{\top }{\mathbf {w}}}{\partial
+          {\mathbf {w}}}} &amp;&amp;= {\mathbf {a}} &amp;&amp;
+  \\ &amp; {\frac {\partial {\mathbf {b}}^{\top }{\mathbf {A}}{\mathbf
+          {w}}}{\partial {\mathbf {w}}}} &amp;&amp; = {\mathbf {A}}^{\top }{\mathbf {b}}
+    &amp;&amp; \\ &amp; {\frac {\partial {\mathbf {w}}^{\top }{\mathbf
+          {A}}{\mathbf {w}}}{\partial {\mathbf {w}}}} &amp;&amp; = ({ \mathbf
+      {A}}+{\mathbf {A}}^{\top }){ \mathbf {w}} &amp;&amp; \quad \text{(or $2\mathbf{A}\mathbf{w}$ if A is symmetric)} \\ &amp; \frac
+    {\partial {\mathbf {w}}^{\top }{\mathbf {w}}}{\partial {\mathbf {w}}} &amp;&amp; =
+    2{\mathbf {w}} &amp;&amp; \\ &amp; {\frac {\partial \;{\mathbf {a}}^{\top }{\mathbf
+          {w}}{\mathbf {w}}^{\top }{\mathbf {b}}}{\partial \;{\mathbf {w}}}} &amp;&amp;
+    = ({\mathbf {a}}{\mathbf {b}}^{\top }+{\mathbf {b}}{\mathbf {a}}^{\top
+    }){\mathbf {w}} &amp;&amp; \\
+  \end{alignat*}</span></p>
+<div id="callout-ex-gradient" class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compute the gradient <span class="math inline">\frac{\partial E({\bf w})}{\partial {\bf w}}</span> for <span class="math inline">E({\bf w}) = ({\bf w}-{\bf B}{\bf w})^{\top} {\bf A} ({\bf w}-{\bf a})</span>.</p>
+<p>There are no assumptions about matrices <span class="math inline">{ \bf A}</span> and <span class="math inline">{ \bf B}</span>.</p>
+</div>
+</div>
+<p>Let us now apply these rules to our loss function: <span class="math display">
+\begin{aligned}
+    \frac{\partial E}{\partial \mathbf{w} } &amp;= \frac{1}{n} \frac{\partial
+    }{\partial \mathbf{w} }  \left( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} - 2
+    \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y} + \mathbf {y}^{\top}\mathbf {y} \right)
+\end{aligned}
+</span></p>
+<p>Applying the formulas to each term (noting that <span class="math inline">\mathbf{X}^{\top}\mathbf{X}</span> is symmetric): <span class="math display">
+\begin{aligned}
+    \frac{\partial}{\partial \mathbf{w} }  \left( \mathbf{w}^{\top} (\mathbf{X}^{\top}\mathbf{X}) \mathbf{w} \right)  &amp;= 2 \mathbf{X}^{\top}\mathbf{X} \mathbf{w} \\
+  \frac{\partial}{\partial \mathbf{w} }  \left( \mathbf {y}^{\top}\mathbf {y} \right)  &amp;= \mathbf{0} \\
+  \frac{\partial}{\partial \mathbf{w} }  \left( -2 \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y} \right)  &amp;= -2 \mathbf{X}^{\top}\mathbf {y}
+\end{aligned}
+</span></p>
+<p>Combining these results, we get the gradient: <span class="math display">
+\frac{\partial E}{\partial \mathbf{w} } = \frac{2}{n}  (\mathbf{X}^{\top} \mathbf{X} \mathbf{w} - \mathbf{X}^{\top} \mathbf{y})
+</span></p>
+<p>Setting the gradient to zero gives the <strong>normal equations</strong>: <span class="math display">
+\mathbf{X}^{\top}  \mathbf{X} \mathbf{w} =  \mathbf{X}^{\top}  \mathbf{y}
+</span></p>
+<p>This is the same linear system we derived earlier, but expressed in a much more compact and powerful notation. Assuming the matrix <span class="math inline">\mathbf{X}^{\top} \mathbf{X}</span> is invertible, we can solve for the optimal weight vector <span class="math inline">\hat{\mathbf{w}}</span> directly: <span class="math display">
+\hat{\mathbf{w}} = (\mathbf{X}^{\top} \mathbf{X})^{-1} \mathbf{X}^{\top} \mathbf{y}
+</span></p>
+</section>
+</section>
+<section id="least-squares-in-practice" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="least-squares-in-practice"><span class="header-section-number">1.3</span> Least Squares in Practice</h2>
+<p>Now that we have derived the theory, let us see how it can be used in practice.</p>
+<section id="a-simple-affine-example" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="a-simple-affine-example"><span class="header-section-number">1.3.1</span> A Simple Affine Example</h3>
+<p>Let us return to our initial height-weight example. The model is a simple affine function: <span class="math inline">y = w_0 + w_1 x</span>. The design matrix <span class="math inline">\mathbf{X}</span> stacks the single feature <span class="math inline">x_i</span> for each person, along with a column of ones for the bias term:</p>
+<p><span class="math display">
+  \mathbf{X}  =
+  {\begin{pmatrix} 1&amp;x_{1} \\
+      1&amp;x_{2} \\
+      \vdots &amp;\vdots  \\
+      1&amp;x_{n} \\
+  \end{pmatrix}}
+</span></p>
+<p>The components of the normal equations are: <span class="math display">
+  \mathbf{X}^{\top} \mathbf{X}  =
+         {\begin{pmatrix}
+             n &amp; \sum x_i  \\
+             \sum x_i &amp; \sum x_i^2 \\
+         \end{pmatrix}};
+\quad
+         \mathbf{X}^{\top} \mathbf{y}  =
+         {\begin{pmatrix}
+             \sum y_i \\
+             \sum x_i y_i
+         \end{pmatrix}}
+</span></p>
+<p>Solving for <span class="math inline">\hat{\mathbf{w}} = (\mathbf{X}^{\top} \mathbf{X})^{-1} \mathbf{X}^{\top} \mathbf{y}</span> with the collected data gives the estimated weights <span class="math inline">\hat{\mathbf{w}} = \begin{pmatrix} -99.5 \\ 0.972 \end{pmatrix}</span>. This corresponds to the linear model we saw earlier: <span class="math display">
+\mathrm{weight} = 0.972 \times \mathrm{height} - 99.5
+</span></p>
+</section>
+<section id="transforming-input-features" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="transforming-input-features"><span class="header-section-number">1.3.2</span> Transforming Input Features</h3>
+<p>A key aspect is that although the model must be linear <em>in the parameters</em> <span class="math inline">\mathbf{w}</span>, it does not have to be linear in the original input features <span class="math inline">\mathbf{x}</span>. A model is considered linear if it can be written as a linear combination of functions of the input features: <span class="math display">
+y = f(\mathbf{x}, \mathbf{w}) = \sum_{i=0}^p w_i \phi_i(\mathbf{x})
+</span> where the basis functions <span class="math inline">\phi_i(\mathbf{x})</span> do not depend on the weights <span class="math inline">\mathbf{w}</span>.</p>
+<p>This means we can fit non-linear relationships by first transforming our raw inputs. For example, we can fit a cubic polynomial model: <span class="math display">
+y = w_0 + w_1 x + w_2 x^2 + w_3 x^3
+</span> This is still a linear model in the sense that <span class="math inline">y</span> is a linear combination of the new features <span class="math inline">\phi_0(x)=1</span>, <span class="math inline">\phi_1(x)=x</span>, <span class="math inline">\phi_2(x)=x^2</span>, and <span class="math inline">\phi_3(x)=x^3</span>.</p>
+<p>Many other transformations can be used. For instance, <span class="math inline">y = w_0 + w_1 \cos(2\pi x) + w_2  \sin(2\pi x)</span> is also a linear model in the parameters <span class="math inline">w_0, w_1, w_2</span>, where the feature vector has been transformed to <span class="math inline">[1, \cos(2\pi x), \sin(2\pi x)]</span>. In contrast, a model like <span class="math inline">y = w_0^2 + x</span> is <em>not</em> linear in the parameters, because the term <span class="math inline">w_0^2</span> is not linear in <span class="math inline">w_0</span>.</p>
+<p>Similarly, we can transform the output variable. For instance, if we have collected 2D points <span class="math inline">(x_{1i}, x_{2i})</span> that lie on a circle centred at the origin, we could define a new output <span class="math inline">y_i = \sqrt{x_{1i}^2 + x_{2i}^2}</span> and fit a simple model <span class="math inline">y = w_0</span> to find the radius.</p>
+<p>This idea of transforming input features is at the core of many Machine Learning techniques. However, as we will see later in <a href="#sec-loss-noise" class="quarto-xref"><span>Section 1.8</span></a>, this practice is not entirely without consequences.</p>
+</section>
+<section id="polynomial-fitting" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="polynomial-fitting"><span class="header-section-number">1.3.3</span> Polynomial Fitting</h3>
+<p>Let us examine the use of feature transforms in more detail by looking at polynomial fitting, a particularly instructive example for ML. Consider the small dataset <span class="math inline">(x_i, y_i)</span> plotted below. Let us assume we know that the true relationship is quadratic, of the form: <span class="math inline">y = w_0 + w_1 x + w_2 x^2</span>.</p>
+<div id="fig-polyfit2-scatter" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyfit2-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/polyfit2_GT.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit2-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: A scatter plot of a small dataset for polynomial fitting, where the ground truth (dotted line) is a quadratic model.
+</figcaption>
+</figure>
+</div>
+<p>To fit this model, we transform our single feature <span class="math inline">x</span> into a new feature vector <span class="math inline">[1, x, x^2]</span>. The design matrix <span class="math inline">\mathbf{X}</span> becomes: <span class="math display">
+  \mathbf{X}  =
+  {\begin{pmatrix} 1&amp;x_{1}&amp; x_{1}^2 \\
+      1&amp;x_{2}&amp; x_{2}^2 \\
+      \vdots &amp;\vdots &amp;\vdots \\
+      1&amp;x_{n}&amp; x_{n}^2 \\
+  \end{pmatrix}}
+</span></p>
+<p>The components of the normal equations are then: <span class="math display">
+  \mathbf{X}^{\top} \mathbf{X}  =
+         {\begin{pmatrix}
+             \sum x_i^0 &amp; \sum x_i^1 &amp; \sum x_i^2 \\
+             \sum x_i^1 &amp; \sum x_i^2 &amp; \sum x_i^3 \\
+             \sum x_i^2 &amp; \sum x_i^3 &amp; \sum x_i^4
+         \end{pmatrix}}
+;, \quad
+         \mathbf{X}^{\top} \mathbf{y}  =
+         {\begin{pmatrix}
+             \sum y_i x_i^0 \\
+             \sum y_i x_i^1 \\
+             \sum y_i x_i^2
+         \end{pmatrix}}
+</span></p>
+<p>Solving for <span class="math inline">\hat{\mathbf{w}} = (\mathbf{X}^{\top} \mathbf{X})^{-1} \mathbf{X}^{\top} \mathbf{y}</span> gives the following estimated curve, which matches the ground truth well.</p>
+<div id="fig-polyfit2" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/polyfit2.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.4: Least Squares estimate for a polynomial fit of order 2.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="underfitting" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="underfitting"><span class="header-section-number">1.4</span> Underfitting</h2>
+<p>What happens if we choose a model that is too simple for the data? For example, let us try to fit a linear model (order 1), <span class="math inline">y = w_0 + w_1 x</span>, to our quadratic data.</p>
+<div id="fig-polyfit1" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/polyfit1.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.5: An example of underfitting (MSE: 2.02e+02).
+</figcaption>
+</figure>
+</div>
+<p>The resulting fit is poor, with a large MSE error. The straight line is unable to capture the curvature present in the data. This problem is called <strong>underfitting</strong>. It occurs when the model is not complex enough to capture the underlying patterns in the training data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How do we know if we are underfitting?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We know we are underfitting when the model performs poorly even on the data it was trained on; that is, the training loss (e.g., MSE) remains high.</p>
+<p>To remedy underfitting, we should consider using a more complex model, for instance, by increasing the degree of the polynomial.</p>
+</div>
+</div>
+</section>
+<section id="overfitting" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="overfitting"><span class="header-section-number">1.5</span> Overfitting</h2>
+<p>Now, let us consider the opposite problem. What if we use a model that is too complex? Let us try to fit a 9th-order polynomial, <span class="math inline">y = w_0 + w_1 x + \cdots + w_9 x^9</span>, to our small dataset.</p>
+<div id="fig-polyfit9" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyfit9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/polyfit9.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.6: An example of overfitting. The training error is extremely low (MSE=7.59e-06), but the model will not generalise well.
+</figcaption>
+</figure>
+</div>
+<p>The curve now passes perfectly through every data point, and the training error is virtually zero. However, the model exhibits wild oscillations between the points. It is clear that its predictions for any new data would be very poor. This phenomenon is called <strong>overfitting</strong>, and it is one of the most fundamental challenges in Machine Learning.</p>
+<p>Overfitting occurs when a model learns the training data too well, capturing not only the underlying pattern but also the random noise specific to that dataset. The model has high variance and fails to <strong>generalise</strong> to new, unseen data.</p>
+<p>This is why we must always evaluate our model on a separate <strong>test set</strong>—a portion of data that was held out and not used during training. Overfitting is occurring if the model’s error on the training set is very low, but its error on the test set is significantly higher.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How do we detect overfitting?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We have overfitting when the training error is a poor indicator of a model’s true performance. That is, when the error on the training set is low, but the error on the test set is high.</p>
+</div>
+</div>
+<p>There are two primary ways to combat overfitting:</p>
+<ol type="1">
+<li><p><strong>Use a simpler model</strong>: If the model is too complex for the amount of data available, reducing its complexity (e.g., using a lower-degree polynomial) can prevent it from fitting the noise.</p></li>
+<li><p><strong>Get more data</strong>: This is almost always the best solution. A larger and more representative dataset will naturally constrain a complex model, forcing it to learn the true underlying pattern. If some features are not useful, their corresponding weights <span class="math inline">w_i</span> will tend towards zero as more data is provided.</p></li>
+</ol>
+<p>The figure below shows what happens when we fit the same 9th-order polynomial to a much denser dataset. The fit is now very close to the true quadratic model, and the wild oscillations have disappeared. Thanks to the large amount of data, the estimated weight for the <span class="math inline">x^9</span> term is now close to zero (<span class="math inline">w_9=\small -1.83\!\times\!
+10^{-8}</span>), as it should be.</p>
+<div id="fig-polyfit9-denser" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polyfit9-denser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/polyfit9-denser.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit9-denser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.7: Higher-order models do not necessarily overfit if there is sufficient data (MSE: 7.18e-01).
+</figcaption>
+</figure>
+</div>
+<p>Note that a small amount of overfitting is not always a bad thing. One would expect a model to perform better on examples it has seen many times before. In practice, some gap between training and test performance is normal, and aggressively avoiding it might lead to underfitting.</p>
+</section>
+<section id="regularisation" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="regularisation"><span class="header-section-number">1.6</span> Regularisation</h2>
+<p>What if we cannot get more data? While this may sometimes be a poor excuse, there are situations where data is genuinely scarce or expensive. In such cases, a go-to technique called <strong>regularisation</strong> can be used to control overfitting.</p>
+<p>For Least Squares, a common regularisation technique is <strong>Tikhonov regularisation</strong>, also known as Ridge Regression or L2 regularisation. The idea is to add a penalty term to the loss function that discourages the model weights from becoming too large.</p>
+<p>Instead of minimising the standard MSE, <span class="math inline">|| \mathbf{X} \mathbf{w} - \mathbf{y} ||^2</span>, we minimise a modified loss: <span class="math display">
+E_{\text{reg}}(\mathbf{w}) = || \mathbf{X} \mathbf{w} - \mathbf{y} ||^2 + \alpha || \mathbf{w} ||^2
+</span> where <span class="math inline">|| \mathbf{w} ||^2 = w_0^2 + w_1^2 + \cdots + w_p^2</span> is the squared L2-norm of the weight vector, and <span class="math inline">\alpha &gt; 0</span> is a hyperparameter that controls the strength of the regularisation.</p>
+<p>The effect of this penalty is to introduce a <strong>bias</strong> that pulls the estimated weights <span class="math inline">\mathbf{w}</span> towards zero. The motivation is that, all else being equal, simpler models with smaller weights are generally more plausible. For example, the model <span class="math display">
+\mathrm{weight} = 0.972 \times \mathrm{height} - 99.5
+</span> is a priori more likely to be correct than a model like <span class="math display">
+\mathrm{weight} = 10^{10} \times \mathrm{height} - 10^{20}
+</span> even if both produce a similar prediction error on the training data. Regularisation helps us favour the former.</p>
+<p>Regularisation is often a necessary tool, but it is not a magic bullet. It helps prevent wild predictions for inputs far from the training data, but it does so by introducing a bias into the estimate. It should be seen as a way to incorporate prior beliefs into our model, not as a substitute for sufficient data.</p>
+<p>Adding the Tikhonov regularisation term still yields a closed-form solution, which is a convenient property: <span class="math display">
+\hat{\mathbf{w}}_{\text{reg}} = (\mathbf{X}^{\top}\mathbf{X} + \alpha \mathbf{I})^{-1} \mathbf{X}^{\top}\mathbf{y}
+</span> where <span class="math inline">\mathbf{I}</span> is the identity matrix.</p>
+<p>Numerically, overfitting often arises because the problem is ill-posed or under-constrained, causing the matrix <span class="math inline">\mathbf{X}^{\top}\mathbf{X}</span> to be singular (non-invertible) or poorly conditioned. Adding the term <span class="math inline">\alpha \mathbf{I}</span> ensures that the matrix is always invertible, thus stabilising the solution. Of course, a better way to make the problem well-posed is to have enough data to properly constrain it.</p>
+<p>So, go and get more data!</p>
+</section>
+<section id="the-maximum-likelihood-perspective" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="the-maximum-likelihood-perspective"><span class="header-section-number">1.7</span> The Maximum Likelihood Perspective</h2>
+<p>Very early on, Gauss established a deep connection between Least Squares, the principles of probability, and the Gaussian (or Normal) distribution. This provides a probabilistic justification for using the Mean Squared Error as our loss function.</p>
+<p>Recall our linear model: <span class="math display">
+  \mathbf{y} = \mathbf{X} \mathbf{w} + \boldsymbol{\varepsilon}
+</span></p>
+<p>We can adopt a probabilistic view by making an explicit assumption about the nature of the error term <span class="math inline">\boldsymbol{\varepsilon}</span>. Let us assume that the errors are drawn independently from a Gaussian distribution with a mean of zero and some variance <span class="math inline">\sigma^2</span>. <span class="math display">
+\varepsilon_i \sim \mathcal{N}(0, \sigma^2)
+</span> The probability density function (pdf) for a single error term is: <span class="math display">
+p(\varepsilon_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{\varepsilon_i^2}{2\sigma^2}\right)
+</span></p>
+<div id="fig-normal-pdf" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-pdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/NormalPDF.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-pdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.8: The probability density function of the Normal distribution.
+</figcaption>
+</figure>
+</div>
+<p>Given this assumption, we can calculate the <strong>likelihood</strong> of observing a particular output <span class="math inline">y_i</span> given the input <span class="math inline">\mathbf{x}_i</span> and model weights <span class="math inline">\mathbf{w}</span>. Since <span class="math inline">\varepsilon_i = y_i - \mathbf{x}_i^{\top}\mathbf{w}</span>, this is: <span class="math display">
+p(y_i|\mathbf{x}_i, \mathbf{w}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y_i - \mathbf{x}_i^{\top}\mathbf{w})^2}{2\sigma^2}\right)
+</span></p>
+<p>Assuming that all <span class="math inline">n</span> observations are independent and identically distributed (i.i.d.), the likelihood of observing the entire dataset <span class="math inline">(\mathbf{X}, \mathbf{y})</span> is the product of the individual likelihoods: <span class="math display">
+\begin{aligned}
+p(\mathbf{y}|\mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n p(y_i|\mathbf{x}_i, \mathbf{w}) \\
+&amp;= \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2\right)
+\end{aligned}
+</span></p>
+<p>The principle of <strong>Maximum Likelihood Estimation</strong> (MLE) states that we should choose the parameters <span class="math inline">\mathbf{w}</span> that make our observed data most probable. That is, we want to find the <span class="math inline">\mathbf{w}</span> that maximises the likelihood function <span class="math inline">p(\mathbf{y}|\mathbf{X}, \mathbf{w})</span>: <span class="math display">
+\hat{\mathbf{w}}_{\text{ML}} = \arg\max_{\mathbf{w}} p(\mathbf{y}|\mathbf{X}, \mathbf{w})
+</span></p>
+<p>For practical reasons, it is easier to work with the logarithm of the likelihood, as this turns the product into a sum and does not change the location of the maximum. Maximising the log-likelihood is equivalent to minimising the negative log-likelihood: <span class="math display">
+\begin{aligned}
+\hat{\mathbf{w}}_{\text{ML}} &amp;= \arg\min_{\mathbf{w}}
+- \log(p(\mathbf{y}|\mathbf{X}, \mathbf{w})) \\
+&amp;= \arg\min_{\mathbf{w}} - \log\left(\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2\right)\right) \\
+&amp;= \arg\min_{\mathbf{w}} \left( n \log(\sqrt{2\pi\sigma^2}) + \frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2 \right)
+\end{aligned}
+</span></p>
+<p>Since the terms <span class="math inline">n</span>, <span class="math inline">\log(\sqrt{2\pi\sigma^2})</span>, and <span class="math inline">2\sigma^2</span> are positive constants with respect to <span class="math inline">\mathbf{w}</span>, minimising this expression is equivalent to minimising: <span class="math display">
+\hat{\mathbf{w}}_{\text{ML}} = \arg\min_{\mathbf{w}} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2
+</span></p>
+<p>This is precisely the same objective function as in the method of Least Squares. This remarkable result shows that the Least Squares estimate is identical to the Maximum Likelihood solution under the assumption of i.i.d. Gaussian noise. This establishes a fundamental link between the choice of a loss function and the implicit assumptions we make about the data’s error distribution.</p>
+<p>Choosing the MSE loss is equivalent to assuming that the prediction error is normally distributed. If we were to choose a different loss function, it would correspond to a different assumption about the noise. For instance, choosing the Mean Absolute Error (MAE) loss, <span class="math inline">\sum |y_i - \mathbf{x}_i^{\top}\mathbf{w}|</span>, is equivalent to assuming the error follows a Laplace distribution.</p>
+<p>In conclusion, the choice of loss function should ideally be driven by our knowledge of the data-generating process. In practice, however, the choice is often guided by a combination of empirical performance on a test set and the mathematical convenience of optimisation.</p>
+</section>
+<section id="sec-loss-noise" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="sec-loss-noise"><span class="header-section-number">1.8</span> Loss, Feature Transforms, and Noise</h2>
+<p>Here are a few examples to illustrate the intricate relationships between the loss function, feature transformations, and noise characteristics.</p>
+<section id="example-1-regression-towards-the-mean" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="example-1-regression-towards-the-mean"><span class="header-section-number">1.8.1</span> Example 1: Regression Towards the Mean</h3>
+<p>Consider the case where our input measurements themselves are noisy. The model is: <span class="math display">
+y = (x + \nu) w + \epsilon
+</span> where <span class="math inline">\nu \sim \mathcal{N}(0, \sigma_\nu^2)</span> is noise in the measurement of the feature <span class="math inline">x</span>, and <span class="math inline">\epsilon \sim \mathcal{N}(0, \sigma_\epsilon^2)</span> is the usual observation noise. The total prediction error is now <span class="math inline">\epsilon + w\nu</span>, which critically depends on the parameter <span class="math inline">w</span> we are trying to estimate. This is no longer a textbook application of Least Squares.</p>
+<p>As illustrated in <a href="#fig-galtontoy" class="quarto-xref">Figure&nbsp;<span>1.9</span></a>, applying standard Least Squares in this scenario will result in an estimated slope <span class="math inline">\hat{w}</span> that is biased towards zero. This is because reducing the magnitude of <span class="math inline">w</span> not only fits the data but also minimises the variance of the noise term <span class="math inline">w\nu</span>. This phenomenon is a common source of surprising results.</p>
+<div id="fig-galtontoy" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-galtontoy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/GaltonToy-LS.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-galtontoy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.9: An example of Regression Towards the Mean. The dashed green line shows the true relationship (<span class="math inline">y=x</span>). The solid red line is the LS estimate, which is biased towards zero.
+</figcaption>
+</figure>
+</div>
+<p>In fact, this problem is the origin of the term <strong>regression</strong> itself. In his 1886 paper, “Regression towards mediocrity in hereditary stature,” Francis Galton used Least Squares to compare the heights of parents and their adult children. He observed that tall parents tended to have children who were shorter than them, and short parents tended to have children who were taller. His linear fit had a slope <span class="math inline">\hat{w} &lt; 1</span>, indicating a “regression to the mean.” The explanation is that both sets of heights are noisy measurements of an underlying genetic predisposition, leading to the bias we have described.</p>
+<p>This issue does not arise if the features are known precisely. For instance, if <span class="math inline">x</span> is a timestamp in a time series, there is no uncertainty, and it is safe to apply LS and any feature transformations.</p>
+</section>
+<section id="example-2-non-linear-transformations" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="example-2-non-linear-transformations"><span class="header-section-number">1.8.2</span> Example 2: Non-linear Transformations</h3>
+<p>Consider the following non-linear model with additive Gaussian noise: <span class="math display">
+y = x_1^{w_1} + \epsilon
+</span> where <span class="math inline">\epsilon \sim \mathcal{N}(0,1)</span>. The model is not linear in the parameters. However, we can linearise it by taking the logarithm of both sides and transforming the features: <span class="math display">
+\begin{aligned}
+   y' &amp; =  \log(y) \\
+   x_1' &amp; =  \log(x_1)
+\end{aligned}
+</span></p>
+<p>This leads to a model that is linear in the weights: <span class="math display">
+y' = w_1 x_1' + \epsilon'
+</span> However, the error term <span class="math inline">\epsilon'</span> is now also a transformed version of the original error <span class="math inline">\epsilon</span>. Using a first-order Taylor approximation, <span class="math inline">\log(t + \epsilon) \approx \log(t) + \epsilon/t</span>, we find that: <span class="math display">
+\epsilon' \approx \frac{\epsilon}{x_1^{w_1}}
+</span> The new error term <span class="math inline">\epsilon'</span> is no longer independent of the features and weights, and its variance is not constant. This violates the assumptions of standard Least Squares, and applying it to the transformed problem is likely to produce biased estimates.</p>
+<p>So, while feature transformations are a powerful tool, it is important to remember that they can alter the statistical properties of the noise, potentially leading to unexpected biases in the results.</p>
+<p>In practice, Machine Learning practitioners often adopt a pragmatic approach. While these deviations from the classical assumptions introduce theoretical risks, the method’s simplicity, robustness and performance in many real-world scenarios often outweigh these statistical drawbacks. The key takeaway is to be aware of the risks and to use diagnostic plots (e.g., residual plots) to identify and potentially address severe assumption breaches.</p>
+</section>
+</section>
+<section id="takeaways" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">1.9</span> Takeaways</h2>
+<p>This chapter has revisited Linear Regression from a Machine Learning perspective. The key takeaways are:</p>
+<ul>
+<li><p>We start with a collection of <span class="math inline">n</span> training examples, <span class="math inline">(\mathbf{x}_i, y_i)</span>. Each example consists of a feature vector <span class="math inline">\mathbf{x}_i</span> and a target value <span class="math inline">y_i</span>.</p></li>
+<li><p>We postulate a <strong>model</strong> that is linear in a set of parameters or <strong>weights</strong> <span class="math inline">\mathbf{w}</span>, such that our prediction is <span class="math inline">\hat{y}_i = \mathbf{x}_i^{\top}\mathbf{w}</span>.</p></li>
+<li><p>We define a <strong>loss function</strong> to quantify the discrepancy between our predictions and the true values. For least squares, this is the <strong>Mean Squared Error (MSE)</strong>.</p></li>
+<li><p>We find the optimal weights <span class="math inline">\hat{\mathbf{w}}</span> by <strong>minimising the loss function</strong>. For MSE, this leads to a closed-form solution known as the normal equations.</p></li>
+<li><p>Minimising the MSE loss is equivalent to finding the <strong>Maximum Likelihood</strong> solution under the assumption that the observation errors are independent and identically distributed according to a Gaussian distribution.</p></li>
+<li><p><strong>Underfitting</strong> occurs when the model is too simple to capture the underlying data patterns. It can be addressed by using a more complex model.</p></li>
+<li><p><strong>Overfitting</strong> occurs when the model is too complex and learns the noise in the training data, failing to generalise to a separate <strong>test set</strong>. It can be addressed by using more data or by using <strong>regularisation</strong>.</p></li>
+<li><p>We can fit non-linear relationships by <strong>transforming the input features</strong>. However, we must be mindful that these transformations can affect the noise distribution and cause biases in our estimates.</p></li>
+</ul>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-01-matrix-dimension" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.1</strong></span> Assume <span class="math inline">{\bf a} = \left[\begin{smallmatrix} a_1 &amp; a_2 &amp; \cdots &amp;
+a_p\end{smallmatrix}\right]^\top</span>, is a column vector of size <span class="math inline">p \times 1</span>,</p>
+<p>What are the matrix dimensions of</p>
+<ol type="1">
+<li><span class="math inline">{\bf a}{\bf a}^{\top}</span></li>
+<li><span class="math inline">{\bf a}^{\top}{\bf a}</span></li>
+<li><span class="math inline">{\bf a}{\bf a}^{\top}{\bf a}{\bf a}^{\top}</span></li>
+<li><span class="math inline">{\bf a}^{\top}{\bf a}{\bf a}^{\top}{\bf a}</span></li>
+</ol>
+</div>
+<div id="exr-02-gradient-computations" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.2</strong></span> Given no assumptions about matrices <span class="math inline">{\bf A}</span>, <span class="math inline">{\bf B}</span> and vectors <span class="math inline">{\bf a}</span> and <span class="math inline">{\bf b}</span>, compute the gradient <span class="math inline">\frac{\partial E({\bf w})}{\partial {\bf
+  w}}</span> for</p>
+<ol type="1">
+<li><span class="math inline">E({\bf w})={\bf w}^{\top}{\bf w}</span></li>
+<li><span class="math inline">E({\bf w})=({\bf w}-{\bf a})^{\top}{\bf A}({\bf w}-{\bf a}</span></li>
+<li><span class="math inline">E({\bf w})=({\bf A}{\bf w}-{\bf b})^{\top}({\bf A}{\bf w}-{\bf b})</span></li>
+<li><span class="math inline">E({\bf w}) = ({\bf w}-{\bf B}{\bf w})^{\top} {\bf A} ({\bf w}-{\bf a})</span></li>
+</ol>
+</div>
+<div id="exr-01-gradient2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Compute the gradient <span class="math inline">\frac{\partial f({\bf x})}{\partial {\bf x}}</span> for:</p>
+<ol type="1">
+<li><span class="math inline">f({\bf x})=\frac{1}{2} {\bf x}^{\top} {\bf A} {\bf x} + b</span> with <span class="math inline">{\bf
+A}</span> symmetric</li>
+<li><span class="math inline">f({\bf x})=\cos({\bf a}^{\top}{\bf x})</span></li>
+<li><span class="math inline">f({\bf x})=\sum_{i=1}^{n} \lambda_i \exp\left(- \frac{\|{\bf x}-{\bf a}_i\|^2}{2}
+\right)</span></li>
+</ol>
+</div>
+<div id="exr-01-which-are-linear" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.4</strong></span> Which of the following models with input <span class="math inline">x_1,x_2</span>, parameters <span class="math inline">w_1,w_2</span> and noise <span class="math inline">\epsilon\sim \mathcal{N}(0,\sigma^2)</span>, are linear in the parameters and can be used as such for Least Squares:</p>
+<ol type="1">
+<li><span class="math inline">y = w_0 +   w_1 x^2 + \epsilon</span></li>
+<li><span class="math inline">y = w_0 x^{w_1} + w_2 + \epsilon</span></li>
+<li><span class="math inline">y = \exp(w_0 + w_1 x) + \epsilon</span></li>
+<li><span class="math inline">\log(y) = w_0 + w_1 x + \epsilon</span></li>
+</ol>
+</div>
+<div id="exr-01-mean" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.5</strong></span> For <span class="math inline">n</span> real numbers <span class="math inline">x_1,\cdots,x_n</span>, what is the value <span class="math inline">\hat{x}</span> that minimises the sum of squared distances from <span class="math inline">x</span> to each <span class="math inline">x_i</span>: <span class="math display">
+  \hat{x} = \arg\min_x \sum_{i=1}^{n} (x_i-x)^2
+</span></p>
+</div>
+<div id="exr-01-mean" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.6</strong></span> For a linear model <span class="math inline">{\bf y} = {\bf X}{\bf w} + \boldsymbol{\epsilon}</span>, derive, in a matrix form, the expression of the least square error. That is, for <span class="math inline">E({\bf
+w}) = \boldsymbol{\epsilon}^{\top}\boldsymbol{\epsilon}</span> derive the expression of <span class="math inline">\min_{{\bf w}} E({\bf w})</span>.</p>
+</div>
+<div id="exr-01-autoregressive" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.7</strong></span> An autoregressive model is when a value from a time series is regressed on previous values from that same time series.</p>
+<p><span class="math display">
+  x_{t}=w_0+\sum _{{i=1}}^{p}w_{i}x_{{t-i}}+\varepsilon_{t}
+</span></p>
+<p>write the design matrix for this problem.</p>
+</div>
+<div id="exr-01-express-bias" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.8</strong></span> Consider the linear model <span class="math inline">y = w_0 + w_1 x</span>. We want to bias <span class="math inline">w_1</span> towards the value 1. Write a loss function that achieves this.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapter-00-intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapter-02-logistic-regression.html" class="pagination-link" aria-label="Logistic Regression: From Lines to Probabilities">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Logistic Regression: From Lines to Probabilities</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, François Pitié</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
