@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>References – 4C16 - Deep Learning and its Applications</title>
+<title>Appendix F — Word Embedding – 4C16 - Deep Learning and its Applications</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,8 +30,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./note-01-error-loss-likelihood.html" rel="next">
-<link href="./chapter-11-LLMs.html" rel="prev">
+<link href="./note-05-He-initialisation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -145,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./note-01-error-loss-likelihood.html">Appendices</a></li><li class="breadcrumb-item"><a href="./note-06-word-embeddings.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -300,7 +280,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -345,7 +325,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
+  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
@@ -356,15 +336,25 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link active" data-scroll-target="#one-hot-encoding"><span class="header-section-number">F.1</span> One-Hot Encoding</a></li>
+  <li><a href="#word2vec" id="toc-word2vec" class="nav-link" data-scroll-target="#word2vec"><span class="header-section-number">F.2</span> Word2Vec</a></li>
+  <li><a href="#doing-maths-with-these-embeddings" id="toc-doing-maths-with-these-embeddings" class="nav-link" data-scroll-target="#doing-maths-with-these-embeddings"><span class="header-section-number">F.3</span> Doing Maths with these Embeddings</a></li>
+  <li><a href="#tokenisation-beyond-word-level-embeddings" id="toc-tokenisation-beyond-word-level-embeddings" class="nav-link" data-scroll-target="#tokenisation-beyond-word-level-embeddings"><span class="header-section-number">F.4</span> Tokenisation: Beyond Word-Level Embeddings</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">F.5</span> Further Reading</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./note-01-error-loss-likelihood.html">Appendices</a></li><li class="breadcrumb-item"><a href="./note-06-word-embeddings.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title"><span id="sec-note-word-embedding" class="quarto-section-identifier">Appendix F — Word Embedding</span></h1>
 </div>
 
 
@@ -381,123 +371,194 @@ window.Quarto = {
 </header>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-BahdanauCB14" class="csl-entry" role="listitem">
-Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. 2015. <span>“Neural
-Machine Translation by Jointly Learning to Align and Translate.”</span>
-In <em>3rd International Conference on Learning Representations,
-<span>ICLR</span> 2015, San Diego, CA, USA, May 7-9, 2015, Conference
-Track Proceedings</em>, edited by Yoshua Bengio and Yann LeCun. <a href="http://arxiv.org/abs/1409.0473">http://arxiv.org/abs/1409.0473</a>.
+<p>At the core of neural networks is the use of linear algebra to combine feature vectors. Using neural networks for text processing is therefore problematic, as text is a sequence of words and symbols rather than a vector of real numbers.</p>
+<p>In this note, we will look at how text can be represented with real-valued <strong>word vectors</strong>. This transformation is a key step in using machine learning for <strong>natural language processing</strong> (NLP) and is called <strong>encoding</strong> or <strong>embedding</strong>.</p>
+<p>The aim of an emdedding is to design a lookup table, where each word can be mapped to a vector.</p>
+<section id="one-hot-encoding" class="level2" data-number="F.1">
+<h2 data-number="F.1" class="anchored" data-anchor-id="one-hot-encoding"><span class="header-section-number">F.1</span> One-Hot Encoding</h2>
+<p>The simplest embedding is the <strong>one-hot</strong> vector. Each symbol in a dictionary of size <span class="math inline">n</span> is represented as a vector where all elements are zero, except for a single entry of one at the index corresponding to that word.</p>
+<div id="exm-one-hot" class="theorem example">
+<p><span class="theorem-title"><strong>Example F.1 (One-Hot Encoding)</strong></span> Consider the following alphabetically sorted dictionary: <code>{a, cat, is, sitting}</code>. The dictionary size is 4, so the word vector sizes are <span class="math inline">4 \times 1</span>. The one-hot encodings for <code>cat</code> and <code>sitting</code> could be as follows: <span class="math display">
+\mathbf{x}_{\mathtt{cat}} = \begin{bmatrix} 0 \\ 1 \\ 0 \\ 0 \end{bmatrix}\,, \quad
+\mathbf{x}_{\mathtt{sitting}} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 1 \end{bmatrix}
+</span></p>
 </div>
-<div id="ref-decisiontrees" class="csl-entry" role="listitem">
-Breiman, L., J. H. Friedman, R. A. Olshen, and C. J. Stone. 1984.
-<em>Classification and Regression Trees</em>. Monterey, CA: Wadsworth;
-Brooks.
+<p>The problem with one-hot word vectors is the sheer scale of languages. There are about 200,000 words in current use in the English language, which altogether create about 13 million different tokens. Word vectors generated by one-hot encoding would be embedded in a vector space of dimension 13 million!</p>
+<p>In neural networks, this would require input vectors of dimension 13 million and thus would necessitate training an enormous number of weights. We therefore need to find a more compact representation.</p>
+<p>Another issue is that one-hot encoding does not capture any semantic relationship between words.</p>
+Let’s look at the word vectors we have defined with one-hot. In theory we could add the word vectors as follows: [ 2 {}<em>{} + 3.2 {}</em>{} - 1.5 {}<em>{} ] but we will end up with vectors that are difficult to interpret. For instance, what would be the meaning of [ 2 {}</em>{} + 3.2 {}<em>{} - 1.5 {}</em>{} =
+<span class="math display">\begin{bmatrix} 0 \\ 2 \\ -1.5 \\ 3.2
+\end{bmatrix}</span>
+<p>= {}_{?} ]</p>
+<p>Also, by definition, for any two distinct dictionary entries <span class="math inline">\mathbf{x}_1</span> and <span class="math inline">\mathbf{x}_2</span>, we have <span class="math inline">\mathbf{x}_1^{\top}\mathbf{x}_2 = 0</span>. Consequently, their <strong>cosine similarity</strong> is always zero, regardless of whether the words are synonyms or entirely unrelated.</p>
+<p>We require an encoding where words are represented by vectors that makes sense in an Euclidean space: where linear combinations of word vectors and scalar products make as much sense as possible.</p>
+</section>
+<section id="word2vec" class="level2" data-number="F.2">
+<h2 data-number="F.2" class="anchored" data-anchor-id="word2vec"><span class="header-section-number">F.2</span> Word2Vec</h2>
+<p><strong>Word2Vec</strong> (2013) was the first neural embedding model to gain widespread popularity. While many non-deep learning techniques exist—such as <strong>GloVe</strong> (Global Vectors for Word Representation), which relies on matrix factorisation of co-occurrence statistics—Word2Vec introduced a powerful predictive approach.</p>
+<p>Word2Vec offers two main architectures: <strong>Continuous Bag of Words</strong> (CBOW), which uses context to predict a target word, and <strong>Skip-gram</strong>, which predicts the context from a target word.</p>
+<p>Let’s look at the Skip-gram approach, where we take a target word <span class="math inline">\mathbf{x}_t</span> and attempt to predict its surrounding context words (e.g.&nbsp;<span class="math inline">\mathbf{x}_{t-2}, \mathbf{x}_{t-1}, \mathbf{x}_{t+1},
+\mathbf{x}_{t+2}</span>).</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/skipgram-sentence.svg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>The Skip-gram model predicts context words from a target word.</figcaption>
+</figure>
 </div>
-<div id="ref-gru" class="csl-entry" role="listitem">
-Chung, Junyoung, Caglar Gulcehre, Kyunghyun Cho, and Yoshua Bengio.
-2014. <span>“Empirical Evaluation of Gated Recurrent Neural Networks on
-Sequence Modeling.”</span> In <em>NIPS 2014 Workshop on Deep Learning,
-December 2014</em>.
+<p>The model follows an encoder-decoder architecture. The input is a one-hot vector of size <span class="math inline">n</span>, the encoder produces a compact embedding of size <span class="math inline">r</span>, and the decoder attempts to reconstruct the context word probabilities.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/skipgram-nn.svg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Word2Vec Skip-gram Network Architecture.</figcaption>
+</figure>
 </div>
-<div id="ref-cox1958" class="csl-entry" role="listitem">
-Cox, D. R. 1958. <span>“The Regression Analysis of Binary
-Sequences.”</span> <em>Journal of the Royal Statistical Society. Series
-B (Methodological)</em> 20 (2): 215–42. <a href="http://www.jstor.org/stable/2983890">http://www.jstor.org/stable/2983890</a>.
+<p>Training this model is numerically challenging because the final softmax layer must handle millions of entries. Calculating the exponentials for such a large dictionary is computationally expensive, requiring specialised techniques such as hierarchical softmax or negative sampling.</p>
+</section>
+<section id="doing-maths-with-these-embeddings" class="level2" data-number="F.3">
+<h2 data-number="F.3" class="anchored" data-anchor-id="doing-maths-with-these-embeddings"><span class="header-section-number">F.3</span> Doing Maths with these Embeddings</h2>
+<p>Remarkably, these learnt embedding spaces often capture semantic relationships as linear substructures. This allows for algebraic manipulation of concepts (ie. linear combination). A famous example is the gender relationship:</p>
+<p><span class="math display">
+\mathbf{x}_{\text{man}} -
+\mathbf{x}_{\text{woman}} \approx \mathbf{x}_{\text{king}} -
+\mathbf{x}_{\text{queen}}
+</span></p>
+<p>Some representations from these linear substructures for GloVe are shown in <a href="#fig-linear-substructures-word-embeddings" class="quarto-xref">Figure&nbsp;<span>F.1</span></a>. Similar examples can be found with Word2Vec.</p>
+<div id="fig-linear-substructures-word-embeddings" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-linear-substructures-word-embeddings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linear-substructures-word-embeddings" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-linear-substructures-word-embeddings-gender" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-linear-substructures-word-embeddings-gender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/man_woman_small.jpg" class="img-fluid figure-img" data-ref-parent="fig-linear-substructures-word-embeddings">
 </div>
-<div id="ref-DEVRIES20232191" class="csl-entry" role="listitem">
-de Vries, Alex. 2023. <span>“The Growing Energy Footprint of Artificial
-Intelligence.”</span> <em>Joule</em> 7 (10): 2191–94. https://doi.org/<a href="https://doi.org/10.1016/j.joule.2023.09.004">https://doi.org/10.1016/j.joule.2023.09.004</a>.
-</div>
-<div id="ref-adaboost" class="csl-entry" role="listitem">
-Freund, Yoav, and Robert E. Schapire. 1995. <span>“A Desicion-Theoretic
-Generalization of on-Line Learning and an Application to
-Boosting.”</span> In <em>Computational Learning Theory</em>, edited by
-Paul Vitányi, 23–37. Berlin, Heidelberg: Springer Berlin Heidelberg.
-</div>
-<div id="ref-gatys2015neural" class="csl-entry" role="listitem">
-Gatys, Leon A., Alexander S. Ecker, and Matthias Bethge. 2015. <span>“A
-Neural Algorithm of Artistic Style.”</span> <a href="http://arxiv.org/abs/1508.06576">http://arxiv.org/abs/1508.06576</a>.
-</div>
-<div id="ref-maskrcnn" class="csl-entry" role="listitem">
-He, Kaiming, Georgia Gkioxari, Piotr Dollár, and Ross B. Girshick. 2017.
-<span>“Mask r-CNN.”</span> <em>2017 IEEE International Conference on
-Computer Vision (ICCV)</em>, 2980–88.
-</div>
-<div id="ref-randomforests" class="csl-entry" role="listitem">
-Ho, Tin Kam. 1995. <span>“Random Decision Forests.”</span> In
-<em>Proceedings of 3rd International Conference on Document Analysis and
-Recognition</em>, 1:278–282 vol.1. <a href="https://doi.org/10.1109/ICDAR.1995.598994">https://doi.org/10.1109/ICDAR.1995.598994</a>.
-</div>
-<div id="ref-lstm" class="csl-entry" role="listitem">
-Hochreiter, Sepp, and Jürgen Schmidhuber. 1997. <span>“Long Short-Term
-Memory.”</span> <em>Neural Computation</em> 9 (8): 1735–80.
-</div>
-<div id="ref-hoffmann2022training" class="csl-entry" role="listitem">
-Hoffmann, Jordan, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya,
-Trevor Cai, Eliza Rutherford, Diego de Las Casas, et al. 2022.
-<span>“Training Compute-Optimal Large Language Models.”</span> <a href="https://arxiv.org/abs/2203.15556">https://arxiv.org/abs/2203.15556</a>.
-</div>
-<div id="ref-alexnet" class="csl-entry" role="listitem">
-Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E Hinton. 2012.
-<span>“ImageNet Classification with Deep Convolutional Neural
-Networks.”</span> In <em>Advances in Neural Information Processing
-Systems 25</em>, edited by F. Pereira, C. J. C. Burges, L. Bottou, and
-K. Q. Weinberger, 1097–1105. Curran Associates, Inc. <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf</a>.
-</div>
-<div id="ref-dalle2" class="csl-entry" role="listitem">
-Ramesh, Aditya, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark
-Chen. 2022. <span>“Hierarchical Text-Conditional Image Generation with
-CLIP Latents.”</span> arXiv. <a href="https://doi.org/10.48550/ARXIV.2204.06125">https://doi.org/10.48550/ARXIV.2204.06125</a>.
-</div>
-<div id="ref-mskinect" class="csl-entry" role="listitem">
-Shotton, Jamie, Toby Sharp, Alex Kipman, Andrew Fitzgibbon, Mark
-Finocchio, Andrew Blake, Mat Cook, and Richard Moore. 2013.
-<span>“Real-Time Human Pose Recognition in Parts from Single Depth
-Images.”</span> <em>Commun. ACM</em> 56 (1): 116–24. <a href="https://doi.org/10.1145/2398356.2398381">https://doi.org/10.1145/2398356.2398381</a>.
-</div>
-<div id="ref-attention" class="csl-entry" role="listitem">
-Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion
-Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017.
-<span>“Attention Is All You Need.”</span> In <em>Advances in Neural
-Information Processing Systems</em>, edited by I. Guyon, U. Von Luxburg,
-S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett. Vol.
-30. Curran Associates, Inc. <a href="https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf</a>.
-</div>
-<div id="ref-showandtell" class="csl-entry" role="listitem">
-Vinyals, Oriol, Alexander Toshev, Samy Bengio, and Dumitru Erhan. 2015.
-<span>“Show and Tell: A Neural Image Caption Generator.”</span> In
-<em>CVPR</em>, 3156–64. IEEE Computer Society. <a href="http://dblp.uni-trier.de/db/conf/cvpr/cvpr2015.html#VinyalsTBE15">http://dblp.uni-trier.de/db/conf/cvpr/cvpr2015.html#VinyalsTBE15</a>.
-</div>
-<div id="ref-wikiHopfieldNetwork" class="csl-entry" role="listitem">
-Wikipedia. 2025a. <span>“<span class="nocase">Hopfield network</span> —
-<span>W</span>ikipedia<span>,</span> the Free Encyclopedia.”</span> <a href="http://en.wikipedia.org/w/index.php?title=Hopfield%20network&amp;oldid=1291715818" class="uri">http://en.wikipedia.org/w/index.php?title=Hopfield%20network&amp;oldid=1291715818</a>.
-</div>
-<div id="ref-wikiPolynomialkernel" class="csl-entry" role="listitem">
-———. 2025b. <span>“<span class="nocase">Polynomial kernel</span> —
-<span>W</span>ikipedia<span>,</span> the Free Encyclopedia.”</span> <a href="http://en.wikipedia.org/w/index.php?title=Polynomial%20kernel&amp;oldid=1244553685" class="uri">http://en.wikipedia.org/w/index.php?title=Polynomial%20kernel&amp;oldid=1244553685</a>.
-</div>
-<div id="ref-wikiRBFKernel" class="csl-entry" role="listitem">
-———. 2025c. <span>“<span class="nocase">Radial basis function
-kernel</span> — <span>W</span>ikipedia<span>,</span> the Free
-Encyclopedia.”</span> <a href="http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357" class="uri">http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357</a>.
-</div>
-<div id="ref-WolpMacr97" class="csl-entry" role="listitem">
-Wolpert, David H., and William G. Macready. 1997. <span>“No Free Lunch
-Theorems for Optimization.”</span> <em>IEEE Transactions on Evolutionary
-Computation</em> 1 (1): 67–82.
-</div>
-<div id="ref-pmlr-v37-xuc15" class="csl-entry" role="listitem">
-Xu, Kelvin, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan
-Salakhudinov, Rich Zemel, and Yoshua Bengio. 2015. <span>“Show, Attend
-and Tell: Neural Image Caption Generation with Visual Attention.”</span>
-In <em>Proceedings of the 32nd International Conference on Machine
-Learning</em>, edited by Francis Bach and David Blei, 37:2048–57.
-Proceedings of Machine Learning Research. Lille, France: PMLR. <a href="https://proceedings.mlr.press/v37/xuc15.html">https://proceedings.mlr.press/v37/xuc15.html</a>.
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-linear-substructures-word-embeddings-gender-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Gender
+</figcaption>
+</figure>
 </div>
 </div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linear-substructures-word-embeddings" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-linear-substructures-word-embeddings-comparative" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-linear-substructures-word-embeddings-comparative-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/comparative_superlative_small.jpg" class="img-fluid figure-img" data-ref-parent="fig-linear-substructures-word-embeddings">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-linear-substructures-word-embeddings-comparative-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Comparative and Superlative
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-linear-substructures-word-embeddings" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-linear-substructures-word-embeddings-zip" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-linear-substructures-word-embeddings-zip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/city_zip_small.jpg" class="img-fluid figure-img" data-ref-parent="fig-linear-substructures-word-embeddings">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-linear-substructures-word-embeddings-zip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) City and Zip code
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linear-substructures-word-embeddings-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;F.1: Linear substructures in word embeddings : Gender, Comparative/Superlative, and City/Zip code relationships. (GloVe)
+</figcaption>
+</figure>
+</div>
+<p>Another remarkable result is that these embeddings are effective at capturing semantic similarities (ie. scalar product). For example, the nearest neighbours to the word “frog” in the GloVe embedding space include other amphibian species like “toad” or “litoria” (see <a href="#fig-glove-frog" class="quarto-xref">Figure&nbsp;<span>F.2</span></a>).</p>
+<div id="fig-glove-frog" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-glove-frog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/toad.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>1. toad</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/litoria.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>2. litoria</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/leptodactylidae.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>3. leptodactylidae</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/rana.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>4. rana</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/lizard.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>5. lizard</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="figures/eleutherodactylus.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>6. eleutherodactylus</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-glove-frog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;F.2: Nearest neighbours for the word “frog” in the GloVe embedding space.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="tokenisation-beyond-word-level-embeddings" class="level2" data-number="F.4">
+<h2 data-number="F.4" class="anchored" data-anchor-id="tokenisation-beyond-word-level-embeddings"><span class="header-section-number">F.4</span> Tokenisation: Beyond Word-Level Embeddings</h2>
+<p>While word-level embeddings like Word2Vec and GloVe show that text can be meaningfully mapped into a Euclidean space, they suffer from several significant limitations:</p>
+<ol type="1">
+<li><strong>Out-of-Dictionary (OOD) Problem:</strong> If a model encounters a word that was not in its training vocabulary (e.g.&nbsp;a typo, a new technical term, or a rare name), it cannot generate a vector for it.</li>
+<li><strong>Morphology:</strong> They treat different forms of the same root word (e.g. “walk”, “walking”, “walked”) as entirely distinct entities, failing to exploit their shared meaning efficiently.</li>
+</ol>
+<p>Modern Large Language Models (LLMs) solve these issues by using <strong>tokenisation</strong> instead of simple word-level encoding. Techniques such as <strong>Byte-Pair Encoding (BPE)</strong> or <strong>WordPiece</strong> breakdown words into frequent groups of bytes or sub-word units.</p>
+<p>In this approach, common words might remain as single tokens, but rare words are decomposed into smaller, more frequent sub-units. For example, the word “unhappily” might be broken down into <code>un</code> + <code>happi</code> + <code>ly</code>.</p>
+<p>This offers a bridge between character-level and word-level encoding:</p>
+<ul>
+<li>Like character-level encoding, it can represent any arbitrary string by breaking it down into its constituent parts (even down to individual bytes), thus eliminating the out-of-dictionary problem.</li>
+<li>Like word-level encoding, it retains semantic meaning in its tokens, as frequent sub-words (like prefixes and suffixes) carry consistent information across different contexts.</li>
+</ul>
+</section>
+<section id="further-reading" class="level2" data-number="F.5">
+<h2 data-number="F.5" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">F.5</span> Further Reading</h2>
+<p>For those wishing to explore word embeddings and tokenisation in more detail, you can look at the following resources:</p>
+<ul>
+<li><a href="https://arxiv.org/abs/1301.3781">Efficient Estimation of Word Representations in Vector Space</a>, T. Mikolov, K. Chen, G. Corrado, and J. Dean (2013).</li>
+<li><a href="https://nlp.stanford.edu/projects/glove/">GloVe: Global Vectors for Word Representation</a>, J. Pennington, R. Socher, and C. Manning (2014).</li>
+<li><a href="https://arxiv.org/abs/1508.07909">Neural Machine Translation of Rare Words with Subword Units</a>, R. Sennrich, B. Haddow, and A. Birch (2015) — the foundational paper for BPE in NLP.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -901,14 +962,11 @@ Proceedings of Machine Learning Research. Lille, France: PMLR. <a href="https://
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chapter-11-LLMs.html" class="pagination-link" aria-label="Large Language Models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span>
+      <a href="./note-05-He-initialisation.html" class="pagination-link" aria-label="He Initialisation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./note-01-error-loss-likelihood.html" class="pagination-link" aria-label="Relationship between Error, Loss Function and Maximum Likelihood">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Relationship between Error, Loss Function and Maximum Likelihood</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

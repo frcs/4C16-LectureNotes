@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,7 +93,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -379,6 +379,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -578,16 +584,8 @@ Figure&nbsp;9.4
 <p><span class="math display">\begin{equation}
      \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} {\bf v}_{j}
 \end{equation}</span></p>
-<p>On the face of it, this looks like a dense layer, as each output vector is a linear combination of the <em>value</em> vectors. The crucial difference is that the weights, <span class="math inline">w_{i,j}</span>, are computed <em>dynamically</em> as a function of how well the query <span class="math inline">{\bf q}_i</span> aligns with the key <span class="math inline">{\bf k}_j</span>:</p>
-<p><span class="math display">\begin{equation}
-     s_{i,j} = {\bf q}_{i}^{\top} {\bf k}_{j} / \sqrt{d_k}
-\end{equation}</span></p>
-<p>These scores are then normalised using a softmax function:</p>
-<p><span class="math display">\begin{equation}
-     w_{i,j} = \frac{\exp(s_{i,j})}{\sum_{l=1}^{L_k} \exp(s_{i,l})} \quad \text{so
-       as to have $\sum_j w_{i,j} = 1$ and $0 \leq w_{i,j} \leq 1$. }
-\end{equation}</span></p>
-<p>In other words, for each query vector <span class="math inline">{\bf q}_i</span>:</p>
+<p>On the face of it, this looks like a dense layer, as each output vector is a linear combination of the <em>value</em> vectors. The crucial difference is that the weights, <span class="math inline">w_{i,j}</span>, are computed <em>dynamically</em> as a function of how well the query <span class="math inline">{\bf q}_i</span> aligns with the key <span class="math inline">{\bf k}_j</span>.</p>
+<p>To summarise, for each query vector <span class="math inline">{\bf q}_i</span>:</p>
 <ol type="1">
 <li><p>We evaluate the alignment/similarity between <span class="math inline">{\bf q}_i</span> and all the <em>keys</em> <span class="math inline">{\bf k}_j</span>:</p>
 <p><span class="math display">\begin{equation}
@@ -614,11 +612,11 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In the language of attention, we can represent these pairs as keys (<span class="math inline">{\bf k}</span>) and values (<span class="math inline">{\bf v}</span>):</p>
 <p><span class="math display">
-\begin{aligned}
-{\bf k}_1 &amp;\equiv \text{`France'}  &amp; ; \quad &amp; {\bf v}_1 &amp;\equiv \ \text{`Paris'} \\
-{\bf k}_2 &amp;\equiv \text{`UK'}        &amp; ; \quad &amp; {\bf v}_2 &amp;\equiv \ \text{`London'} \\
-{\bf k}_3 &amp;\equiv \text{`Germany'}  &amp; ; \quad &amp; {\bf v}_3 &amp;\equiv \ \text{`Berlin'} \\
-\end{aligned}
+\begin{alignat}{3}
+{\bf k}_1 &amp;\equiv \text{`France'}  &amp;; \quad &amp;  {\bf v}_1  &amp; &amp;\equiv \ \text{`Paris'} \\
+{\bf k}_2 &amp;\equiv \text{`UK'}        &amp;; \quad &amp;  {\bf v}_2 &amp; &amp;\equiv \ \text{`London'} \\
+{\bf k}_3 &amp;\equiv \text{`Germany'}  &amp;; \quad &amp; {\bf v}_3  &amp; &amp;\equiv \ \text{`Berlin'} \\
+\end{alignat}
 </span></p>
 <p>A standard dictionary performs a “hard” lookup. If we provide the query <code>'France'</code>, it finds an exact match with key <span class="math inline">{\bf k}_1</span> and returns the single corresponding value <span class="math inline">{\bf v}_1</span>.</p>
 <p>We can model this hard lookup using an attention-like process. Imagine a hypothetical alignment score function that returns <span class="math inline">+\infty</span> if the query and key strings are identical, and <span class="math inline">-\infty</span> if they differ. When we apply the softmax function to these scores, the weights become either 1 for a perfect match or 0 otherwise.</p>
@@ -636,14 +634,14 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 \end{aligned}
 </span></p>
 <p>This perfectly mimics the dictionary lookup.</p>
-<p>The actual attention mechanism is a “soft” or “fuzzy” lookup. By using similarity measure (like the our dot product) between vector representations, a query for <code>'French Republic'</code> might result in high, but not absolute, similarity to <code>'France'</code>, yielding attention weights like <span class="math inline">(0.95, 0.03, 0.02)</span>. The resulting output would be a blend of the values, heavily weighted towards <code>'Paris'</code>. This allows the model to relax the requirement to have a single exact match.</p>
+<p>The actual attention mechanism is a “soft” or “fuzzy” lookup. By using similarity measure (like our dot product) between vector representations, a query for <code>'French Republic'</code> might result in high, but not absolute, similarity to <code>'France'</code>, yielding attention weights like <span class="math inline">(0.95, 0.03, 0.02)</span>. The resulting output would be a blend of the values, heavily weighted towards <code>'Paris'</code>. This allows the model to relax the requirement to have a single exact match.</p>
 </section>
 <section id="no-trainable-parameters" class="level3" data-number="9.2.3">
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="no-trainable-parameters"><span class="header-section-number">9.2.3</span> No Trainable Parameters</h3>
 <p>As we loop through the queries and keys, the number of similarity scores to compute is <span class="math inline">L_q \times L_k</span>. Each similarity calculation takes <span class="math inline">\mathcal{O}(d_k)</span> operations, so the overall computational complexity is <span class="math inline">\mathcal{O}(L_q \times L_k \times d_k)</span>. This is very similar in complexity to a dense layer (except that we do not try to have cross-channel weights).</p>
 <p>Importantly, because we have a formula to compute the weights, the <strong>Attention mechanism itself does not have any trainable parameters</strong>. This becomes apparent when we write down the full mathematical formula in matrix form:</p>
 <p><span class="math display">\begin{equation} \small \text{Attention}({\bf Q}, {\bf K}, {\bf V}) =
-  \mathrm{softmax}\left(\frac{{\bf Q} {\bf K}^\top}{\sqrt{d_k}} \right) {\bf V}
+  \mathrm{softmax}\left(\frac{{\bf Q} {\bf K}^\top}{\sqrt{d_k}} \right) {\bf V},
 \end{equation}</span></p>
 <p>where the <span class="math inline">\mathrm{softmax}</span> function is applied row-wise.</p>
 </section>
