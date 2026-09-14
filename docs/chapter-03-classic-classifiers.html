@@ -369,7 +369,7 @@ window.Quarto = {
   <li><a href="#the-kernel-trick" id="toc-the-kernel-trick" class="nav-link" data-scroll-target="#the-kernel-trick"><span class="header-section-number">3.5</span> The Kernel Trick</a>
   <ul class="collapse">
   <li><a href="#the-challenge-of-feature-expansion" id="toc-the-challenge-of-feature-expansion" class="nav-link" data-scroll-target="#the-challenge-of-feature-expansion"><span class="header-section-number">3.5.1</span> The Challenge of Feature Expansion</a></li>
-  <li><a href="#step-1-re-parameterization" id="toc-step-1-re-parameterization" class="nav-link" data-scroll-target="#step-1-re-parameterization"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterization</a></li>
+  <li><a href="#step-1-re-parameterisation" id="toc-step-1-re-parameterisation" class="nav-link" data-scroll-target="#step-1-re-parameterisation"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterisation</a></li>
   <li><a href="#step-2-kernel-functions" id="toc-step-2-kernel-functions" class="nav-link" data-scroll-target="#step-2-kernel-functions"><span class="header-section-number">3.5.3</span> Step 2: Kernel Functions</a></li>
   <li><a href="#understanding-the-rbf-kernel" id="toc-understanding-the-rbf-kernel" class="nav-link" data-scroll-target="#understanding-the-rbf-kernel"><span class="header-section-number">3.5.4</span> Understanding the RBF Kernel</a></li>
   <li><a href="#support-vectors" id="toc-support-vectors" class="nav-link" data-scroll-target="#support-vectors"><span class="header-section-number">3.5.5</span> Support Vectors</a></li>
@@ -405,7 +405,7 @@ window.Quarto = {
 <section id="k-nearest-neighbours-k-nn" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="k-nearest-neighbours-k-nn"><span class="header-section-number">3.1</span> k-Nearest Neighbours (<span class="math inline">k</span>-NN)</h2>
 <p>The <span class="math inline">k</span>-nearest neighbours (<span class="math inline">k</span>-NN) algorithm is a simple yet powerful non-parametric method. To classify a new data point, <span class="math inline">{\bf x}</span>, the algorithm identifies the <span class="math inline">k</span> closest data points in the training set (its “neighbours”). The new data point is then assigned to the class that is most common among its <span class="math inline">k</span> neighbours. The confidence of the prediction can be expressed as the proportion of neighbours belonging to the majority class.</p>
-<p>For example, in <a href="#fig-knn-illustration" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, if we use <span class="math inline">k=3</span>, the prediction for the new data point (with the question mark) would be the positive class (red cross) with 66% confidence. However, if we use <span class="math inline">k=5</span>, the prediction would be the negative class (blue circle) with 60% confidence.</p>
+<p>For example, in <a href="#fig-knn-illustration" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, if we use <span class="math inline">k=3</span>, the prediction for the new data point (with the question mark) would be the positive class (red cross) with 66.7% confidence. However, if we use <span class="math inline">k=5</span>, the prediction would be the negative class (blue circle) with 60% confidence.</p>
 <div id="fig-knn-illustration" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-knn-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -416,14 +416,14 @@ Figure&nbsp;3.1: An illustration of <span class="math inline">k</span>-NN with <
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The color shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
+<p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The colour shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
 <div id="fig-db-kNN" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/compare-classifiers-decision-boundary-NN.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN on three different classification problems. The intensity of the color indicates the confidence of the prediction.
+Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN on three different classification problems. The intensity of the colour indicates the confidence of the prediction.
 </figcaption>
 </figure>
 </div>
@@ -436,6 +436,8 @@ Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN o
 <p><strong>Cons:</strong></p>
 <ul>
 <li><strong>Computationally expensive:</strong> Finding the nearest neighbours can be slow, especially with large datasets.</li>
+<li><strong>Sensitive to feature scaling:</strong> Features with larger numerical ranges dominate distance metrics, making standardisation essential.</li>
+<li><strong>Curse of dimensionality:</strong> In high-dimensional spaces, pairwise distances concentrate and data points become roughly equidistant, degrading predictive accuracy.</li>
 <li><strong>Sensitive to small datasets:</strong> The algorithm can perform poorly if the training set is small or not representative of the true data distribution.</li>
 <li><strong>Lack of interpretability:</strong> The model does not provide insights into the importance of different features.</li>
 </ul>
@@ -511,19 +513,19 @@ See Also
 y = [ {\bf x}^{\top}{\bf w} &gt; 0 ]
 </span></p>
 <p>The key difference between SVM and logistic regression lies in the loss function used for training.</p>
-<p>While logistic regression uses the cross-entropy loss, SVM employs the <em>hinge loss</em>:</p>
+<p>While logistic regression uses the cross-entropy loss, SVM employs regularised <em>hinge loss</em>:</p>
 <p><span class="math display">
-L_{SVM}( {\bf w}) = \sum_{i=1}^N [y_i=0]\max(0, 1 + {\bf x}_i^{\top} {\bf w}) + [y_i=1]\max(0, 1 - {\bf x}_i^{\top}
-{\bf w})
+L_{SVM}( {\bf w}) = \frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \Big( [y_i=0]\max(0, 1 + {\bf x}_i^{\top} {\bf w}) + [y_i=1]\max(0, 1 - {\bf x}_i^{\top} {\bf w}) \Big)
 </span></p>
-<p>Geometrically, the hinge loss encourages the model to find a hyperplane that maximizes the margin, or the distance, between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>).</p>
+<p>The hinge loss penalises points that fail to clear a margin around the boundary, while the <span class="math inline">\ell_2</span> penalty <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2</span> encourages the model to find a hyperplane that maximises the geometric margin between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>).</p>
+<p><em>Note: In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in \{-1, +1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i {\bf x}_i^{\top} {\bf w})</span>.</em></p>
 <div id="fig-diag-svm" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/svm-unreg.svg" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.6: SVM aims to find the hyperplane that maximizes the margin between the two classes.
+Figure&nbsp;3.6: SVM aims to find the hyperplane that maximises the margin between the two classes.
 </figcaption>
 </figure>
 </div>
@@ -532,7 +534,7 @@ Figure&nbsp;3.6: SVM aims to find the hyperplane that maximizes the margin betwe
 <section id="the-no-free-lunch-theorem" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="the-no-free-lunch-theorem"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem</h2>
 <p>It is important to note that there is no single best classifier for all problems. The performance of a classifier depends heavily on the nature of the data.</p>
-<p>Recall that the choice of loss function directly relates to assumptions you make about the distribution of the prediction errors, and thus about the dataset of your problem).</p>
+<p>Recall that the choice of loss function directly relates to assumptions you make about the distribution of the prediction errors, and thus about the dataset of your problem.</p>
 <p>This is formalised by the <strong>No-Free-Lunch Theorem</strong> <span class="citation" data-cites="WolpMacr97">(<a href="references.html#ref-WolpMacr97" role="doc-biblioref">Wolpert and Macready 1997</a>)</span>, which states that, when averaged over all possible problems, all classifiers perform equally well. In other words, the choice of classifier should always be guided by the specific characteristics of the problem at hand.</p>
 <div id="fig-no-free-lunch-theorem" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -570,8 +572,8 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 <p>For instance, with <span class="math inline">p=100</span> features and a polynomial of degree 5, the resulting feature vector would have a dimension of approximately 100 million. This makes computations, such as the least-squares solution <span class="math inline">{\bf w} = (X^{\top}X)^{-1}X^{\top}{\bf y}</span>, completely impractical, as <span class="math inline">X^{\top}X</span> would be a <span class="math inline">10^8 \times 10^8</span> matrix.</p>
 <p>The <strong>kernel trick</strong> provides an elegant solution to this problem, allowing us to work with very complex, high-dimensional feature mappings without ever explicitly computing them.</p>
 </section>
-<section id="step-1-re-parameterization" class="level3" data-number="3.5.2">
-<h3 data-number="3.5.2" class="anchored" data-anchor-id="step-1-re-parameterization"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterization</h3>
+<section id="step-1-re-parameterisation" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="step-1-re-parameterisation"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterisation</h3>
 <p>In many machine learning algorithms, the loss function depends on the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">{\bf x}^{\top}{\bf w}</span>. It can be shown (see <a href="note-04-kernel-trick.html" class="quarto-xref"><span>Appendix D</span></a>) that the optimal weight vector, <span class="math inline">\hat{\bf w}</span>, can be expressed as a linear combination of the input feature vectors:</p>
 <p><span class="math display">
 \hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
@@ -580,9 +582,9 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 <p><span class="math display">
   {\bf x}^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}^{\top} {\bf x}_i,
 </span></p>
-<p>Notice that the score now depends on the dot products between feature vectors. This re-parameterization is key to the kernel trick. When we apply a feature mapping <span class="math inline">\phi</span>, the score becomes:</p>
+<p>Notice that the score now depends on the dot products between feature vectors. This re-parameterisation is key to the kernel trick. When we apply a feature mapping <span class="math inline">\phi</span>, the score becomes:</p>
 <p><span class="math display">
-    \phi({\bf x})^{\top}{\bf w} = \sum_{i=1}^n \alpha_i \phi({\bf x})^{\top} \phi({\bf x}_i)
+    \phi({\bf x})^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i \phi({\bf x})^{\top} \phi({\bf x}_i)
 </span></p>
 <p>To compute the score in this high-dimensional space, we only need to be able to compute the dot products <span class="math inline">\phi({\bf x})^{\top} \phi({\bf x}_i)</span>.</p>
 </section>
@@ -596,13 +598,13 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 </span></p>
 <p>The key here is that we can often define and compute the kernel function <span class="math inline">\kappa</span> without ever explicitly defining or computing the feature mapping <span class="math inline">\phi</span>. The theory of Reproducing Kernel Hilbert Spaces (RKHS) guarantees that for a wide class of kernel functions, a corresponding mapping <span class="math inline">\phi</span> does indeed exist.</p>
 <p>Many different kernel functions are available. For example, the <strong>polynomial kernel</strong> is defined as: <span class="math display">
-\kappa({\bf u}, {\bf v}) = (r - \gamma {\bf u}^{\top} {\bf v})^d
+\kappa({\bf u}, {\bf v}) = (r + \gamma {\bf u}^{\top} {\bf v})^d
 </span> This kernel is equivalent to the polynomial feature mapping of degree <span class="math inline">d</span> we discussed earlier (see <span class="citation" data-cites="wikiPolynomialkernel">(<a href="references.html#ref-wikiPolynomialkernel" role="doc-biblioref">Wikipedia 2025a</a>)</span>), but it avoids the computational explosion in dimensionality.</p>
 <p>The most commonly used kernel is the <strong>Radial Basis Function (RBF) kernel</strong> (see <span class="citation" data-cites="wikiRBFKernel">(<a href="references.html#ref-wikiRBFKernel" role="doc-biblioref">Wikipedia 2025b</a>)</span>): <span class="math display">
 \kappa({\bf u}, {\bf v}) = e^{- \gamma \| {\bf u} - {\bf
       v}\|^2 }
 </span></p>
-<p>The feature mapping <span class="math inline">\phi</span> induced by the RBF kernel is infinitely dimensional, but we never need to compute it directly. A finite approximation of the mapping can be obtained by taking cosine/sine projections of the input feature onto a set of random directions <span class="math inline">{\bf w}_{1}, \ldots, {\bf w}_{D}</span>:</p>
+<p>The feature mapping <span class="math inline">\phi</span> induced by the RBF kernel is infinitely dimensional, but we never need to compute it directly. A finite approximation of the mapping can be obtained by taking cosine/sine projections of the input feature onto a set of random directions <span class="math inline">{\bf w}_{1}, \ldots, {\bf w}_{D}</span> drawn from a Gaussian distribution:</p>
 <p><span class="math display">
 \varphi ({\bf x})\approx{\frac {1}{\sqrt {D}}}[\cos ( {\bf w}_{1}^\top{\bf x})
 ,\sin ( {\bf w}_{1}^\top{\bf x})  ,\ldots ,\cos({\bf w}_{D}^\top{\bf x})  ,\sin({\bf w}_{D}^\top{\bf x})
@@ -615,7 +617,7 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 \mathrm{score}({\bf x}) = \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i)
 </span></p>
 <p>The kernel function <span class="math inline">\kappa({\bf u}, {\bf v}) = e^{- \gamma \| {\bf u} - {\bf
-v}\|^2 }</span> acts as a measure of similarity between two data points. If <span class="math inline">{\bf u}</span> and <span class="math inline">{\bf v}</span> are close, <span class="math inline">\kappa({\bf u}, {\bf v}) \approx 1</span>. If they are far apart, <span class="math inline">\kappa({\bf u}, {\bf v}) \approx 0</span>. The parameter <span class="math inline">\gamma</span> controls the scale of this neighbourhood. As you can imaging, this is less intuitive for other kernels.</p>
+v}\|^2 }</span> acts as a measure of similarity between two data points. If <span class="math inline">{\bf u}</span> and <span class="math inline">{\bf v}</span> are close, <span class="math inline">\kappa({\bf u}, {\bf v}) \approx 1</span>. If they are far apart, <span class="math inline">\kappa({\bf u}, {\bf v}) \approx 0</span>. The parameter <span class="math inline">\gamma</span> controls the scale of this neighbourhood. As you can imagine, this is less intuitive for other kernels.</p>
 <p>If we were to set <span class="math inline">\alpha_i = 1</span> for positive examples and <span class="math inline">\alpha_i = -1</span> for negative examples (which is a simplification of what SVM actually does), the score would be:</p>
 <p><span class="math display">
   \begin{aligned}
