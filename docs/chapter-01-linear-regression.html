@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,7 +38,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -417,156 +417,140 @@ Figure&nbsp;1.2: An example of collected data, showing a linear regression fit.
 </div>
 <p>In the language of Machine Learning, we define the following:</p>
 <ul>
-<li><p>The <strong>input</strong> to our predictive model is a set of features, represented by a vector <span class="math inline">(x_1, \cdots, x_p)</span>. In this simple case, we have only one feature, <span class="math inline">x_1</span>, which is a person’s height in centimetres.</p></li>
+<li><p>The <strong>input</strong> to our predictive model is a set of features, represented by a vector <span class="math inline">(x_1, \dots, x_p)</span>. In this simple case, we have only one feature, <span class="math inline">x_1</span>, which is a person’s height in centimetres.</p></li>
 <li><p>The <strong>output</strong> of the model is a scalar value, <span class="math inline">y</span>. Here, <span class="math inline">y</span> is the person’s weight in kilograms. It is straightforward to generalise this to a vector of outputs by treating each component as a separate scalar prediction problem.</p></li>
 <li><p>The <strong>model</strong> defines the relationship between the input features and the output. For linear regression, we assume this relationship is linear:</p></li>
 </ul>
 <p><span class="math display">
-y = w_0 + w_1 x_{1} + w_2 x_{2} + w_3 x_{3} +
-\cdots + w_p x_{p}
+y = w_0 + w_1 x_{1} + w_2 x_{2} + w_3 x_{3} + \dots + w_p x_{p}
 </span></p>
 <p>For our height-weight example, a well-fitting model might look like this:</p>
 <p><span class="math display">
-  \mathrm{weight (kg)} = 0.972 \times \mathrm{height (cm)} - 99.5
+  \mathrm{weight (kg)} = \mathrm{height (cm)} \times 0.972 - 99.5
 </span></p>
 <p>The parameters of the model, <span class="math inline">(w_0, w_1, \dots, w_p)</span>, are called the <strong>weights</strong>. The term <span class="math inline">w_0</span> is often called the <strong>bias</strong> or <strong>intercept</strong>. The mathematical notations used here are strongly established conventions in Machine Learning, and we will adhere to them throughout this module. Note, however, that ML is an interdisciplinary field, and conventions can sometimes conflict. For instance, in Statistics, the model parameters are instead denoted as <span class="math inline">\beta_0, \beta_1, \dots, \beta_p</span>.</p>
 <p>Let us formalise the problem. We have a dataset consisting of <span class="math inline">n</span> observations. For each observation <span class="math inline">i</span>, we have a vector of <span class="math inline">p</span> features <span class="math inline">(x_{i1}, x_{i2}, \dots, x_{ip})</span> and a corresponding output <span class="math inline">y_i</span>. The linear model for each observation is:</p>
 <p><span class="math display">
   \begin{aligned}
-    y_1  &amp;= w_0 + w_1 x_{11} + w_2 x_{12} + \cdots + w_p x_{1p} +
-    \varepsilon_1 \\
-    y_2  &amp;= w_0 + w_1 x_{21} + w_2 x_{22} + \cdots + w_p x_{2p} +
-    \varepsilon_2  \\
-    &amp; \vdots &amp; \\
-    y_n  &amp;= w_0 + w_1 x_{n1} + w_2 x_{n2} + \cdots  + w_p x_{np} +
-    \varepsilon_n
+    y_1  &amp;= w_0 + w_1 x_{11} + w_2 x_{12} + \dots + w_p x_{1p} + \varepsilon_1 \\
+    y_2  &amp;= w_0 + w_1 x_{21} + w_2 x_{22} + \dots + w_p x_{2p} + \varepsilon_2 \\
+    y_3  &amp;= w_0 + w_1 x_{31} + w_2 x_{32} + \dots + w_p x_{3p} + \varepsilon_3 \\
+         &amp;\;\;\vdots \\
+    y_n  &amp;= w_0 + w_1 x_{n1} + w_2 x_{n2} + \dots + w_p x_{np} + \varepsilon_n
   \end{aligned}
 </span></p>
 <p>Again, we will stick to these notations throughout the module and <span class="math inline">n</span> will always represent the number of observations/number of points in your dataset, and <span class="math inline">p</span> the number of features.</p>
 <p>Since a simple linear model cannot perfectly capture the complexity of the real world, we have introduced an <strong>error term</strong>, <span class="math inline">\varepsilon_i</span>, for each observation. This term represents the difference between our model’s prediction and the actual observed value <span class="math inline">y_i</span>.</p>
-<p>Our objective is to find the set of weights <span class="math inline">(w_0, w_1, \cdots, w_p)</span> that makes the errors as small as possible. However, the errors <span class="math inline">(\varepsilon_1, \dots, \varepsilon_n)</span> form a vector, and we cannot directly minimise a vector. We need to aggregate these <span class="math inline">n</span> error values into a single scalar quantity that we can compare and use for optimisation.</p>
+<p>Our objective is to find the set of weights <span class="math inline">(w_0, w_1, \dots, w_p)</span> that makes the errors as small as possible. However, the errors <span class="math inline">(\varepsilon_1, \dots, \varepsilon_n)</span> form a vector, and we cannot directly minimise a vector. We need to aggregate these <span class="math inline">n</span> error values into a single scalar quantity that we can compare and use for optimisation.</p>
 <p>In Least Squares, this is achieved using the <strong>Mean Squared Error</strong> (MSE), which is the average of the squared errors:</p>
 <p><span class="math display">
-    E = \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots  + w_p x_{ip} - y_i \right)^2
+    E = \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right)^2
 </span></p>
 <p>The choice of the Mean Squared Error is the defining aspect of Least Squares. While other metrics are possible (such as the mean absolute difference), the MSE is mathematically convenient and, as we will see, has a deep probabilistic justification. In Machine Learning, the function that measures the model’s error is called the <strong>loss function</strong>. Our goal is to find the weights that minimise this loss function.</p>
 </section>
 <section id="optimisation" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="optimisation"><span class="header-section-number">1.2</span> Optimisation</h2>
-<p>To find the optimal values for the weights <span class="math inline">(w_0, \dots, w_p)</span> that minimise the MSE, we can use calculus. The MSE, <span class="math inline">E(w_0, \dots, w_p)</span>, is a convex function of the weights. Therefore, its minimum occurs where its gradient is zero; that is, where all its partial derivatives with respect to each weight are equal to zero.</p>
+<p>To find the optimal values for the weights <span class="math inline">(w_0, \dots, w_p)</span> that minimise the MSE, we can use calculus. The MSE, <span class="math inline">E(w_0, \dots, w_p)</span>, is a convex function of the weights. Therefore, its minimum occurs where its gradient is zero; that is, where all its partial derivatives with respect to each weight are equal to zero:</p>
 <p><span class="math display">
-  \frac{\partial E}{\partial w_0} = 0, \quad \frac{\partial E}{\partial w_1} = 0, \quad \cdots, \quad \frac{\partial E}{\partial w_p} = 0
+  \frac{\partial E}{\partial w_0} = \dots = \frac{\partial E}{\partial w_p} = 0
 </span></p>
 <p>Let us compute these partial derivatives for our MSE loss function: <span class="math display">
-  E(w_0,\cdots,w_p) = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots  + w_p x_{ip} - y_i \right)^2
+  E(w_0, \dots, w_p) = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right)^2
 </span></p>
 <p><span class="math display">
 \begin{aligned}
-    \frac{\partial E}{\partial  w_0} &amp;= \frac{2}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \cdots + w_p x_{ip} - y_i \right) = 0
-    \\
-    \frac{\partial E}{\partial w_1} &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{i1} \left( w_0 + w_1 x_{i1} + \cdots + w_p x_{ip} - y_i \right) = 0 \\
-    &amp; \vdots   \\
-    \frac{\partial E}{\partial w_p} &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{ip}
-    \left( w_0 + w_1 x_{i1} + \cdots + w_p x_{ip} - y_i \right) = 0
+    \frac{\partial E}{\partial w_0}(w_0, \dots, w_p) &amp;= \frac{2}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0 \\
+    \frac{\partial E}{\partial w_1}(w_0, \dots, w_p) &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{i1} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0 \\
+    &amp;\;\;\vdots \\
+    \frac{\partial E}{\partial w_p}(w_0, \dots, w_p) &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{ip} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0
 \end{aligned}
 </span></p>
 <p>Rearranging these terms and dividing by <span class="math inline">2/n</span>, we obtain a system of <span class="math inline">p+1</span> linear equations in <span class="math inline">p+1</span> unknowns <span class="math inline">(w_0, \dots, w_p)</span>:</p>
 <p><span class="math display">\begin{alignat*}{5}
     &amp; w_0 \sum_{i=1}^n 1
     &amp;&amp; + w_1 \sum_{i=1}^n x_{i1}
-    &amp;&amp; +\cdots
+    &amp;&amp; +\dots
     &amp;&amp; + w_p \sum_{i=1}^n x_{ip}
     &amp;&amp; = \sum_{i=1}^n y_i \\
     &amp; w_0 \sum_{i=1}^n x_{i1}
     &amp;&amp; + w_1 \sum_{i=1}^n x_{i1}^2
-    &amp;&amp; +\cdots
+    &amp;&amp; +\dots
     &amp;&amp; + w_p \sum_{i=1}^n x_{i1}x_{ip}
     &amp;&amp; = \sum_{i=1}^n x_{i1} y_i \\
-    &amp;  &amp;&amp; \vdots &amp;&amp; \vdots &amp;&amp; \vdots &amp;&amp; \vdots \\
+    &amp;  &amp;&amp; \;\;\vdots &amp;&amp; \;\;\vdots &amp;&amp; \;\;\vdots &amp;&amp; \;\;\vdots \\
     &amp; w_0 \sum_{i=1}^n x_{ip}
     &amp;&amp; + w_1 \sum_{i=1}^n x_{ip}x_{i1}
-    &amp;&amp; +\cdots
+    &amp;&amp; +\dots
     &amp;&amp; + w_p \sum_{i=1}^n x_{ip}^2
     &amp;&amp; = \sum_{i=1}^n x_{ip} y_i
 \end{alignat*}</span></p>
-<p>This system of equations can be solved efficiently using standard linear algebra methods.</p>
+<p>This gives a linear system of <span class="math inline">p+1</span> equations, solvable efficiently using standard linear solvers.</p>
 <section id="matrix-notation" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="matrix-notation"><span class="header-section-number">1.2.1</span> Matrix Notation</h3>
-<p>While the summation notation is explicit, it quickly becomes cumbersome. Deriving these equations using matrix notation is more elegant. By convention, we denote scalars with a lowercase letter (<span class="math inline">y</span>), vectors with a bold lowercase letter (<span class="math inline">\mathbf{w}</span>), and matrices with a bold uppercase letter (<span class="math inline">\mathbf{X}</span>).</p>
+<p>While the summation notation is explicit, it quickly becomes cumbersome. Deriving these equations using matrix notation is much cleaner and avoids having to track nested summations. By convention, we denote scalars with a lowercase letter (<span class="math inline">x</span> or <span class="math inline">y</span>), vectors with a bold lowercase letter (<span class="math inline">\mathbf{w}</span> or <span class="math inline">\mathbf{x}</span>), and matrices with a bold uppercase letter (<span class="math inline">\mathbf{X}</span>).</p>
 <p>Let us define the following: <span class="math display">
-  \mathbf {y} =
+  \mathbf{y} =
   \begin{pmatrix}
   y_{1}\\ y_{2}\\ \vdots \\ y_{n}
-  \end{pmatrix},
-  \,
-  \mathbf {x}_i =
+  \end{pmatrix}, \quad
+  \mathbf{X} =
   \begin{pmatrix}
-  1 \\ x_{i1}\\ x_{i2}\\ \vdots \\ x_{ip}
-  \end{pmatrix},
-  \,
+  1 &amp; x_{11} &amp; \dots &amp; x_{1p} \\
+  1 &amp; x_{21} &amp; \dots &amp; x_{2p} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  1 &amp; x_{n1} &amp; \dots &amp; x_{np}
+  \end{pmatrix}, \quad
   \mathbf{w} =
   \begin{pmatrix}
   w_{0} \\ w_{1} \\ \vdots \\ w_{p}
-  \end{pmatrix},
-  \,
+  \end{pmatrix}, \quad
   \boldsymbol{\varepsilon} =
   \begin{pmatrix}
-    \varepsilon_{1}\\
-    \varepsilon_{2}\\
-    \vdots \\
-    \varepsilon_{n}
-    \end{pmatrix},
+  \varepsilon_{1}\\
+  \varepsilon_{2}\\
+  \vdots \\
+  \varepsilon_{n}
+  \end{pmatrix}
 </span></p>
-<p>To handle the bias <span class="math inline">w_0</span> as any of the other weights, we have augmented the feature vector with a made-up feature <span class="math inline">x_{i0}=1</span>. Doing this allows us to write our model in a compact way:</p>
+<p>The linear model compactly becomes: <span class="math display">
+  \mathbf{y} = \mathbf{X} \mathbf{w} + \boldsymbol{\varepsilon}
+</span></p>
+<p>The matrix <span class="math inline">\mathbf{X}</span>, which stacks all the observations, is called the <strong>Design Matrix</strong>.</p>
+<p>Notice that <span class="math inline">w_0</span> plays a distinct role as an intercept: in machine learning and deep learning, this weight <span class="math inline">w_0</span> is called <strong>the bias</strong>. We can consider the bias <span class="math inline">w_0</span> as the weight of an augmented feature with constant value <span class="math inline">1</span> (<span class="math inline">x_{i0}=1</span>). Thus, the row feature vector for observation <span class="math inline">i</span> is:</p>
 <p><span class="math display">
-\begin{aligned}
-y_i &amp;= w_0 \times 1 + w_1 x_{i1} + \cdots + w_p x_{ip} + \varepsilon_i \\
-&amp; = \mathbf {x}_i ^T\mathbf {w} + \varepsilon_i
-\end{aligned}
+  \mathbf{x}_i =
+  \begin{pmatrix}
+  1 \\ x_{i1}\\ \vdots \\ x_{ip}
+  \end{pmatrix}
 </span></p>
-<p>We can combine this for all observations by introducing the matrix <span class="math inline">\mathbf{X}</span>, which contains all our input features for all <span class="math inline">n</span> observations:</p>
+<p>The linear model for observation <span class="math inline">i</span> is written compactly as <span class="math inline">y_i = \mathbf{x}_i^{\top} \mathbf{w} + \varepsilon_i</span>, and the design matrix simply stacks these row feature vectors:</p>
 <p><span class="math display">
   \mathbf{X} =
   \begin{pmatrix}
-  1 &amp; x_{11} &amp; \cdots &amp; x_{1p} \\
-  1 &amp; x_{21} &amp; \cdots &amp; x_{2p} \\
-  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-  1 &amp; x_{n1} &amp; \cdots &amp; x_{np}
+  \mathbf{x}_1^{\top} \\
+  \vdots \\
+  \mathbf{x}_n^{\top}
   \end{pmatrix}
 </span></p>
-<p>As mentioned earlier, the first column of ones is included to accommodate the bias term <span class="math inline">w_0</span>. This important matrix is known as the <strong>Design Matrix</strong>.</p>
-<p>Using these definitions, our entire system of <span class="math inline">n</span> linear equations can be written compactly as: <span class="math display">
-    \mathbf {y} = \mathbf{X} \mathbf{w} + \boldsymbol{\varepsilon}
-</span></p>
-<p>The MSE loss function can also be expressed neatly in matrix form. The sum of squared errors, <span class="math inline">\sum \varepsilon_i^2</span>, is equivalent to the squared Euclidean norm of the error vector, <span class="math inline">||\boldsymbol{\varepsilon}||^2</span>, which can be written as the dot product <span class="math inline">\boldsymbol{\varepsilon}^{\top}\boldsymbol{\varepsilon}</span>.</p>
+<p>The Mean Squared Error loss function can also be expressed neatly in matrix form. The sum of squared errors, <span class="math inline">\sum_{i=1}^n \varepsilon_i^2</span>, is equivalent to the squared Euclidean norm of the error vector, <span class="math inline">\|\boldsymbol{\varepsilon}\|^2</span>, which can be written as the dot product <span class="math inline">\boldsymbol{\varepsilon}^{\top}\boldsymbol{\varepsilon}</span>:</p>
 <p><span class="math display">
   \begin{aligned}
-    E(\mathbf{w}) &amp;= \frac{1}{n} \sum_{i=1}^n \varepsilon_i^2 = \frac{1}{n} \boldsymbol{\varepsilon}^{\top}
-    \boldsymbol{\varepsilon} =  \frac{1}{n} || \boldsymbol{\varepsilon} ||^2 \\
-     &amp;= \frac{1}{n} ( \mathbf{X} \mathbf{w} - \mathbf {y} )^{\top} (
-    \mathbf{X} \mathbf{w} - \mathbf {y} ) \\
-    &amp;= \frac{1}{n} ( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} - 2 \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y} + \mathbf {y}^{\top}\mathbf {y} )
+    E(\mathbf{w}) &amp;= \frac{1}{n} \sum_{i=1}^n \varepsilon_i^2 = \frac{1}{n} \boldsymbol{\varepsilon}^{\top} \boldsymbol{\varepsilon} = \frac{1}{n} \| \boldsymbol{\varepsilon} \|^2 \\
+    &amp;= \frac{1}{n} \left( \mathbf{X} \mathbf{w} - \mathbf{y} \right)^{\top} \left( \mathbf{X} \mathbf{w} - \mathbf{y} \right) \\
+    &amp;= \frac{1}{n} \left( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} + \mathbf{y}^{\top}\mathbf{y} - 2 \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf{y} \right)
   \end{aligned}
 </span></p>
-<p>To find the minimum of <span class="math inline">E(\mathbf{w})</span>, we need to compute its gradient with respect to the vector <span class="math inline">\mathbf{w}</span>, denoted <span class="math inline">\nabla_{\mathbf{w}} E</span> or <span class="math inline">\frac{\partial E}{\partial \mathbf{w}}</span>, and set it to the zero vector. <span class="math display">
-  \frac{\partial E}{\partial \mathbf{w}} = \left( \frac{\partial E}{\partial w_0}, \cdots,
-  \frac{\partial E}{\partial w_p} \right)^{\top} = \mathbf{0}
+<p>At the minimum of <span class="math inline">E(\mathbf{w})</span>, the gradient vector vanishes: <span class="math display">
+  \frac{\partial E}{\partial \mathbf{w}} = \left( \frac{\partial E}{\partial w_0}, \dots, \frac{\partial E}{\partial w_p} \right)^{\top} = \mathbf{0}
 </span></p>
-<p>Knowing a few standard results for vector calculus is very useful. Below is a list of common matrix derivative identities, assuming that <span class="math inline">\mathbf{a}, \mathbf{b}, \mathbf {A}</span> are independent of <span class="math inline">\mathbf {w}</span>.</p>
+<p>Below is a reference list of useful matrix and vector gradient identities. Vectors <span class="math inline">\mathbf{a}, \mathbf{b}</span> and matrix <span class="math inline">\mathbf{A}</span> are independent of <span class="math inline">\mathbf{w}</span>.</p>
 <p><span class="math display">\begin{alignat*}{3}
-    &amp; {\frac {\partial {\mathbf{a}}^{\top }{\mathbf {w}}}{\partial
-          {\mathbf {w}}}} &amp;&amp;= {\mathbf {a}} &amp;&amp;
-  \\ &amp; {\frac {\partial {\mathbf {b}}^{\top }{\mathbf {A}}{\mathbf
-          {w}}}{\partial {\mathbf {w}}}} &amp;&amp; = {\mathbf {A}}^{\top }{\mathbf {b}}
-    &amp;&amp; \\ &amp; {\frac {\partial {\mathbf {w}}^{\top }{\mathbf
-          {A}}{\mathbf {w}}}{\partial {\mathbf {w}}}} &amp;&amp; = ({ \mathbf
-      {A}}+{\mathbf {A}}^{\top }){ \mathbf {w}} &amp;&amp; \quad \text{(or $2\mathbf{A}\mathbf{w}$ if A is symmetric)} \\ &amp; \frac
-    {\partial {\mathbf {w}}^{\top }{\mathbf {w}}}{\partial {\mathbf {w}}} &amp;&amp; =
-    2{\mathbf {w}} &amp;&amp; \\ &amp; {\frac {\partial \;{\mathbf {a}}^{\top }{\mathbf
-          {w}}{\mathbf {w}}^{\top }{\mathbf {b}}}{\partial \;{\mathbf {w}}}} &amp;&amp;
-    = ({\mathbf {a}}{\mathbf {b}}^{\top }+{\mathbf {b}}{\mathbf {a}}^{\top
-    }){\mathbf {w}} &amp;&amp; \\
-  \end{alignat*}</span></p>
+    &amp; \frac{\partial \mathbf{a}^{\top}\mathbf{w}}{\partial \mathbf{w}} &amp;&amp;= \mathbf{a} &amp;&amp; \\
+    &amp; \frac{\partial \mathbf{b}^{\top}\mathbf{A}\mathbf{w}}{\partial \mathbf{w}} &amp;&amp;= \mathbf{A}^{\top}\mathbf{b} &amp;&amp; \\
+    &amp; \frac{\partial \mathbf{w}^{\top}\mathbf{A}\mathbf{w}}{\partial \mathbf{w}} &amp;&amp;= (\mathbf{A} + \mathbf{A}^{\top})\mathbf{w} &amp;&amp; \quad \text{($2\mathbf{A}\mathbf{w}$ if $\mathbf{A}$ is symmetric)} \\
+    &amp; \frac{\partial \mathbf{w}^{\top}\mathbf{w}}{\partial \mathbf{w}} &amp;&amp;= 2\mathbf{w} &amp;&amp; \\
+    &amp; \frac{\partial (\mathbf{a}^{\top}\mathbf{w})(\mathbf{w}^{\top}\mathbf{b})}{\partial \mathbf{w}} &amp;&amp;= (\mathbf{a}\mathbf{b}^{\top} + \mathbf{b}\mathbf{a}^{\top})\mathbf{w} &amp;&amp;
+\end{alignat*}</span></p>
 <div id="callout-ex-gradient" class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -577,31 +561,29 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Compute the gradient <span class="math inline">\frac{\partial E({\bf w})}{\partial {\bf w}}</span> for <span class="math inline">E({\bf w}) = ({\bf w}-{\bf B}{\bf w})^{\top} {\bf A} ({\bf w}-{\bf a})</span>.</p>
-<p>There are no assumptions about matrices <span class="math inline">{ \bf A}</span> and <span class="math inline">{ \bf B}</span>.</p>
+<p>Compute the gradient <span class="math inline">\frac{\partial E(\mathbf{w})}{\partial \mathbf{w}}</span> for: <span class="math display">
+E(\mathbf{w}) = (\mathbf{w} - \mathbf{B}\mathbf{w})^{\top} \mathbf{A} (\mathbf{w} - \mathbf{a})
+</span></p>
+<p>Assume no special properties for matrices <span class="math inline">\mathbf{A}</span> and <span class="math inline">\mathbf{B}</span>.</p>
 </div>
 </div>
-<p>Let us now apply these rules to our loss function: <span class="math display">
+<p>Let us now apply these identities to our MSE loss function: <span class="math display">
+\frac{\partial E}{\partial \mathbf{w}} = \frac{1}{n} \frac{\partial}{\partial \mathbf{w}} \left( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} + \mathbf{y}^{\top}\mathbf{y} - 2\mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf{y} \right)
+</span></p>
+<p>Differentiating term-by-term: <span class="math display">
 \begin{aligned}
-    \frac{\partial E}{\partial \mathbf{w} } &amp;= \frac{1}{n} \frac{\partial
-    }{\partial \mathbf{w} }  \left( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} - 2
-    \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y} + \mathbf {y}^{\top}\mathbf {y} \right)
+    \frac{\partial}{\partial \mathbf{w}} \left( \mathbf{w}^{\top} \mathbf{X}^{\top}\mathbf{X} \mathbf{w} \right) &amp;= 2 \mathbf{X}^{\top}\mathbf{X} \mathbf{w} \\
+    \frac{\partial}{\partial \mathbf{w}} \left( \mathbf{y}^{\top}\mathbf{y} \right) &amp;= \mathbf{0} \\
+    \frac{\partial}{\partial \mathbf{w}} \left( \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf{y} \right) &amp;= \mathbf{X}^{\top}\mathbf{y}
 \end{aligned}
 </span></p>
-<p>Applying the formulas to each term (noting that <span class="math inline">\mathbf{X}^{\top}\mathbf{X}</span> is symmetric): <span class="math display">
-\begin{aligned}
-    \frac{\partial}{\partial \mathbf{w} }  \left( \mathbf{w}^{\top} (\mathbf{X}^{\top}\mathbf{X}) \mathbf{w} \right)  &amp;= 2 \mathbf{X}^{\top}\mathbf{X} \mathbf{w} \\
-  \frac{\partial}{\partial \mathbf{w} }  \left( \mathbf {y}^{\top}\mathbf {y} \right)  &amp;= \mathbf{0} \\
-  \frac{\partial}{\partial \mathbf{w} }  \left( -2 \mathbf{w}^{\top}\mathbf{X}^{\top}\mathbf {y} \right)  &amp;= -2 \mathbf{X}^{\top}\mathbf {y}
-\end{aligned}
+<p>Setting the gradient to zero: <span class="math display">
+\frac{\partial E}{\partial \mathbf{w}} = \frac{2}{n}\mathbf{X}^{\top}\mathbf{X}\mathbf{w} - \frac{2}{n}\mathbf{X}^{\top}\mathbf{y} = \mathbf{0} \implies \mathbf{X}^{\top}\mathbf{X}\mathbf{w} = \mathbf{X}^{\top}\mathbf{y}
 </span></p>
-<p>Combining these results, we get the gradient: <span class="math display">
-\frac{\partial E}{\partial \mathbf{w} } = \frac{2}{n}  (\mathbf{X}^{\top} \mathbf{X} \mathbf{w} - \mathbf{X}^{\top} \mathbf{y})
+<p>This linear system is known as the <strong>normal equations</strong>: <span class="math display">
+\mathbf{X}^{\top}\mathbf{X}\mathbf{w} = \mathbf{X}^{\top}\mathbf{y}
 </span></p>
-<p>Setting the gradient to zero gives the <strong>normal equations</strong>: <span class="math display">
-\mathbf{X}^{\top}  \mathbf{X} \mathbf{w} =  \mathbf{X}^{\top}  \mathbf{y}
-</span></p>
-<p>This is the same linear system we derived earlier, but expressed in a much more compact and powerful notation. Assuming the matrix <span class="math inline">\mathbf{X}^{\top} \mathbf{X}</span> is invertible, we can solve for the optimal weight vector <span class="math inline">\hat{\mathbf{w}}</span> directly: <span class="math display">
+<p>Notice that this is identical to the system derived entry-by-entry using scalar calculus. Provided <span class="math inline">\mathbf{X}</span> has full column rank (<span class="math inline">\mathbf{X}^{\top}\mathbf{X}</span> is invertible), the least squares estimate is: <span class="math display">
 \hat{\mathbf{w}} = (\mathbf{X}^{\top} \mathbf{X})^{-1} \mathbf{X}^{\top} \mathbf{y}
 </span></p>
 </section>
@@ -613,45 +595,58 @@ Exercise
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="a-simple-affine-example"><span class="header-section-number">1.3.1</span> A Simple Affine Example</h3>
 <p>Let us return to our initial height-weight example. The model is a simple affine function: <span class="math inline">y = w_0 + w_1 x</span>. The design matrix <span class="math inline">\mathbf{X}</span> stacks the single feature <span class="math inline">x_i</span> for each person, along with a column of ones for the bias term:</p>
 <p><span class="math display">
-  \mathbf{X}  =
-  {\begin{pmatrix} 1&amp;x_{1} \\
-      1&amp;x_{2} \\
-      \vdots &amp;\vdots  \\
-      1&amp;x_{n} \\
-  \end{pmatrix}}
+  \mathbf{X} =
+  \begin{pmatrix}
+      1 &amp; x_{1} \\
+      1 &amp; x_{2} \\
+      \vdots &amp; \vdots \\
+      1 &amp; x_{n}
+  \end{pmatrix}
 </span></p>
-<p>The components of the normal equations are: <span class="math display">
-  \mathbf{X}^{\top} \mathbf{X}  =
-         {\begin{pmatrix}
-             n &amp; \sum x_i  \\
-             \sum x_i &amp; \sum x_i^2 \\
-         \end{pmatrix}};
-\quad
-         \mathbf{X}^{\top} \mathbf{y}  =
-         {\begin{pmatrix}
-             \sum y_i \\
-             \sum x_i y_i
-         \end{pmatrix}}
+<p>The components of the normal equations evaluate to: <span class="math display">
+  \mathbf{X}^{\top} \mathbf{X} =
+  \begin{pmatrix}
+      \sum_{i=1}^{n} 1 &amp; \sum_{i=1}^{n} x_i \\
+      \sum_{i=1}^{n} x_i &amp; \sum_{i=1}^{n} x_i^2
+  \end{pmatrix}, \quad
+  \mathbf{X}^{\top} \mathbf{y} =
+  \begin{pmatrix}
+      \sum_{i=1}^{n} y_i \\
+      \sum_{i=1}^{n} x_i y_i
+  \end{pmatrix}
 </span></p>
-<p>Solving for <span class="math inline">\hat{\mathbf{w}} = (\mathbf{X}^{\top} \mathbf{X})^{-1} \mathbf{X}^{\top} \mathbf{y}</span> with the collected data gives the estimated weights <span class="math inline">\hat{\mathbf{w}} = \begin{pmatrix} -99.5 \\ 0.972 \end{pmatrix}</span>. This corresponds to the linear model we saw earlier: <span class="math display">
-\mathrm{weight} = 0.972 \times \mathrm{height} - 99.5
+<p>Provided <span class="math inline">\mathbf{X}</span> has full column rank (<span class="math inline">\mathbf{X}^\top\mathbf{X}</span> is invertible), the least squares estimate is: <span class="math display">
+  \hat{\mathbf{w}} = \left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{y} =
+  \begin{pmatrix}
+      \sum_{i=1}^{n} 1 &amp; \sum_{i=1}^{n} x_i \\
+      \sum_{i=1}^{n} x_i &amp; \sum_{i=1}^{n} x_i^2
+  \end{pmatrix}^{-1}
+  \begin{pmatrix}
+      \sum_{i=1}^{n} y_i \\
+      \sum_{i=1}^{n} x_i y_i
+  \end{pmatrix}
+</span></p>
+<p>Numerically, we obtain <span class="math inline">\hat{\mathbf{w}} = \begin{pmatrix} -99.5 \\ 0.972 \end{pmatrix}</span>, yielding: <span class="math display">
+\mathrm{weight} = \mathrm{height} \times 0.972 - 99.5
 </span></p>
 </section>
 <section id="transforming-input-features" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="transforming-input-features"><span class="header-section-number">1.3.2</span> Transforming Input Features</h3>
-<p>A key aspect is that although the model must be linear <em>in the parameters</em> <span class="math inline">\mathbf{w}</span>, it does not have to be linear in the original input features <span class="math inline">\mathbf{x}</span>. A model is considered linear if it can be written as a linear combination of functions of the input features: <span class="math display">
-y = f(\mathbf{x}, \mathbf{w}) = \sum_{i=0}^p w_i \phi_i(\mathbf{x})
-</span> where the basis functions <span class="math inline">\phi_i(\mathbf{x})</span> do not depend on the weights <span class="math inline">\mathbf{w}</span>.</p>
+<p>A key aspect is that although the model must be linear <em>in the parameters</em> <span class="math inline">\mathbf{w}</span>, it does not have to be linear in the original input features <span class="math inline">\mathbf{x}</span>. A model is linear in the parameters if it can be written as: <span class="math display">
+y = f(\mathbf{x}, \mathbf{w}) = \sum_{j=0}^p w_j \phi_j(\mathbf{x})
+</span> where the basis functions <span class="math inline">\phi_j(\mathbf{x})</span> can be non-linear, but remain strictly independent of the weights <span class="math inline">\mathbf{w}</span>.</p>
 <p>This means we can fit non-linear relationships by first transforming our raw inputs. For example, we can fit a cubic polynomial model: <span class="math display">
 y = w_0 + w_1 x + w_2 x^2 + w_3 x^3
-</span> This is still a linear model in the sense that <span class="math inline">y</span> is a linear combination of the new features <span class="math inline">\phi_0(x)=1</span>, <span class="math inline">\phi_1(x)=x</span>, <span class="math inline">\phi_2(x)=x^2</span>, and <span class="math inline">\phi_3(x)=x^3</span>.</p>
-<p>Many other transformations can be used. For instance, <span class="math inline">y = w_0 + w_1 \cos(2\pi x) + w_2  \sin(2\pi x)</span> is also a linear model in the parameters <span class="math inline">w_0, w_1, w_2</span>, where the feature vector has been transformed to <span class="math inline">[1, \cos(2\pi x), \sin(2\pi x)]</span>. In contrast, a model like <span class="math inline">y = w_0^2 + x</span> is <em>not</em> linear in the parameters, because the term <span class="math inline">w_0^2</span> is not linear in <span class="math inline">w_0</span>.</p>
+</span> This is still a linear model because <span class="math inline">y</span> is linear in the unknown parameters <span class="math inline">\mathbf{w}</span>. We have simply mapped input <span class="math inline">x</span> to feature vector <span class="math inline">\mathbf{x} = (1, x, x^2, x^3)^\top</span>.</p>
+<p>Similarly: <span class="math display">
+y = w_0 + w_1 \cos(2\pi x) + w_2 \sin(2\pi x)
+</span> is linear in parameters with <span class="math inline">\mathbf{x} = (1, \cos(2\pi x), \sin(2\pi x))^\top</span>. In contrast, a model like <span class="math inline">y = w_0^2 + x</span> is <em>not</em> linear in the parameters, because the term <span class="math inline">w_0^2</span> is non-linear in parameter <span class="math inline">w_0</span>.</p>
 <p>Similarly, we can transform the output variable. For instance, if we have collected 2D points <span class="math inline">(x_{1i}, x_{2i})</span> that lie on a circle centred at the origin, we could define a new output <span class="math inline">y_i = \sqrt{x_{1i}^2 + x_{2i}^2}</span> and fit a simple model <span class="math inline">y = w_0</span> to find the radius.</p>
 <p>This idea of transforming input features is at the core of many Machine Learning techniques. However, as we will see later in <a href="#sec-loss-noise" class="quarto-xref"><span>Section 1.8</span></a>, this practice is not entirely without consequences.</p>
 </section>
 <section id="polynomial-fitting" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="polynomial-fitting"><span class="header-section-number">1.3.3</span> Polynomial Fitting</h3>
-<p>Let us examine the use of feature transforms in more detail by looking at polynomial fitting, a particularly instructive example for ML. Consider the small dataset <span class="math inline">(x_i, y_i)</span> plotted below. Let us assume we know that the true relationship is quadratic, of the form: <span class="math inline">y = w_0 + w_1 x + w_2 x^2</span>.</p>
+<p>Let us examine the use of feature transforms in more detail by looking at polynomial fitting, a particularly instructive example for ML. Consider the small dataset <span class="math inline">(x_i, y_i)</span> plotted below. The ground-truth process generating the data is a quadratic model: <span class="math inline">y = w_0 + w_1 x + w_2 x^2</span>.</p>
 <div id="fig-polyfit2-scatter" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit2-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -662,30 +657,33 @@ Figure&nbsp;1.3: A scatter plot of a small dataset for polynomial fitting, where
 </figcaption>
 </figure>
 </div>
-<p>To fit this model, we transform our single feature <span class="math inline">x</span> into a new feature vector <span class="math inline">[1, x, x^2]</span>. The design matrix <span class="math inline">\mathbf{X}</span> becomes: <span class="math display">
-  \mathbf{X}  =
-  {\begin{pmatrix} 1&amp;x_{1}&amp; x_{1}^2 \\
-      1&amp;x_{2}&amp; x_{2}^2 \\
-      \vdots &amp;\vdots &amp;\vdots \\
-      1&amp;x_{n}&amp; x_{n}^2 \\
-  \end{pmatrix}}
+<p>For model <span class="math inline">y = w_0 + w_1 x + w_2 x^2</span>, the polynomial design matrix is: <span class="math display">
+  \mathbf{X} =
+  \begin{pmatrix}
+      1 &amp; x_{1} &amp; x_{1}^2 \\
+      1 &amp; x_{2} &amp; x_{2}^2 \\
+      \vdots &amp; \vdots &amp; \vdots \\
+      1 &amp; x_{n} &amp; x_{n}^2
+  \end{pmatrix}
 </span></p>
-<p>The components of the normal equations are then: <span class="math display">
-  \mathbf{X}^{\top} \mathbf{X}  =
-         {\begin{pmatrix}
-             \sum x_i^0 &amp; \sum x_i^1 &amp; \sum x_i^2 \\
-             \sum x_i^1 &amp; \sum x_i^2 &amp; \sum x_i^3 \\
-             \sum x_i^2 &amp; \sum x_i^3 &amp; \sum x_i^4
-         \end{pmatrix}}
-;, \quad
-         \mathbf{X}^{\top} \mathbf{y}  =
-         {\begin{pmatrix}
-             \sum y_i x_i^0 \\
-             \sum y_i x_i^1 \\
-             \sum y_i x_i^2
-         \end{pmatrix}}
+<p>The components of the normal equations evaluate to: <span class="math display">
+  \mathbf{X}^{\top} \mathbf{X} =
+  \begin{pmatrix}
+      \sum 1 &amp; \sum x_i &amp; \sum x_i^2 \\
+      \sum x_i &amp; \sum x_i^2 &amp; \sum x_i^3 \\
+      \sum x_i^2 &amp; \sum x_i^3 &amp; \sum x_i^4
+  \end{pmatrix}, \quad
+  \mathbf{X}^{\top} \mathbf{y} =
+  \begin{pmatrix}
+      \sum y_i \\
+      \sum x_i y_i \\
+      \sum x_i^2 y_i
+  \end{pmatrix}
 </span></p>
-<p>Solving for <span class="math inline">\hat{\mathbf{w}} = (\mathbf{X}^{\top} \mathbf{X})^{-1} \mathbf{X}^{\top} \mathbf{y}</span> gives the following estimated curve, which matches the ground truth well.</p>
+<p>The least squares parameter estimate remains: <span class="math display">
+\hat{\mathbf{w}} = \left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{y}
+</span></p>
+<p>Solving with the collected data gives the estimated quadratic curve shown in <a href="#fig-polyfit2" class="quarto-xref">Figure&nbsp;<span>1.4</span></a> (MSE: 4.38e-01), which matches the ground truth well.</p>
 <div id="fig-polyfit2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -711,7 +709,7 @@ Figure&nbsp;1.5: An example of underfitting (MSE: 2.02e+02).
 </figcaption>
 </figure>
 </div>
-<p>The resulting fit is poor, with a large MSE error. The straight line is unable to capture the curvature present in the data. This problem is called <strong>underfitting</strong>. It occurs when the model is not complex enough to capture the underlying patterns in the training data.</p>
+<p>The resulting fit is poor, with a large MSE error (<span class="math inline">\mathrm{MSE} = 2.02 \times 10^2</span>). The straight line is unable to capture the curvature present in the data. This pathology is called <strong>underfitting</strong>. It occurs when the model is too restrictive to capture the structure in the data: the training error cannot be reduced to a satisfactory level.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -722,27 +720,29 @@ How do we know if we are underfitting?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We know we are underfitting when the model performs poorly even on the data it was trained on; that is, the training loss (e.g., MSE) remains high.</p>
-<p>To remedy underfitting, we should consider using a more complex model, for instance, by increasing the degree of the polynomial.</p>
+<p>You are underfitting when the model is too restrictive to capture the structure in the data: the training error cannot be reduced to a satisfactory level.</p>
+<p>To remedy underfitting, use a more flexible model, for instance, by increasing the degree of the polynomial or introducing relevant features.</p>
 </div>
 </div>
 </section>
 <section id="overfitting" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="overfitting"><span class="header-section-number">1.5</span> Overfitting</h2>
-<p>Now, let us consider the opposite problem. What if we use a model that is too complex? Let us try to fit a 9th-order polynomial, <span class="math inline">y = w_0 + w_1 x + \cdots + w_9 x^9</span>, to our small dataset.</p>
+<p>Now, let us consider the opposite problem. What if we use a model that is too complex? Let us try a 9th-degree polynomial: <span class="math display">
+y = w_0 + w_1 x + \dots + w_9 x^9
+</span> to our small dataset.</p>
 <div id="fig-polyfit9" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/polyfit9.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.6: An example of overfitting. The training error is extremely low (MSE=7.59e-06), but the model will not generalise well.
+Figure&nbsp;1.6: An example of overfitting. The training error is near zero (MSE: 7.59e-06), but the model will not generalise well.
 </figcaption>
 </figure>
 </div>
-<p>The curve now passes perfectly through every data point, and the training error is virtually zero. However, the model exhibits wild oscillations between the points. It is clear that its predictions for any new data would be very poor. This phenomenon is called <strong>overfitting</strong>, and it is one of the most fundamental challenges in Machine Learning.</p>
-<p>Overfitting occurs when a model learns the training data too well, capturing not only the underlying pattern but also the random noise specific to that dataset. The model has high variance and fails to <strong>generalise</strong> to new, unseen data.</p>
-<p>This is why we must always evaluate our model on a separate <strong>test set</strong>—a portion of data that was held out and not used during training. Overfitting is occurring if the model’s error on the training set is very low, but its error on the test set is significantly higher.</p>
+<p>Although training error is near zero (<span class="math inline">\mathrm{MSE} = 7.59 \times 10^{-6}</span>), the curve oscillates wildly between sample points. This pathology is called <strong>overfitting</strong>.</p>
+<p>Given enough free parameters, a model will fit training observations arbitrarily closely, including noise, but fail to generalise to unseen test data.</p>
+<p>This is why we must always evaluate our model on a separate <strong>test set</strong>—a portion of data that was held out and not used during training.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -753,45 +753,43 @@ How do we detect overfitting?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We have overfitting when the training error is a poor indicator of a model’s true performance. That is, when the error on the training set is low, but the error on the test set is high.</p>
+<p>You know that you are overfitting when the training error is low, but the prediction error on new, unseen data is large.</p>
 </div>
 </div>
 <p>There are two primary ways to combat overfitting:</p>
 <ol type="1">
-<li><p><strong>Use a simpler model</strong>: If the model is too complex for the amount of data available, reducing its complexity (e.g., using a lower-degree polynomial) can prevent it from fitting the noise.</p></li>
-<li><p><strong>Get more data</strong>: This is almost always the best solution. A larger and more representative dataset will naturally constrain a complex model, forcing it to learn the true underlying pattern. If some features are not useful, their corresponding weights <span class="math inline">w_i</span> will tend towards zero as more data is provided.</p></li>
+<li><p><strong>Use a simpler model</strong>: Check whether your model class is unnecessarily complex: use a simpler model and ensure it does not underfit (e.g., do not use degree 9 when the underlying phenomenon is degree 2).</p></li>
+<li><p><strong>Get more training data</strong>: Often the model class is reasonable, but there are too few observations to constrain all coefficients (e.g., 5 observations cannot reliably constrain a 9th-degree polynomial).</p></li>
 </ol>
-<p>The figure below shows what happens when we fit the same 9th-order polynomial to a much denser dataset. The fit is now very close to the true quadratic model, and the wild oscillations have disappeared. Thanks to the large amount of data, the estimated weight for the <span class="math inline">x^9</span> term is now close to zero (<span class="math inline">w_9=\small -1.83\!\times\!
-10^{-8}</span>), as it should be.</p>
+<p>Using more data is always a good idea. It allows us to use models that are more complex than necessary. With sufficient samples, irrelevant coefficients naturally shrink towards zero:</p>
 <div id="fig-polyfit9-denser" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit9-denser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/polyfit9-denser.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit9-denser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.7: Higher-order models do not necessarily overfit if there is sufficient data (MSE: 7.18e-01).
+Figure&nbsp;1.7: With dense data, higher-order models do not necessarily overfit: <span class="math inline">\hat{w}_9 = -1.83 \times 10^{-8}</span> (MSE: 7.18e-01).
 </figcaption>
 </figure>
 </div>
-<p>Note that a small amount of overfitting is not always a bad thing. One would expect a model to perform better on examples it has seen many times before. In practice, some gap between training and test performance is normal, and aggressively avoiding it might lead to underfitting.</p>
+<p>Note that a small gap between training and test performance is normal, and aggressively avoiding it might lead to underfitting.</p>
 </section>
 <section id="regularisation" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="regularisation"><span class="header-section-number">1.6</span> Regularisation</h2>
-<p>What if we cannot get more data? While this may sometimes be a poor excuse, there are situations where data is genuinely scarce or expensive. In such cases, a go-to technique called <strong>regularisation</strong> can be used to control overfitting.</p>
-<p>For Least Squares, a common regularisation technique is <strong>Tikhonov regularisation</strong>, also known as Ridge Regression or L2 regularisation. The idea is to add a penalty term to the loss function that discourages the model weights from becoming too large.</p>
-<p>Instead of minimising the standard MSE, <span class="math inline">|| \mathbf{X} \mathbf{w} - \mathbf{y} ||^2</span>, we minimise a modified loss: <span class="math display">
-E_{\text{reg}}(\mathbf{w}) = || \mathbf{X} \mathbf{w} - \mathbf{y} ||^2 + \alpha || \mathbf{w} ||^2
-</span> where <span class="math inline">|| \mathbf{w} ||^2 = w_0^2 + w_1^2 + \cdots + w_p^2</span> is the squared L2-norm of the weight vector, and <span class="math inline">\alpha &gt; 0</span> is a hyperparameter that controls the strength of the regularisation.</p>
-<p>The effect of this penalty is to introduce a <strong>bias</strong> that pulls the estimated weights <span class="math inline">\mathbf{w}</span> towards zero. The motivation is that, all else being equal, simpler models with smaller weights are generally more plausible. For example, the model <span class="math display">
-\mathrm{weight} = 0.972 \times \mathrm{height} - 99.5
-</span> is a priori more likely to be correct than a model like <span class="math display">
-\mathrm{weight} = 10^{10} \times \mathrm{height} - 10^{20}
-</span> even if both produce a similar prediction error on the training data. Regularisation helps us favour the former.</p>
-<p>Regularisation is often a necessary tool, but it is not a magic bullet. It helps prevent wild predictions for inputs far from the training data, but it does so by introducing a bias into the estimate. It should be seen as a way to incorporate prior beliefs into our model, not as a substitute for sufficient data.</p>
-<p>Adding the Tikhonov regularisation term still yields a closed-form solution, which is a convenient property: <span class="math display">
-\hat{\mathbf{w}}_{\text{reg}} = (\mathbf{X}^{\top}\mathbf{X} + \alpha \mathbf{I})^{-1} \mathbf{X}^{\top}\mathbf{y}
+<p>What if we cannot get enough data? In situations where data is genuinely scarce or expensive, an alternative solution is to use <strong>regularisation</strong>.</p>
+<p>In Least Squares, standard <span class="math inline">\ell_2</span> shrinkage is known as <strong>Tikhonov regularisation</strong> (or Ridge regression). Instead of minimising <span class="math inline">\|\mathbf{X} \mathbf{w} - \mathbf{y}\|^2</span>, we add a parameter penalty: <span class="math display">
+E(\mathbf{w}) = \|\mathbf{X} \mathbf{w} - \mathbf{y}\|^2 + \alpha \|\mathbf{w}\|^2
+</span> where <span class="math inline">\|\mathbf{w}\|^2 = w_0^2 + w_1^2 + \dots + w_p^2</span> is the squared <span class="math inline">\ell_2</span>-norm of the weight vector, and <span class="math inline">\alpha &gt; 0</span> is a hyperparameter that controls the strength of the regularisation.</p>
+<p>This penalises large coefficients, guarantees invertibility of the linear system, and admits a closed-form solution: <span class="math display">
+\hat{\mathbf{w}} = (\mathbf{X}^{\top}\mathbf{X} + \alpha \mathbf{I})^{-1} \mathbf{X}^{\top}\mathbf{y}
 </span> where <span class="math inline">\mathbf{I}</span> is the identity matrix.</p>
-<p>Numerically, overfitting often arises because the problem is ill-posed or under-constrained, causing the matrix <span class="math inline">\mathbf{X}^{\top}\mathbf{X}</span> to be singular (non-invertible) or poorly conditioned. Adding the term <span class="math inline">\alpha \mathbf{I}</span> ensures that the matrix is always invertible, thus stabilising the solution. Of course, a better way to make the problem well-posed is to have enough data to properly constrain it.</p>
+<p><em>Note: In practice, the intercept <span class="math inline">w_0</span> is left unregularised by setting the top-left diagonal entry of the identity matrix <span class="math inline">\mathbf{I}</span> to <span class="math inline">0</span>.</em></p>
+<p>Tikhonov regularisation pulls weights towards zero when evidence in the data is insufficient to justify large values. It encodes a prior assumption: without evidence to the contrary, simpler, smaller weights are more plausible. For example, it is much more plausible that: <span class="math display">
+\mathrm{weight} = \mathrm{height} \times 0.972 - 99.5
+</span> than: <span class="math display">
+\mathrm{weight} = \mathrm{height} \times 10^{10} - 10^{20}
+</span> even if both produce a similar prediction error on a small training set. Regularisation helps us favour the former.</p>
+<p>Regularisation avoids severe instability when evaluating predictions outside dense regions of training inputs. However, this stability introduces estimation bias. Whenever possible, prefer collecting sufficient samples so that <span class="math inline">\mathbf{X}^{\top}\mathbf{X}</span> is comfortably conditioned on its own.</p>
 <p>So, go and get more data!</p>
 </section>
 <section id="the-maximum-likelihood-perspective" class="level2" data-number="1.7">
@@ -803,7 +801,7 @@ E_{\text{reg}}(\mathbf{w}) = || \mathbf{X} \mathbf{w} - \mathbf{y} ||^2 + \alpha
 <p>We can adopt a probabilistic view by making an explicit assumption about the nature of the error term <span class="math inline">\boldsymbol{\varepsilon}</span>. Let us assume that the errors are drawn independently from a Gaussian distribution with a mean of zero and some variance <span class="math inline">\sigma^2</span>. <span class="math display">
 \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
 </span> The probability density function (pdf) for a single error term is: <span class="math display">
-p(\varepsilon_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{\varepsilon_i^2}{2\sigma^2}\right)
+p(\varepsilon) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{\varepsilon^2}{2\sigma^2}\right)
 </span></p>
 <div id="fig-normal-pdf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -815,30 +813,30 @@ Figure&nbsp;1.8: The probability density function of the Normal distribution.
 </figcaption>
 </figure>
 </div>
-<p>Given this assumption, we can calculate the <strong>likelihood</strong> of observing a particular output <span class="math inline">y_i</span> given the input <span class="math inline">\mathbf{x}_i</span> and model weights <span class="math inline">\mathbf{w}</span>. Since <span class="math inline">\varepsilon_i = y_i - \mathbf{x}_i^{\top}\mathbf{w}</span>, this is: <span class="math display">
-p(y_i|\mathbf{x}_i, \mathbf{w}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y_i - \mathbf{x}_i^{\top}\mathbf{w})^2}{2\sigma^2}\right)
+<p>Given <span class="math inline">\mathbf{x}_i</span> and parameters <span class="math inline">\mathbf{w}</span>, observation <span class="math inline">y_i</span> has conditional density: <span class="math display">
+p(y_i \mid \mathbf{x}_i, \mathbf{w}) = p(\varepsilon_i = y_i - \mathbf{x}_i^{\top}\mathbf{w}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y_i - \mathbf{x}_i^{\top}\mathbf{w})^2}{2\sigma^2}\right)
 </span></p>
 <p>Assuming that all <span class="math inline">n</span> observations are independent and identically distributed (i.i.d.), the likelihood of observing the entire dataset <span class="math inline">(\mathbf{X}, \mathbf{y})</span> is the product of the individual likelihoods: <span class="math display">
 \begin{aligned}
-p(\mathbf{y}|\mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n p(y_i|\mathbf{x}_i, \mathbf{w}) \\
+p(\mathbf{y} \mid \mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n p(y_i \mid \mathbf{x}_i, \mathbf{w}) \\
 &amp;= \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2\right)
 \end{aligned}
 </span></p>
-<p>The principle of <strong>Maximum Likelihood Estimation</strong> (MLE) states that we should choose the parameters <span class="math inline">\mathbf{w}</span> that make our observed data most probable. That is, we want to find the <span class="math inline">\mathbf{w}</span> that maximises the likelihood function <span class="math inline">p(\mathbf{y}|\mathbf{X}, \mathbf{w})</span>: <span class="math display">
-\hat{\mathbf{w}}_{\text{ML}} = \arg\max_{\mathbf{w}} p(\mathbf{y}|\mathbf{X}, \mathbf{w})
+<p>The principle of <strong>Maximum Likelihood Estimation</strong> (MLE) states that we should choose the parameters <span class="math inline">\mathbf{w}</span> that make our observed data most probable. That is, we want to find the <span class="math inline">\mathbf{w}</span> that maximises the likelihood function <span class="math inline">p(\mathbf{y} \mid \mathbf{X}, \mathbf{w})</span>: <span class="math display">
+\hat{\mathbf{w}}_{\mathrm{ML}} = \arg\max_{\mathbf{w}} p(\mathbf{y} \mid \mathbf{X}, \mathbf{w})
 </span></p>
 <p>For practical reasons, it is easier to work with the logarithm of the likelihood, as this turns the product into a sum and does not change the location of the maximum. Maximising the log-likelihood is equivalent to minimising the negative log-likelihood: <span class="math display">
 \begin{aligned}
-\hat{\mathbf{w}}_{\text{ML}} &amp;= \arg\min_{\mathbf{w}}
-- \log(p(\mathbf{y}|\mathbf{X}, \mathbf{w})) \\
-&amp;= \arg\min_{\mathbf{w}} - \log\left(\left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2\right)\right) \\
-&amp;= \arg\min_{\mathbf{w}} \left( n \log(\sqrt{2\pi\sigma^2}) + \frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2 \right)
+\hat{\mathbf{w}}_{\mathrm{ML}} &amp;= \arg\min_{\mathbf{w}}
+\left[ - \log p(\mathbf{y} \mid \mathbf{X}, \mathbf{w}) \right] \\
+&amp;= \arg\min_{\mathbf{w}} \left[ \frac{1}{2\sigma^2} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2 + n \log\left(\sqrt{2\pi\sigma^2}\right) \right] \\
+&amp;= \arg\min_{\mathbf{w}} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2
 \end{aligned}
 </span></p>
-<p>Since the terms <span class="math inline">n</span>, <span class="math inline">\log(\sqrt{2\pi\sigma^2})</span>, and <span class="math inline">2\sigma^2</span> are positive constants with respect to <span class="math inline">\mathbf{w}</span>, minimising this expression is equivalent to minimising: <span class="math display">
-\hat{\mathbf{w}}_{\text{ML}} = \arg\min_{\mathbf{w}} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2
+<p>Since the terms <span class="math inline">n</span>, <span class="math inline">\log(\sqrt{2\pi\sigma^2})</span>, and <span class="math inline">2\sigma^2</span> are positive constants with respect to <span class="math inline">\mathbf{w}</span>, minimising this expression is equivalent to minimising the sum of squared residuals: <span class="math display">
+\hat{\mathbf{w}}_{\mathrm{ML}} = \arg\min_{\mathbf{w}} \sum_{i=1}^n (y_i - \mathbf{x}_i^{\top}\mathbf{w})^2
 </span></p>
-<p>This is precisely the same objective function as in the method of Least Squares. This remarkable result shows that the Least Squares estimate is identical to the Maximum Likelihood solution under the assumption of i.i.d. Gaussian noise. This establishes a fundamental link between the choice of a loss function and the implicit assumptions we make about the data’s error distribution.</p>
+<p>Minimising the sum of squared residuals is mathematically identical to maximum likelihood estimation under additive i.i.d. Gaussian noise. This fundamental result shows that the Least Squares estimate is identical to the Maximum Likelihood solution under the assumption of normal errors.</p>
 <p>Choosing the MSE loss is equivalent to assuming that the prediction error is normally distributed. If we were to choose a different loss function, it would correspond to a different assumption about the noise. For instance, choosing the Mean Absolute Error (MAE) loss, <span class="math inline">\sum |y_i - \mathbf{x}_i^{\top}\mathbf{w}|</span>, is equivalent to assuming the error follows a Laplace distribution.</p>
 <p>In conclusion, the choice of loss function should ideally be driven by our knowledge of the data-generating process. In practice, however, the choice is often guided by a combination of empirical performance on a test set and the mathematical convenience of optimisation.</p>
 </section>
@@ -847,38 +845,62 @@ p(\mathbf{y}|\mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n p(y_i|\mathbf{x}_i, \m
 <p>Here are a few examples to illustrate the intricate relationships between the loss function, feature transformations, and noise characteristics.</p>
 <section id="example-1-regression-towards-the-mean" class="level3" data-number="1.8.1">
 <h3 data-number="1.8.1" class="anchored" data-anchor-id="example-1-regression-towards-the-mean"><span class="header-section-number">1.8.1</span> Example 1: Regression Towards the Mean</h3>
-<p>Consider the case where our input measurements themselves are noisy. The model is: <span class="math display">
-y = (x + \nu) w + \epsilon
-</span> where <span class="math inline">\nu \sim \mathcal{N}(0, \sigma_\nu^2)</span> is noise in the measurement of the feature <span class="math inline">x</span>, and <span class="math inline">\epsilon \sim \mathcal{N}(0, \sigma_\epsilon^2)</span> is the usual observation noise. The total prediction error is now <span class="math inline">\epsilon + w\nu</span>, which critically depends on the parameter <span class="math inline">w</span> we are trying to estimate. This is no longer a textbook application of Least Squares.</p>
-<p>As illustrated in <a href="#fig-galtontoy" class="quarto-xref">Figure&nbsp;<span>1.9</span></a>, applying standard Least Squares in this scenario will result in an estimated slope <span class="math inline">\hat{w}</span> that is biased towards zero. This is because reducing the magnitude of <span class="math inline">w</span> not only fits the data but also minimises the variance of the noise term <span class="math inline">w\nu</span>. This phenomenon is a common source of surprising results.</p>
+<p>The word <strong>Regression</strong> originates from Francis Galton’s paper, <em>Regression towards mediocrity in hereditary stature</em> (1886). Galton compared the distribution of heights between parents and their offspring. Using least squares, he observed that parents at extreme percentiles produced offspring closer to the population mean (e.g.&nbsp;taller-than-average parents had shorter offspring). Hence the expression <strong>regression towards the mean</strong>.</p>
+<p>However, interpreting this as a biological convergence is a statistical artifact of errors-in-variables. The parent height measurement is a noisy proxy for latent genetic factors.</p>
+<p>Instead of observing the clean feature <span class="math inline">x</span>, we observe <span class="math inline">x' = x + \nu</span>. The underlying linear relationship is: <span class="math display">
+\begin{aligned}
+  y &amp;= w_0 + w_1 x + \varepsilon \\
+    &amp;= w_0 + w_1 (x' - \nu) + \varepsilon
+\end{aligned}
+</span> where <span class="math inline">\varepsilon</span> is model noise and <span class="math inline">\nu</span> is feature measurement noise.</p>
+<p>What is the impact of noisy features <span class="math inline">x' = x + \nu</span> on the normal equations? The observed design matrix <span class="math inline">\mathbf{X'}</span> gives: <span class="math display">
+  \mathbf{X'}^{\top} \mathbf{X'} = \begin{pmatrix}
+    \sum 1 &amp; \sum (x_i + \nu_i) \\
+    \sum (x_i + \nu_i) &amp; \sum (x_i + \nu_i)^2
+  \end{pmatrix}, \quad
+  \mathbf{X'}^{\top} \mathbf{y} = \begin{pmatrix}
+    \sum y_i \\
+    \sum (x_i + \nu_i) y_i
+  \end{pmatrix}
+</span></p>
+<p>Assuming <span class="math inline">\nu</span> is zero-mean and independent of <span class="math inline">x</span> and <span class="math inline">y</span>, as <span class="math inline">n \to \infty</span>: <span class="math display">
+  \frac{1}{n} \sum \nu_i \to 0, \quad
+  \frac{1}{n} \sum \nu_i x_i \to 0, \quad
+  \frac{1}{n} \sum \nu_i y_i \to 0, \quad
+  \frac{1}{n} \sum \nu_i^2 \to \sigma_{\nu}^2
+</span></p>
+<p>Thus <span class="math inline">\mathbf{X'}^\top \mathbf{y} \approx \mathbf{X}^\top \mathbf{y}</span>, and the least squares estimate satisfies: <span class="math display">
+  \hat{\mathbf{w}} = (\mathbf{X'}^\top \mathbf{X'})^{-1} \mathbf{X'}^\top \mathbf{y} \approx \left( \mathbf{X}^{\top} \mathbf{X} + n \begin{pmatrix} 0 &amp; 0 \\ 0 &amp; \sigma_{\nu}^2 \end{pmatrix} \right)^{-1} \mathbf{X}^{\top} \mathbf{y}
+</span></p>
+<p>The noise variance <span class="math inline">\sigma_\nu^2</span> introduces an implicit diagonal regulariser, attenuating <span class="math inline">\hat{w}_1</span> towards <span class="math inline">0</span> (known as <strong>attenuation bias</strong>). Just like Tikhonov regularisation, the diagonal penalty pulls the slope towards zero.</p>
 <div id="fig-galtontoy" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-galtontoy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/GaltonToy-LS.svg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-galtontoy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.9: An example of Regression Towards the Mean. The dashed green line shows the true relationship (<span class="math inline">y=x</span>). The solid red line is the LS estimate, which is biased towards zero.
+Figure&nbsp;1.9: An example of Regression Towards the Mean. The dashed green line shows the true relationship (<span class="math inline">y=x</span>) without measurement noise. The solid red line is the attenuated LS estimate obtained under noisy inputs, which is biased towards zero.
 </figcaption>
 </figure>
 </div>
-<p>In fact, this problem is the origin of the term <strong>regression</strong> itself. In his 1886 paper, “Regression towards mediocrity in hereditary stature,” Francis Galton used Least Squares to compare the heights of parents and their adult children. He observed that tall parents tended to have children who were shorter than them, and short parents tended to have children who were taller. His linear fit had a slope <span class="math inline">\hat{w} &lt; 1</span>, indicating a “regression to the mean.” The explanation is that both sets of heights are noisy measurements of an underlying genetic predisposition, leading to the bias we have described.</p>
-<p>This issue does not arise if the features are known precisely. For instance, if <span class="math inline">x</span> is a timestamp in a time series, there is no uncertainty, and it is safe to apply LS and any feature transformations.</p>
+<p>If inputs are noisy, standard least squares biases the estimated slope towards zero. Standard linear regression assumes observations satisfy <span class="math inline">y = \mathbf{x}^{\top}\mathbf{w} + \varepsilon</span>, where input regressors <span class="math inline">\mathbf{x}</span> are known without error. When features contain measurement noise (<span class="math inline">\mathbf{x}' = \mathbf{x} + \boldsymbol{\nu}</span>), regressors correlate with the effective disturbance, violating ordinary least squares assumptions.</p>
+<p>This issue does not arise if features are known precisely (for instance, if <span class="math inline">x</span> is a timestamp in a time series).</p>
 </section>
 <section id="example-2-non-linear-transformations" class="level3" data-number="1.8.2">
 <h3 data-number="1.8.2" class="anchored" data-anchor-id="example-2-non-linear-transformations"><span class="header-section-number">1.8.2</span> Example 2: Non-linear Transformations</h3>
 <p>Consider the following non-linear model with additive Gaussian noise: <span class="math display">
-y = x_1^{w_1} + \epsilon
-</span> where <span class="math inline">\epsilon \sim \mathcal{N}(0,1)</span>. The model is not linear in the parameters. However, we can linearise it by taking the logarithm of both sides and transforming the features: <span class="math display">
+y = x_1^{w_1} + \varepsilon
+</span> where <span class="math inline">\varepsilon \sim \mathcal{N}(0,1)</span>. The model is not linear in the parameters. However, we can linearise it by taking the logarithm of both sides and transforming the features: <span class="math display">
 \begin{aligned}
    y' &amp; =  \log(y) \\
    x_1' &amp; =  \log(x_1)
 \end{aligned}
 </span></p>
 <p>This leads to a model that is linear in the weights: <span class="math display">
-y' = w_1 x_1' + \epsilon'
-</span> However, the error term <span class="math inline">\epsilon'</span> is now also a transformed version of the original error <span class="math inline">\epsilon</span>. Using a first-order Taylor approximation, <span class="math inline">\log(t + \epsilon) \approx \log(t) + \epsilon/t</span>, we find that: <span class="math display">
-\epsilon' \approx \frac{\epsilon}{x_1^{w_1}}
-</span> The new error term <span class="math inline">\epsilon'</span> is no longer independent of the features and weights, and its variance is not constant. This violates the assumptions of standard Least Squares, and applying it to the transformed problem is likely to produce biased estimates.</p>
+y' = w_1 x_1' + \varepsilon'
+</span> However, the error term <span class="math inline">\varepsilon'</span> is now also a transformed version of the original error <span class="math inline">\varepsilon</span>. Using a first-order Taylor approximation, <span class="math inline">\log(t + \varepsilon) \approx \log(t) + \varepsilon/t</span>, we find that: <span class="math display">
+\varepsilon' \approx \frac{\varepsilon}{x_1^{w_1}}
+</span> The new error term <span class="math inline">\varepsilon'</span> is no longer independent of the features and weights, and its variance is not constant. This violates the assumptions of standard Least Squares, and applying it to the transformed problem is likely to produce biased estimates.</p>
 <p>So, while feature transformations are a powerful tool, it is important to remember that they can alter the statistical properties of the noise, potentially leading to unexpected biases in the results.</p>
 <p>In practice, Machine Learning practitioners often adopt a pragmatic approach. While these deviations from the classical assumptions introduce theoretical risks, the method’s simplicity, robustness and performance in many real-world scenarios often outweigh these statistical drawbacks. The key takeaway is to be aware of the risks and to use diagnostic plots (e.g., residual plots) to identify and potentially address severe assumption breaches.</p>
 </section>
@@ -887,73 +909,69 @@ y' = w_1 x_1' + \epsilon'
 <h2 data-number="1.9" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">1.9</span> Takeaways</h2>
 <p>This chapter has revisited Linear Regression from a Machine Learning perspective. The key takeaways are:</p>
 <ul>
-<li><p>We start with a collection of <span class="math inline">n</span> training examples, <span class="math inline">(\mathbf{x}_i, y_i)</span>. Each example consists of a feature vector <span class="math inline">\mathbf{x}_i</span> and a target value <span class="math inline">y_i</span>.</p></li>
-<li><p>We postulate a <strong>model</strong> that is linear in a set of parameters or <strong>weights</strong> <span class="math inline">\mathbf{w}</span>, such that our prediction is <span class="math inline">\hat{y}_i = \mathbf{x}_i^{\top}\mathbf{w}</span>.</p></li>
-<li><p>We define a <strong>loss function</strong> to quantify the discrepancy between our predictions and the true values. For least squares, this is the <strong>Mean Squared Error (MSE)</strong>.</p></li>
-<li><p>We find the optimal weights <span class="math inline">\hat{\mathbf{w}}</span> by <strong>minimising the loss function</strong>. For MSE, this leads to a closed-form solution known as the normal equations.</p></li>
-<li><p>Minimising the MSE loss is equivalent to finding the <strong>Maximum Likelihood</strong> solution under the assumption that the observation errors are independent and identically distributed according to a Gaussian distribution.</p></li>
-<li><p><strong>Underfitting</strong> occurs when the model is too simple to capture the underlying data patterns. It can be addressed by using a more complex model.</p></li>
-<li><p><strong>Overfitting</strong> occurs when the model is too complex and learns the noise in the training data, failing to generalise to a separate <strong>test set</strong>. It can be addressed by using more data or by using <strong>regularisation</strong>.</p></li>
-<li><p>We can fit non-linear relationships by <strong>transforming the input features</strong>. However, we must be mindful that these transformations can affect the noise distribution and cause biases in our estimates.</p></li>
+<li><p>We start from a dataset of <span class="math inline">n</span> observations <span class="math inline">(\mathbf{x}_i, y_i)_{i=1}^n</span>. Each observation possesses <span class="math inline">p</span> original features <span class="math inline">(x_{i1}, \dots, x_{ip})</span>.</p></li>
+<li><p>The feature vector can be augmented: we prepend a constant <span class="math inline">x_{i0}=1</span> to accommodate the intercept (<span class="math inline">\mathbf{x}_i = (1, x_{i1}, \dots, x_{ip})^\top</span>), or include non-linear transformations such as <span class="math inline">x_{ik}=x_{i1}^2</span>.</p></li>
+<li><p>The core structural assumption is that targets are linear in parameters: <span class="math display">
+y_i = \mathbf{x}_i^{\top}\mathbf{w} + \varepsilon_i
+</span></p></li>
+<li><p>We define a <strong>loss function</strong> to quantify fitting error: in Least Squares, this is the <strong>Mean Squared Error (MSE)</strong>.</p></li>
+<li><p>The closed-form solution <span class="math inline">\hat{\mathbf{w}} = (\mathbf{X}^{\top}\mathbf{X})^{-1}\mathbf{X}^{\top}\mathbf{y}</span> is derived via the normal equations and coincides with the maximum likelihood estimator under i.i.d. Gaussian error.</p></li>
+<li><p><strong>Underfitting</strong> is addressed by enriching the feature representation; <strong>overfitting</strong> is addressed by collecting more observations or applying regularisation.</p></li>
+<li><p>When features contain measurement noise, standard least squares suffers from <strong>attenuation bias</strong>, pulling parameter estimates towards zero.</p></li>
 </ul>
 </section>
 <section id="exercises" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
 <div id="exr-01-matrix-dimension" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.1</strong></span> Assume <span class="math inline">{\bf a} = \left[\begin{smallmatrix} a_1 &amp; a_2 &amp; \cdots &amp;
-a_p\end{smallmatrix}\right]^\top</span>, is a column vector of size <span class="math inline">p \times 1</span>,</p>
-<p>What are the matrix dimensions of</p>
+<p><span class="theorem-title"><strong>Exercise 1.1</strong></span> Assume <span class="math inline">\mathbf{a} = \begin{bmatrix} a_1 &amp; a_2 &amp; \dots &amp; a_p \end{bmatrix}^\top</span> is a column vector of size <span class="math inline">p \times 1</span>.</p>
+<p>What are the matrix dimensions of:</p>
 <ol type="1">
-<li><span class="math inline">{\bf a}{\bf a}^{\top}</span></li>
-<li><span class="math inline">{\bf a}^{\top}{\bf a}</span></li>
-<li><span class="math inline">{\bf a}{\bf a}^{\top}{\bf a}{\bf a}^{\top}</span></li>
-<li><span class="math inline">{\bf a}^{\top}{\bf a}{\bf a}^{\top}{\bf a}</span></li>
+<li><span class="math inline">\mathbf{a}\mathbf{a}^{\top}</span></li>
+<li><span class="math inline">\mathbf{a}^{\top}\mathbf{a}</span></li>
+<li><span class="math inline">\mathbf{a}\mathbf{a}^{\top}\mathbf{a}\mathbf{a}^{\top}</span></li>
+<li><span class="math inline">\mathbf{a}^{\top}\mathbf{a}\mathbf{a}^{\top}\mathbf{a}</span></li>
 </ol>
 </div>
 <div id="exr-02-gradient-computations" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.2</strong></span> Given no assumptions about matrices <span class="math inline">{\bf A}</span>, <span class="math inline">{\bf B}</span> and vectors <span class="math inline">{\bf a}</span> and <span class="math inline">{\bf b}</span>, compute the gradient <span class="math inline">\frac{\partial E({\bf w})}{\partial {\bf
-  w}}</span> for</p>
+<p><span class="theorem-title"><strong>Exercise 1.2</strong></span> Assume no special properties for matrices <span class="math inline">\mathbf{A}, \mathbf{B}</span> and vectors <span class="math inline">\mathbf{a}, \mathbf{b}</span>. Compute the gradient <span class="math inline">\frac{\partial E(\mathbf{w})}{\partial \mathbf{w}}</span> for:</p>
 <ol type="1">
-<li><span class="math inline">E({\bf w})={\bf w}^{\top}{\bf w}</span></li>
-<li><span class="math inline">E({\bf w})=({\bf w}-{\bf a})^{\top}{\bf A}({\bf w}-{\bf a}</span></li>
-<li><span class="math inline">E({\bf w})=({\bf A}{\bf w}-{\bf b})^{\top}({\bf A}{\bf w}-{\bf b})</span></li>
-<li><span class="math inline">E({\bf w}) = ({\bf w}-{\bf B}{\bf w})^{\top} {\bf A} ({\bf w}-{\bf a})</span></li>
+<li><span class="math inline">E(\mathbf{w}) = \mathbf{w}^{\top}\mathbf{w}</span></li>
+<li><span class="math inline">E(\mathbf{w}) = (\mathbf{w} - \mathbf{a})^{\top} \mathbf{A} (\mathbf{w} - \mathbf{a})</span></li>
+<li><span class="math inline">E(\mathbf{w}) = (\mathbf{A}\mathbf{w} - \mathbf{b})^{\top} (\mathbf{A}\mathbf{w} - \mathbf{b})</span></li>
+<li><span class="math inline">E(\mathbf{w}) = (\mathbf{w} - \mathbf{B}\mathbf{w})^{\top} \mathbf{A} (\mathbf{w} - \mathbf{a})</span></li>
 </ol>
 </div>
 <div id="exr-01-gradient2" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Compute the gradient <span class="math inline">\frac{\partial f({\bf x})}{\partial {\bf x}}</span> for:</p>
+<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Compute the gradient <span class="math inline">\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}</span> for:</p>
 <ol type="1">
-<li><span class="math inline">f({\bf x})=\frac{1}{2} {\bf x}^{\top} {\bf A} {\bf x} + b</span> with <span class="math inline">{\bf
-A}</span> symmetric</li>
-<li><span class="math inline">f({\bf x})=\cos({\bf a}^{\top}{\bf x})</span></li>
-<li><span class="math inline">f({\bf x})=\sum_{i=1}^{n} \lambda_i \exp\left(- \frac{\|{\bf x}-{\bf a}_i\|^2}{2}
-\right)</span></li>
+<li><span class="math inline">f(\mathbf{x}) = \frac{1}{2} \mathbf{x}^{\top} \mathbf{A} \mathbf{x} + b</span> with <span class="math inline">\mathbf{A}</span> symmetric</li>
+<li><span class="math inline">f(\mathbf{x}) = \cos(\mathbf{a}^{\top}\mathbf{x})</span></li>
+<li><span class="math inline">f(\mathbf{x}) = \sum_{i=1}^{n} \lambda_i \exp\left(- \frac{\|\mathbf{x} - \mathbf{a}_i\|^2}{2}\right)</span></li>
 </ol>
 </div>
 <div id="exr-01-which-are-linear" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.4</strong></span> Which of the following models with input <span class="math inline">x_1,x_2</span>, parameters <span class="math inline">w_1,w_2</span> and noise <span class="math inline">\epsilon\sim \mathcal{N}(0,\sigma^2)</span>, are linear in the parameters and can be used as such for Least Squares:</p>
+<p><span class="theorem-title"><strong>Exercise 1.4</strong></span> Which of the following models with inputs <span class="math inline">x_1, x_2</span>, parameters <span class="math inline">w_1, w_2</span> and noise <span class="math inline">\varepsilon \sim \mathcal{N}(0,\sigma^2)</span>, are linear in the parameters and can be used as such for Least Squares:</p>
 <ol type="1">
-<li><span class="math inline">y = w_0 +   w_1 x^2 + \epsilon</span></li>
-<li><span class="math inline">y = w_0 x^{w_1} + w_2 + \epsilon</span></li>
-<li><span class="math inline">y = \exp(w_0 + w_1 x) + \epsilon</span></li>
-<li><span class="math inline">\log(y) = w_0 + w_1 x + \epsilon</span></li>
+<li><span class="math inline">y = w_0 + w_1 x^2 + \varepsilon</span></li>
+<li><span class="math inline">y = w_0 x^{w_1} + w_2 + \varepsilon</span></li>
+<li><span class="math inline">y = \exp(w_0 + w_1 x) + \varepsilon</span></li>
+<li><span class="math inline">\log(y) = w_0 + w_1 x + \varepsilon</span></li>
 </ol>
 </div>
 <div id="exr-01-mean" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.5</strong></span> For <span class="math inline">n</span> real numbers <span class="math inline">x_1,\cdots,x_n</span>, what is the value <span class="math inline">\hat{x}</span> that minimises the sum of squared distances from <span class="math inline">x</span> to each <span class="math inline">x_i</span>: <span class="math display">
-  \hat{x} = \arg\min_x \sum_{i=1}^{n} (x_i-x)^2
+<p><span class="theorem-title"><strong>Exercise 1.5</strong></span> For <span class="math inline">n</span> real numbers <span class="math inline">x_1, \dots, x_n</span>, what is the value <span class="math inline">\hat{x}</span> that minimises the sum of squared distances from <span class="math inline">x</span> to each <span class="math inline">x_i</span>: <span class="math display">
+\hat{x} = \arg\min_x \sum_{i=1}^{n} (x_i - x)^2
 </span></p>
 </div>
-<div id="exr-01-mean" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.6</strong></span> For a linear model <span class="math inline">{\bf y} = {\bf X}{\bf w} + \boldsymbol{\epsilon}</span>, derive, in a matrix form, the expression of the least square error. That is, for <span class="math inline">E({\bf
-w}) = \boldsymbol{\epsilon}^{\top}\boldsymbol{\epsilon}</span> derive the expression of <span class="math inline">\min_{{\bf w}} E({\bf w})</span>.</p>
+<div id="exr-01-least-squares-error" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1.6</strong></span> For a linear model <span class="math inline">\mathbf{y} = \mathbf{X}\mathbf{w} + \boldsymbol{\varepsilon}</span>, derive, in matrix form, the expression of the least squares error. That is, for <span class="math inline">E(\mathbf{w}) = \boldsymbol{\varepsilon}^{\top}\boldsymbol{\varepsilon}</span> derive the expression of <span class="math inline">\min_{\mathbf{w}} E(\mathbf{w})</span>.</p>
 </div>
 <div id="exr-01-autoregressive" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.7</strong></span> An autoregressive model is when a value from a time series is regressed on previous values from that same time series.</p>
+<p><span class="theorem-title"><strong>Exercise 1.7</strong></span> An autoregressive model is when a value from a time series is regressed on previous values from that same time series:</p>
 <p><span class="math display">
-  x_{t}=w_0+\sum _{{i=1}}^{p}w_{i}x_{{t-i}}+\varepsilon_{t}
+  x_{t} = w_0 + \sum_{i=1}^{p} w_{i}x_{t-i} + \varepsilon_{t}
 </span></p>
-<p>write the design matrix for this problem.</p>
+<p>Write the design matrix for this problem.</p>
 </div>
 <div id="exr-01-express-bias" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 1.8</strong></span> Consider the linear model <span class="math inline">y = w_0 + w_1 x</span>. We want to bias <span class="math inline">w_1</span> towards the value 1. Write a loss function that achieves this.</p>
