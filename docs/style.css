@@ -270,3 +270,104 @@ font-size: 0.9em;
 
 }
 
+
+/* ==========================================================================
+   PRINT STYLESHEET (@media print)
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 24mm 20mm 20mm 20mm;
+  }
+
+  /* Remove Interactive Web UI Elements */
+  #quarto-sidebar,
+  #quarto-header,
+  .quarto-color-scheme-toggle,
+  .nav-page,
+  .sidebar,
+  .btn,
+  .quarto-reader-toggle,
+  .page-navigation,
+  .quarto-navigation,
+  .breadcrumb,
+  #quarto-margin-sidebar,
+  .nav-tabs,
+  .quarto-title-meta-heading,
+  footer {
+    display: none !important;
+  }
+
+  /* Full width container reset */
+  #quarto-content, main, article, .page-columns, .page-body {
+    display: block !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Chapter Title styling */
+  h1.title,
+  .quarto-title-block h1,
+  header#title-block-header h1 {
+    break-before: avoid !important;
+    margin-top: 1.2rem !important;
+    margin-bottom: 1.5rem !important;
+    font-size: 2.1rem !important;
+    font-weight: 700 !important;
+    color: #111 !important;
+    padding-bottom: 0.4rem !important;
+    border-bottom: 1.5px solid #222 !important;
+  }
+
+  h1:not(.title) {
+    break-before: page;
+    break-after: avoid;
+    margin-top: 2rem !important;
+    padding-top: 0.5rem;
+    font-size: 1.6rem !important;
+    font-weight: 600 !important;
+  }
+
+  h2 {
+    break-after: avoid;
+    margin-top: 1.6rem !important;
+    margin-bottom: 0.6rem !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    border-bottom: 0.5px solid #ddd !important;
+    padding-bottom: 0.2rem !important;
+  }
+
+  h3, h4 {
+    break-after: avoid;
+    margin-top: 1.2rem !important;
+    margin-bottom: 0.4rem !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+  }
+
+  /* Prevent awkward splits across pages */
+  figure,
+  .figure,
+  img,
+  svg,
+  table,
+  .callout,
+  .exercise,
+  .example,
+  .promptAI,
+  pre,
+  .math.display {
+    break-inside: avoid;
+  }
+
+  /* Clean print links */
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
+

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,7 +93,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -612,11 +612,11 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In the language of attention, we can represent these pairs as keys (<span class="math inline">{\bf k}</span>) and values (<span class="math inline">{\bf v}</span>):</p>
 <p><span class="math display">
-\begin{alignat}{3}
-{\bf k}_1 &amp;\equiv \text{`France'}  &amp;; \quad &amp;  {\bf v}_1  &amp; &amp;\equiv \ \text{`Paris'} \\
-{\bf k}_2 &amp;\equiv \text{`UK'}        &amp;; \quad &amp;  {\bf v}_2 &amp; &amp;\equiv \ \text{`London'} \\
-{\bf k}_3 &amp;\equiv \text{`Germany'}  &amp;; \quad &amp; {\bf v}_3  &amp; &amp;\equiv \ \text{`Berlin'} \\
-\end{alignat}
+\begin{aligned}
+{\bf k}_1 &amp;\equiv \text{'France'}  &amp;; \quad   {\bf v}_1  &amp;\equiv \text{'Paris'} \\
+{\bf k}_2 &amp;\equiv \text{'UK'}        &amp;; \quad   {\bf v}_2  &amp;\equiv \text{'London'} \\
+{\bf k}_3 &amp;\equiv \text{'Germany'}  &amp;; \quad  {\bf v}_3  &amp;\equiv \text{'Berlin'}
+\end{aligned}
 </span></p>
 <p>A standard dictionary performs a “hard” lookup. If we provide the query <code>'France'</code>, it finds an exact match with key <span class="math inline">{\bf k}_1</span> and returns the single corresponding value <span class="math inline">{\bf v}_1</span>.</p>
 <p>We can model this hard lookup using an attention-like process. Imagine a hypothetical alignment score function that returns <span class="math inline">+\infty</span> if the query and key strings are identical, and <span class="math inline">-\infty</span> if they differ. When we apply the softmax function to these scores, the weights become either 1 for a perfect match or 0 otherwise.</p>
@@ -929,13 +929,13 @@ i \mapsto \phi(i) = \begin{bmatrix}
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-BahdanauCB14" class="csl-entry" role="listitem">
-Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. 2015. <span>“Neural Machine Translation by Jointly Learning to Align and Translate.”</span> In <em>3rd International Conference on Learning Representations, <span>ICLR</span> 2015, San Diego, CA, USA, May 7-9, 2015, Conference Track Proceedings</em>, edited by Yoshua Bengio and Yann LeCun. <a href="http://arxiv.org/abs/1409.0473">http://arxiv.org/abs/1409.0473</a>.
+Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. 2015. <span>‘Neural Machine Translation by Jointly Learning to Align and Translate’</span>. In <em>3rd International Conference on Learning Representations, <span>ICLR</span> 2015, San Diego, CA, USA, May 7-9, 2015, Conference Track Proceedings</em>, edited by Yoshua Bengio and Yann LeCun. <a href="http://arxiv.org/abs/1409.0473">http://arxiv.org/abs/1409.0473</a>.
 </div>
 <div id="ref-luong-etal-2015-effective" class="csl-entry" role="listitem">
-Luong, Thang, Hieu Pham, and Christopher D. Manning. 2015. <span>“Effective Approaches to Attention-Based Neural Machine Translation.”</span> In <em>Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing</em>, edited by Lluı́s Màrquez, Chris Callison-Burch, and Jian Su, 1412–21. Lisbon, Portugal: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D15-1166">https://doi.org/10.18653/v1/D15-1166</a>.
+Luong, Thang, Hieu Pham, and Christopher D. Manning. 2015. <span>‘Effective Approaches to Attention-Based Neural Machine Translation’</span>. In <em>Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing</em>, edited by Lluı́s Màrquez, Chris Callison-Burch, and Jian Su, 1412–21. Lisbon, Portugal: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D15-1166">https://doi.org/10.18653/v1/D15-1166</a>.
 </div>
 <div id="ref-pmlr-v37-xuc15" class="csl-entry" role="listitem">
-Xu, Kelvin, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and Yoshua Bengio. 2015. <span>“Show, Attend and Tell: Neural Image Caption Generation with Visual Attention.”</span> In <em>Proceedings of the 32nd International Conference on Machine Learning</em>, edited by Francis Bach and David Blei, 37:2048–57. Proceedings of Machine Learning Research. Lille, France: PMLR. <a href="https://proceedings.mlr.press/v37/xuc15.html">https://proceedings.mlr.press/v37/xuc15.html</a>.
+Xu, Kelvin, Jimmy Ba, Ryan Kiros, Kyunghyun Cho, Aaron Courville, Ruslan Salakhudinov, Rich Zemel, and Yoshua Bengio. 2015. <span>‘Show, Attend and Tell: Neural Image Caption Generation with Visual Attention’</span>. In <em>Proceedings of the 32nd International Conference on Machine Learning</em>, edited by Francis Bach and David Blei, 37:2048–57. Proceedings of Machine Learning Research. Lille, France: PMLR. <a href="https://proceedings.mlr.press/v37/xuc15.html">https://proceedings.mlr.press/v37/xuc15.html</a>.
 </div>
 </div>
 </section>
