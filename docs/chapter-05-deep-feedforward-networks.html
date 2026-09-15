@@ -382,7 +382,7 @@ window.Quarto = {
   <li><a href="#optimisations-for-training-deep-neural-networks" id="toc-optimisations-for-training-deep-neural-networks" class="nav-link" data-scroll-target="#optimisations-for-training-deep-neural-networks"><span class="header-section-number">5.8</span> Optimisations for Training Deep Neural Networks</a>
   <ul class="collapse">
   <li><a href="#mini-batch-and-stochastic-gradient-descent" id="toc-mini-batch-and-stochastic-gradient-descent" class="nav-link" data-scroll-target="#mini-batch-and-stochastic-gradient-descent"><span class="header-section-number">5.8.1</span> Mini-Batch and Stochastic Gradient Descent</a></li>
-  <li><a href="#more-advanced-gradient-descent-optimizers" id="toc-more-advanced-gradient-descent-optimizers" class="nav-link" data-scroll-target="#more-advanced-gradient-descent-optimizers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimizers</a></li>
+  <li><a href="#more-advanced-gradient-descent-optimisers" id="toc-more-advanced-gradient-descent-optimisers" class="nav-link" data-scroll-target="#more-advanced-gradient-descent-optimisers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimisers</a></li>
   </ul></li>
   <li><a href="#constraints-and-regularisers" id="toc-constraints-and-regularisers" class="nav-link" data-scroll-target="#constraints-and-regularisers"><span class="header-section-number">5.9</span> Constraints and Regularisers</a>
   <ul class="collapse">
@@ -426,28 +426,6 @@ window.Quarto = {
 </span></p>
 <p>This model can be considered our first and simplest example of a neural network.</p>
 <p>A neural network, in its simplest form, is what happens when we start stacking these building blocks. Instead of the output of one logistic unit being the final answer, we will use it as an <em>input</em> to another, creating layers of computation. Let’s dive in.</p>
-<!-- Recall the logistic regression model. It performed two key steps: -->
-<!-- 1.  It calculated a linear score from the inputs: $z = \mathbf{x}^\top \mathbf{w} + b$. -->
-<!-- 2.  It passed this score through a non-linear activation function (the sigmoid) to produce a probability: $p = \sigma(z)$. -->
-<!-- A neural network, in its simplest form, is what happens when we start stacking these building blocks. Instead of the output of one logistic unit being the final answer, we use it as an *input* to another, creating layers of computation. Let's dive in. -->
-<!-- --- -->
-<!-- ### Option 2 (Conceptual "Limitations" Approach) -->
-<!-- This version frames neural networks as a solution to the limitations of the models studied previously. -->
-<!-- --- -->
-<!-- ## Feed-Forward Neural Networks -->
-<!-- Having covered linear models like logistic regression and classic classifiers, you might be wondering: what are their limits? While powerful, these models are fundamentally **linear** at their core; they define a single, straight decision boundary to separate data. What happens when the relationship between our inputs and outputs is more complex? -->
-<!-- This is where we transition from single-story structures to skyscrapers. We are now ready to explore **neural networks**, models designed to learn highly complex, non-linear patterns. We will see how the simple computational units from logistic regression can be organised into layers, allowing them to collectively learn intricate decision boundaries that are impossible for a single linear model to capture. -->
-<!-- --- -->
-<!-- ### Option 3 (Concise & Punchy) -->
-<!-- A shorter, more direct transition. -->
-<!-- --- -->
-<!-- ## Feed-Forward Neural Networks -->
-<!-- Everything we've studied so far—least squares, logistic regression, and classification metrics—has been leading to this. We're now ready to combine these ideas to build our first **neural network**. -->
-<!-- Think of a logistic regression unit as a single "neuron". It takes inputs, -->
-<!-- computes a weighted sum, and applies an activation function. A neural network is -->
-<!-- simply what we get when we arrange many of these neurons into interconnected -->
-<!-- layers. By doing this, we move from simple linear decision-makers to powerful, -->
-<!-- non-linear learning machines. Let's see how it's done. -->
 <section id="what-is-a-feed-forward-neural-network" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="what-is-a-feed-forward-neural-network"><span class="header-section-number">5.1</span> What is a Feed-Forward Neural Network?</h2>
 <section id="a-graph-of-differentiable-operations" class="level3" data-number="5.1.1">
@@ -472,12 +450,12 @@ Figure&nbsp;5.1: Logistic Regression Model as a DAG
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="units-and-artificial-neurons"><span class="header-section-number">5.1.2</span> Units and Artificial Neurons</h3>
 <p>The term <em>neural</em> in “neural network” originates from the design of the network’s fundamental units, which are inspired by biological neurons.</p>
 <p>An <strong>artificial neuron</strong> is a specific type of unit that performs a two-step computation. First, it calculates a weighted sum of its inputs (a linear combination). Second, it applies a non-linear function, known as an <strong>activation function</strong>, to this sum.</p>
-<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<div id="fig-neuron-model" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-neuron-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="tikz-figures/nn-dag-neuron.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neuron-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5.2: Neuron Model
 </figcaption>
 </figure>
@@ -499,7 +477,7 @@ Figure&nbsp;5.2: Neuron Model
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-activation-functions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.3: Sigmoid, tanh, and Relu Activation Functions. Note that the Relu activation function (<span class="math inline">z\mapsto \max(0,z)</span>) is not differentiable at <span class="math inline">z=0</span>, but this is generally not a problem in practice.
+Figure&nbsp;5.3: Sigmoid, tanh, and ReLU Activation Functions. Note that the Relu activation function (<span class="math inline">z\mapsto \max(0,z)</span>) is not differentiable at <span class="math inline">z=0</span>, but this is generally not a problem in practice.
 </figcaption>
 </figure>
 </div>
@@ -510,12 +488,12 @@ Figure&nbsp;5.3: Sigmoid, tanh, and Relu Activation Functions. Note that the Rel
 <section id="biological-neurons" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="biological-neurons"><span class="header-section-number">5.2</span> Biological Neurons</h2>
 <p>The original concept of artificial neurons was an attempt to create a simplified mathematical model of their biological counterparts. In a biological neuron, signals received by the dendrites are aggregated. This combined signal must then reach a certain threshold to trigger an output spike, a process that bears a resemblance to the behaviour of a ReLU activation function.</p>
-<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<div id="fig-actual-neuron" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-actual-neuron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/actual-neuron.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-actual-neuron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5.4: Representation of a Biological Neuron
 </figcaption>
 </figure>
@@ -524,6 +502,7 @@ Figure&nbsp;5.4: Representation of a Biological Neuron
 <p><span class="math display">
 C_{\mathrm {m} }{\frac {dV_{\mathrm {m} }(t)}{dt}}=I(t)-{\frac {V_{\mathrm {m} }(t)}{R_{\mathrm {m} }}}
 </span></p>
+<p>(here we assume a baseline resting potential shifted to <span class="math inline">0\text{ mV}</span>)</p>
 <p>In the LIF model, the membrane voltage increases as the neuron receives input current from connected neurons. If the voltage reaches a specific threshold, the neuron “fires,” producing an output voltage spike. Immediately after firing, the membrane potential is reset to a lower resting value. Models that exhibit this behaviour are known as <strong>spiking neuron models</strong>. <a href="#fig-LIFcircuit" class="quarto-xref">Figure&nbsp;<span>5.5</span></a> provides a schematic of the LIF model as an electrical circuit (left) and illustrates how the membrane potential responds to a constant input current (right).</p>
 <div id="fig-LIFcircuit" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -583,7 +562,7 @@ Figure&nbsp;5.8: Neural Network made of neuron units, arranged in a Multi-Layer 
 <img src="tikz-figures/nn-dag-deep-ml-perceptron.svg" class="img-fluid figure-img" style="width:79.4%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-FC-layer2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.9: Deep Neural Network or neuron units in a Multi-Layer Perceptron Layout. Each layer is defined as a <strong>Fully Connected Layer</strong>.
+Figure&nbsp;5.9: Deep Neural Network of neuron units in a Multi-Layer Perceptron Layout. Each layer is defined as a <strong>Fully Connected Layer</strong>.
 </figcaption>
 </figure>
 </div>
@@ -646,7 +625,7 @@ Figure&nbsp;5.11: Example of a graph of operations for neural net evaluation.
 </div>
 <p>The goal of <strong>training</strong> is to find the optimal set of weights <span class="math inline">{\bf w}</span> that makes the network’s predictions accurate. This is achieved by first evaluating the network’s output <span class="math inline">f({\bf x}_i, {\bf w})</span> for a given input <span class="math inline">{\bf x}_i</span> from the training data. This prediction is then compared to the true, observed result <span class="math inline">{\bf y}_i</span> using a <strong>loss function</strong>, <span class="math inline">E</span>, which quantifies the error.</p>
 <p>Typically, the total loss is aggregated over the entire dataset of <span class="math inline">n</span> observations: <span class="math display">
-E({\bf w}) = \sum_{i=1}^n e(f({\bf x}_i, {\bf w}), {\bf y}_i),
+E({\bf w}) = \frac{1}{n} \sum_{i=1}^n e(f({\bf x}_i, {\bf w}), {\bf y}_i),
 </span> where <span class="math inline">e(\cdot, \cdot)</span> is the loss function for a single observation.</p>
 <p>The computation graph for training on a single observation can now be constructed, as shown in <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span>5.12</span></a>. This graph is an extension of the evaluation graph, with the network’s output units now connected to a final unit that computes the loss.</p>
 <div id="fig-nn-graph-training" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -709,13 +688,13 @@ e}{\partial {\bf w}}</span>. This is precisely the problem that the <strong>back
 <section id="back-propagating-with-the-chain-rule" class="level3" data-number="5.7.3">
 <h3 data-number="5.7.3" class="anchored" data-anchor-id="back-propagating-with-the-chain-rule"><span class="header-section-number">5.7.3</span> Back-Propagating with the Chain-Rule</h3>
 <p>Let us now apply the chain rule to our neural network example to see how backpropagation works.</p>
-<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<div id="fig-nn-training-1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-nn-training-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="tikz-figures/nn-training-1.svg" class="img-fluid figure-img" style="width:60.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.13: Backpropagation starts with all the nodes that are directely required to compute the loss function. In this case: <span class="math inline">u_{12}, u_{13}, u_{14}</span>.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nn-training-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.13: Backpropagation starts with all the nodes that are directly required to compute the loss function. In this case: <span class="math inline">u_{12}, u_{13}, u_{14}</span>.
 </figcaption>
 </figure>
 </div>
@@ -736,14 +715,6 @@ e(u_{12},u_{13},u_{14}) = (u_{12}-a)^2 + (u_{13}-b)^2 + (u_{14}-c)^2,
 <p>The term <span class="math inline">\frac{\partial u_{14}}{\partial u_{10}}</span> is the <em>local</em> gradient of the unit <span class="math inline">u_{14}</span> with respect to its input <span class="math inline">u_{10}</span>. If, for example, the function for <span class="math inline">u_{14}</span> was a linear combination <span class="math inline">u_{14} = u_5 + 0.2
 u_{10} + \dots</span>, then this local gradient would simply be <span class="math inline">0.2</span>.</p>
 <p>By repeatedly applying this process, we can propagate the gradients backwards through the network, computing the gradient for each node one layer at a time.</p>
-<!-- ::: {#fig-} -->
-<!-- ![](tikz-figures/nn-training-3.svg){width="60%" } -->
-<!-- Backpropagation. -->
-<!-- ::: -->
-<!-- ::: {#fig-} -->
-<!-- ![](tikz-figures/nn-training-4.svg){width="60%" } -->
-<!-- Backpropagation. -->
-<!-- ::: -->
 <div id="callout-ex-gradient" class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -763,7 +734,7 @@ e}{\partial u_j}</span> for all units <span class="math inline">u_j</span> in a 
 <p>Since the values of <span class="math inline">\frac{\partial e}{\partial u_j}</span> (the “upstream” gradients) are already known, we only need to compute the “local” gradients, <span class="math inline">\frac{\partial u_j}{\partial u_i}</span>, which involves differentiating the function for unit <span class="math inline">u_j</span> with respect to its input <span class="math inline">u_i</span>. This backward pass continues until the gradients have been computed for all the parameters (weights) of the network.</p>
 </div>
 </div>
-<p>Backpropagation is a remarkably efficient algorithm for computing the gradient of a scalar-valued function with respect to all inputs of a computation graph. The computational complexity of backpropagation is proportional to the number of operations in the forward pass. For most common network architectures, this is a linear function of the number of units, making it extremely scalable. It is this efficiency that makes training deep neural networks with millions of parameters computationally feasible.</p>
+<p>Backpropagation is a remarkably efficient algorithm for computing the gradient of a scalar-valued function with respect to all inputs of a computation graph. The computational complexity of backpropagation is proportional to the number of operations in the forward pass. For most common network architectures, this is a linear function of the number of edges/weights, making it extremely scalable. It is this efficiency that makes training deep neural networks with millions of parameters computationally feasible.</p>
 </section>
 <section id="vanishing-gradients" class="level3" data-number="5.7.4">
 <h3 data-number="5.7.4" class="anchored" data-anchor-id="vanishing-gradients"><span class="header-section-number">5.7.4</span> Vanishing Gradients</h3>
@@ -772,19 +743,19 @@ e}{\partial u_j}</span> for all units <span class="math inline">u_j</span> in a 
 <p>Hochreiter, S. (1991). Untersuchungen zu dynamischen neuronalen Netzen (PDF) (diploma thesis). Technical University Munich, Institute of Computer Science.</p>
 </blockquote>
 <p>Consider a deep network with many layers, for instance, the 6-layer network shown below:</p>
-<div id="fig-" class="quarto-float quarto-figure quarto-figure-left anchored">
+<div id="fig-vanishing-grad-arch" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-vanishing-grad-arch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="tikz-figures/nn-vanishing-gradients.svg" class="img-fluid figure-img" style="width:90.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vanishing-grad-arch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5.14: Backpropagation.
 </figcaption>
 </figure>
 </div>
 <p>To compute the gradient of the loss with respect to an early weight <span class="math inline">w</span>, the chain rule involves a long product of derivatives from each subsequent layer: <span class="math display">
 \frac{de}{dw} = \frac{de}{du_6}\frac{du_6}{du_5}\frac{du_5}{du_4}\frac{du_4}{du_3}\frac{du_3}{du_2}\frac{du_2}{du_1}\frac{du_1}{dw}
-</span> If any of the terms in this product are small (i.e., less than 1), the overall product will shrink exponentially as it is propagated backwards. This can cause the gradient to become extremely small, or “vanish,” by the time it reaches the early layers of the network.</p>
+</span> If any of the terms in this product is small (i.e., less than 1), the overall product will shrink. If multiple are small, this can cause the gradient to exponentially “vanish,” by the time it reaches the early layers of the network.</p>
 <div id="fig-activation-derivatives" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-activation-derivatives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -852,8 +823,8 @@ Figure&nbsp;5.15: Derivatives of common activation functions.
 <p>Smaller batch sizes allow for more frequent weight updates, which can speed up convergence. The gradient estimate is also “noisier” because it is based on fewer samples. This noise can be beneficial, as it can help the optimiser escape from sharp, poor local minima. However, it can also make the convergence path erratic and prevent the optimiser from settling into a good minimum.</p>
 <p>An <strong>epoch</strong> is defined as one full pass through the entire training dataset. For a dataset of size <span class="math inline">n</span> and a batch size of <span class="math inline">B</span>, one epoch consists of <span class="math inline">n/B</span> gradient descent steps (or iterations). It is standard practice to shuffle the training data at the beginning of every epoch to ensure that the mini-batches are different each time, preventing cyclical behaviour and improving convergence.</p>
 </section>
-<section id="more-advanced-gradient-descent-optimizers" class="level3" data-number="5.8.2">
-<h3 data-number="5.8.2" class="anchored" data-anchor-id="more-advanced-gradient-descent-optimizers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimizers</h3>
+<section id="more-advanced-gradient-descent-optimisers" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="more-advanced-gradient-descent-optimisers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimisers</h3>
 <p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
 <div id="fig-SGD-ravine" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -867,7 +838,7 @@ Figure&nbsp;5.16: Illustration of a Stochastic Gradient Descent converging poorl
 </div>
 <p>As illustrated in the figure, the direction of steepest descent (the negative gradient) does not always point directly towards the minimum, leading to an inefficient, zig-zagging path.</p>
 <p>One common technique to improve convergence is to use a <strong>learning rate schedule</strong>, where the learning rate <span class="math inline">\eta</span> is gradually decreased over the course of training. This allows for larger steps at the beginning and smaller, more precise steps as the optimiser approaches a minimum.</p>
-<p>Another powerful approach is to incorporate <strong>momentum</strong>. This technique helps to accelerate progress along shallow gradients and dampen oscillations. It achieves this by adding a fraction of the previous update vector to the current one, creating an exponentially weighted moving average of the gradients: <span class="math display">\begin{align*}
+<p>Another powerful approach is to incorporate <strong>momentum</strong>. This technique helps to accelerate progress along shallow gradients and dampen oscillations. It achieves this by adding a fraction of the previous update vector to the current one, creating a weighted moving average of the gradients: <span class="math display">\begin{align*}
     {\bf v}^{(m+1)} &amp;= \mu {\bf v}^{(m)} - \eta \frac{\partial E}{\partial {\bf
 w}}({\bf w}^{(m)}) \\
     {\bf w}^{(m+1)} &amp;= {\bf w}^{(m)} + {\bf v}^{(m+1)}
@@ -901,6 +872,7 @@ See Also
   E'({\bf w}) = E({\bf w}) + \lambda \sum_i w_i^2
 </span></p>
 <p>This penalty discourages very large weights, leading to a “simpler” model that is less likely to overfit.</p>
+<p>Note that in deep feed-forward networks, we do not regularise biases, as this would lead to underfitting. Thus <span class="math inline">\sum w_i^2</span> typically sums over connection weights, leaving layer biases unpenalised.</p>
 </section>
 <section id="l1-regularisation" class="level3" data-number="5.9.2">
 <h3 data-number="5.9.2" class="anchored" data-anchor-id="l1-regularisation"><span class="header-section-number">5.9.2</span> L1 Regularisation</h3>
@@ -909,20 +881,12 @@ See Also
   E'({\bf w}) = E({\bf w}) + \lambda \sum_i |w_i|
 </span></p>
 <p>A key property of L1 regularisation is that it encourages sparsity; that is, it tends to drive many of the weights to become exactly zero. This can be useful for feature selection and for simplifying the network model (see <a href="note-03-l1-induces-sparsity.html" class="quarto-xref"><span>Appendix C</span></a>).</p>
-<!-- ::: {#callout-GD-seealso .callout-note icon=false } -->
-<!-- ## See Also -->
-<!-- *  [https://keras.io/api/layers/regularization_layers/](https://keras.io/api/layers/regularization_layers/) -->
-<!-- ::: -->
 </section>
 </section>
 <section id="dropout-noise" class="level2" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="dropout-noise"><span class="header-section-number">5.10</span> Dropout &amp; Noise</h2>
 <p>One of the most effective ways to combat overfitting is to train on more data. When collecting more data is not feasible, we can artificially augment the existing dataset. A simple way to do this is to create new training examples by adding a small amount of random noise (e.g., from a Gaussian distribution) to the input features of the original samples.</p>
 <p>This idea can be taken a step further by injecting noise not just at the input layer, but also to the activations of the hidden units during the training process.</p>
-<!-- ::: {#callout-GD-seealso .callout-note icon=false } -->
-<!-- ## See Also -->
-<!-- *  [https://keras.io/api/layers/regularization_layers/gaussian_noise/](https://keras.io/api/layers/regularization_layers/gaussian_noise/) -->
-<!-- ::: -->
 <p>A very effective and widely used regularisation technique that builds on this idea is <strong>dropout</strong>. During each training step, dropout randomly sets the output of a fraction of the units in a layer to zero. This is equivalent to training a large ensemble of smaller networks that share weights, which prevents complex co-adaptations between neurons and forces the network to learn more robust features.</p>
 <div id="callout-Dropout-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -995,7 +959,7 @@ Figure&nbsp;5.18: Detecting Overfitting in Training.
 \\ 0 &amp; \text{if } \mathbf{x}^{\top}\mathbf{w} \le 0 \end{cases}
 </span></p>
 <p>where <span class="math inline">\mathbf{x}</span> is the input vector and <span class="math inline">\mathbf{w}</span> is the weight and bias vector.</p>
-<p>▶ Demonstrate that if all the weights and biases <span class="math inline">\mathbf{w}</span> in such a network are multiplied by a positive constant <span class="math inline">c &gt; 0</span>, the overall output behavior of the network remains unchanged.</p>
+<p>▶ Demonstrate that if all the weights and biases <span class="math inline">\mathbf{w}</span> in such a network are multiplied by a positive constant <span class="math inline">c &gt; 0</span>, the overall output behaviour of the network remains unchanged.</p>
 </div>
 <div id="exr-05-binary-sigmoid-neurons" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.2</strong></span> Consider a deep neural network (DNN) where all neurons are binary neurons, each employing the step activation function defined in Exercise 1.</p>
@@ -1003,7 +967,7 @@ Figure&nbsp;5.18: Detecting Overfitting in Training.
 <p><span class="math display">
 \text{output} = \frac{1}{1 + \exp(-\mathbf{x}^{\top}\mathbf{w})}
 </span></p>
-<p>▶ Show that by multiplying the weights and biases of each sigmoid neuron by a sufficiently large positive constant <span class="math inline">c &gt; 0</span>, the behavior of the new sigmoid-based DNN can arbitrarily approximate the original binary neuron DNN.</p>
+<p>▶ Show that by multiplying the weights and biases of each sigmoid neuron by a sufficiently large positive constant <span class="math inline">c &gt; 0</span>, the behaviour of the new sigmoid-based DNN can arbitrarily approximate the original binary neuron DNN.</p>
 </div>
 <div id="exr-05-bitwise-representation" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.3</strong></span> Consider a pre-trained three-layer neural network designed to classify single digits (0-9). The third layer (output layer of the original network) has 10 neurons, where each neuron’s activation corresponds to the probability or confidence of a specific digit. We are given that for a correctly classified digit, the corresponding output neuron has an activation of at least <span class="math inline">0.99</span>, while all other incorrect output neurons have activations less than <span class="math inline">0.01</span>.</p>
@@ -1058,7 +1022,7 @@ Figure&nbsp;5.18: Detecting Overfitting in Training.
 <p><span class="math display">
 E = (\hat{y} - y)^2
 </span></p>
-<p>Our goal is to adjust <span class="math inline">w</span> and <span class="math inline">b</span> to minimize <span class="math inline">E</span> using <strong>gradient descent</strong>.</p>
+<p>Our goal is to adjust <span class="math inline">w</span> and <span class="math inline">b</span> to minimise <span class="math inline">E</span> using <strong>gradient descent</strong>.</p>
 <p>▶ Derive the partial derivative of the cost function <span class="math inline">E</span> with respect to the weight <span class="math inline">w</span>, i.e., calculate <span class="math inline">\frac{\partial E}{\partial w}</span></p>
 <p>▶ Derive the partial derivative of the cost function <span class="math inline">E</span> with respect to the bias <span class="math inline">b</span>, i.e., calculate <span class="math inline">\frac{\partial E}{\partial b}</span>.</p>
 <p>▶ Write down the update rules for <span class="math inline">w</span> and <span class="math inline">b</span> using gradient descent with a learning rate <span class="math inline">\eta</span>.</p>
