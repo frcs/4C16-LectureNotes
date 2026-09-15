@@ -468,11 +468,11 @@ Table&nbsp;4.1: Confusion Matrices for the classifiers shown in <a href="#fig-da
 <tr class="odd">
 <td style="text-align: left;">Predicted: 0</td>
 <td style="text-align: left;">TN=162</td>
-<td style="text-align: left;">FN=25</td>
+<td style="text-align: left;">FN=17</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Predicted: 1</td>
-<td style="text-align: left;">FP=17</td>
+<td style="text-align: left;">FP=25</td>
 <td style="text-align: left;">TP=196</td>
 </tr>
 </tbody>
@@ -500,11 +500,11 @@ Table&nbsp;4.1: Confusion Matrices for the classifiers shown in <a href="#fig-da
 <tr class="odd">
 <td style="text-align: left;">Predicted: 0</td>
 <td style="text-align: center;">TN=170</td>
-<td style="text-align: center;">FN=17</td>
+<td style="text-align: center;">FN=29</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Predicted: 1</td>
-<td style="text-align: center;">FP=29</td>
+<td style="text-align: center;">FP=17</td>
 <td style="text-align: center;">TP=184</td>
 </tr>
 </tbody>
@@ -587,7 +587,7 @@ Example
 <img src="figures/ROC-1.svg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-roc-curve-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: An example of Receiving Operating Characteristic (ROC) curves for four different classifiers.
+Figure&nbsp;4.2: An example of Receiver Operating Characteristic (ROC) curves for four different classifiers.
 </figcaption>
 </figure>
 </div>
@@ -619,7 +619,7 @@ Figure&nbsp;4.3: ROC curves for the classifiers from <a href="#fig-dataset04" cl
 <p>Similarly, one can plot a <strong>Precision-Recall curve</strong> and compute the area under it, which is known as the <strong>Average Precision (AP)</strong>. This metric is particularly informative for highly imbalanced datasets where the number of negatives far outweighs the number of positives.</p>
 <p>It is implemented slightly differently from the ROC-AUC: <span class="math display">
 \mathrm{AP} = \sum_{i=1}^n \mathrm{Precision}_i \times \left(\mathrm{Recall}_i-\mathrm{Recall}_{i-1}\right)
-</span> where <span class="math inline">\mathrm{Recall}_i</span> and <span class="math inline">\mathrm{Precision}_i</span> are the precision and recall values taken at <span class="math inline">n</span> different thresholds <span class="math inline">T_i</span> values.</p>
+</span> where <span class="math inline">\mathrm{Recall}_i</span> and <span class="math inline">\mathrm{Precision}_i</span> are the precision and recall values taken at <span class="math inline">n</span> different threshold values <span class="math inline">T_i</span>, and <span class="math inline">\mathrm{Recall}_0=0</span>.</p>
 </section>
 </section>
 <section id="metrics-for-multiclass-classification" class="level2" data-number="4.3">
@@ -655,7 +655,7 @@ Figure&nbsp;4.3: ROC curves for the classifiers from <a href="#fig-dataset04" cl
 </tr>
 </tbody>
 </table>
-<p>There are <span class="math inline">K-1</span> possible ways of miss-classifying each class. Thus there are <span class="math inline">(K-1) \times K</span> types of errors in total.</p>
+<p>There are <span class="math inline">K-1</span> possible ways of misclassifying each class. Thus there are <span class="math inline">(K-1) \times K</span> types of errors in total.</p>
 <p>The most common way to adapt binary metrics to the multiclass setting is to use averaging strategies. For each class <span class="math inline">k</span>, we can compute its own set of metrics by considering it as the “positive” class and all other classes as the “negative” class (a one-vs-rest approach). Then, we can average these per-class metrics.</p>
 <ul>
 <li><p><strong>Macro-averaging</strong>: Compute the metric independently for each class and then take the unweighted average. This treats all classes equally, regardless of their size. <span class="math display">
@@ -678,7 +678,7 @@ Example
 <p>Given <code>y_true = [0, 1, 2, 0, 1, 2, 2]</code> and <code>y_pred = [0, 2, 1, 0, 0, 1, 0]</code></p>
 <p>we have <span class="math inline">\mathrm{TP}_0 = 2</span>, <span class="math inline">\mathrm{TP}_1 = 0</span>, <span class="math inline">\mathrm{TP}_2 = 0</span>, <span class="math inline">\mathrm{FP}_0 = 2</span>, <span class="math inline">\mathrm{FP}_1 = 2</span>, <span class="math inline">\mathrm{FP}_2 = 1</span></p>
 <p><span class="math display">
-\mathrm{MicroPrecision} = \frac{2 + 0 + 0}{ (2+0+0) + (1 + 2 + 1)} = 0.286
+\mathrm{MicroPrecision} = \frac{2 + 0 + 0}{ (2 + 0 + 0) + (2 + 2 + 1)} = 0.286
 </span></p>
 <p><span class="math display">
 \mathrm{MacroPrecision} = \frac{1}{3} \left( \frac{2}{2+2} +  \frac{0}{0  +
@@ -705,7 +705,7 @@ Example
 <ul>
 <li><p><strong>Training sets</strong>: as large as you can afford.</p></li>
 <li><p><strong>Validation/Dev sets</strong> with sizes from 1,000 to 10,000 examples are common. With 100 examples, you will have a good chance of detecting an improvement of 5%. With 10,000 examples, you will have a good chance of detecting an improvement of 0.1%. The size of that dataset should be at least as large as what is required by your targetted <a href="https://en.wikipedia.org/wiki/Confidence_interval">confidence interval</a>.</p></li>
-<li><p><strong>Test sets</strong> should be large enough to give high confidence in the overall performance of your system. One popular heuristic had been to use 30% of your data for your test set. This is makes sense when you have, say, 100 to 10,000 examples but maybe less so when you have billion of training examples. Basically, think that you want to catch the all possible edge cases of your system.</p></li>
+<li><p><strong>Test sets</strong> should be large enough to give high confidence in the overall performance of your system. One popular heuristic had been to use 30% of your data for your test set. This makes sense when you have, say, 100 to 10,000 examples but maybe less so when you have billions of training examples. Basically, think that you want to catch all possible edge cases of your system.</p></li>
 </ul>
 <p>Important: the test and dev sets should contain examples of what you ultimately want to perform well on, rather than whatever data you happen to have for training.</p>
 </section>
@@ -747,7 +747,7 @@ Example
 <p>Compute the accuracy and comment on the performance of the classifier.</p>
 </div>
 <div id="exr-04-multiclass" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 4.2</strong></span> Consider a multiclass classifier which produce the following results</p>
+<p><span class="theorem-title"><strong>Exercise 4.2</strong></span> Consider a multiclass classifier which produces the following results</p>
 <pre><code>y_true = [0, 0, 1, 2, 2, 2, 1, 1, 0]
 y_pred = [1, 0, 1, 2, 1, 0, 1, 2, 0]</code></pre>
 <p>compute the confusion matrix, the accuracy, the micro precision and the macro precision.</p>
