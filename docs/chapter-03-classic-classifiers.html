@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -569,7 +569,7 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 </figure>
 </div>
 <p>A major challenge with feature expansion is that the dimensionality of the new feature space can grow very rapidly. For a polynomial expansion of degree <em>d</em> on an input feature vector of dimension <em>p</em>, the new feature vector will have a dimension of <span class="math inline">\frac{(p+d)!}{p!\, d!}</span>.</p>
-<p>For instance, with <span class="math inline">p=100</span> features and a polynomial of degree 5, the resulting feature vector would have a dimension of approximately 100 million. This makes computations, such as the least-squares solution <span class="math inline">{\bf w} = (X^{\top}X)^{-1}X^{\top}{\bf y}</span>, completely impractical, as <span class="math inline">X^{\top}X</span> would be a <span class="math inline">10^8 \times 10^8</span> matrix.</p>
+<p>For instance, with <span class="math inline">p=100</span> features and a polynomial of degree 5, the resulting feature vector would have a dimension of approximately 100 million. This makes computations, such as the least-squares solution <span class="math inline">\hat{\bf w} = ({\bf X}^{\top}{\bf X})^{-1}{\bf X}^{\top}{\bf y}</span>, completely impractical, as <span class="math inline">{\bf X}^{\top}X</span> would be a <span class="math inline">10^8 \times 10^8</span> matrix.</p>
 <p>The <strong>kernel trick</strong> provides an elegant solution to this problem, allowing us to work with very complex, high-dimensional feature mappings without ever explicitly computing them.</p>
 </section>
 <section id="step-1-re-parameterisation" class="level3" data-number="3.5.2">
@@ -609,6 +609,10 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 \varphi ({\bf x})\approx{\frac {1}{\sqrt {D}}}[\cos ( {\bf w}_{1}^\top{\bf x})
 ,\sin ( {\bf w}_{1}^\top{\bf x})  ,\ldots ,\cos({\bf w}_{D}^\top{\bf x})  ,\sin({\bf w}_{D}^\top{\bf x})
 ]^{\top}
+</span></p>
+<p>In practice, you would never need to do this. All you need to do is compute something like this: <span class="math display">
+\kappa({\bf x}, {\bf x}_i) = e^{- \gamma \| {\bf x} - {\bf
+      x}_i\|^2 }
 </span></p>
 </section>
 <section id="understanding-the-rbf-kernel" class="level3" data-number="3.5.4">
