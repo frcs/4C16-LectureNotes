@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,7 +93,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -172,7 +172,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -369,20 +369,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -429,7 +423,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-10-generative-models.html">Generative AI</a></li><li class="breadcrumb-item"><a href="./chapter-11-LLMs.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -503,7 +497,7 @@ window.Quarto = {
 <p><code>I like to have a [_] 4C16 [_]</code> <span class="math inline">\Rightarrow</span> the model predicts that <code>challenging</code> and <code>exam</code> are the missing words.</p>
 <p>This <em>masked</em> approach is the one adopted in BERT for instance.</p>
 </section>
-<section id="building-your-own-llm-in-3-easy-steps" class="level2" data-number="11.2">
+<section id="building-your-own-llm-in-3-easy-steps" class="level2 page-columns page-full" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="building-your-own-llm-in-3-easy-steps"><span class="header-section-number">11.2</span> Building Your Own LLM (in 3 easy steps)</h2>
 <section id="scrape-the-internet" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="scrape-the-internet"><span class="header-section-number">11.2.1</span> Scrape the Internet</h3>
@@ -565,7 +559,7 @@ window.Quarto = {
 </table>
 <p>Basically you’ll need a few terabytes of text from the internet.</p>
 </section>
-<section id="tokenisation" class="level3" data-number="11.2.2">
+<section id="tokenisation" class="level3 page-columns page-full" data-number="11.2.2">
 <h3 data-number="11.2.2" class="anchored" data-anchor-id="tokenisation"><span class="header-section-number">11.2.2</span> Tokenisation</h3>
 <p>Words then need to be mapped into vectors. Obviously the English vocabulary is just too big (with millions of potential tokens).</p>
 <p>The strategy is usually to reduce the vocabulary size to something small (<em>eg.</em> GPT3’s vocabulary size is only 50257). Words that are not in the initial dictionary (Out-of-Vocabulary words) are encoded by combination of smaller tokens. Typically this is done with algorithms such as <em>byte-pair</em> encoding or <em>WordPiece</em> tokenisation.</p>
@@ -576,25 +570,16 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> outputs <span class="op">=</span> tokenizer(inputs)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> np.array(outputs)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>], dtype<span class="op">=</span>int32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="seealso-tokenizers" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li><a href="https://keras.io/api/keras_nlp/tokenizers/word_piece_tokenizer/">Keras doc on WordPiece tokenization</a></li>
 <li><a href="https://huggingface.co/learn/nlp-course/chapter6/6?fw=pt">huggingface course on WordPiece tokenization</a></li>
 <li><a href="https://keras.io/api/keras_nlp/tokenizers/byte_pair_tokenizer/">Keras doc Byte-Pair Encoding tokenization</a></li>
 <li><a href="https://huggingface.co/learn/nlp-course/chapter6/5?fw=pt">huggingface course on Byte-Pair Encoding tokenization</a></li>
 </ul>
-</div>
-</div>
-</section>
+</div></div></section>
 <section id="architecture-all-you-need-is-attention" class="level3" data-number="11.2.3">
 <h3 data-number="11.2.3" class="anchored" data-anchor-id="architecture-all-you-need-is-attention"><span class="header-section-number">11.2.3</span> Architecture: All You Need is Attention</h3>
 <p>As we have seen, LLMs are no more than gigantic Transformer models.</p>

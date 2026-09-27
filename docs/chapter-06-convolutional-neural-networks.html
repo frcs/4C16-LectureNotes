@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -349,20 +349,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -403,7 +397,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html">Foundations of Deep Neural Networks</a></li><li class="breadcrumb-item"><a href="./chapter-06-convolutional-neural-networks.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Convolutional Neural Networks</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -756,10 +750,11 @@ Figure&nbsp;6.11: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer
 <p>K. Simonyan, A. Zisserman Very Deep Convolutional Networks for Large-Scale Image Recognition</p>
 </blockquote>
 </section>
-<section id="example-vgg16" class="level2" data-number="6.6">
+<section id="example-vgg16" class="level2 page-columns page-full" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="example-vgg16"><span class="header-section-number">6.6</span> Example: VGG16</h2>
 <p>Below is the code for the network definition of VGG16 in PyTorch.</p>
 <p>In PyTorch, models are defined as classes that inherit from <code>torch.nn.Module</code>. The layers of the network are defined in the <code>__init__</code> method, and the forward pass is defined in the <code>forward</code> method. The <code>torch.nn.Sequential</code> container is a convenient way to group layers that are applied in sequence.</p>
+<div class="column-page">
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -820,9 +815,10 @@ Figure&nbsp;6.11: VGG (Simonyan and Zisserman, 2013). This is a popular 16-layer
 <span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.classifier(x)</span>
 <span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span>
 <span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: In PyTorch, the softmax activation is often applied in the loss function</span></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="co"># (e.g., `nn.CrossEntropyLoss`) for better numerical stability, so it is not</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co"># always included in the model's forward pass. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: In PyTorch, the softmax activation is often applied in the</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="co"># loss function (e.g., `nn.CrossEntropyLoss`) for better numerical</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co"># stability, so it is not always included in the forward pass.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>As can be seen the network definition is rather compact. The convolutional layers are laid out in sequence. After <code>block1_pool</code>, the image tensor contains 64 channels but is halved in width and height. As the process goes deeper, the width and height is further halved and the number of channels/features increase. At <code>block5_pool</code>, the tensor width and height is <span class="math inline">32</span> times smaller than the original but the number of channels/features per pixel is 512.</p>
 <p>The last dense layers (<code>FC1</code>, <code>FC2</code>) perform the classification task based on the visual features of <code>block5_pool</code>.</p>
 <p>Let us take the following input image (tensor size <span class="math inline">3 \times 224 \times 224</span>, image has been resized to match that dimension):</p>

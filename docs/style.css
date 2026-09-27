@@ -30,6 +30,7 @@
    pre {
    word-break: normal;
    word-wrap: normal;
+   font-size: 0.85em;
    }
    pre code {
    white-space: inherit;
@@ -106,6 +107,41 @@
 	margin: 0;
 	padding: 0;
 	background: none;
+}
+
+.proof {
+	background: #f8fafc;
+	border-left: 4px solid #64748b;
+	margin: 1.5em 0;
+	padding: 0.8em 1.2em;
+	border-radius: 2px;
+	position: relative;
+}
+
+.proof .proof {
+	border: none;
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+
+.proof .proof-title {
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.proof .proof-title em {
+	font-style: normal;
+}
+
+.proof::after {
+	content: "□";
+	display: block;
+	text-align: right;
+	color: #64748b;
+	font-size: 1.2em;
+	line-height: 1;
+	margin-top: 0.25em;
 }
 
 
@@ -272,13 +308,14 @@ font-size: 0.9em;
 
 
 /* ==========================================================================
-   PRINT STYLESHEET (@media print)
+   KAOBOOK LECTURE NOTES PRINT STYLESHEET (@media print)
+   Based on the kaobook LaTeX class by Federico Marotta
    ========================================================================== */
 
 @media print {
   @page {
     size: A4;
-    margin: 24mm 20mm 20mm 20mm;
+    margin: 24mm 22mm 22mm 22mm;
   }
 
   /* Remove Interactive Web UI Elements */
@@ -295,6 +332,7 @@ font-size: 0.9em;
   #quarto-margin-sidebar,
   .nav-tabs,
   .quarto-title-meta-heading,
+  .quarto-title-breadcrumbs,
   footer {
     display: none !important;
   }
@@ -308,60 +346,311 @@ font-size: 0.9em;
     padding: 0 !important;
   }
 
-  /* Chapter Title styling */
-  h1.title,
-  .quarto-title-block h1,
-  header#title-block-header h1 {
+  /* kaobook Body Typography: Refined Book Serif with parskip rhythm */
+  body, #quarto-document-content, main, article, p {
+    font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif !important;
+    font-size: 10.2pt !important;
+    line-height: 1.46 !important;
+    color: #1a202c !important;
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  p {
+    margin-top: 0 !important;
+    margin-bottom: 0.75em !important;
+  }
+
+  /* kaobook Chapter Header Block (\setchapterstyle{lines} / \setchapterstyle{kao}) */
+  .quarto-title-block,
+  header#title-block-header {
     break-before: avoid !important;
-    margin-top: 1.2rem !important;
-    margin-bottom: 1.5rem !important;
-    font-size: 2.1rem !important;
+    margin-top: 0.8rem !important;
+    margin-bottom: 2rem !important;
+    padding-bottom: 1.1rem !important;
+    border-bottom: 1.2pt solid #1e293b !important;
+  }
+
+  .quarto-title,
+  .quarto-title h1.title,
+  h1.title {
+    break-before: avoid !important;
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .quarto-title h1.title .chapter-number {
+    display: block !important;
+    font-size: 2.8rem !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    color: #1e3a8a !important; /* kaobook Royal Navy accent */
+    margin-bottom: 0.45rem !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .quarto-title h1.title .chapter-title {
+    display: block !important;
+    font-size: 1.85rem !important;
     font-weight: 700 !important;
-    color: #111 !important;
-    padding-bottom: 0.4rem !important;
-    border-bottom: 1.5px solid #222 !important;
+    color: #0f172a !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.01em !important;
   }
 
   h1:not(.title) {
     break-before: page;
     break-after: avoid;
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
     margin-top: 2rem !important;
-    padding-top: 0.5rem;
-    font-size: 1.6rem !important;
-    font-weight: 600 !important;
+    padding-top: 0.5rem !important;
+    font-size: 1.65rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
   }
 
+  /* kaobook Section Headings (KOMA-Script \sffamily\bfseries) */
   h2 {
-    break-after: avoid;
-    margin-top: 1.6rem !important;
-    margin-bottom: 0.6rem !important;
-    font-size: 1.25rem !important;
-    font-weight: 600 !important;
-    border-bottom: 0.5px solid #ddd !important;
-    padding-bottom: 0.2rem !important;
+    break-after: avoid !important;
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 1.28rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin-top: 1.9rem !important;
+    margin-bottom: 0.55rem !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
   }
 
-  h3, h4 {
-    break-after: avoid;
-    margin-top: 1.2rem !important;
-    margin-bottom: 0.4rem !important;
-    font-size: 1.05rem !important;
+  h3 {
+    break-after: avoid !important;
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 1.08rem !important;
     font-weight: 600 !important;
+    color: #1e293b !important;
+    margin-top: 1.35rem !important;
+    margin-bottom: 0.35rem !important;
   }
 
-  /* Prevent awkward splits across pages */
-  figure,
-  .figure,
-  img,
-  svg,
-  table,
-  .callout,
+  h4 {
+    break-after: avoid !important;
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    margin-top: 1.1rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .header-section-number {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: #1e3a8a !important;
+    padding-right: 0.45em !important;
+  }
+
+  /* kaobook Boxes & Environments (kaobox & kaotheorems style) */
   .exercise,
-  .example,
+  .theorem.exercise {
+    break-inside: avoid !important;
+    background-color: #fdfaf2 !important; /* Soft warm ivory / goldenrod tint */
+    border: none !important;
+    border-left: 3.5pt solid #d97706 !important; /* Warm amber / goldenrod accent */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 1.3em 0 !important;
+    padding: 0.75em 1.1em !important;
+  }
+
+  .example {
+    break-inside: avoid !important;
+    background-color: #f2f8f4 !important; /* Soft sage/mint tint */
+    border: none !important;
+    border-left: 3.5pt solid #059669 !important; /* Emerald accent */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 1.3em 0 !important;
+    padding: 0.75em 1.1em !important;
+  }
+
   .promptAI,
-  pre,
+  .callout {
+    break-inside: avoid !important;
+    background-color: #f0f5fa !important; /* kaobox RoyalBlue!15!white */
+    border: none !important;
+    border-left: 3.5pt solid #2563eb !important; /* Royal Blue accent */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 1.3em 0 !important;
+    padding: 0.75em 1.1em !important;
+  }
+
+  .proof {
+    break-inside: avoid !important;
+    background-color: #f8fafc !important; /* Soft slate/neutral tint */
+    border: none !important;
+    border-left: 3.5pt solid #64748b !important; /* Slate accent */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 1.3em 0 !important;
+    padding: 0.75em 1.1em !important;
+  }
+
+  .exercise .theorem-title,
+  .theorem.exercise .theorem-title {
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    color: #92400e !important;
+    font-size: 9.8pt !important;
+  }
+
+  .example strong {
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-weight: 700 !important;
+    color: #065f46 !important;
+    font-size: 9.8pt !important;
+  }
+
+  .callout-title {
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    color: #1e3a8a !important;
+    font-size: 9.8pt !important;
+  }
+
+  .proof .proof-title {
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+  }
+
+  .proof::after {
+    content: "□";
+    display: block;
+    text-align: right;
+    color: #64748b;
+    font-size: 1.1em;
+    line-height: 1;
+    margin-top: 0.25em;
+  }
+
+  .callout-header {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 0 0.4em 0 !important;
+  }
+
+  .callout-icon-container {
+    display: none !important;
+  }
+
+  .callout-body {
+    padding: 0 !important;
+  }
+
+  /* Blockquotes (kaobook style) */
+  blockquote {
+    border-left: 3pt solid #3b82f6 !important;
+    background: #f8fafc !important;
+    padding: 0.6em 1em !important;
+    margin: 1.2em 0 !important;
+    color: #1e293b !important;
+    font-style: italic !important;
+    border-radius: 0 !important;
+  }
+
+  blockquote p {
+    font-style: italic !important;
+  }
+
+  /* kaobook Code Blocks */
+  pre, code, tt {
+    font-family: "Fira Mono", "Courier New", Courier, monospace !important;
+    font-size: 8.5pt !important;
+  }
+
+  pre {
+    background-color: #f8fafc !important;
+    border: 0.5pt solid #cbd5e1 !important;
+    border-radius: 0 !important;
+    padding: 0.6em 0.8em !important;
+    line-height: 1.35 !important;
+  }
+
+  /* kaobook Figures, Tables & Captions */
+  figure, .figure, img, svg, table {
+    break-inside: avoid !important;
+  }
+
+  figure, .quarto-figure {
+    margin: 1.3em auto !important;
+    text-align: center !important;
+  }
+
+  figcaption, .figure-caption, p.caption {
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 8.5pt !important;
+    line-height: 1.35 !important;
+    color: #475569 !important;
+    text-align: center !important;
+    margin-top: 0.5em !important;
+    font-style: normal !important;
+  }
+
+  figcaption strong, .figure-caption strong {
+    font-weight: 700 !important;
+    color: #0f172a !important;
+  }
+
+  /* Booktabs Table Styling */
+  table {
+    border-collapse: collapse !important;
+    border-top: 1.2pt solid #1e293b !important;
+    border-bottom: 1.2pt solid #1e293b !important;
+    border-left: none !important;
+    border-right: none !important;
+    width: 100% !important;
+    margin: 1.2em 0 !important;
+    font-size: 9pt !important;
+  }
+
+  table thead th {
+    font-family: "Fira Sans", "Inria Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    border-top: none !important;
+    border-bottom: 0.8pt solid #334155 !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    padding: 0.45em 0.6em !important;
+  }
+
+  table tbody td {
+    border-top: none !important;
+    border-bottom: 0.3pt solid #e2e8f0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 0.35em 0.6em !important;
+  }
+
+  /* Lists & Mathematics */
+  ul, ol {
+    margin-top: 0.3em !important;
+    margin-bottom: 0.6em !important;
+    padding-left: 1.8em !important;
+  }
+
+  li {
+    margin-bottom: 0.25em !important;
+  }
+
   .math.display {
-    break-inside: avoid;
+    break-inside: avoid !important;
+    margin: 0.85em 0 !important;
   }
 
   /* Clean print links */
@@ -369,5 +658,60 @@ font-size: 0.9em;
     color: inherit !important;
     text-decoration: none !important;
   }
+}
+
+/* Margin 'See Also' Card */
+.seealso-card {
+  border-left: 2px solid #2b6cb0;
+  background-color: #f7fafc;
+  padding: 6px 8px;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  margin-bottom: 0.8rem;
+}
+
+.seealso-card .seealso-title {
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: #2b6cb0;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.seealso-card ul {
+  padding-left: 1.0em;
+  margin-bottom: 0;
+}
+
+.seealso-card li {
+  margin-bottom: 0.2em;
+}
+
+/* Margin Note Minimal & Card */
+.marginnote-minimal {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  margin-bottom: 0.8rem;
+}
+
+.marginnote-card {
+  border-left: 2px solid #718096;
+  background-color: #f7fafc;
+  padding: 6px 8px;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  margin-bottom: 0.8rem;
+}
+
+.marginnote-card .marginnote-title {
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: #4a5568;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 

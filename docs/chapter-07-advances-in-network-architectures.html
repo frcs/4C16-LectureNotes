@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -152,7 +152,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -349,20 +349,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -400,7 +394,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advances in Network Architectures</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -632,7 +626,7 @@ Figure&nbsp;7.8: ResNet Sub-Network. A direct path between the input and the out
 <p>The ResNet architecture has been highly influential, and many pre-trained variants, such as ResNet-18, ResNet-34, and ResNet-50, are still widely used today.</p>
 </section>
 </section>
-<section id="a-modern-training-pipeline" class="level2" data-number="7.3">
+<section id="a-modern-training-pipeline" class="level2 page-columns page-full" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="a-modern-training-pipeline"><span class="header-section-number">7.3</span> A Modern Training Pipeline</h2>
 <section id="data-augmentation" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">7.3.1</span> Data Augmentation</h3>
@@ -644,30 +638,21 @@ Figure&nbsp;7.8: ResNet Sub-Network. A direct path between the input and the out
 <p>Another approach is to synthesise data using simulation models, such as game engines. However, be aware that synthetic data is a simplified model of the real world and can lead to overfitting. It also tends to have different characteristics from real data, which can cause domain adaptation issues.</p>
 <p>Generative models, such as those discussed in later chapters, can also be used to create synthetic data. For example, you could use a large language model to generate text for a natural language processing task.</p>
 </section>
-<section id="initialisation" class="level3" data-number="7.3.2">
+<section id="initialisation" class="level3 page-columns page-full" data-number="7.3.2">
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="initialisation"><span class="header-section-number">7.3.2</span> Initialisation</h3>
 <p>Initialisation needs to be considered carefully. Starting with all weights at zero is generally a bad idea, as it can lead to being stuck in a local minimum with zero gradients from the outset. A better approach is to initialise the weights randomly. We need, however to be careful, and control the output at each layer to avoid a situation where gradients would explode or vanish through the different layers.</p>
 <p>For networks using the ReLU activation function, <strong>He initialisation</strong> is a popular choice. For each layer <span class="math inline">l</span>, the bias <span class="math inline">b</span> and weights <span class="math inline">w</span> are initialised as <span class="math inline">b_l=0, w_l\sim \mathcal{N}(0,
 \sqrt{2/n_{l-1}})</span>, where <span class="math inline">n_{l-1}</span> is the number of neurons in the previous layer. This helps to maintain a stable gradient flow throughout the network, at least at the beginning of training.</p>
-<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>see <a href="https://docs.pytorch.org/docs/stable/nn.init.html">PyTorch docs</a></li>
 <li>see <a href="https://www.deeplearning.ai/ai-notes/initialization/">https://www.deeplearning.ai/ai-notes/initialization</a></li>
 <li>Kaiming He et al.&nbsp;Delving Deep into Rectifiers (see <a href="https://arxiv.org/abs/1502.01852">paper</a>)</li>
-<li>A quick overview of how this works is presented in <a href="note-05-He-initialisation.html" class="quarto-xref"><span>Appendix E</span></a>.</li>
+<li>A quick overview of how this works is presented in <a href="note-04-He-initialisation.html" class="quarto-xref"><span>Appendix D</span></a>.</li>
 </ul>
-</div>
-</div>
-</section>
+</div></div></section>
 <section id="optimisation" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="optimisation"><span class="header-section-number">7.3.3</span> Optimisation</h3>
 <p>As discussed in previous chapters, various optimisation techniques are available for training. Adam and SGD with momentum are two of the most common choices. While Adam often converges faster, SGD with momentum has been shown to find local minima that generalise better. An improved version of Adam, called AdamW, has been proposed to address some of Adam’s shortcomings.</p>

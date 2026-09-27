@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -334,20 +334,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -378,7 +372,8 @@ window.Quarto = {
   <li><a href="#multiclass-classification-multinomial-logistic-regression" id="toc-multiclass-classification-multinomial-logistic-regression" class="nav-link" data-scroll-target="#multiclass-classification-multinomial-logistic-regression"><span class="header-section-number">2.8</span> Multiclass Classification: Multinomial Logistic Regression</a>
   <ul class="collapse">
   <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example"><span class="header-section-number">2.8.1</span> Worked Example</a></li>
-  <li><a href="#multinomial-cross-entropy-loss" id="toc-multinomial-cross-entropy-loss" class="nav-link" data-scroll-target="#multinomial-cross-entropy-loss"><span class="header-section-number">2.8.2</span> Multinomial Cross-Entropy Loss</a></li>
+  <li><a href="#visualising-multiclass-decision-boundaries" id="toc-visualising-multiclass-decision-boundaries" class="nav-link" data-scroll-target="#visualising-multiclass-decision-boundaries"><span class="header-section-number">2.8.2</span> Visualising Multiclass Decision Boundaries</a></li>
+  <li><a href="#multinomial-cross-entropy-loss" id="toc-multinomial-cross-entropy-loss" class="nav-link" data-scroll-target="#multinomial-cross-entropy-loss"><span class="header-section-number">2.8.3</span> Multinomial Cross-Entropy Loss</a></li>
   </ul></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">2.9</span> Takeaways</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
@@ -702,8 +697,35 @@ p(y=C_k \mid {\bf x}, {\bf W}) = \mathrm{softmax}({\bf W}^\top {\bf x})_k = \fra
 </span></p>
 <p>Note that we have indeed <span class="math inline">p(A \mid {\bf x}) + p(B \mid {\bf x}) + p(C \mid {\bf x})=1</span>.</p>
 </section>
-<section id="multinomial-cross-entropy-loss" class="level3" data-number="2.8.2">
-<h3 data-number="2.8.2" class="anchored" data-anchor-id="multinomial-cross-entropy-loss"><span class="header-section-number">2.8.2</span> Multinomial Cross-Entropy Loss</h3>
+<section id="visualising-multiclass-decision-boundaries" class="level3" data-number="2.8.2">
+<h3 data-number="2.8.2" class="anchored" data-anchor-id="visualising-multiclass-decision-boundaries"><span class="header-section-number">2.8.2</span> Visualising Multiclass Decision Boundaries</h3>
+<p>Just as in the two-class setting, multinomial logistic regression is a <strong>linear classifier</strong>. The decision boundary between any pair of classes <span class="math inline">C_i</span> and <span class="math inline">C_j</span> corresponds to the set of points where their predicted probabilities are equal:</p>
+<p><span class="math display">
+p(y=C_i \mid {\bf x}, {\bf W}) = p(y=C_j \mid {\bf x}, {\bf W})
+</span></p>
+<p>Substituting the softmax expressions:</p>
+<p><span class="math display">
+\frac{e^{{\bf x}^\top {\bf w}_i}}{\sum_k e^{{\bf x}^\top {\bf w}_k}} = \frac{e^{{\bf x}^\top {\bf w}_j}}{\sum_k e^{{\bf x}^\top {\bf w}_k}} \iff e^{{\bf x}^\top {\bf w}_i} = e^{{\bf x}^\top {\bf w}_j} \iff {\bf x}^\top ({\bf w}_i - {\bf w}_j) = 0
+</span></p>
+<p>This equation defines a <strong>linear hyperplane</strong> perpendicular to <span class="math inline">({\bf w}_i - {\bf w}_j)</span>.</p>
+<p>In a 2D problem with <span class="math inline">K=3</span> classes (<a href="#fig-logistic-regression-10" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>), the pairwise decision boundaries form three linear rays (shown as solid yellow lines) that meet at a central <strong>triple point</strong> where all three classes have equal probability:</p>
+<p><span class="math display">
+p_0({\bf x}) = p_1({\bf x}) = p_2({\bf x}) = \frac{1}{3}
+</span></p>
+<p>The dashed lines indicate the 95% probability contours for each class (<span class="math inline">p_k({\bf x}) = 0.95</span>), representing regions of high confidence where the competing classes each have probability under 5%.</p>
+<div id="fig-logistic-regression-10" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-logistic-regression-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/MultinomialRegression-2DToy-lines.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.8: Decision boundaries (solid yellow) and 95% probability contours (dashed) for 3-class multinomial logistic regression in 2D. The boundaries are linear hyperplanes meeting at a triple point where <span class="math inline">p_0=p_1=p_2=\frac{1}{3}</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="multinomial-cross-entropy-loss" class="level3" data-number="2.8.3">
+<h3 data-number="2.8.3" class="anchored" data-anchor-id="multinomial-cross-entropy-loss"><span class="header-section-number">2.8.3</span> Multinomial Cross-Entropy Loss</h3>
 <p>For a single observation, the likelihood across all classes is written using indicator exponents:</p>
 <p><span class="math display">
 p(y \mid {\bf x}, {\bf W}) = \prod_{k=1}^K p(y=C_k \mid {\bf x}, {\bf W})^{[y=C_k]}

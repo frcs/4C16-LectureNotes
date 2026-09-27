@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -137,7 +137,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -334,20 +334,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -398,7 +392,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html">Foundations of Deep Neural Networks</a></li><li class="breadcrumb-item"><a href="./chapter-05-deep-feedforward-networks.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Feedforward Neural Networks</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -641,8 +635,8 @@ Figure&nbsp;5.12: Example of a graph of operations for neural net training.
 <p>To be precise, <a href="#fig-nn-graph-training" class="quarto-xref">Figure&nbsp;<span>5.12</span></a> depicts the computation for a single observation. The graph for the entire training process would involve replicating this structure for all observations and aggregating their individual losses to compute the total loss, <span class="math inline">E</span>.</p>
 <p>To find the optimal weights <span class="math inline">{\bf w}</span>, we use an iterative optimisation algorithm, most commonly <strong>gradient descent</strong>. Starting from a random initial set of weights <span class="math inline">{\bf w}^{(0)}</span>, the algorithm repeatedly updates them in the direction that minimises the loss:</p>
 <p><span class="math display">
-{\bf w}^{(m+1)} = {\bf w}^{(m)} - \eta \frac{\partial E}{\partial {\bf
-w}}({\bf w}^{(m)})
+{\bf w}^{(t+1)} = {\bf w}^{(t)} - \eta \frac{\partial E}{\partial {\bf
+w}}({\bf w}^{(t)})
 </span> Here, <span class="math inline">\frac{\partial E}{\partial {\bf w}}</span> is the gradient of the total loss with respect to the weights. It indicates the direction of steepest ascent of the loss function. The scalar <span class="math inline">\eta</span> is a hyperparameter called the <strong>learning rate</strong>, which controls the size of the step we take in the opposite direction of the gradient. Choosing an appropriate learning rate is crucial for successful training.</p>
 <p>Therefore, any neural network can be trained using gradient descent, provided we have an efficient method for computing the gradient of the loss function with respect to every weight in the network, <span class="math inline">\frac{\partial
 e}{\partial {\bf w}}</span>. This is precisely the problem that the <strong>backpropagation</strong> algorithm solves.</p>
@@ -662,7 +656,7 @@ e}{\partial {\bf w}}</span>. This is precisely the problem that the <strong>back
 \frac{\partial e}{\partial w_{i}} \approx \frac{e(\cdots, w_{i}+\varepsilon, \cdots) - e(\cdots, w_{i}, \cdots)}{\varepsilon}
 </span> where <span class="math inline">\varepsilon</span> is a very small number. While this method is simple to implement, its computational cost makes it impractical for neural networks.</p>
 <p>A modern deep neural network can easily have hundreds of millions of parameters. To compute the full gradient using this numerical approach, we would need to evaluate the entire network once for each parameter. For a network with 100 million parameters, this would mean 100 million forward passes through the network just to perform a single weight update. Clearly, this is computationally infeasible.</p>
-<p>In contrast, backpropagation can compute the exact gradient for all parameters simultaneously in approximately the time it takes to perform just two forward passes. The efficiency of backpropagation is what transformed neural networks from a theoretical curiosity into a practical and powerful machine learning technique.</p>
+<p>In contrast, backpropagation can compute the exact gradient for all parameters simultaneously in approximately the time it takes to perform two forward passes. The efficiency of backpropagation is what transformed neural networks from a theoretical curiosity into a practical and powerful machine learning technique.</p>
 <p>The process of computing the output of a network for a given input is called <strong>forward propagation</strong> (or a forward pass). Information flows from the input layer, through the hidden units, to the output layer. During training, the forward pass extends all the way to the final loss unit, producing a scalar error value <span class="math inline">e({\bf w})</span>.</p>
 <p>The backpropagation algorithm then begins. It uses the <strong>chain rule</strong> from calculus to efficiently propagate gradient information backwards, starting from the final loss unit and moving all the way back to the network’s weights.</p>
 </section>
@@ -807,7 +801,7 @@ Figure&nbsp;5.15: Derivatives of common activation functions.
 <p>The vanishing gradient problem is a fundamental obstacle in training deep networks. It is one of the primary reasons that the ReLU activation function has become popular. Since the derivative of ReLU is 1 for all positive inputs, it is less prone to causing gradients to shrink. Many modern network architectures, such as Residual Networks (ResNets) and Long Short-Term Memory networks (LSTMs), incorporate specific mechanisms designed to mitigate the vanishing gradient problem.</p>
 </section>
 </section>
-<section id="optimisations-for-training-deep-neural-networks" class="level2" data-number="5.8">
+<section id="optimisations-for-training-deep-neural-networks" class="level2 page-columns page-full" data-number="5.8">
 <h2 data-number="5.8" class="anchored" data-anchor-id="optimisations-for-training-deep-neural-networks"><span class="header-section-number">5.8</span> Optimisations for Training Deep Neural Networks</h2>
 <p>We have established that network weights can be trained using gradient descent, with the gradients being computed efficiently by the backpropagation algorithm. However, a major challenge remains: the resulting objective functions to be optimised are highly complex and non-convex. Standard gradient descent is not guaranteed to find a global minimum; it can get stuck in poor local minima or saddle points.</p>
 <p>Consequently, tuning the training process is a critical part of developing any neural network application. There is no single “best” set of hyperparameters; finding a good combination often requires experimentation and a degree of trial and error. Fortunately, a range of optimisation strategies and regularisation techniques have been developed to improve the speed and stability of the training process.</p>
@@ -823,7 +817,7 @@ Figure&nbsp;5.15: Derivatives of common activation functions.
 <p>Smaller batch sizes allow for more frequent weight updates, which can speed up convergence. The gradient estimate is also “noisier” because it is based on fewer samples. This noise can be beneficial, as it can help the optimiser escape from sharp, poor local minima. However, it can also make the convergence path erratic and prevent the optimiser from settling into a good minimum.</p>
 <p>An <strong>epoch</strong> is defined as one full pass through the entire training dataset. For a dataset of size <span class="math inline">n</span> and a batch size of <span class="math inline">B</span>, one epoch consists of <span class="math inline">n/B</span> gradient descent steps (or iterations). It is standard practice to shuffle the training data at the beginning of every epoch to ensure that the mini-batches are different each time, preventing cyclical behaviour and improving convergence.</p>
 </section>
-<section id="more-advanced-gradient-descent-optimisers" class="level3" data-number="5.8.2">
+<section id="more-advanced-gradient-descent-optimisers" class="level3 page-columns page-full" data-number="5.8.2">
 <h3 data-number="5.8.2" class="anchored" data-anchor-id="more-advanced-gradient-descent-optimisers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimisers</h3>
 <p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
 <div id="fig-SGD-ravine" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -839,29 +833,20 @@ Figure&nbsp;5.16: Illustration of a Stochastic Gradient Descent converging poorl
 <p>As illustrated in the figure, the direction of steepest descent (the negative gradient) does not always point directly towards the minimum, leading to an inefficient, zig-zagging path.</p>
 <p>One common technique to improve convergence is to use a <strong>learning rate schedule</strong>, where the learning rate <span class="math inline">\eta</span> is gradually decreased over the course of training. This allows for larger steps at the beginning and smaller, more precise steps as the optimiser approaches a minimum.</p>
 <p>Another powerful approach is to incorporate <strong>momentum</strong>. This technique helps to accelerate progress along shallow gradients and dampen oscillations. It achieves this by adding a fraction of the previous update vector to the current one, creating a weighted moving average of the gradients: <span class="math display">\begin{align*}
-    {\bf v}^{(m+1)} &amp;= \mu {\bf v}^{(m)} - \eta \frac{\partial E}{\partial {\bf
-w}}({\bf w}^{(m)}) \\
-    {\bf w}^{(m+1)} &amp;= {\bf w}^{(m)} + {\bf v}^{(m+1)}
+    {\bf v}^{(t+1)} &amp;= \mu {\bf v}^{(t)} - \eta \frac{\partial E}{\partial {\bf
+w}}({\bf w}^{(t)}) \\
+    {\bf w}^{(t+1)} &amp;= {\bf w}^{(t)} + {\bf v}^{(t+1)}
   \end{align*}</span> with <span class="math inline">\mu\approx 0.9</span> controlling the moving average.</p>
 <p>Many other, more sophisticated optimisation algorithms have been developed, each with its own strategy for adapting the learning rate or update rule. Popular examples include Nesterov Accelerated Gradient (NAG), Adagrad, RMSprop, and Adam.</p>
 <p><strong>Adam</strong> (Adaptive Moment Estimation) and its variant Nadam are currently among the most widely used and effective optimisers, often providing good results with little hyperparameter tuning. However, the best choice of optimiser is problem-dependent, so it is always good practice to experiment with a few different ones.</p>
-<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li><a href="http://cs231n.github.io/neural-networks-3/">http://cs231n.github.io/neural-networks-3/</a></li>
 <li><a href="https://docs.pytorch.org/docs/stable/optim.html">PyTorch optimisers</a></li>
 </ul>
-</div>
-</div>
-</section>
+</div></div></section>
 </section>
 <section id="constraints-and-regularisers" class="level2" data-number="5.9">
 <h2 data-number="5.9" class="anchored" data-anchor-id="constraints-and-regularisers"><span class="header-section-number">5.9</span> Constraints and Regularisers</h2>
@@ -869,7 +854,7 @@ See Also
 <h3 data-number="5.9.1" class="anchored" data-anchor-id="l2-regularisation"><span class="header-section-number">5.9.1</span> L2 Regularisation</h3>
 <p><strong>L2 regularisation</strong> is the most common form of regularisation. It is the Tikhonov regularisation used in linear regression. It works by adding a penalty term to the loss function that is proportional to the square of the weights:</p>
 <p><span class="math display">
-  E'({\bf w}) = E({\bf w}) + \lambda \sum_i w_i^2
+  E'({\bf w}) = E({\bf w}) + \frac{\lambda}{2} \sum_i w_i^2
 </span></p>
 <p>This penalty discourages very large weights, leading to a “simpler” model that is less likely to overfit.</p>
 <p>Note that in deep feed-forward networks, we do not regularise biases, as this would lead to underfitting. Thus <span class="math inline">\sum w_i^2</span> typically sums over connection weights, leaving layer biases unpenalised.</p>
@@ -883,27 +868,18 @@ See Also
 <p>A key property of L1 regularisation is that it encourages sparsity; that is, it tends to drive many of the weights to become exactly zero. This can be useful for feature selection and for simplifying the network model (see <a href="note-03-l1-induces-sparsity.html" class="quarto-xref"><span>Appendix C</span></a>).</p>
 </section>
 </section>
-<section id="dropout-noise" class="level2" data-number="5.10">
+<section id="dropout-noise" class="level2 page-columns page-full" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="dropout-noise"><span class="header-section-number">5.10</span> Dropout &amp; Noise</h2>
 <p>One of the most effective ways to combat overfitting is to train on more data. When collecting more data is not feasible, we can artificially augment the existing dataset. A simple way to do this is to create new training examples by adding a small amount of random noise (e.g., from a Gaussian distribution) to the input features of the original samples.</p>
 <p>This idea can be taken a step further by injecting noise not just at the input layer, but also to the activations of the hidden units during the training process.</p>
 <p>A very effective and widely used regularisation technique that builds on this idea is <strong>dropout</strong>. During each training step, dropout randomly sets the output of a fraction of the units in a layer to zero. This is equivalent to training a large ensemble of smaller networks that share weights, which prevents complex co-adaptations between neurons and forces the network to learn more robust features.</p>
-<div id="callout-Dropout-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Dropout.html">PyTorch docs for Dropout</a></li>
 </ul>
-</div>
-</div>
-</section>
+</div></div></section>
 <section id="monitoring-and-training-diagnostics" class="level2" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
 <p>Training a deep neural network can be a lengthy process, taking anywhere from hours to several days or even weeks. It is therefore essential to carefully monitor the process to ensure it is proceeding correctly. Tracking metrics like the loss function over time is crucial for diagnosing potential problems.</p>

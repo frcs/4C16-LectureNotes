@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,7 +93,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -172,7 +172,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -369,20 +369,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -417,7 +411,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-07-advances-in-network-architectures.html">Modern Architectures and Techniques</a></li><li class="breadcrumb-item"><a href="./chapter-08-recurrent-neural-networks.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Recurrent Neural Networks</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -672,7 +666,7 @@ Figure&nbsp;8.10: In Truncated BPTT, the RNN is unrolled for only a fixed number
 </figure>
 </div>
 </section>
-<section id="dealing-with-long-sequences" class="level2" data-number="8.4">
+<section id="dealing-with-long-sequences" class="level2 page-columns page-full" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="dealing-with-long-sequences"><span class="header-section-number">8.4</span> Dealing with Long Sequences</h2>
 <p>When unrolled, recurrent networks can become very deep. As with any deep network, training with gradient descent is susceptible to the <strong>vanishing and exploding gradient problems</strong>. As the error is propagated back through many time steps, the gradients can either shrink exponentially until they become negligible (vanish) or grow exponentially until they become unstable (explode). This makes it very difficult for simple RNNs to learn long-range dependencies in the data.</p>
 <p>To visualise this consider a simplified case where the <code>tanh</code> activation is replaced with a linear activation (note this is a valid approximation if the weights are small or the logits close to zero). Let’s unroll the governing equations for a particular choice of weights <span class="math inline">{\bf U}</span>, <span class="math inline">{\bf W}</span>, <span class="math inline">{\bf b}</span>:</p>
@@ -692,7 +686,7 @@ x}_{t}+{\bf b}\right) \\
 \end{equation}</span></p>
 <p>Somehow the matrix exponentiation of <span class="math inline">{\bf U}</span> needs to remain stable, even large values of <span class="math inline">t</span>. This is in theory possible, but, very difficult to achieve in training, with a random initialisation of <span class="math inline">U</span>.</p>
 <p>For this reason, the simple RNN architecture is rarely used in practice. Instead, we resort to more sophisticated RNN architectures that were specifically designed to address this issue, namely Long Short-Term Memory (LSTM) and Gated Recurrent Units (GRU).</p>
-<section id="lstm" class="level3" data-number="8.4.1">
+<section id="lstm" class="level3 page-columns page-full" data-number="8.4.1">
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="lstm"><span class="header-section-number">8.4.1</span> LSTM</h3>
 <p>The <strong>Long Short-Term Memory (LSTM)</strong> architecture was introduced in 1997 by Sepp Hochreiter and Jürgen Schmidhuber <span class="citation" data-cites="lstm">(<a href="references.html#ref-lstm" role="doc-biblioref">Hochreiter and Schmidhuber 1997</a>)</span> precisely to combat the vanishing and exploding gradient problems. LSTM cells (see <a href="#fig-rnn-lstm" class="quarto-xref">Figure&nbsp;<span>8.11</span></a>) replace the simple hidden layer of a standard RNN. They introduce a more complex internal structure that includes a separate cell state and a series of “gates” that regulate the flow of information.</p>
 <p>These gates—the forget gate, input gate, and output gate—allow the network to selectively add or remove information from the cell state, enabling it to remember information for very long periods. After their potential was realised around 2014, major technology companies like Google, Apple, and Microsoft began using LSTMs extensively in products for speech recognition and machine translation.</p>
@@ -706,26 +700,17 @@ Figure&nbsp;8.11: The internal architecture of a Long Short-Term Memory (LSTM) c
 </figcaption>
 </figure>
 </div>
-<div id="seealso-lstm" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>S. Hochreiter and J. Schmidhuber (1997). “Long short-term memory” <a href="https://goo.gl/hhBNRE">original paper</a></li>
 <li>Keras’s <a href="https://keras.io/api/layers/recurrent_layers/lstm">LSTM documentation</a></li>
 <li>See also Brandon’s Rohrer’s <a href="https://youtu.be/WCUNPb-5EYI">video</a></li>
 <li>and colah’s <a href="https://goo.gl/uc7gbn">blog</a></li>
 </ul>
-</div>
-</div>
-</section>
-<section id="gru" class="level3" data-number="8.4.2">
+</div></div></section>
+<section id="gru" class="level3 page-columns page-full" data-number="8.4.2">
 <h3 data-number="8.4.2" class="anchored" data-anchor-id="gru"><span class="header-section-number">8.4.2</span> GRU</h3>
 <p>The <strong>Gated Recurrent Unit (GRU)</strong> was introduced in 2014 <span class="citation" data-cites="gru">(<a href="references.html#ref-gru" role="doc-biblioref">Chung et al. 2014</a>)</span> as a simpler alternative to the LSTM. GRUs combine the forget and input gates into a single “update gate” and merge the cell state and hidden state. This results in a model that is computationally more efficient (faster to train) because it has fewer parameters than an LSTM.</p>
 <p>The performance of GRUs is often comparable to that of LSTMs. They may perform slightly better on smaller datasets but can be outperformed by LSTMs on larger, more complex problems. The architecture is shown in <a href="#fig-rnn-gru" class="quarto-xref">Figure&nbsp;<span>8.12</span></a>.</p>
@@ -739,23 +724,14 @@ Figure&nbsp;8.12: The internal architecture of a Gated Recurrent Unit (GRU) cell
 </figcaption>
 </figure>
 </div>
-<div id="seealso-gru" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>J. Chung, C. Gulcehre, K. Cho and Y. Bengio (2014). “Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling”. (<a href="https://arxiv.org/abs/1412.3555">original paper</a>)</li>
 <li>Keras <a href="https://keras.io/api/layers/recurrent_layers/gru/">GRU documentation</a></li>
 </ul>
-</div>
-</div>
-</section>
+</div></div></section>
 <section id="gated-units" class="level3" data-number="8.4.3">
 <h3 data-number="8.4.3" class="anchored" data-anchor-id="gated-units"><span class="header-section-number">8.4.3</span> Gated Units</h3>
 <p>Without delving too deeply into the equations of LSTMs and GRUs, it is useful to understand the core concept they introduce: <strong>gated units</strong>. So far, the primary way we have combined information from two units, <span class="math inline">u_1</span> and <span class="math inline">u_2</span>, has been through a linear combination, <span class="math inline">w_1u_1 + w_2u_2</span>. Gating provides an alternative mechanism based on element-wise multiplication.</p>
@@ -788,26 +764,17 @@ u_2 \odot \sigma(u_1) = \begin{bmatrix} \vdots \\ 0.4 \\ 0.3 \\ \vdots \end{bmat
 <p>In LSTMs and GRUs, this gating mechanism is used to control the cell state, allowing the network to learn what information to store, what to forget, and what to output at each time step.</p>
 </section>
 </section>
-<section id="application-image-caption-generator" class="level2" data-number="8.5">
+<section id="application-image-caption-generator" class="level2 page-columns page-full" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="application-image-caption-generator"><span class="header-section-number">8.5</span> Application: Image Caption Generator</h2>
 <p>A powerful application that combines computer vision and natural language processing is the <strong>Image Caption Generator</strong>. This model takes an image as input and automatically generates a textual description.</p>
-<div id="seealso-image-captioning" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>O. Vinyals, A. Toshev, S. Bengio and D. Erhan (2015). ``Show and tell: A neural image caption generator’’ <a href="https://arxiv.org/abs/1411.4555">original paper</a> <span class="citation" data-cites="showandtell">(<a href="references.html#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span></li>
 <li>Google Research Blog <a href="https://goo.gl/U88bDQ">post</a></li>
 </ul>
-</div>
-</div>
-<p>The process begins (see <a href="#fig-rnn-captioning" class="quarto-xref">Figure&nbsp;<span>8.14</span></a>) by using a pre-trained Convolutional Neural Network (CNN), such as VGG or ResNet, to extract a rich set of visual features from the input image.</p>
+</div></div><p>The process begins (see <a href="#fig-rnn-captioning" class="quarto-xref">Figure&nbsp;<span>8.14</span></a>) by using a pre-trained Convolutional Neural Network (CNN), such as VGG or ResNet, to extract a rich set of visual features from the input image.</p>
 <p>We typically remove the final classification layer of the CNN, as we are interested in the high-level feature representation from one of the last fully connected layers, not the final class prediction.</p>
 <div id="fig-rnn-captioning" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -827,31 +794,22 @@ Figure&nbsp;8.14: Image Captioning. First the input impage is mapped into a vect
 <p>Recurrent Neural Networks provide a powerful framework for modelling sequential data, finding applications in time series analysis, text processing, and video analysis. However, simple RNNs are difficult to train due to the vanishing and exploding gradient problems, which limit their ability to capture long-range dependencies.</p>
 <p>Gated architectures like LSTMs and GRUs were developed to overcome these limitations. By using gating mechanisms to control the flow of information, they have made the training of deep recurrent models far more stable and effective. These models became the standard for many language-based tasks, including machine translation, text generation, and image captioning.</p>
 </section>
-<section id="limitations-of-rnns-and-the-rise-of-transformers" class="level2" data-number="8.7">
+<section id="limitations-of-rnns-and-the-rise-of-transformers" class="level2 page-columns page-full" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="limitations-of-rnns-and-the-rise-of-transformers"><span class="header-section-number">8.7</span> Limitations of RNNs and the Rise of Transformers</h2>
 <p>Despite their success, RNNs have fundamental limitations. Their inherently recurrent nature, processing data one step at a time, prevents effective parallelisation. This makes them slow to train on very long sequences.</p>
 <p>Perhaps more critically, RNNs and LSTMs are not well-suited for transfer learning in the same way as CNNs. It is difficult to pre-train a general-purpose RNN on a massive dataset and then fine-tune it for a new task. Consequently, most RNN applications require training from scratch, which demands large amounts of task-specific data and significant computational resources.</p>
 <p>The 2017 landmark paper “Attention Is All You Need” <span class="citation" data-cites="attention">(<a href="references.html#ref-attention" role="doc-biblioref">Vaswani et al. 2017</a>)</span> introduced the <strong>Transformer</strong> architecture, which has since ended the predominance of RNNs in natural language processing. Transformers, built upon the <strong>Attention Mechanism</strong>, dispense with recurrence entirely. Their design allows for massive parallelisation and has proven exceptionally effective for transfer learning. This has enabled the creation of powerful pre-trained models like BERT and GPT, which can be adapted to a wide range of tasks with minimal fine-tuning. This is why we will cover these in the next chapters.</p>
 <p>… but good ideas never die. Recurrent approaches made a comeback in late 2023 with <em>Mamba</em>, an architecture demonstrating that state-space models with recurrent properties can compete with, and sometimes outperform, Transformers, particularly in terms of computational efficiency during inference. This shows that the principles of recurrence remain an active and evolving area of research.</p>
-<div id="seealso-mamba" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>Albert Gu, Tri Dao (2023). “Mamba: Linear-Time Sequence Modeling with Selective State Spaces”. <a href="https://arxiv.org/abs/2312.00752">original paper</a></li>
 <li>see also this <a href="https://tinyurl.com/4ub385ye">tutorial</a></li>
 </ul>
-</div>
-</div>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+</div></div><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-gru" class="csl-entry" role="listitem">
 Chung, Junyoung, Caglar Gulcehre, Kyunghyun Cho, and Yoshua Bengio. 2014. <span>‘Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling’</span>. In <em>NIPS 2014 Workshop on Deep Learning, December 2014</em>.
 </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -137,7 +137,7 @@ window.Quarto = {
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating slimcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -334,20 +334,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-04-kernel-trick.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Kernel Trick</span></span></a>
+  <a href="./note-04-He-initialisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./note-05-He-initialisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">He Initialisation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./note-06-word-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
+  <a href="./note-05-word-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Word Embedding</span></span></a>
   </div>
 </li>
       </ul>
@@ -365,7 +359,7 @@ window.Quarto = {
   <li><a href="#k-nearest-neighbours-k-nn" id="toc-k-nearest-neighbours-k-nn" class="nav-link active" data-scroll-target="#k-nearest-neighbours-k-nn"><span class="header-section-number">3.1</span> k-Nearest Neighbours (<span class="math inline">k</span>-NN)</a></li>
   <li><a href="#decision-trees" id="toc-decision-trees" class="nav-link" data-scroll-target="#decision-trees"><span class="header-section-number">3.2</span> Decision Trees</a></li>
   <li><a href="#linear-svm" id="toc-linear-svm" class="nav-link" data-scroll-target="#linear-svm"><span class="header-section-number">3.3</span> Linear SVM</a></li>
-  <li><a href="#the-no-free-lunch-theorem" id="toc-the-no-free-lunch-theorem" class="nav-link" data-scroll-target="#the-no-free-lunch-theorem"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem</a></li>
+  <li><a href="#the-no-free-lunch-theorem-and-inductive-bias" id="toc-the-no-free-lunch-theorem-and-inductive-bias" class="nav-link" data-scroll-target="#the-no-free-lunch-theorem-and-inductive-bias"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem and Inductive Bias</a></li>
   <li><a href="#the-kernel-trick" id="toc-the-kernel-trick" class="nav-link" data-scroll-target="#the-kernel-trick"><span class="header-section-number">3.5</span> The Kernel Trick</a>
   <ul class="collapse">
   <li><a href="#the-challenge-of-feature-expansion" id="toc-the-challenge-of-feature-expansion" class="nav-link" data-scroll-target="#the-challenge-of-feature-expansion"><span class="header-section-number">3.5.1</span> The Challenge of Feature Expansion</a></li>
@@ -380,7 +374,7 @@ window.Quarto = {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter-01-linear-regression.html">Introduction to Machine Learning</a></li><li class="breadcrumb-item"><a href="./chapter-03-classic-classifiers.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">A Tour of Classic Classifiers</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -402,21 +396,21 @@ window.Quarto = {
 
 
 <p>Before we delve into the world of neural networks, it is important to recognise that they are not a recent invention. For many years, other machine learning algorithms were the preferred methods for a wide range of tasks. In this chapter, we will briefly introduce some of the most influential <em>classic</em> supervised learning algorithms for classification. Given the scope of this chapter, we will only touch upon these techniques, as some would traditionally warrant dedicated modules for in-depth study.</p>
-<section id="k-nearest-neighbours-k-nn" class="level2" data-number="3.1">
+<section id="k-nearest-neighbours-k-nn" class="level2 page-columns page-full" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="k-nearest-neighbours-k-nn"><span class="header-section-number">3.1</span> k-Nearest Neighbours (<span class="math inline">k</span>-NN)</h2>
 <p>The <span class="math inline">k</span>-nearest neighbours (<span class="math inline">k</span>-NN) algorithm is a simple yet powerful non-parametric method. To classify a new data point, <span class="math inline">{\bf x}</span>, the algorithm identifies the <span class="math inline">k</span> closest data points in the training set (its “neighbours”). The new data point is then assigned to the class that is most common among its <span class="math inline">k</span> neighbours. The confidence of the prediction can be expressed as the proportion of neighbours belonging to the majority class.</p>
 <p>For example, in <a href="#fig-knn-illustration" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, if we use <span class="math inline">k=3</span>, the prediction for the new data point (with the question mark) would be the positive class (red cross) with 66.7% confidence. However, if we use <span class="math inline">k=5</span>, the prediction would be the negative class (blue circle) with 60% confidence.</p>
-<div id="fig-knn-illustration" class="quarto-float quarto-figure quarto-figure-left anchored">
+
+<div class="no-row-height column-margin column-container"><div id="fig-knn-illustration" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-knn-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-NN.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/drawing-NN.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-knn-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.1: An illustration of <span class="math inline">k</span>-NN with <span class="math inline">k=3</span> and <span class="math inline">k=5</span>.
 </figcaption>
 </figure>
-</div>
-<p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The colour shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
+</div></div><p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The colour shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
 <div id="fig-db-kNN" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -442,13 +436,13 @@ Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN o
 <li><strong>Lack of interpretability:</strong> The model does not provide insights into the importance of different features.</li>
 </ul>
 </section>
-<section id="decision-trees" class="level2" data-number="3.2">
+<section id="decision-trees" class="level2 page-columns page-full" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="decision-trees"><span class="header-section-number">3.2</span> Decision Trees</h2>
 <p><strong>Decision trees</strong> <span class="citation" data-cites="decisiontrees">(<a href="references.html#ref-decisiontrees" role="doc-biblioref">Breiman et al. 1984</a>)</span> and their more advanced variants, like Random Forests and AdaBoost, are another popular class of algorithms. A decision tree partitions the input space into a set of rectangular regions, following a “divide and conquer” strategy, as illustrated in <a href="#fig-diag-decisiontree" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>.</p>
 <div id="fig-diag-decisiontree" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-DecisionTree.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/drawing-DecisionTree.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.3: The principle of a decision tree.
@@ -481,31 +475,22 @@ Figure&nbsp;3.4: Decision boundaries for a single Decision Tree, AdaBoost, and R
 <div id="fig-decisiontree-issue" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-decisiontree-issue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-DecisionTree-diagonal.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/drawing-DecisionTree-diagonal.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decisiontree-issue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.5: Decision trees can only split the feature space along the axes, but it could be better to separate the dataset by an off-axis cut (e.g.&nbsp;by testing <span class="math inline">x_1 &lt; x_2</span>).
 </figcaption>
 </figure>
 </div>
-<div id="callout-DT-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>Ada Boost, Random Forests.</li>
 <li><a href="https://www.youtube.com/watch?v=p17C9q2M00Q">StatQuest: Decision Trees</a></li>
 </ul>
-</div>
-</div>
-</section>
-<section id="linear-svm" class="level2" data-number="3.3">
+</div></div></section>
+<section id="linear-svm" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="linear-svm"><span class="header-section-number">3.3</span> Linear SVM</h2>
 <p>Until the rise of deep learning, <strong>Support Vector Machines (SVMs)</strong> were the most popular classification algorithm.</p>
 <p>Similar to Logistic Regression, a linear SVM is a linear classifier that makes predictions based on a linear combination of the input features:</p>
@@ -518,8 +503,11 @@ y = [ {\bf x}^{\top}{\bf w} &gt; 0 ]
 L_{SVM}( {\bf w}) = \frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \Big( [y_i=0]\max(0, 1 + {\bf x}_i^{\top} {\bf w}) + [y_i=1]\max(0, 1 - {\bf x}_i^{\top} {\bf w}) \Big)
 </span></p>
 <p>The hinge loss penalises points that fail to clear a margin around the boundary, while the <span class="math inline">\ell_2</span> penalty <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2</span> encourages the model to find a hyperplane that maximises the geometric margin between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>).</p>
-<p><em>Note: In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in \{-1, +1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i {\bf x}_i^{\top} {\bf w})</span>.</em></p>
-<div id="fig-diag-svm" class="quarto-float quarto-figure quarto-figure-left anchored">
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card">
+<div class="marginnote-title"><i class="fa fa-info-circle"></i> NOTE</div>
+<p>In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in \{-1, +1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i {\bf x}_i^{\top} {\bf w})</span>.</p>
+</div></div><div id="fig-diag-svm" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/svm-unreg.svg" class="img-fluid figure-img" style="width:50.0%">
@@ -531,37 +519,45 @@ Figure&nbsp;3.6: SVM aims to find the hyperplane that maximises the margin betwe
 </div>
 <p>There is much more to SVMs, but a full treatment is beyond the scope of this module.</p>
 </section>
-<section id="the-no-free-lunch-theorem" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="the-no-free-lunch-theorem"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem</h2>
-<p>It is important to note that there is no single best classifier for all problems. The performance of a classifier depends heavily on the nature of the data.</p>
-<p>Recall that the choice of loss function directly relates to assumptions you make about the distribution of the prediction errors, and thus about the dataset of your problem.</p>
-<p>This is formalised by the <strong>No-Free-Lunch Theorem</strong> <span class="citation" data-cites="WolpMacr97">(<a href="references.html#ref-WolpMacr97" role="doc-biblioref">Wolpert and Macready 1997</a>)</span>, which states that, when averaged over all possible problems, all classifiers perform equally well. In other words, the choice of classifier should always be guided by the specific characteristics of the problem at hand.</p>
+<section id="the-no-free-lunch-theorem-and-inductive-bias" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="the-no-free-lunch-theorem-and-inductive-bias"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem and Inductive Bias</h2>
+<p>At this point, you might be wondering whether a Linear SVM is intrinsically better than Logistic Regression. The short answer is that it depends entirely on the application. In fact, this is true of any classification method.</p>
+<p>There is no single best classifier for all problems; performance depends heavily on the nature of the data and the problem’s underlying distribution.</p>
+<p>This principle is formalised by the <strong>No-Free-Lunch Theorem</strong> for Supervised Learning <span class="citation" data-cites="Wolpert96">(<a href="references.html#ref-Wolpert96" role="doc-biblioref">Wolpert 1996</a>)</span>, which proves that when averaged across all mathematically possible data-generating distributions, all learning algorithms perform identically. On average, no classifier is any better than random guessing!</p>
+<p>This seems counter-intuitive, but in practice, real-world data is far from uniformly distributed across all possible distributions (see <a href="#fig-no-free-lunch-theorem" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>). Successful learning requires matching your assumptions to the specific characteristics of the problem at hand.</p>
 <div id="fig-no-free-lunch-theorem" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-no-free-lunch-theorem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/no-free-lunch-theorem.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/no-free-lunch-theorem.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-no-free-lunch-theorem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.7: Illustration of the No-Free-Lunch Theorem.
 </figcaption>
 </figure>
 </div>
+<p>What the No-Free-Lunch Theorem demonstrates is that empirical data alone is never enough to guarantee generalisation. Given a finite training dataset, there are infinitely many candidate functions that can fit the observed samples perfectly, yet make completely contradictory predictions on unseen test points.</p>
+<p>To choose among these competing hypotheses, an algorithm must rely on an <strong>inductive bias</strong>—a set of prior assumptions, structural choices, or preferences built directly into the learning algorithm.</p>
+<p>Common Forms of Inductive Bias include:</p>
+<ol type="1">
+<li>Representation Bias: restricting the shape of the function (eg. free linear boundary like in Logistic Regression or axis-aligned split like in Decision Trees)</li>
+<li>Regularisation Bias: prefering simpler, smoother, or sparser solutions.</li>
+<li>Loss Formulation: choosing a loss that matches our assumptions about the noise distribution generating the errors (e.g., MSE for Gaussian noise vs.&nbsp;MAE for Laplace noise).</li>
+</ol>
+<p>An inductive bias is not an unwelcome limitation; it is the necessary ingredient that makes learning and generalisation possible in the real world. A classifier succeeds precisely when its inductive bias matches the true structure of the problem.</p>
 </section>
 <section id="the-kernel-trick" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="the-kernel-trick"><span class="header-section-number">3.5</span> The Kernel Trick</h2>
 <p>SVMs gained immense popularity with the introduction of the <strong>kernel trick</strong>.</p>
 <section id="the-challenge-of-feature-expansion" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="the-challenge-of-feature-expansion"><span class="header-section-number">3.5.1</span> The Challenge of Feature Expansion</h3>
-<p>Recall from our discussion of linear regression that we can fit non-linear relationships by augmenting the feature space with higher-order terms (e.g., <span class="math inline">x, x^2, x^3</span>). This is a form of feature mapping, where we transform the original features into a higher-dimensional space: <span class="math inline">\phi: {\bf x}\mapsto \phi({\bf x})</span>. For example:</p>
-<p><span class="math display">
-\phi ({x}) = \left( \begin{matrix} 1 \\ x \\ x^2 \\ x^3 \\ \vdots
-\end{matrix} \right)
+<p>Recall from our discussion of linear regression that we can fit non-linear relationships by augmenting the feature space with higher-order terms (e.g., <span class="math inline">x, x^2, x^3</span>). This is a form of feature mapping, where we transform the original features into a higher-dimensional space: <span class="math inline">\phi: {\bf x}\mapsto \phi({\bf x})</span>. For example, <span class="math display">
+\phi(x) = [1,\, x,\, x^2,\, x^3,\, \dots]^\top
 </span></p>
 <p>Feature transformation is a fundamental concept in machine learning. The original features are often not sufficient to linearly separate the classes, and it is not always clear how to best transform them (see <a href="#fig-diag-mapping" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>).</p>
 <div id="fig-diag-mapping" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-mapping.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/drawing-mapping.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.8: Feature mapping transforms the input data into a new space where a linear classifier can be used.
@@ -574,14 +570,19 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 </section>
 <section id="step-1-re-parameterisation" class="level3" data-number="3.5.2">
 <h3 data-number="3.5.2" class="anchored" data-anchor-id="step-1-re-parameterisation"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterisation</h3>
-<p>In many machine learning algorithms, the loss function depends on the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">{\bf x}^{\top}{\bf w}</span>. It can be shown (see <a href="note-04-kernel-trick.html" class="quarto-xref"><span>Appendix D</span></a>) that the optimal weight vector, <span class="math inline">\hat{\bf w}</span>, can be expressed as a linear combination of the input feature vectors:</p>
+<p>In many machine learning algorithms, the loss function depends on the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">{\bf x}^{\top}{\bf w}</span>. It can be shown (see below) that the optimal weight vector, <span class="math inline">\hat{\bf w}</span>, can be expressed as a linear combination of the input feature vectors:</p>
 <p><span class="math display">
 \hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
 </span></p>
-<p>where the <span class="math inline">\alpha_i</span> are a new set of weights. These new weights are sometimes called the dual coefficients in SVM. The score can then be rewritten as:</p>
-<p><span class="math display">
-  {\bf x}^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}^{\top} {\bf x}_i,
+<p>where the <span class="math inline">\alpha_i</span> are a new set of weights. These new weights are sometimes called the dual coefficients in SVM.</p>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>By the Fundamental Theorem of Linear Algebra, any vector <span class="math inline">\mathbf{w} \in \mathbb{R}^p</span> can be written as:</p>
+<p><span class="math display">\mathbf{w} = \sum_{i=1}^n \alpha_i \mathbf{x}_i + \mathbf{v}</span></p>
+<p>where <span class="math inline">\mathbf{v}</span> is a vector perpendicular to every single training point, meaning <span class="math inline">{\bf x}_i^\top\mathbf{v} = 0</span> for all datapoints <span class="math inline">i</span>. Clearly adding <span class="math inline">\mathbf{v}</span> does not alter the scores on the observations: <span class="math display">
+\mathrm{score}_i = \mathbf{x}_i^\top \mathbf{w} = \sum_j \mathbf{x}_i^\top \mathbf{x}_j \alpha_i + \underbrace{\mathbf{x}_i ^\top \mathbf{v}}_{0} = \sum_j \mathbf{x}_i^\top \mathbf{x}_j \alpha_i
 </span></p>
+<p>However, for any regularisation, <span class="math inline">\lambda &gt; 0</span>, adding a non-zero <span class="math inline">\mathbf{v}</span> would needlessly inflates the penalty by <span class="math inline">\lambda \Vert{}\mathbf{v}\Vert{}^2</span>. Hence the optimal solution necessarily has to be for <span class="math inline">\mathbf{v}=\mathbf{0}</span>.</p>
+</div>
 <p>Notice that the score now depends on the dot products between feature vectors. This re-parameterisation is key to the kernel trick. When we apply a feature mapping <span class="math inline">\phi</span>, the score becomes:</p>
 <p><span class="math display">
     \phi({\bf x})^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i \phi({\bf x})^{\top} \phi({\bf x}_i)
@@ -596,7 +597,21 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 <p>This allows us to rewrite the score as: <span class="math display">
 \phi({\bf x})^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i).
 </span></p>
-<p>The key here is that we can often define and compute the kernel function <span class="math inline">\kappa</span> without ever explicitly defining or computing the feature mapping <span class="math inline">\phi</span>. The theory of Reproducing Kernel Hilbert Spaces (RKHS) guarantees that for a wide class of kernel functions, a corresponding mapping <span class="math inline">\phi</span> does indeed exist.</p>
+<p>The key here is that we can often define and compute the kernel function <span class="math inline">\kappa</span> without ever explicitly defining or computing the feature mapping <span class="math inline">\phi</span>.</p>
+<div class="example">
+<p><strong>Toy Example.</strong> Consider two 1D scalar inputs <span class="math inline">u, v \in \mathbb{R}</span>. Suppose we apply a quadratic feature mapping into 3D:</p>
+<p><span class="math display">
+\phi(u) = \begin{bmatrix} u^2 \\ \sqrt{2}u \\ 1 \end{bmatrix}, \quad \phi(v) = \begin{bmatrix} v^2 \\ \sqrt{2}v \\ 1 \end{bmatrix}
+</span></p>
+<p>Taking the explicit dot product in 3D:</p>
+<p><span class="math display">
+\phi(u)^\top \phi(v) = u^2 v^2 + 2uv + 1 = (uv + 1)^2
+</span></p>
+<p>Instead of transforming both numbers into 3D vectors and computing their dot product, we evaluate the closed-form kernel function:</p>
+<p><span class="math display">\kappa(u, v) = (uv + 1)^2</span></p>
+<p>This produces the exact same result in <span class="math inline">\mathcal{O}(1)</span> operations, bypassing the intermediate representation entirely.</p>
+</div>
+<p>The theory of Reproducing Kernel Hilbert Spaces (RKHS) guarantees that for a wide class of kernel functions, a corresponding mapping <span class="math inline">\phi</span> does indeed exist.</p>
 <p>Many different kernel functions are available. For example, the <strong>polynomial kernel</strong> is defined as: <span class="math display">
 \kappa({\bf u}, {\bf v}) = (r + \gamma {\bf u}^{\top} {\bf v})^d
 </span> This kernel is equivalent to the polynomial feature mapping of degree <span class="math inline">d</span> we discussed earlier (see <span class="citation" data-cites="wikiPolynomialkernel">(<a href="references.html#ref-wikiPolynomialkernel" role="doc-biblioref">Wikipedia 2025a</a>)</span>), but it avoids the computational explosion in dimensionality.</p>
@@ -630,8 +645,7 @@ v}\|^2 }</span> acts as a measure of similarity between two data points. If <spa
     &amp;\approx \sum_{i \in \text{neighbours of ${\bf x}$}} \begin{cases} 1 &amp;
       \text{if $y_i$ positive} \\ -1 &amp; \text{if  $y_i$  negative}
     \end{cases} \\
-    &amp;\approx \text{nb of positive neighbours of ${\bf x}$}  - \text{nb of negative
-      neighbours  of ${\bf x}$}
+    &amp;\approx \text{nb positive neighbours} - \text{nb negative neighbours}
   \end{aligned}
 </span></p>
 <p>This is similar to <span class="math inline">k</span>-NN. The score is high if a data point has more positive neighbours than negative neighbours. The main difference is that instead of a fixed number of neighbours (<span class="math inline">k</span>), we consider all neighbours within a certain radius (controlled by <span class="math inline">\gamma</span>).</p>
@@ -643,7 +657,7 @@ v}\|^2 }</span> acts as a measure of similarity between two data points. If <spa
 <div id="fig-kernel-trick-alpha-rbf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kernel-trick-alpha-rbf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/kernel-trick-alpha-rbf.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/kernel-trick-alpha-rbf.svg" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kernel-trick-alpha-rbf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.9: An SVM with an RBF kernel. The support vectors are the data points with non-zero alpha values. Here they are highlighted with an outer circle, whose thickness is proportional to the magnitude of <span class="math inline">|\alpha_i|</span>.
@@ -682,7 +696,7 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 <p>Evidence that deep learning could outperform kernel SVMs on large datasets began to emerge in 2006. The real turning point came in 2012 with the success of AlexNet <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> in the ImageNet competition.</p>
 </section>
 </section>
-<section id="takeaways" class="level2" data-number="3.6">
+<section id="takeaways" class="level2 page-columns page-full" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">3.6</span> Takeaways</h2>
 <ul>
 <li>Neural networks have been around for a long time, but it is only since 2012 that they have started to surpass other techniques in popularity and performance.</li>
@@ -690,26 +704,17 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 <li>Kernel methods provide an elegant way to handle non-linear data by implicitly mapping it to a high-dimensional feature space.</li>
 <li>The computational cost of kernel methods can be a significant drawback for large datasets.</li>
 </ul>
-<div id="callout-GD-seealso" class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-See Also
-</div>
-</div>
-<div class="callout-body-container callout-body">
+
+
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>Related topics include <a href="https://en.wikipedia.org/wiki/Gaussian_process">Gaussian Processes</a>, <a href="https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space">Reproducing Kernel Hilbert Spaces</a>, and Kernel Logistic Regression.</li>
 <li><a href="https://goo.gl/hY1Bpn">Laurent El Ghaoui’s lecture at Berkeley</a></li>
 <li><a href="https://goo.gl/73iBdx">Eric Kim’s Python tutorial on SVM</a></li>
 </ul>
-</div>
-</div>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+</div></div><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-decisiontrees" class="csl-entry" role="listitem">
 Breiman, L., J. H. Friedman, R. A. Olshen, and C. J. Stone. 1984. <em>Classification and Regression Trees</em>. Monterey, CA: Wadsworth; Brooks.
 </div>
@@ -731,8 +736,8 @@ Wikipedia. 2025a. <span>‘<span class="nocase">Polynomial kernel</span> — <sp
 <div id="ref-wikiRBFKernel" class="csl-entry" role="listitem">
 ———. 2025b. <span>‘<span class="nocase">Radial basis function kernel</span> — <span>W</span>ikipedia<span>,</span> the Free Encyclopedia’</span>. <a href="http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357" class="uri">http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357</a>.
 </div>
-<div id="ref-WolpMacr97" class="csl-entry" role="listitem">
-Wolpert, David H., and William G. Macready. 1997. <span>‘No Free Lunch Theorems for Optimization’</span>. <em>IEEE Transactions on Evolutionary Computation</em> 1 (1): 67–82.
+<div id="ref-Wolpert96" class="csl-entry" role="listitem">
+Wolpert, David H. 1996. <span>‘The Lack of a Priori Distinctions Between Learning Algorithms’</span>. <em>Neural Comput.</em> 8 (7): 1341–90. <a href="https://doi.org/10.1162/neco.1996.8.7.1341">https://doi.org/10.1162/neco.1996.8.7.1341</a>.
 </div>
 </div>
 </section>
