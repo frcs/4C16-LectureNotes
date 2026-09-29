@@ -398,7 +398,7 @@ Figure&nbsp;1.1: Legendre (1805), <em>Nouvelles méthodes pour la détermination
 </div>
 <section id="the-linear-model-and-notations" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="the-linear-model-and-notations"><span class="header-section-number">1.1</span> The Linear Model and Notations</h2>
-<p>Let us begin with a simple, practical example. Imagine we have collected data on the height and weight of a group of people, as shown in <a href="#fig-polyfit-regression" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-polyfit-regression</span></a>. Our goal is to build a model that can predict a person’s weight based on their height.</p>
+<p>Let us begin with a simple, practical example. Imagine we have collected data on the height and weight of a group of people, as shown in <a href="#fig-polyfit-regression" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>. Our goal is to build a model that can predict a person’s weight based on their height.</p>
 <div id="fig-polyfit-regression" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -636,7 +636,7 @@ y = w_0 + w_1 x + w_2 x^2 + w_3 x^3
 y = w_0 + w_1 \cos(2\pi x) + w_2 \sin(2\pi x)
 </span> is linear in parameters with <span class="math inline">\mathbf{x} = (1, \cos(2\pi x), \sin(2\pi x))^\top</span>. In contrast, a model like <span class="math inline">y = w_0^2 + x</span> is <em>not</em> linear in the parameters, because the term <span class="math inline">w_0^2</span> is non-linear in parameter <span class="math inline">w_0</span>.</p>
 <p>Similarly, we can transform the output variable. For instance, if we have collected 2D points <span class="math inline">(x_{1i}, x_{2i})</span> that lie on a circle centred at the origin, we could define a new output <span class="math inline">y_i = \sqrt{x_{1i}^2 + x_{2i}^2}</span> and fit a simple model <span class="math inline">y = w_0</span> to find the radius.</p>
-<p>This idea of transforming input features is at the core of many Machine Learning techniques. However, as we will see later in <a href="#sec-loss-noise" class="quarto-xref"><span class="quarto-unresolved-ref">sec-loss-noise</span></a>, this practice is not entirely without consequences.</p>
+<p>This idea of transforming input features is at the core of many Machine Learning techniques. However, as we will see later in <a href="#sec-loss-noise" class="quarto-xref"><span>Section 1.8</span></a>, this practice is not entirely without consequences.</p>
 </section>
 <section id="polynomial-fitting" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="polynomial-fitting"><span class="header-section-number">1.3.3</span> Polynomial Fitting</h3>
@@ -677,7 +677,7 @@ Figure&nbsp;1.3: A scatter plot of a small dataset for polynomial fitting, where
 <p>The least squares parameter estimate remains: <span class="math display">
 \hat{\mathbf{w}} = \left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \mathbf{y}
 </span></p>
-<p>Solving with the collected data gives the estimated quadratic curve shown in <a href="#fig-polyfit2" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-polyfit2</span></a> (MSE: 4.38e-01), which matches the ground truth well.</p>
+<p>Solving with the collected data gives the estimated quadratic curve shown in <a href="#fig-polyfit2" class="quarto-xref">Figure&nbsp;<span>1.4</span></a> (MSE: 4.38e-01), which matches the ground truth well.</p>
 <div id="fig-polyfit2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
