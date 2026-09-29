@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -365,11 +365,14 @@ window.Quarto = {
   <li><a href="#the-challenge-of-feature-expansion" id="toc-the-challenge-of-feature-expansion" class="nav-link" data-scroll-target="#the-challenge-of-feature-expansion"><span class="header-section-number">3.5.1</span> The Challenge of Feature Expansion</a></li>
   <li><a href="#step-1-re-parameterisation" id="toc-step-1-re-parameterisation" class="nav-link" data-scroll-target="#step-1-re-parameterisation"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterisation</a></li>
   <li><a href="#step-2-kernel-functions" id="toc-step-2-kernel-functions" class="nav-link" data-scroll-target="#step-2-kernel-functions"><span class="header-section-number">3.5.3</span> Step 2: Kernel Functions</a></li>
-  <li><a href="#understanding-the-rbf-kernel" id="toc-understanding-the-rbf-kernel" class="nav-link" data-scroll-target="#understanding-the-rbf-kernel"><span class="header-section-number">3.5.4</span> Understanding the RBF Kernel</a></li>
-  <li><a href="#support-vectors" id="toc-support-vectors" class="nav-link" data-scroll-target="#support-vectors"><span class="header-section-number">3.5.5</span> Support Vectors</a></li>
-  <li><a href="#remarks" id="toc-remarks" class="nav-link" data-scroll-target="#remarks"><span class="header-section-number">3.5.6</span> Remarks</a></li>
+  <li><a href="#step-3-optimisation-and-inference" id="toc-step-3-optimisation-and-inference" class="nav-link" data-scroll-target="#step-3-optimisation-and-inference"><span class="header-section-number">3.5.4</span> Step 3: Optimisation and Inference</a></li>
+  <li><a href="#choices-of-kernel-functions" id="toc-choices-of-kernel-functions" class="nav-link" data-scroll-target="#choices-of-kernel-functions"><span class="header-section-number">3.5.5</span> Choices of Kernel Functions</a></li>
+  <li><a href="#understanding-the-rbf-kernel" id="toc-understanding-the-rbf-kernel" class="nav-link" data-scroll-target="#understanding-the-rbf-kernel"><span class="header-section-number">3.5.6</span> Understanding the RBF Kernel</a></li>
+  <li><a href="#support-vectors" id="toc-support-vectors" class="nav-link" data-scroll-target="#support-vectors"><span class="header-section-number">3.5.7</span> Support Vectors</a></li>
+  <li><a href="#remarks" id="toc-remarks" class="nav-link" data-scroll-target="#remarks"><span class="header-section-number">3.5.8</span> Remarks</a></li>
   </ul></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">3.6</span> Takeaways</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   </ul>
 </nav>
     </div>
@@ -395,10 +398,12 @@ window.Quarto = {
 </header>
 
 
-<p>Before we delve into the world of neural networks, it is important to recognise that they are not a recent invention. For many years, other machine learning algorithms were the preferred methods for a wide range of tasks. In this chapter, we will briefly introduce some of the most influential <em>classic</em> supervised learning algorithms for classification. Given the scope of this chapter, we will only touch upon these techniques, as some would traditionally warrant dedicated modules for in-depth study.</p>
+<p>Before we delve into the world of neural networks, it is important to recognise that they are not a recent invention. For many years, other machine learning algorithms were the preferred methods for a wide range of tasks. In this chapter, we will briefly introduce some of the most influential <em>classic</em> supervised learning algorithms for classification.</p>
+<p>The main theme is not simply that there are many different classifiers, but that different classifiers make different assumptions about the structure of the data. These assumptions, or <strong>inductive biases</strong>, are essential for learning from finite data. Classical machine learning often made these assumptions through the choice of features or representation; neural networks will later allow us to learn much of that representation directly from data.</p>
+<p>Given the scope of this chapter, we will only touch upon these techniques, as some would traditionally warrant dedicated modules for in-depth study.</p>
 <section id="k-nearest-neighbours-k-nn" class="level2 page-columns page-full" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="k-nearest-neighbours-k-nn"><span class="header-section-number">3.1</span> k-Nearest Neighbours (<span class="math inline">k</span>-NN)</h2>
-<p>The <span class="math inline">k</span>-nearest neighbours (<span class="math inline">k</span>-NN) algorithm is a simple yet powerful non-parametric method. To classify a new data point, <span class="math inline">{\bf x}</span>, the algorithm identifies the <span class="math inline">k</span> closest data points in the training set (its “neighbours”). The new data point is then assigned to the class that is most common among its <span class="math inline">k</span> neighbours. The confidence of the prediction can be expressed as the proportion of neighbours belonging to the majority class.</p>
+<p>The <span class="math inline">k</span>-nearest neighbours (<span class="math inline">k</span>-NN) algorithm is a simple yet powerful non-parametric method. To classify a new data point, <span class="math inline">\mathbf{x}</span>, the algorithm identifies the <span class="math inline">k</span> closest data points in the training set (its “neighbours”). The new data point is then assigned to the class that is most common among its <span class="math inline">k</span> neighbours. The confidence of the prediction can be expressed as the proportion of neighbours belonging to the majority class.</p>
 <p>For example, in <a href="#fig-knn-illustration" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, if we use <span class="math inline">k=3</span>, the prediction for the new data point (with the question mark) would be the positive class (red cross) with 66.7% confidence. However, if we use <span class="math inline">k=5</span>, the prediction would be the negative class (blue circle) with 60% confidence.</p>
 
 <div class="no-row-height column-margin column-container"><div id="fig-knn-illustration" class="quarto-float quarto-figure quarto-figure-left anchored">
@@ -410,7 +415,8 @@ window.Quarto = {
 Figure&nbsp;3.1: An illustration of <span class="math inline">k</span>-NN with <span class="math inline">k=3</span> and <span class="math inline">k=5</span>.
 </figcaption>
 </figure>
-</div></div><p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The colour shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
+</div></div><p>The key assumption behind <span class="math inline">k</span>-NN is simple: <strong>nearby data points tend to have similar labels</strong>. This is an example of inductive bias based on local similarity.</p>
+<p><a href="#fig-db-kNN" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> shows the decision boundaries produced by <span class="math inline">k</span>-NN for different values of <span class="math inline">k</span> on three different datasets. The colour shading indicates the predicted probability of belonging to each class. As you can see, the decision boundaries become smoother as <span class="math inline">k</span> increases.</p>
 <div id="fig-db-kNN" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -424,16 +430,16 @@ Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN o
 <p><strong>Pros:</strong></p>
 <ul>
 <li><strong>Simple and intuitive:</strong> The algorithm is easy to understand and implement.</li>
-<li><strong>Non-parametric:</strong> It makes no assumptions about the underlying data distribution.</li>
-<li><strong>Effective with large datasets:</strong> With a sufficiently large training set, <span class="math inline">k</span>-NN can achieve high accuracy.</li>
+<li><strong>Non-parametric:</strong> It makes no assumptions about a particular parametric form for the data distribution.</li>
+<li><strong>Can perform well with representative training data:</strong> Since predictions are based directly on nearby examples, additional training data can improve the quality of the local neighbourhood.</li>
 </ul>
 <p><strong>Cons:</strong></p>
 <ul>
 <li><strong>Computationally expensive:</strong> Finding the nearest neighbours can be slow, especially with large datasets.</li>
 <li><strong>Sensitive to feature scaling:</strong> Features with larger numerical ranges dominate distance metrics, making standardisation essential.</li>
 <li><strong>Curse of dimensionality:</strong> In high-dimensional spaces, pairwise distances concentrate and data points become roughly equidistant, degrading predictive accuracy.</li>
-<li><strong>Sensitive to small datasets:</strong> The algorithm can perform poorly if the training set is small or not representative of the true data distribution.</li>
-<li><strong>Lack of interpretability:</strong> The model does not provide insights into the importance of different features.</li>
+<li><strong>Sensitive to small or unrepresentative datasets:</strong> The algorithm can perform poorly when there are too few examples to capture the true local structure of the data.</li>
+<li><strong>No explicit decision function:</strong> The model does not learn a compact parametric rule or provide feature-importance measures directly.</li>
 </ul>
 </section>
 <section id="decision-trees" class="level2 page-columns page-full" data-number="3.2">
@@ -450,8 +456,9 @@ Figure&nbsp;3.3: The principle of a decision tree.
 </figure>
 </div>
 <p>At each internal node of the tree, a decision is made based on a simple test, such as “is feature <span class="math inline">x_2</span> less than 3?”. This process is repeated until a leaf node is reached, which corresponds to a specific class label.</p>
-<p>While a single decision tree does not produce probabilistic predictions, ensemble methods like <strong>AdaBoost</strong> <span class="citation" data-cites="adaboost">(<a href="references.html#ref-adaboost" role="doc-biblioref">Freund and Schapire 1995</a>)</span> and <strong>Random Forests</strong> <span class="citation" data-cites="randomforests">(<a href="references.html#ref-randomforests" role="doc-biblioref">Ho 1995</a>)</span> combine the outputs of multiple decision trees to generate probabilities, similar to how we can get a confidence score with <span class="math inline">k</span>-NN.</p>
-<p>As shown in <a href="#fig-db-decisiontrees" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>, the decision boundaries of these models are composed of vertical and horizontal lines, aligned with the axes of the input space and corresponding to the tests performed (eg. <span class="math inline">x_2 &gt; 3</span>, <span class="math inline">x_1 &gt; 2</span>, etc. )</p>
+<p>A useful way to view a decision tree is therefore as a collection of <strong>axis-aligned decisions</strong> that divide the feature space into rectangular regions.</p>
+<p>While a single decision tree produces a class decision at each leaf, ensemble methods like <strong>AdaBoost</strong> <span class="citation" data-cites="adaboost">(<a href="references.html#ref-adaboost" role="doc-biblioref">Freund and Schapire 1995</a>)</span> and <strong>Random Forests</strong> <span class="citation" data-cites="randomforests">(<a href="references.html#ref-randomforests" role="doc-biblioref">Ho 1995</a>)</span> combine multiple trees to produce more flexible decision boundaries.</p>
+<p>As shown in <a href="#fig-db-decisiontrees" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>, the decision boundaries of these models are composed of vertical and horizontal lines, aligned with the axes of the input space and corresponding to the tests performed (e.g.&nbsp;<span class="math inline">x_2 &gt; 3</span>, <span class="math inline">x_1 &gt; 2</span>, etc.).</p>
 <div id="fig-db-decisiontrees" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-decisiontrees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -486,27 +493,29 @@ Figure&nbsp;3.5: Decision trees can only split the feature space along the axes,
 <div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
 <div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
-<li>Ada Boost, Random Forests.</li>
+<li>AdaBoost, Random Forests.</li>
 <li><a href="https://www.youtube.com/watch?v=p17C9q2M00Q">StatQuest: Decision Trees</a></li>
 </ul>
 </div></div></section>
 <section id="linear-svm" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="linear-svm"><span class="header-section-number">3.3</span> Linear SVM</h2>
-<p>Until the rise of deep learning, <strong>Support Vector Machines (SVMs)</strong> were the most popular classification algorithm.</p>
+<p>Until the rise of deep learning, <strong>Support Vector Machines (SVMs)</strong> were among the most widely used classification methods.</p>
 <p>Similar to Logistic Regression, a linear SVM is a linear classifier that makes predictions based on a linear combination of the input features:</p>
 <p><span class="math display">
-y = [ {\bf x}^{\top}{\bf w} &gt; 0 ]
+y = [ \mathbf{x}^{\top}\mathbf{w} &gt; 0 ]
 </span></p>
+<p>Here we use the same augmented feature-vector convention as in the previous lectures, so the bias term is included in <span class="math inline">\mathbf{x}</span>.</p>
 <p>The key difference between SVM and logistic regression lies in the loss function used for training.</p>
 <p>While logistic regression uses the cross-entropy loss, SVM employs regularised <em>hinge loss</em>:</p>
 <p><span class="math display">
-L_{SVM}( {\bf w}) = \frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \Big( [y_i=0]\max(0, 1 + {\bf x}_i^{\top} {\bf w}) + [y_i=1]\max(0, 1 - {\bf x}_i^{\top} {\bf w}) \Big)
+L_{SVM}( \mathbf{w}) = \frac{\lambda}{2} \|\mathbf{w}\|^2 + \sum_{i=1}^n \Big( [y_i=0]\max(0, 1 + \mathbf{x}_i^{\top} \mathbf{w}) + [y_i=1]\max(0, 1 - \mathbf{x}_i^{\top} \mathbf{w}) \Big)
 </span></p>
-<p>The hinge loss penalises points that fail to clear a margin around the boundary, while the <span class="math inline">\ell_2</span> penalty <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2</span> encourages the model to find a hyperplane that maximises the geometric margin between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>).</p>
+<p>The hinge loss penalises points that fail to clear a margin around the boundary, while the <span class="math inline">\ell_2</span> penalty <span class="math inline">\frac{\lambda}{2} \|\mathbf{w}\|^2</span> encourages the model to find a hyperplane that maximises the geometric margin between the two classes (see <a href="#fig-diag-svm" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>).</p>
 
 <div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card">
 <div class="marginnote-title"><i class="fa fa-info-circle"></i> NOTE</div>
-<p>In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in \{-1, +1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|{\bf w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i {\bf x}_i^{\top} {\bf w})</span>.</p>
+<p>In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in
+\{-1, +1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|\mathbf{w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i \mathbf{x}_i^{\top} \mathbf{w})</span>.</p>
 </div></div><div id="fig-diag-svm" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -517,14 +526,14 @@ Figure&nbsp;3.6: SVM aims to find the hyperplane that maximises the margin betwe
 </figcaption>
 </figure>
 </div>
-<p>There is much more to SVMs, but a full treatment is beyond the scope of this module.</p>
+<p>There is much more to SVMs, but a full treatment is beyond the scope of this module. For our purposes, the important question is how we can extend a linear classifier to handle non-linear data.</p>
 </section>
 <section id="the-no-free-lunch-theorem-and-inductive-bias" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="the-no-free-lunch-theorem-and-inductive-bias"><span class="header-section-number">3.4</span> The No-Free-Lunch Theorem and Inductive Bias</h2>
-<p>At this point, you might be wondering whether a Linear SVM is intrinsically better than Logistic Regression. The short answer is that it depends entirely on the application. In fact, this is true of any classification method.</p>
+<p>At this point, you might be wondering whether a Linear SVM is intrinsically better than Logistic Regression. In practice, this depends on the application. In fact, this is true of any classification method.</p>
 <p>There is no single best classifier for all problems; performance depends heavily on the nature of the data and the problem’s underlying distribution.</p>
-<p>This principle is formalised by the <strong>No-Free-Lunch Theorem</strong> for Supervised Learning <span class="citation" data-cites="Wolpert96">(<a href="references.html#ref-Wolpert96" role="doc-biblioref">Wolpert 1996</a>)</span>, which proves that when averaged across all mathematically possible data-generating distributions, all learning algorithms perform identically. On average, no classifier is any better than random guessing!</p>
-<p>This seems counter-intuitive, but in practice, real-world data is far from uniformly distributed across all possible distributions (see <a href="#fig-no-free-lunch-theorem" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>). Successful learning requires matching your assumptions to the specific characteristics of the problem at hand.</p>
+<p>This principle is formalised by the <strong>No-Free-Lunch Theorem</strong> for Supervised Learning <span class="citation" data-cites="Wolpert96">(<a href="references.html#ref-Wolpert96" role="doc-biblioref">Wolpert 1996</a>)</span>, which proves that when averaged across all mathematically possible data-generating distributions, all learning algorithms perform identically.</p>
+<p>This seems counter-intuitive, but in practice, real-world data is far from uniformly distributed across all possible distributions (see <a href="#fig-no-free-lunch-theorem" class="quarto-xref">Figure&nbsp;<span>3.7</span></a>). Successful learning requires matching our assumptions to the specific characteristics of the problem at hand.</p>
 <div id="fig-no-free-lunch-theorem" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-no-free-lunch-theorem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -535,22 +544,20 @@ Figure&nbsp;3.7: Illustration of the No-Free-Lunch Theorem.
 </figcaption>
 </figure>
 </div>
-<p>What the No-Free-Lunch Theorem demonstrates is that empirical data alone is never enough to guarantee generalisation. Given a finite training dataset, there are infinitely many candidate functions that can fit the observed samples perfectly, yet make completely contradictory predictions on unseen test points.</p>
-<p>To choose among these competing hypotheses, an algorithm must rely on an <strong>inductive bias</strong>—a set of prior assumptions, structural choices, or preferences built directly into the learning algorithm.</p>
-<p>Common Forms of Inductive Bias include:</p>
-<ol type="1">
-<li>Representation Bias: restricting the shape of the function (eg. free linear boundary like in Logistic Regression or axis-aligned split like in Decision Trees)</li>
-<li>Regularisation Bias: prefering simpler, smoother, or sparser solutions.</li>
-<li>Loss Formulation: choosing a loss that matches our assumptions about the noise distribution generating the errors (e.g., MSE for Gaussian noise vs.&nbsp;MAE for Laplace noise).</li>
-</ol>
-<p>An inductive bias is not an unwelcome limitation; it is the necessary ingredient that makes learning and generalisation possible in the real world. A classifier succeeds precisely when its inductive bias matches the true structure of the problem.</p>
+<p>What the No-Free-Lunch Theorem demonstrates is that empirical data alone is never enough to guarantee generalisation. Given a finite training dataset, there are infinitely many candidate functions that can fit the observed samples perfectly, yet make completely contradictory predictions on unseen test points (see overfitting!).</p>
+<p>To choose among these competing hypotheses, an algorithm must rely on an <strong>inductive bias</strong>—a set of prior assumptions directly into the learning algorithm.</p>
+<p>These assumptions can enter the learning process in several ways. For example, the choice of functions used to model the boundary (hyperplane like in LR, axis-aligned rectangular regions likein DT), the choice of the loss function, or the choice of regularisation.</p>
+<p>An inductive bias is not an unwelcome limitation; it is the necessary ingredient that makes learning and generalisation possible in the real world. A classifier succeeds precisely when its inductive bias matches the structure of the problem.</p>
 </section>
-<section id="the-kernel-trick" class="level2" data-number="3.5">
+<section id="the-kernel-trick" class="level2 page-columns page-full" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="the-kernel-trick"><span class="header-section-number">3.5</span> The Kernel Trick</h2>
 <p>SVMs gained immense popularity with the introduction of the <strong>kernel trick</strong>.</p>
+<p>The central idea is simple: if the input features are not sufficient to separate the classes, we can transform the data into a new feature space in which a linear classifier may be able to do so.</p>
 <section id="the-challenge-of-feature-expansion" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="the-challenge-of-feature-expansion"><span class="header-section-number">3.5.1</span> The Challenge of Feature Expansion</h3>
-<p>Recall from our discussion of linear regression that we can fit non-linear relationships by augmenting the feature space with higher-order terms (e.g., <span class="math inline">x, x^2, x^3</span>). This is a form of feature mapping, where we transform the original features into a higher-dimensional space: <span class="math inline">\phi: {\bf x}\mapsto \phi({\bf x})</span>. For example, <span class="math display">
+<p>Recall from our discussion of linear regression that we can fit non-linear relationships by augmenting the feature space with higher-order terms (e.g., <span class="math inline">x, x^2, x^3</span>). This is a form of feature mapping, where we transform the original features into a higher-dimensional space: <span class="math inline">\phi: \mathbf{x}\mapsto
+\phi(\mathbf{x})</span>. For example,</p>
+<p><span class="math display">
 \phi(x) = [1,\, x,\, x^2,\, x^3,\, \dots]^\top
 </span></p>
 <p>Feature transformation is a fundamental concept in machine learning. The original features are often not sufficient to linearly separate the classes, and it is not always clear how to best transform them (see <a href="#fig-diag-mapping" class="quarto-xref">Figure&nbsp;<span>3.8</span></a>).</p>
@@ -564,38 +571,59 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 </figcaption>
 </figure>
 </div>
-<p>A major challenge with feature expansion is that the dimensionality of the new feature space can grow very rapidly. For a polynomial expansion of degree <em>d</em> on an input feature vector of dimension <em>p</em>, the new feature vector will have a dimension of <span class="math inline">\frac{(p+d)!}{p!\, d!}</span>.</p>
-<p>For instance, with <span class="math inline">p=100</span> features and a polynomial of degree 5, the resulting feature vector would have a dimension of approximately 100 million. This makes computations, such as the least-squares solution <span class="math inline">\hat{\bf w} = ({\bf X}^{\top}{\bf X})^{-1}{\bf X}^{\top}{\bf y}</span>, completely impractical, as <span class="math inline">{\bf X}^{\top}X</span> would be a <span class="math inline">10^8 \times 10^8</span> matrix.</p>
+<p>If we include all monomials of total degree up to <span class="math inline">d</span> for an input feature vector of dimension <span class="math inline">p</span>, the resulting feature vector has dimension</p>
+<p><span class="math display">
+\frac{(p+d)!}{p!\,d!}.
+</span></p>
+<p>For instance, with <span class="math inline">p=100</span> features and a polynomial of degree 5, the resulting feature vector would have a dimension of approximately 100 million. Explicitly working with such a representation quickly becomes impractical. For example, <span class="math inline">\mathbf X^\top\mathbf X</span> would be a <span class="math inline">10^8 \times 10^8</span> matrix.</p>
 <p>The <strong>kernel trick</strong> provides an elegant solution to this problem, allowing us to work with very complex, high-dimensional feature mappings without ever explicitly computing them.</p>
 </section>
-<section id="step-1-re-parameterisation" class="level3" data-number="3.5.2">
+<section id="step-1-re-parameterisation" class="level3 page-columns page-full" data-number="3.5.2">
 <h3 data-number="3.5.2" class="anchored" data-anchor-id="step-1-re-parameterisation"><span class="header-section-number">3.5.2</span> Step 1: Re-parameterisation</h3>
-<p>In many machine learning algorithms, the loss function depends on the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">{\bf x}^{\top}{\bf w}</span>. It can be shown (see below) that the optimal weight vector, <span class="math inline">\hat{\bf w}</span>, can be expressed as a linear combination of the input feature vectors:</p>
+<p>In many machine learning algorithms, the loss function depends on the data through the <em>score</em>, which is calculated (see previous chapter) as <span class="math inline">\mathbf{x}^{\top}\mathbf{w}</span>. With regularisation, we therefore have an objective of the form</p>
 <p><span class="math display">
-\hat{\bf w} = \sum_{i=1}^n \alpha_i {\bf x}_i,
+E(\mathbf{w}) = \sum_{i=1}^n e({\mathbf{x}_i^\top\mathbf{w}}) + \frac{\lambda}{2} \|\mathbf{w}\|^2.
 </span></p>
-<p>where the <span class="math inline">\alpha_i</span> are a new set of weights. These new weights are sometimes called the dual coefficients in SVM.</p>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>By the Fundamental Theorem of Linear Algebra, any vector <span class="math inline">\mathbf{w} \in \mathbb{R}^p</span> can be written as:</p>
-<p><span class="math display">\mathbf{w} = \sum_{i=1}^n \alpha_i \mathbf{x}_i + \mathbf{v}</span></p>
-<p>where <span class="math inline">\mathbf{v}</span> is a vector perpendicular to every single training point, meaning <span class="math inline">{\bf x}_i^\top\mathbf{v} = 0</span> for all datapoints <span class="math inline">i</span>. Clearly adding <span class="math inline">\mathbf{v}</span> does not alter the scores on the observations: <span class="math display">
-\mathrm{score}_i = \mathbf{x}_i^\top \mathbf{w} = \sum_j \mathbf{x}_i^\top \mathbf{x}_j \alpha_i + \underbrace{\mathbf{x}_i ^\top \mathbf{v}}_{0} = \sum_j \mathbf{x}_i^\top \mathbf{x}_j \alpha_i
-</span></p>
-<p>However, for any regularisation, <span class="math inline">\lambda &gt; 0</span>, adding a non-zero <span class="math inline">\mathbf{v}</span> would needlessly inflates the penalty by <span class="math inline">\lambda \Vert{}\mathbf{v}\Vert{}^2</span>. Hence the optimal solution necessarily has to be for <span class="math inline">\mathbf{v}=\mathbf{0}</span>.</p>
-</div>
-<p>Notice that the score now depends on the dot products between feature vectors. This re-parameterisation is key to the kernel trick. When we apply a feature mapping <span class="math inline">\phi</span>, the score becomes:</p>
+<p>For this kind of loss, the optimal weight vector can be expressed as a linear combination of the training examples:</p>
 <p><span class="math display">
-    \phi({\bf x})^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i \phi({\bf x})^{\top} \phi({\bf x}_i)
+\hat{\mathbf{w}} = \sum_{i=1}^n \alpha_i \mathbf{x}_i,
 </span></p>
-<p>To compute the score in this high-dimensional space, we only need to be able to compute the dot products <span class="math inline">\phi({\bf x})^{\top} \phi({\bf x}_i)</span>.</p>
+<p>where the <span class="math inline">\alpha_i</span> are scalar weights.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card">
+<div class="marginnote-title"><i class="fa fa-info-circle"></i> NOTE</div>
+<p>Why does <span class="math inline">\hat{\mathbf{w}}</span> lie in the span of the training examples?</p>
+<p>Recall from the previous lecture that the gradient has the form:</p>
+<p><span class="math display">
+\frac{\partial E}{\partial \mathbf{w}}(\mathbf{w})= \sum_{i=1}^n e'(\mathbf{x}_i^\top \mathbf{w}) \mathbf{x}_i
++\lambda\mathbf{w}
+</span></p>
+<p>If we initialise gradient descent with <span class="math inline">\mathbf{w}^{(0)}=\mathbf{0}</span>, the gradient is always a linear combination of the training vectors <span class="math inline">\mathbf{x}_i</span>. Consequently, every iterate <span class="math inline">\mathbf{w}^{(t)}</span>, and hence the optimum <span class="math inline">\hat{\mathbf w}</span>, remains in their span.</p>
+</div></div><p>The important consequence is that we no longer need to think of the model as a large vector of weights. For a new data point, the score becomes</p>
+<p><span class="math display">
+\begin{aligned}
+\mathrm{score}(\mathbf{x})
+&amp;= \mathbf{x}^\top \hat{\mathbf{w}} \\
+&amp;= \sum_{i=1}^n \alpha_i\,\mathbf{x}^\top\mathbf{x}_i.
+\end{aligned}
+</span></p>
+<p>The score therefore depends on the training data only through <strong>dot products</strong> between feature vectors.</p>
+<p>Now suppose that instead of using the original feature vector, we first apply a feature mapping <span class="math inline">\phi</span>. The same expression in the transformed space is</p>
+<p><span class="math display">
+\phi(\mathbf{x})^{\top}\hat{\mathbf{w}} = \sum_{i=1}^n \alpha_i\, \phi(\mathbf{x})^{\top} \phi(\mathbf{x}_i).
+</span></p>
+<p>To compute the score in this potentially enormous feature space, we only need to be able to compute the dot products <span class="math inline">\phi(\mathbf{x})^{\top} \phi(\mathbf{x}_i)</span>.</p>
+<p>This is the key observation behind the kernel trick.</p>
 </section>
 <section id="step-2-kernel-functions" class="level3" data-number="3.5.3">
 <h3 data-number="3.5.3" class="anchored" data-anchor-id="step-2-kernel-functions"><span class="header-section-number">3.5.3</span> Step 2: Kernel Functions</h3>
-<p>We define a <strong>kernel function</strong> as: <span class="math display">
-\kappa({\bf u}, {\bf v} ) = \phi({\bf u})^{\top} \phi({\bf v}),
+<p>We define a <strong>kernel function</strong> as:</p>
+<p><span class="math display">
+\kappa(\mathbf{u}, \mathbf{v}) = \phi(\mathbf{u})^{\top} \phi(\mathbf{v}),
 </span></p>
-<p>This allows us to rewrite the score as: <span class="math display">
-\phi({\bf x})^{\top}\hat{\bf w} = \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i).
+<p>This allows us to rewrite the score as</p>
+<p><span class="math display">
+\phi(\mathbf{x})^{\top}\hat{\mathbf{w}} = \sum_{i=1}^n \alpha_i\, \kappa(\mathbf{x}, \mathbf{x}_i).
 </span></p>
 <p>The key here is that we can often define and compute the kernel function <span class="math inline">\kappa</span> without ever explicitly defining or computing the feature mapping <span class="math inline">\phi</span>.</p>
 <div class="example">
@@ -608,52 +636,80 @@ Figure&nbsp;3.8: Feature mapping transforms the input data into a new space wher
 \phi(u)^\top \phi(v) = u^2 v^2 + 2uv + 1 = (uv + 1)^2
 </span></p>
 <p>Instead of transforming both numbers into 3D vectors and computing their dot product, we evaluate the closed-form kernel function:</p>
-<p><span class="math display">\kappa(u, v) = (uv + 1)^2</span></p>
-<p>This produces the exact same result in <span class="math inline">\mathcal{O}(1)</span> operations, bypassing the intermediate representation entirely.</p>
-</div>
-<p>The theory of Reproducing Kernel Hilbert Spaces (RKHS) guarantees that for a wide class of kernel functions, a corresponding mapping <span class="math inline">\phi</span> does indeed exist.</p>
-<p>Many different kernel functions are available. For example, the <strong>polynomial kernel</strong> is defined as: <span class="math display">
-\kappa({\bf u}, {\bf v}) = (r + \gamma {\bf u}^{\top} {\bf v})^d
-</span> This kernel is equivalent to the polynomial feature mapping of degree <span class="math inline">d</span> we discussed earlier (see <span class="citation" data-cites="wikiPolynomialkernel">(<a href="references.html#ref-wikiPolynomialkernel" role="doc-biblioref">Wikipedia 2025a</a>)</span>), but it avoids the computational explosion in dimensionality.</p>
-<p>The most commonly used kernel is the <strong>Radial Basis Function (RBF) kernel</strong> (see <span class="citation" data-cites="wikiRBFKernel">(<a href="references.html#ref-wikiRBFKernel" role="doc-biblioref">Wikipedia 2025b</a>)</span>): <span class="math display">
-\kappa({\bf u}, {\bf v}) = e^{- \gamma \| {\bf u} - {\bf
-      v}\|^2 }
-</span></p>
-<p>The feature mapping <span class="math inline">\phi</span> induced by the RBF kernel is infinitely dimensional, but we never need to compute it directly. A finite approximation of the mapping can be obtained by taking cosine/sine projections of the input feature onto a set of random directions <span class="math inline">{\bf w}_{1}, \ldots, {\bf w}_{D}</span> drawn from a Gaussian distribution:</p>
 <p><span class="math display">
-\varphi ({\bf x})\approx{\frac {1}{\sqrt {D}}}[\cos ( {\bf w}_{1}^\top{\bf x})
-,\sin ( {\bf w}_{1}^\top{\bf x})  ,\ldots ,\cos({\bf w}_{D}^\top{\bf x})  ,\sin({\bf w}_{D}^\top{\bf x})
-]^{\top}
+\kappa(u, v) = (uv + 1)^2
 </span></p>
-<p>In practice, you would never need to do this. All you need to do is compute something like this: <span class="math display">
-\kappa({\bf x}, {\bf x}_i) = e^{- \gamma \| {\bf x} - {\bf
-      x}_i\|^2 }
+<p>This produces the exact same result while bypassing the intermediate representation entirely.</p>
+</div>
+</section>
+<section id="step-3-optimisation-and-inference" class="level3" data-number="3.5.4">
+<h3 data-number="3.5.4" class="anchored" data-anchor-id="step-3-optimisation-and-inference"><span class="header-section-number">3.5.4</span> Step 3: Optimisation and Inference</h3>
+<p>With this kernel function, our objective can be written entirely in terms of kernel evaluations:</p>
+<p><span class="math display">
+E(\mathbf{\alpha}) = \sum_{i=1}^n e\left(\sum_{j=1}^n \alpha_j \kappa(\mathbf{x}_i, \mathbf{x}_j)\right) + \frac{\lambda}{2} \sum_{j=1}^n\sum_{i=1}^n \alpha_i \alpha_j \kappa(\mathbf{x}_i, \mathbf{x}_j).
+</span></p>
+<p>We therefore have no need to explicitly construct the feature mapping <span class="math inline">\phi</span>. As long as we have a formula for <span class="math inline">\kappa</span>, the values <span class="math inline">K_{ij}=\kappa(\mathbf{x}_i, \mathbf{x}_j)</span> can be collected in an <span class="math inline">n\times n</span> matrix <span class="math inline">K</span>, called the <strong>Gram matrix</strong>.</p>
+<p>Training can then be performed using this kernel representation. We will not go into the details of the optimisation in these lecture notes. The important point is that we still need to optimise the coefficients () to find the classifier. Standard kernel SVM optimisation methods can find a globally optimal solution for <span class="math inline">\hat{\boldsymbol{\alpha}}</span>.</p>
+<p>For inference of a new data point <span class="math inline">\mathbf{x}</span>, we simply compute the score:</p>
+<p><span class="math display">
+\mathrm{score}(\mathbf{x}) =  \sum_{i=1}^n \hat{\alpha}_i \kappa(\mathbf{x}, \mathbf{x}_i).
+</span></p>
+<p>Then we can test whether <span class="math inline">\mathrm{score}(\mathbf{x}) &gt; 0</span>, for instance, to assign the classification.</p>
+</section>
+<section id="choices-of-kernel-functions" class="level3 page-columns page-full" data-number="3.5.5">
+<h3 data-number="3.5.5" class="anchored" data-anchor-id="choices-of-kernel-functions"><span class="header-section-number">3.5.5</span> Choices of Kernel Functions</h3>
+<p>The theory of Reproducing Kernel Hilbert Spaces (RKHS) guarantees that for a wide class of kernel functions, a corresponding mapping <span class="math inline">\phi</span> does indeed exist.</p>
+<p>Many different kernel functions are available. For example, the <strong>polynomial kernel</strong> is defined as:</p>
+<p><span class="math display">
+\kappa(\mathbf{u}, \mathbf{v}) = (r + \gamma \mathbf{u}^{\top} \mathbf{v})^d
+</span></p>
+<p>This kernel is equivalent to a polynomial feature mapping of degree <span class="math inline">d</span>, like the one we discussed earlier, but it avoids the computational explosion in dimensionality.</p>
+<p>The most commonly used kernel is the <strong>Radial Basis Function (RBF) kernel</strong> (see <span class="citation" data-cites="wikiRBFKernel">(<a href="references.html#ref-wikiRBFKernel" role="doc-biblioref">Wikipedia 2025</a>)</span>):</p>
+<p><span class="math display">
+\kappa(\mathbf{u}, \mathbf{v}) = e^{- \gamma \|\mathbf{u} - \mathbf{v}\|^2}.
+</span></p>
+<p>The feature mapping <span class="math inline">\phi</span> induced by the RBF kernel is infinitely dimensional, but we never need to compute it directly.</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<p>An approximate finite-dimensional representation of RBF mapping can be made using random Fourier features.</p>
+<p><span class="math display">
+\begin{aligned}
+\phi (\mathbf{x})\approx &amp; {\frac {1}{\sqrt {D}}}[\cos ( \mathbf{w}_{1}^\top\mathbf{x}) ,\sin ( \mathbf{w}_{1}^\top\mathbf{x}),\\ &amp;\ldots ,\cos(\mathbf{w}_{D}^\top\mathbf{x}),
+\sin(\mathbf{w}_{D}^\top\mathbf{x}) ]^{\top}
+\end{aligned}
+</span></p>
+<p>The random directions <span class="math inline">\mathbf{w}_{1},\ldots,\mathbf{w}_{D}</span> allow this finite-dimensional representation to approximate the RBF kernel.</p>
+</div></div><p>In practice, with the kernel trick, all we need to compute is simply</p>
+<p><span class="math display">
+\kappa(\mathbf{x}, \mathbf{x}_i) = e^{- \gamma \|\mathbf{x} - \mathbf{x}_i\|^2 }.
 </span></p>
 </section>
-<section id="understanding-the-rbf-kernel" class="level3" data-number="3.5.4">
-<h3 data-number="3.5.4" class="anchored" data-anchor-id="understanding-the-rbf-kernel"><span class="header-section-number">3.5.4</span> Understanding the RBF Kernel</h3>
-<p>To gain some intuition for how the RBF kernel works, let us consider the score for a particular data point <span class="math inline">{\bf x}</span>: <span class="math display">
-\mathrm{score}({\bf x}) = \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i)
+<section id="understanding-the-rbf-kernel" class="level3" data-number="3.5.6">
+<h3 data-number="3.5.6" class="anchored" data-anchor-id="understanding-the-rbf-kernel"><span class="header-section-number">3.5.6</span> Understanding the RBF Kernel</h3>
+<p>To gain some intuition for how the RBF kernel works, let us consider the score for a particular data point <span class="math inline">\mathbf{x}</span>:</p>
+<p><span class="math display">
+\mathrm{score}(\mathbf{x}) = \sum_{i=1}^n \alpha_i \kappa(\mathbf{x}, \mathbf{x}_i)
 </span></p>
-<p>The kernel function <span class="math inline">\kappa({\bf u}, {\bf v}) = e^{- \gamma \| {\bf u} - {\bf
-v}\|^2 }</span> acts as a measure of similarity between two data points. If <span class="math inline">{\bf u}</span> and <span class="math inline">{\bf v}</span> are close, <span class="math inline">\kappa({\bf u}, {\bf v}) \approx 1</span>. If they are far apart, <span class="math inline">\kappa({\bf u}, {\bf v}) \approx 0</span>. The parameter <span class="math inline">\gamma</span> controls the scale of this neighbourhood. As you can imagine, this is less intuitive for other kernels.</p>
+<p>The kernel function <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) = e^{- \gamma \|\mathbf{u} - \mathbf{v}\|^2 }</span> acts as a measure of similarity between two data points. If <span class="math inline">\mathbf{u}</span> and <span class="math inline">{\bf
+v}</span> are close, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \approx 1</span>. If they are far apart, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \approx 0</span>. The parameter <span class="math inline">\gamma</span> controls the scale of this neighbourhood.</p>
 <p>If we were to set <span class="math inline">\alpha_i = 1</span> for positive examples and <span class="math inline">\alpha_i = -1</span> for negative examples (which is a simplification of what SVM actually does), the score would be:</p>
 <p><span class="math display">
   \begin{aligned}
-    \mathrm{score}({\bf x}) &amp;= \sum_{i=1}^n \alpha_i \kappa({\bf x}, {\bf x}_i)
+    \mathrm{score}(\mathbf{x}) &amp;= \sum_{i=1}^n \alpha_i \kappa(\mathbf{x}, \mathbf{x}_i)
     \\
-    &amp;\approx \sum_{i \in \text{neighbours of ${\bf x}$}} \begin{cases} 1 &amp;
-      \text{if $y_i$ positive} \\ -1 &amp; \text{if  $y_i$  negative}
+    &amp;\approx \sum_{i \in \text{neighbours of $\mathbf{x}$}} \begin{cases} 1 &amp;
+      \text{if $y_i$ positive} \\ -1 &amp; \text{if $y_i$ negative}
     \end{cases} \\
     &amp;\approx \text{nb positive neighbours} - \text{nb negative neighbours}
   \end{aligned}
 </span></p>
-<p>This is similar to <span class="math inline">k</span>-NN. The score is high if a data point has more positive neighbours than negative neighbours. The main difference is that instead of a fixed number of neighbours (<span class="math inline">k</span>), we consider all neighbours within a certain radius (controlled by <span class="math inline">\gamma</span>).</p>
+<p>This is similar to <span class="math inline">k</span>-NN. The score is high if a data point has more positive neighbours than negative neighbours. The main difference is that <span class="math inline">k</span>-NN considers a fixed number of neighbours, whereas the RBF kernel assigns a continuously decreasing weight to every training point according to its distance.</p>
 </section>
-<section id="support-vectors" class="level3" data-number="3.5.5">
-<h3 data-number="3.5.5" class="anchored" data-anchor-id="support-vectors"><span class="header-section-number">3.5.5</span> Support Vectors</h3>
-<p>In an SVM, the optimal values of <span class="math inline">\hat{\alpha}_i</span> are found by minimising the hinge loss. This is a constrained optimisation problem that can be solved using off-the-shelf solvers. The solution has the property that many of the <span class="math inline">\alpha_i</span> values are actually zero.</p>
-<p>The data points for which <span class="math inline">\alpha_i</span> is non-zero are called <strong>support vectors</strong>. These are typically the points that lie closest to the decision boundary (see <a href="#fig-kernel-trick-alpha-rbf" class="quarto-xref">Figure&nbsp;<span>3.9</span></a>). Only these support vectors are needed to make predictions, which can make the prediction process more efficient.</p>
+<section id="support-vectors" class="level3" data-number="3.5.7">
+<h3 data-number="3.5.7" class="anchored" data-anchor-id="support-vectors"><span class="header-section-number">3.5.7</span> Support Vectors</h3>
+<p>Interestingly, many of the coefficients <span class="math inline">\hat{\alpha}_i</span> in the final solution are zero. This means that, although the entire training set was used during training, only a subset of the training examples actually contribute to the final decision function.</p>
+<p>These influential training examples are called <strong>support vectors</strong>. They are typically the points closest to the decision boundary.</p>
 <div id="fig-kernel-trick-alpha-rbf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kernel-trick-alpha-rbf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -686,26 +742,25 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 </figure>
 </div>
 </section>
-<section id="remarks" class="level3" data-number="3.5.6">
-<h3 data-number="3.5.6" class="anchored" data-anchor-id="remarks"><span class="header-section-number">3.5.6</span> Remarks</h3>
+<section id="remarks" class="level3" data-number="3.5.8">
+<h3 data-number="3.5.8" class="anchored" data-anchor-id="remarks"><span class="header-section-number">3.5.8</span> Remarks</h3>
 <ul>
 <li>The kernel trick is not limited to SVMs. Many other linear models, such as logistic regression, can be “kernelised.” These are known as <strong>kernel methods</strong>.</li>
-<li>A major drawback of kernel methods is that the computational cost of making predictions scales with the number of training examples (like with <span class="math inline">k</span>-NN)</li>
+<li>A major drawback of kernel methods is that the computational cost of making predictions scales with the number of training examples (like with <span class="math inline">k</span>-NN).</li>
 <li>The training time for kernel methods can also be high for large datasets (e.g., tens of thousands of data points).</li>
 </ul>
-<p>Evidence that deep learning could outperform kernel SVMs on large datasets began to emerge in 2006. The real turning point came in 2012 with the success of AlexNet <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> in the ImageNet competition.</p>
+<p>Evidence that deep learning could outperform kernel SVMs on large datasets began to emerge in the late 2000s. The real turning point came in 2012 with the success of AlexNet <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> in the ImageNet competition.</p>
 </section>
 </section>
 <section id="takeaways" class="level2 page-columns page-full" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">3.6</span> Takeaways</h2>
 <ul>
-<li>Neural networks have been around for a long time, but it is only since 2012 that they have started to surpass other techniques in popularity and performance.</li>
-<li>Random Forests and SVM with RBF kernel are very efficient solutions when the dataset is relatively small. (eg. less than 10’s of thousands of observations).</li>
-<li>Kernel methods provide an elegant way to handle non-linear data by implicitly mapping it to a high-dimensional feature space.</li>
-<li>The computational cost of kernel methods can be a significant drawback for large datasets.</li>
+<li><p>Random Forests and SVMs with an RBF kernel can be very effective when the dataset is relatively small (e.g.&nbsp;fewer than tens of thousands of observations).</p></li>
+<li><p>Different classifiers embody different <strong>inductive biases</strong>: (k)-NN relies on local similarity, decision trees rely on axis-aligned splits, and linear SVMs favour large-margin linear separators.</p></li>
+<li><p>Classical machine learning often relies on <strong>feature engineering</strong> to augment or transform the representation of the data.</p></li>
+<li><p>The <strong>kernel trick</strong> provides a way to engineer high-dimensional feature representations without explicitly constructing them, by instead defining a notion of similarity through a kernel function.</p></li>
+<li><p>As we will see, <strong>neural networks take this idea one step further</strong> by learning useful representations directly from data, rather than requiring us to design all the features by hand.</p></li>
 </ul>
-
-
 
 <div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
 <div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
@@ -714,7 +769,57 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 <li><a href="https://goo.gl/hY1Bpn">Laurent El Ghaoui’s lecture at Berkeley</a></li>
 <li><a href="https://goo.gl/73iBdx">Eric Kim’s Python tutorial on SVM</a></li>
 </ul>
-</div></div><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+</div></div></section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<div id="exr-03-feature-scaling-knn" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.1 (<span class="math inline">k</span>-NN)</strong></span> Consider a dataset with two features: <span class="math inline">x_1</span> representing age in years (eg. taking values in <span class="math inline">[20, 60]</span>) and <span class="math inline">x_2</span> representing annual salary in euros (eg. taking values in <span class="math inline">[20\,000, 120\,000]</span>).</p>
+<ol type="1">
+<li>Consider two training samples <span class="math inline">\mathbf{a} = (30, 50\,000)^\top</span> and <span class="math inline">\mathbf{b} = (35, 50\,000)^\top</span>, and a new test query <span class="math inline">\mathbf{q} = (30, 51\,000)^\top</span>. Which sample is identified as the nearest neighbour, and does this align with your practical intuition about which sample is more similar to (q)?</li>
+<li>How could you pre-process the data to mitigate this issue?</li>
+</ol>
+</div>
+<div id="exr-03-decision-trees-rotation" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.2 (Decision Trees)</strong></span> Decision trees partition feature space using orthogonal, axis-aligned hyperplanes of the form <span class="math inline">x_j \le \theta</span>.</p>
+<ol type="1">
+<li>Consider a two-dimensional binary classification task where the true underlying decision boundary is diagonal: <span class="math inline">x_1 + x_2 = 1</span>, with points satisfying <span class="math inline">x_1 + x_2 &gt; 1</span> belonging to class <span class="math inline">+1</span> and points satisfying <span class="math inline">x_1 + x_2 \le 1</span> belonging to class <span class="math inline">-1</span>. Sketch or describe the decision boundary that a decision tree must construct to approximate this linear boundary.</li>
+<li>What happens to the depth of the tree, the number of leaf nodes, and the risk of overfitting as we demand higher classification accuracy on this diagonal boundary?</li>
+<li>What pre-processing of the data could simplify the resulting tree?</li>
+</ol>
+</div>
+<div id="exr-03-kernel-trick-quadratic" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.3 (Kernel Trick)</strong></span> Recall the inhomogeneous polynomial kernel of degree <span class="math inline">d=2</span> defined on vectors <span class="math inline">\mathbf{u}, \mathbf{v} \in \mathbb{R}^p</span>:</p>
+<p><span class="math display">
+\kappa(\mathbf{u}, \mathbf{v}) = (\mathbf{u}^\top \mathbf{v} + 1)^2
+</span></p>
+<ol type="1">
+<li>Let <span class="math inline">\mathbf{u} = (u_1, u_2)^\top</span> and <span class="math inline">\mathbf{v} = (v_1, v_2)^\top</span> be two-dimensional vectors (<span class="math inline">p=2</span>). Expand the expression <span class="math inline">(\mathbf{u}^\top \mathbf{v} + 1)^2</span> algebraically and identify the corresponding monomial terms.</li>
+<li>Deduce an explicit feature mapping <span class="math inline">\phi(\mathbf{u}) \in \mathbb{R}^6</span> such that: <span class="math display">
+\kappa(\mathbf{u}, \mathbf{v}) = \phi(\mathbf{u})^\top \phi(\mathbf{v})
+</span></li>
+<li>Compare the computational cost (number of basic scalar operations) required to evaluate <span class="math inline">\kappa(\mathbf{u}, \mathbf{v})</span> directly with that of explicitly computing <span class="math inline">\phi(\mathbf{u})</span>, <span class="math inline">\phi(\mathbf{v})</span>, and their dot product in <span class="math inline">\mathbb{R}^6</span>. How does this gap evolve if the original input dimension <span class="math inline">p</span> is large (e.g.&nbsp;<span class="math inline">p = 1\,000</span>)?</li>
+</ol>
+</div>
+<div id="exr-03-rbf-kernel-bandwidth" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.4 (RBF Kernel)</strong></span> The Radial Basis Function (RBF) kernel is parameterised as:</p>
+<p><span class="math display">
+\kappa(\mathbf{u}, \mathbf{v}) = \exp\left(-\gamma \|\mathbf{u} - \mathbf{v}\|^2\right), \quad \text{with } \gamma &gt; 0
+</span></p>
+<ol type="1">
+<li>Assume a dataset of <span class="math inline">n</span> distinct training observations <span class="math inline">\{\mathbf{x}_1, \ldots, \mathbf{x}_n\}</span> with labels <span class="math inline">y_i \in \{0, 1\}</span>. What does the Gram matrix <span class="math inline">\mathbf{K} \in \mathbb{R}^{n \times n}</span> (where <span class="math inline">K_{ij} = \kappa(\mathbf{x}_i, \mathbf{x}_j)</span>) tend towards as <span class="math inline">\gamma \to \infty</span>? What is the consequence for the ability of the kernel to distinguish individual training observations and for the risk of overfitting?</li>
+<li>Now examine the opposite limit, <span class="math inline">\gamma \to 0</span>. What does the Gram matrix tend towards, and what does this tell you about the information available to the kernel for distinguishing the training observations?</li>
+</ol>
+</div>
+<div id="exr-03-inference-complexity" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 3.5 (Deployment and Inference)</strong></span> Suppose an embedded edge device (such as a health monitor or wearable sensor) must classify streaming sensor signals in real time with stringent latency and memory limits. The model has been trained on a dataset of <span class="math inline">n</span> observations with <span class="math inline">p</span> features.</p>
+<ol type="1">
+<li>For an application with very large training data (<span class="math inline">n = 1\,000\,000</span>) but modest dimensionality (<span class="math inline">p = 20</span>), explain why a decision tree is far more practical for deployment than <span class="math inline">k</span>-NN.</li>
+<li>In a biomedical application where <span class="math inline">p \gg n</span> (e.g.&nbsp;<span class="math inline">p = 50\,000</span> gene expression features from <span class="math inline">n = 150</span> tissue biopsies), why might an SVM with an RBF kernel be preferable to logistic regression?</li>
+</ol>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-decisiontrees" class="csl-entry" role="listitem">
 Breiman, L., J. H. Friedman, R. A. Olshen, and C. J. Stone. 1984. <em>Classification and Regression Trees</em>. Monterey, CA: Wadsworth; Brooks.
 </div>
@@ -730,11 +835,8 @@ Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E Hinton. 2012. <span>‘ImageNet
 <div id="ref-mskinect" class="csl-entry" role="listitem">
 Shotton, Jamie, Toby Sharp, Alex Kipman, Andrew Fitzgibbon, Mark Finocchio, Andrew Blake, Mat Cook, and Richard Moore. 2013. <span>‘Real-Time Human Pose Recognition in Parts from Single Depth Images’</span>. <em>Commun. ACM</em> 56 (1): 116–24. <a href="https://doi.org/10.1145/2398356.2398381">https://doi.org/10.1145/2398356.2398381</a>.
 </div>
-<div id="ref-wikiPolynomialkernel" class="csl-entry" role="listitem">
-Wikipedia. 2025a. <span>‘<span class="nocase">Polynomial kernel</span> — <span>W</span>ikipedia<span>,</span> the Free Encyclopedia’</span>. <a href="http://en.wikipedia.org/w/index.php?title=Polynomial%20kernel&amp;oldid=1244553685" class="uri">http://en.wikipedia.org/w/index.php?title=Polynomial%20kernel&amp;oldid=1244553685</a>.
-</div>
 <div id="ref-wikiRBFKernel" class="csl-entry" role="listitem">
-———. 2025b. <span>‘<span class="nocase">Radial basis function kernel</span> — <span>W</span>ikipedia<span>,</span> the Free Encyclopedia’</span>. <a href="http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357" class="uri">http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357</a>.
+Wikipedia. 2025. <span>‘<span class="nocase">Radial basis function kernel</span> — <span>W</span>ikipedia<span>,</span> the Free Encyclopedia’</span>. <a href="http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357" class="uri">http://en.wikipedia.org/w/index.php?title=Radial%20basis%20function%20kernel&amp;oldid=1293738357</a>.
 </div>
 <div id="ref-Wolpert96" class="csl-entry" role="listitem">
 Wolpert, David H. 1996. <span>‘The Lack of a Priori Distinctions Between Learning Algorithms’</span>. <em>Neural Comput.</em> 8 (7): 1341–90. <a href="https://doi.org/10.1162/neco.1996.8.7.1341">https://doi.org/10.1162/neco.1996.8.7.1341</a>.
