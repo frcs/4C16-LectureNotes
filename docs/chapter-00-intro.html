@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-485d01fc63b59abcd3ee1bf1e8e2748d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -356,7 +356,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#deep-learning-machine-learning-and-a.i." id="toc-deep-learning-machine-learning-and-a.i." class="nav-link active" data-scroll-target="#deep-learning-machine-learning-and-a.i.">Deep Learning, Machine Learning, and A.I.</a></li>
+  <li><a href="#deep-learning-machine-learning-and-a.i." id="toc-deep-learning-machine-learning-and-a.i." class="nav-link active" data-scroll-target="#deep-learning-machine-learning-and-a.i.">Deep Learning, Machine Learning, and A.I.</a>
+  <ul class="collapse">
+  <li><a href="#what-is-machine-learning" id="toc-what-is-machine-learning" class="nav-link" data-scroll-target="#what-is-machine-learning">What is Machine Learning?</a></li>
+  <li><a href="#what-is-deep-learning" id="toc-what-is-deep-learning" class="nav-link" data-scroll-target="#what-is-deep-learning">What is Deep Learning?</a></li>
+  </ul></li>
   <li><a href="#main-areas-of-machine-learning" id="toc-main-areas-of-machine-learning" class="nav-link" data-scroll-target="#main-areas-of-machine-learning">Main Areas of Machine Learning</a>
   <ul class="collapse">
   <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning">Supervised Learning</a></li>
@@ -364,23 +368,40 @@ window.Quarto = {
   <li><a href="#reinforcement-learning" id="toc-reinforcement-learning" class="nav-link" data-scroll-target="#reinforcement-learning">Reinforcement Learning</a></li>
   <li><a href="#generative-models" id="toc-generative-models" class="nav-link" data-scroll-target="#generative-models">Generative Models</a></li>
   </ul></li>
-  <li><a href="#early-deep-learning-successes" id="toc-early-deep-learning-successes" class="nav-link" data-scroll-target="#early-deep-learning-successes">Early Deep Learning Successes</a>
+  <li><a href="#a-decade-of-breakthroughs" id="toc-a-decade-of-breakthroughs" class="nav-link" data-scroll-target="#a-decade-of-breakthroughs">A decade of breakthroughs</a>
   <ul class="collapse">
-  <li><a href="#image-classification" id="toc-image-classification" class="nav-link" data-scroll-target="#image-classification">Image Classification</a></li>
+  <li><a href="#image-classification" id="toc-image-classification" class="nav-link" data-scroll-target="#image-classification">2012: Image Classification</a></li>
   <li><a href="#scene-understanding" id="toc-scene-understanding" class="nav-link" data-scroll-target="#scene-understanding">Scene Understanding</a></li>
-  <li><a href="#image-captioning" id="toc-image-captioning" class="nav-link" data-scroll-target="#image-captioning">Image Captioning</a></li>
   <li><a href="#machine-translation" id="toc-machine-translation" class="nav-link" data-scroll-target="#machine-translation">Machine Translation</a></li>
-  <li><a href="#multimedia-content" id="toc-multimedia-content" class="nav-link" data-scroll-target="#multimedia-content">Multimedia Content</a></li>
-  <li><a href="#game-playing" id="toc-game-playing" class="nav-link" data-scroll-target="#game-playing">Game Playing</a></li>
+  <li><a href="#image-captioning-images-start-talking" id="toc-image-captioning-images-start-talking" class="nav-link" data-scroll-target="#image-captioning-images-start-talking">Image Captioning: Images Start Talking</a></li>
+  <li><a href="#from-language-models-to-llms" id="toc-from-language-models-to-llms" class="nav-link" data-scroll-target="#from-language-models-to-llms">From Language Models to LLMs</a></li>
+  <li><a href="#multimedia-and-multimodal-models" id="toc-multimedia-and-multimodal-models" class="nav-link" data-scroll-target="#multimedia-and-multimodal-models">Multimedia and Multimodal Models</a></li>
+  <li><a href="#reinforcement-learning-and-game-playing" id="toc-reinforcement-learning-and-game-playing" class="nav-link" data-scroll-target="#reinforcement-learning-and-game-playing">Reinforcement Learning and Game Playing</a></li>
   </ul></li>
-  <li><a href="#reasons-for-success" id="toc-reasons-for-success" class="nav-link" data-scroll-target="#reasons-for-success">Reasons for Success</a>
+  <li><a href="#why-did-deep-learning-succeed" id="toc-why-did-deep-learning-succeed" class="nav-link" data-scroll-target="#why-did-deep-learning-succeed">Why did Deep Learning succeed?</a>
   <ul class="collapse">
-  <li><a href="#global-reach" id="toc-global-reach" class="nav-link" data-scroll-target="#global-reach">Global Reach</a></li>
-  <li><a href="#genericity-and-systematicity" id="toc-genericity-and-systematicity" class="nav-link" data-scroll-target="#genericity-and-systematicity">Genericity and Systematicity</a></li>
-  <li><a href="#simplicity-and-democratisation" id="toc-simplicity-and-democratisation" class="nav-link" data-scroll-target="#simplicity-and-democratisation">Simplicity and Democratisation</a></li>
-  <li><a href="#impact" id="toc-impact" class="nav-link" data-scroll-target="#impact">Impact</a></li>
+  <li><a href="#scale" id="toc-scale" class="nav-link" data-scroll-target="#scale">Scale</a></li>
+  <li><a href="#universality-one-recipe-many-problems" id="toc-universality-one-recipe-many-problems" class="nav-link" data-scroll-target="#universality-one-recipe-many-problems">Universality: one recipe, many problems</a></li>
+  <li><a href="#feature-learning" id="toc-feature-learning" class="nav-link" data-scroll-target="#feature-learning">Feature learning</a></li>
+  <li><a href="#simplicity-and-democratisation" id="toc-simplicity-and-democratisation" class="nav-link" data-scroll-target="#simplicity-and-democratisation">Simplicity and democratisation</a></li>
   </ul></li>
-  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary">In Summary</a></li>
+  <li><a href="#the-impact" id="toc-the-impact" class="nav-link" data-scroll-target="#the-impact">The impact</a>
+  <ul class="collapse">
+  <li><a href="#what-happens-to-jobs" id="toc-what-happens-to-jobs" class="nav-link" data-scroll-target="#what-happens-to-jobs">What happens to jobs?</a></li>
+  <li><a href="#the-energy-problem" id="toc-the-energy-problem" class="nav-link" data-scroll-target="#the-energy-problem">The energy problem</a></li>
+  <li><a href="#is-the-ai-revolution-going-to-continue" id="toc-is-the-ai-revolution-going-to-continue" class="nav-link" data-scroll-target="#is-the-ai-revolution-going-to-continue">Is the AI revolution going to continue?</a></li>
+  </ul></li>
+  <li><a href="#where-are-we-now-in-2026" id="toc-where-are-we-now-in-2026" class="nav-link" data-scroll-target="#where-are-we-now-in-2026">Where are we now in 2026?</a>
+  <ul class="collapse">
+  <li><a href="#agentic-ai" id="toc-agentic-ai" class="nav-link" data-scroll-target="#agentic-ai">Agentic AI</a></li>
+  <li><a href="#context-engineering" id="toc-context-engineering" class="nav-link" data-scroll-target="#context-engineering">Context engineering</a></li>
+  </ul></li>
+  <li><a href="#what-are-we-going-to-learn-in-this-module" id="toc-what-are-we-going-to-learn-in-this-module" class="nav-link" data-scroll-target="#what-are-we-going-to-learn-in-this-module">What are we going to learn in this module?</a>
+  <ul class="collapse">
+  <li><a href="#part-i-machine-learning-fundamentals" id="toc-part-i-machine-learning-fundamentals" class="nav-link" data-scroll-target="#part-i-machine-learning-fundamentals">Part I — Machine Learning Fundamentals</a></li>
+  <li><a href="#part-ii-neural-network-fundamentals" id="toc-part-ii-neural-network-fundamentals" class="nav-link" data-scroll-target="#part-ii-neural-network-fundamentals">Part II — Neural Network Fundamentals</a></li>
+  </ul></li>
+  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary">In summary</a></li>
   </ul>
 </nav>
     </div>
@@ -408,166 +429,239 @@ window.Quarto = {
 
 <section id="deep-learning-machine-learning-and-a.i." class="level2">
 <h2 class="anchored" data-anchor-id="deep-learning-machine-learning-and-a.i.">Deep Learning, Machine Learning, and A.I.</h2>
-<p>As you begin this module, you are witnessing a pivotal moment in a technological and societal revolution, one driven by what is now universally called <strong>Artificial Intelligence (AI)</strong>. However, how we arrived at this term is a curious trajectory. Around We started around 2012-2013, with the term <strong>Deep Learning (DL)</strong>. Soon after, the broader and more established academic term <strong>Machine Learning (ML)</strong> became more common. Today, we have largely settled on <strong>AI</strong>, a catch-all term that is now globally used. Let us untangle these terms. They are not interchangeable; rather, they represent a nested hierarchy of concepts.</p>
-<p>Artificial Intelligence is the broadest and oldest concept, born in the 1950s. The original ambition was to create machines capable of human-like intelligence in its entirety—reasoning, planning, learning, and natural language understanding. For decades, the dominant approach to AI, often called “Symbolic AI” or “Good Old-Fashioned AI” (GOFAI), relied on explicitly programming computers with hand-coded rules and logic. The machine was “intelligent” because a human had manually encoded knowledge and decision-making processes into it.</p>
-<p>Beginning in the 1980s and gaining significant momentum through the 1990s and 2000s, a fundamentally different approach emerged: <strong>Machine Learning (ML)</strong>.</p>
-<p>At its heart, ML is about fitting mathematical models to data, a concept you’ve likely already encountered in statistics with good old regression. In regression, the goal is to find the parameters (e.g., the slope <span class="math inline">m</span> and intercept <span class="math inline">b</span> for a line <span class="math inline">y=mx+b</span>) that create the best possible fit to your data. Machine Learning generalises this powerful idea. Instead of just lines, we can work with far more complex models, but the principle is the same: we use data to tune the model’s parameters automatically. Rather than explicitly programming rules, we let the machine discover the rules by learning the patterns directly from examples. This data-driven approach is a significant cultural and methodological shift.</p>
-<p>While we often think of “machine learning” as a term from computer science, the underlying principles and techniques have been developed across many disciplines. For anyone working with numerical data, the need for analytical tools is universal. Many fields, including statistics and signal processing, have contributed to and benefited from the development of these methods. This interdisciplinary nature has led to some political friction. For instance, many statisticians might view much of modern ML as “applied statistics” or refer to it as <em>Statistical Learning</em>, emphasising its deep roots in their field.</p>
-<p>This brings us to the focus of this module: <strong>Deep Learning (DL)</strong>. Deep Learning is a specific subfield of Machine Learning. It is not a new idea—its core concepts have existed for decades, with scientists such as McCulloch and Pitts (1943), Rosenblatt (1958) and Joseph (1960) introducing the ideas of artificial neurons, perceptrons, and multilayer perceptrons. But it remained an essentially fringe domain for decades and it is only in the 2010s that it became a practical and dominant method.</p>
-<p>The defining feature of Deep Learning is its use of deep <strong>Artificial Neural Networks</strong>—architectures with multiple layers of interconnected nodes, loosely inspired by the structure of the human brain.</p>
-<p>The relationship between these fields can be summarised as:</p>
+<p>As you begin this module, you are arriving at a turning point in computing, and probably even human history. <strong>Artificial Intelligence (AI)</strong> has suddenly become the most talked about topic on the planet. You cannot really spend a day without running into it somewhere.</p>
+<p>But here is a slightly odd part: the technology did not suddenly appear in 2022 with ChatGPT, or even in 2012 with Alexnet. A lot of the ideas we are going to study are decades old. What changed was that, rather suddenly, they started to work <em>really</em> well.</p>
+<p>We now tend to draw a very neat picture to explain how they fit:</p>
 <p><span class="math display">
-\text{Deep Learning} \subset \text{Machine Learning}  \subset \text{AI}
+\text{Deep Learning} \subset \text{Machine Learning} \subset \text{AI}.
 </span></p>
-<p>Note that while deep learning was technically always a part of the broader AI research field, it was a fringe area, and its major breakthrough papers happened first in the fields of computer vision, image processing, audio processing and natural language processing, which were external to AI. Their success was so profound that it revitalised the term AI, giving it a new meaning. So much so, that whenever you hear about a AI today—whether in self-driving cars, medical diagnostics, or natural language translation—you can be almost certain that it is, in fact, powered by Deep Learning.</p>
+<p>It is a useful picture but it deserves a small historical warning.</p>
+<p>I am going to use the three terms <strong>AI</strong>, <strong>Machine Learning (ML)</strong> and <strong>Deep Learning (DL)</strong> throughout this module, and in everyday conversation I will often use them almost interchangeably. That is partly because, in 2026, so much of what gets called <em>AI</em> is in fact built using machine learning, and in particular deep learning.</p>
+<p>But historically, the neat nesting diagram is not quite how things happened. It is better thought of as a modern taxonomy than as a historical genealogy. The different communities did not simply emerge in this neat order and then merge together.</p>
+<p>Artificial Intelligence became a named field in the 1950s, with a very broad ambition: make machines do things that we would describe as intelligent: reasoning, planning, language, learning, problem solving, etc. For a long time, much of the AI community concentrated on symbolic approaches: represent knowledge explicitly and write down rules for manipulating it. The machine was “intelligent” because a human had manually encoded knowledge and decision-making processes into it.</p>
+<p>In parallel, during the 80s, 90s and 00s, a rather different collection of ideas was developing around <strong>statistics, pattern recognition, signal processing, information theory, cybernetics, and computer science</strong>. Much of this work was driven by scientific and engineering applications rather than by the traditional AI agenda of building explicitly intelligent machines. These communities laid much of the foundation of modern machine learning, a multi-disciplinary field whose state-of-the-art techniques — Random Forests, SVMs, logistic regression, and so on — were adopted across almost any application involving numerical data.</p>
+<p>The neural-network strand, which eventually became deep learning, was even more of its own separate research ecosystem, sitting across the fields of AI and machine learning. Biologically inspired artificial neurons go back to McCulloch and Pitts in 1943; the perceptron appeared with Rosenblatt in 1958; and multilayer networks and their training were explored repeatedly over the following decades. None of this was new in 2012.</p>
+<p>What <em>was</em> new was that, around 2012, deep neural networks suddenly became extremely good at solving important problems. Those breakthroughs happened largely in communities such as computer vision, image processing, speech and audio processing, and natural language processing, rather than in some single unified “AI” community.</p>
+<p>So there is a bit of historical relabelling, politics, and marketing going on here. AI was the name of the problem space; machine learning provided an increasingly powerful way of solving those problems; deep learning turned out to be an exceptionally successful form of machine learning. Once these methods started solving the things people had been calling AI for decades, the AI label came back.</p>
+<p>That is why the neat diagram works for teaching purposes, but now you know that the actual history is a bit messier.</p>
+<section id="what-is-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-machine-learning">What is Machine Learning?</h3>
+<p>At its heart, machine learning is the very old idea: <strong>fit a mathematical model to data</strong>.</p>
+<p>You have probably already met the basic idea through least squares. Suppose we have measurements <span class="math inline">(x_i,y_i)</span> and we want to fit a straight line</p>
+<p><span class="math display">
+y = mx+b.
+</span></p>
+<p>We choose <span class="math inline">m</span> and <span class="math inline">b</span> so that the line fits the observations as well as possible. Machine learning generalises this idea. Instead of just fitting a straight line, we can define much more complicated models with many parameters and use data to estimate those parameters.</p>
+<p>In machine learning, the focus is not so much on the physical correctness of the model. The aim is to make good predictions. So instead of looking for a set of well founded rules, we are trying to learn a model, from the data, that can, in practice, capture the relationship I care about.</p>
+<p>That shift from <strong>hand-written rules to data-driven models</strong> is one of the central ideas of this module.</p>
+<p>And this is why machine learning is inherently interdisciplinary. The same mathematical machinery shows up in statistics, signal processing, computer vision, speech, control, optimisation, and many other fields. Depending on where you come from, you may even use a different name for roughly the same thing: <em>statistical learning</em>, <em>pattern recognition</em>, <em>adaptive signal processing</em>, and so on.</p>
+</section>
+<section id="what-is-deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-deep-learning">What is Deep Learning?</h3>
+<p>Deep learning is the subfield of machine learning concerned with <strong>artificial neural networks</strong>, particularly networks with many layers.</p>
+<p>Again, the important thing is that deep learning is <em>not a new invention</em>. The underlying ideas have been around for decades. What changed in the 2010s was that the combination of large datasets, powerful computing hardware, and very effective optimisation methods made it possible to train these networks at a scale that had previously been impractical.</p>
+<p>And once that started working, it worked <em>everywhere</em>.</p>
+</section>
 </section>
 <section id="main-areas-of-machine-learning" class="level2">
 <h2 class="anchored" data-anchor-id="main-areas-of-machine-learning">Main Areas of Machine Learning</h2>
-<p>Machine learning itself can be broadly categorised into four main areas, each addressing different types of problems: Supervised Learning, Unsupervised Learning, Reinforcement Learning, and Generative Models. Deep Learning has had a major impact on all of them.</p>
+<p>There is no single universally agreed way of carving machine learning into exactly four boxes. For this module, however, we will use four broad categories: <strong>supervised learning, unsupervised learning, reinforcement learning, and generative models</strong>.</p>
+<p>Deep learning has simply revolutionised all four.</p>
 <section id="supervised-learning" class="level3">
 <h3 class="anchored" data-anchor-id="supervised-learning">Supervised Learning</h3>
-<p>Supervised learning is the most common type of machine learning, accounting for a vast majority of research and applications. In supervised learning, we start with a dataset that has been labelled with the correct outcomes. For example, we might have a collection of images, where each image is labeled as either a “dog” or a “cat.” The goal is to train a model that can learn the relationship between the input data (the images) and the corresponding labels.</p>
-<p>Mathematically, we have a dataset of <span class="math inline">n</span> observations, where each observation consists of a feature vector <span class="math inline">{\bf x}_i</span> (e.g., the pixels of an image) and a known outcome <span class="math inline">y_i</span> (e.g., 0 for a dog, 1 for a cat). The task is to learn a function <span class="math inline">f</span> from that labelled dataset <span class="math inline">({\bf x}_i, y_i)_{i=1,\dots,n}</span> that can predict the outcome for a new, unseen input: <span class="math inline">f({\bf x}_j, {\bf
-w})=y_j</span>. This is achieved by estimating the parameters <span class="math inline">{\bf w}</span> of the model <span class="math inline">f({\bf x}, {\bf w})</span>.</p>
+<p>This is the workhorse of machine learning, and it is also the main type of problem we will study in the first part of this module.</p>
+<p>The basic setup is simple. You have a dataset containing inputs and the answers you want:</p>
+<p><span class="math display">
+\left({\bf x}_i,y_i\right)_{i=1,\ldots,n}.
+</span></p>
+<p>For example, <span class="math inline">{\bf x}_i</span> might be all the pixel values in an image and <span class="math inline">y_i</span> might be a label such as <code>cat</code> or <code>dog</code>.</p>
+<p>The task is to learn a function <span class="math inline">f</span> which maps the input to the desired output. In a parametric model we might write</p>
+<p><span class="math display">
+f({\bf x};{\bf w}) \approx y,
+</span></p>
+<p>where <span class="math inline">{\bf w}</span> contains the parameters of the model. The training problem is then to choose <span class="math inline">{\bf w}</span> so that the predictions are good on the training data, and — much more importantly — on new data that the model has not seen before.</p>
 <div id="fig-intro-2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/dogcat.jpg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Example of Supervised Learning Task: Image Classification
+Figure&nbsp;1: Example of a supervised learning task: image classification.
 </figcaption>
 </figure>
 </div>
+<p>This is the basic pattern behind most of machine-learning systems: <strong>examples in, prediction out</strong>.</p>
 </section>
 <section id="unsupervised-learning" class="level3">
 <h3 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h3>
-<p>In unsupervised learning, the goal is to find patterns and structure in a dataset <span class="math inline">({\bf x}_i)</span> without the help of any pre-existing labels. A common application is <em>clustering</em>, where the algorithm groups similar data points together. For example, an e-commerce website could use clustering to segment its customers into different groups based on their purchasing behavior. These clusters can then be used for targeted marketing campaigns.</p>
+<p>Now remove the labels. In unsupervised learning we are given a dataset:</p>
+<p><span class="math display">
+({\bf x}_i)_{i=1,\ldots,n}
+</span></p>
+<p>and we ask: <strong>what can we learn about its structure just by looking at the data?</strong></p>
+<p>One classic example is <em>clustering</em>: perhaps the data naturally falls into a few groups, even though nobody told us in advance what the groups should be. For example, an online retailer might discover groups of customers with similar purchasing behaviour.</p>
+<p>The machine is no longer trying to reproduce an answer supplied by a human. It is trying to uncover structures that are already present in the data.</p>
 <div id="fig-intro-3" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/unsupervised-learning.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example of Unsupervised Learning Task: Clustering
+Figure&nbsp;2: Example of an unsupervised learning task: clustering.
 </figcaption>
 </figure>
 </div>
+<p>An important practical motivation is that <strong>labelling data is a costly manual effort</strong>. If you have millions of examples, getting someone to label every single one is painful, slow, and sometimes impossible. Unsupervised and self-supervised approaches therefore become extremely important when labelled data is scarce.</p>
 </section>
 <section id="reinforcement-learning" class="level3">
 <h3 class="anchored" data-anchor-id="reinforcement-learning">Reinforcement Learning</h3>
-<p>Reinforcement learning (RL) is about training an <em>agent</em> to make a sequence of decisions in an <em>environment</em> to maximise a cumulative <em>reward</em>. The agent learns through trial and error, receiving feedback in the form of rewards or penalties for its actions. RL is the basis for training models to play games like chess and Go, as well as for robotics applications where a robot learns to navigate its surroundings. While powerful, RL can be complex and data-intensive to implement, which is why it is less common than supervised or unsupervised learning.</p>
+<p>Reinforcement learning (RL) is a slightly different beast.</p>
+<p>Instead of giving the system a large dataset of correct answers, we give it an <em>agent</em>, an <em>environment</em>, and some notion of <em>reward</em>. The agent takes an action, observes what happens, receives feedback, and <strong>tries to learn a strategy</strong> that maximises its cumulative reward. The machine-learning problem is to learn a policy — a strategy for choosing actions — from the agent’s experience.</p>
+<p>This is the setting behind systems that learn to play games, control robots, or make decisions over a sequence of steps.</p>
 <div id="fig-intro-4" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/reinforcement-learning.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Reinforcement Learning
+Figure&nbsp;3: Reinforcement learning.
 </figcaption>
 </figure>
 </div>
+<p>Reinforcement learning is often much harder to engineer than ordinary supervised learning. The feedback is delayed, the data is generated by the agent itself, and the process is very much sequential, not lending itself to parallelisation.</p>
 </section>
 <section id="generative-models" class="level3">
 <h3 class="anchored" data-anchor-id="generative-models">Generative Models</h3>
-<p>Generative models are a rapidly advancing area of machine learning focused on creating new content. These models learn the underlying distribution of a dataset and can then generate new samples that are similar to the original data. This includes generating realistic images, writing human-like text, and composing music.</p>
-<p>Mathematically, we try to model the conditional probability of the observable <span class="math inline">{\bf x}</span>, given a target <span class="math inline">y</span>: <span class="math inline">{\bf x} \sim p({\bf x}| y)</span>. This is your ChatGPT, Midjourney, Stable Diffusions, etc.</p>
+<p>The fourth box is the one everyone has suddenly become very interested in.</p>
+<p><strong>Generative models</strong> try to learn how data is distributed so that we can then generate <em>new</em> samples from that distribution.</p>
+<p>In a simplified mathematical picture, we try to model the conditional distribution</p>
+<p><span class="math display">
+{\bf x} \sim p({\bf x}\mid y),
+</span></p>
+<p>where <span class="math inline">y</span> specifies what we want and <span class="math inline">{\bf x}</span> is a possible generated observation.</p>
+<p>For images, <span class="math inline">y</span> might describe a scene (eg. “it’s a dog”). For text, it might be a preceding sequence of words. For audio, it might describe a sound or another signal. The basic idea is the same: <strong>learn a probability model that allows us to generate new samples</strong>.</p>
+<p>This is the world of ChatGPT, image generators such as DALL·E and Midjourney, diffusion models, and many other generative systems.</p>
 <div id="fig-intro-5" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/dalle2-astronaut.jpg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Example of Generative AI with DALLE2 (Mar 2022)
+Figure&nbsp;4: Example of generative AI with DALL·E 2 (March 2022).
 </figcaption>
 </figure>
 </div>
-<p>Deep Learning has made major breakthroughs in all four of these fields. As a result, neural networks have become the dominant tool in virtually all areas of machine learning research.</p>
+<p>These categories overlap in practice. Modern generative models, for example, can be trained using combinations of supervised, unsupervised and reinforcement-learning ideas. The four-way split is therefore not set in stone.</p>
 </section>
 </section>
-<section id="early-deep-learning-successes" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="early-deep-learning-successes">Early Deep Learning Successes</h2>
+<section id="a-decade-of-breakthroughs" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="a-decade-of-breakthroughs">A decade of breakthroughs</h2>
+<p>Now that we clarified the taxonomy, the interesting question is: <strong>why did deep learning suddenly take over?</strong> The easiest way to understand the answer is to look at what happened between 2012 and the present.</p>
 <section id="image-classification" class="level3">
-<h3 class="anchored" data-anchor-id="image-classification">Image Classification</h3>
-<p>The story of Deep Learning’s success began in 2012 with <em>Image Classification</em>, also known as <em>Image Recognition</em>. This core task in Computer Vision is arguably the birthplace of modern Deep Learning. For years, image recognition was a notoriously difficult problem. The prevailing approach involved manually engineering a set of image features and then feeding them into a classification algorithm. The 2014 comic from <em>xkcd</em> illustrates this challenge:</p>
+<h3 class="anchored" data-anchor-id="image-classification">2012: Image Classification</h3>
+<p>Our story really starts in <strong>image recognition</strong>. Image recognition had been a core problem in computer vision for decades. The usual recipe was something like this: take an image, design mathematically motivated, domain-specific features, and then feed those features into a classifier such as a Support Vector Machine (SVM).</p>
+<p>This was a very tricky problem, where a lot of engineering was required to find features that are robust to changes in viewpoint, lighting, scale, clutter, and so on.</p>
+<p>The xkcd cartoon (2014) below captures the spirit of this perfectly:</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://imgs.xkcd.com/comics/tasks.png" class="img-fluid figure-img" style="width:30.0%"></p>
-<figcaption>https://xkcd.com/1425/ (2014)</figcaption>
+<p><img src="https://imgs.xkcd.com/comics/tasks.png" class="img-fluid figure-img" style="width:12em"></p>
+<figcaption>The classic “tasks” cartoon from xkcd.</figcaption>
 </figure>
 </div>
-<p>The <a href="https://www.image-net.org">ImageNet</a> Large Scale Visual Recognition Challenge (ILSVRC) is an annual competition which benchmarks the performance of image recognition algorithms. Before 2012, methods like Support Vector Machines (SVMs) were the top performers.</p>
+<p>The <strong>ImageNet Large Scale Visual Recognition Challenge (ILSVRC)</strong> gave the community a common benchmark. There were roughly one million labelled images, spread across one thousand object categories — a large dataset by the standards of the time.</p>
 <div id="fig-intro-6" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/imagenet-fig1.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/imagenet-fig1.png" class="img-fluid figure-img" style="width:30em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: ImageNet image classification challenge.
+Figure&nbsp;5: The ImageNet image-classification challenge.
 </figcaption>
 </figure>
 </div>
-<p>In 2012, a deep learning model called AlexNet <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span> dramatically reduced the error rate for object recognition, capturing the attention of the computer vision community and beyond. While neural networks had existed for decades, the scale of this improvement was undeniable. Since then, every winning entry in the ImageNet competition has been based on a deep neural network, with each year bringing further incremental progress. Today, machines have surpassed human performance on this specific task. In 2014, Andrej Karpathy, then a PhD student, manually classified a subset of the ImageNet dataset and achieved a 5% error rate. For comparison, the winning entry in 2022 had an error rate of less than 1%.</p>
+<p>Before 2012, the best systems were making only gradual progress. Then AlexNet appeared <span class="citation" data-cites="alexnet">(<a href="references.html#ref-alexnet" role="doc-biblioref">Krizhevsky, Sutskever, and Hinton 2012</a>)</span>. It was not a new idea in the sense of inventing neural networks from scratch. The remarkable thing was that it could actually be <strong>trained successfully at this scale</strong>.</p>
+<p>The result was dramatic: the error rate dropped from roughly 27–30% to about 17% in one step. That is not a tiny improvement. In practical terms, it turns a system that is mostly a research curiosity into one that suddenly starts to look useful.</p>
+<p>That caught the attention of the wider research community and everybody piled in.</p>
 <div id="fig-ImageNetErrorRates" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ImageNetErrorRates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/ImageNet.svg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ImageNetErrorRates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Historical error Rates at ImageNet’s classification challenge between 2010 and 2015. (<a href="https://paperswithcode.com/sota/image-classification-on-imagenet">see full leaderboard</a>)
+Figure&nbsp;6: Historical error rates at the ImageNet classification challenge. See the <a href="https://paperswithcode.com/sota/image-classification-on-imagenet">full leaderboard</a>.
 </figcaption>
 </figure>
 </div>
+<p>Error rates fell rapidly over the next few years. In 2014, Andrej Karpathy manually labelled a large subset of the test images and obtained an error rate of roughly 5%. By the middle of the decade, deep neural networks were already matching or exceeding that number on this benchmark.</p>
+<p>Something fundamentally different was happening.</p>
 </section>
 <section id="scene-understanding" class="level3">
 <h3 class="anchored" data-anchor-id="scene-understanding">Scene Understanding</h3>
-<p>The advancements in image recognition quickly spread to related fields like <em>Scene Understanding</em>. The figure below shows the results of Mask R-CNN <span class="citation" data-cites="maskrcnn">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>, a deep learning model that can perform semantic segmentation. This means it can classify every pixel in an image, associating it with a specific object class like “human,” “train,” or “car.”</p>
+<p>Very quickly the same basic machinery was adapted to nearby tasks such as object detection, semantic segmentation and <em>scene understanding</em>. Instead of assigning one label to an entire image, the model could predict what was happening at the level of individual pixels and objects.</p>
 <div id="fig-intro-7" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/MaskRCNN.jpg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Results from Mask R-CNN. <span class="citation" data-cites="maskrcnn">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>
+Figure&nbsp;7: Results from Mask R-CNN <span class="citation" data-cites="maskrcnn">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>.
 </figcaption>
 </figure>
 </div>
+<p>The breakthrough was not isolated. It extended to all these adjacent fields. It showed that the same recipe could often be transferred and adapted to a neighbouring problem.</p>
 </section>
-<section id="image-captioning" class="level3">
-<h3 class="anchored" data-anchor-id="image-captioning">Image Captioning</h3>
-<p>By 2014, researchers were combining deep learning models for vision and language to automatically generate captions for images. A single, end-to-end neural network could now take an image as input and produce a descriptive sentence as output.</p>
+<section id="machine-translation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="machine-translation">Machine Translation</h3>
+<p>The same story happened in language processing.</p>
+<p>By the middle of the 2010s, major technology companies had started moving their machine-translation systems to deep learning. A particularly striking example came from Google’s translation work: the New York Times reported that the system had historically improved by around 0.4% per year, while the first deep learning system produced an improvement of roughly 7% in one jump.</p>
+<p>The exact numbers are less important than the scale of the change. A whole research programme that had focused on carefully improving hand-designed components could suddenly be replaced by a system trained end-to-end on data.</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<p>Read the <em>The Great AI Awakening</em> in the <a href="https://goo.gl/DPYp6d">New York Times</a> for a good account of this transition.</p>
+</div></div></section>
+<section id="image-captioning-images-start-talking" class="level3">
+<h3 class="anchored" data-anchor-id="image-captioning-images-start-talking">Image Captioning: Images Start Talking</h3>
+<p>Once we have a model that understands something about an image, and another model that can generate language, why not connect them?</p>
+<p>Already by 2014, systems were generating natural-language descriptions of images. An image goes in; a sentence comes out. The results were nothing short of ground breaking at the time.</p>
 <div id="fig-intro-8" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/captioning.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Results of automated image captioning <span class="citation" data-cites="showandtell">(<a href="references.html#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See <a href="https://goo.gl/U88bDQ">Google Research blog entry</a>
+Figure&nbsp;8: Results of automated image captioning <span class="citation" data-cites="showandtell">(<a href="references.html#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See the <a href="https://goo.gl/U88bDQ">Google Research blog entry</a>.
 </figcaption>
 </figure>
 </div>
+<p>This was an early demonstration of something that has since become one of the central themes of modern AI: <strong>models for different modalities can almost be combined like lego blocks</strong>.</p>
 </section>
-<section id="machine-translation" class="level3">
-<h3 class="anchored" data-anchor-id="machine-translation">Machine Translation</h3>
-<p>The deep learning revolution also transformed the field of Natural Language Processing (NLP). By 2014, major tech companies were replacing their existing machine translation systems with deep learning models. Google, for example, had been seeing an average annual improvement of 0.4% on its translation service. Their first implementation of a deep learning-based system resulted in a 7% improvement overnight—more than the cumulative progress of a decade of work. This story is detailed in the New York Times article, <a href="https://goo.gl/DPYp6d">“The Great AI Awakening”</a>.</p>
-<p>Years of handcrafted feature engineering were rendered obsolete overnight by a simple deep learning model.</p>
-<p>Since then, the development of Large Language Models (LLMs) has further revolutionised text processing. These models, with hundreds of billions of parameters, are trained on vast amounts of text from the internet, often in multiple languages.</p>
-<p>With the release of <a href="https://openai.com/blog/gpt-3-apps/">OpenAI’s GPT-3</a> in June of 2020, the revolution went mainstream. GPT-3 became a household name and brought the capabilities of LLMs to a global audience.</p>
-</section>
-<section id="multimedia-content" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="multimedia-content">Multimedia Content</h3>
-<p>Deep Learning has become a universal tool for applications that involve multiple types of media. As early as 2014, Microsoft show cased how speech recognition, machine translation, and speech synthesis could be combined into a single, seamless experience.</p>
-
-<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
-<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<section id="from-language-models-to-llms" class="level3">
+<h3 class="anchored" data-anchor-id="from-language-models-to-llms">From Language Models to LLMs</h3>
+<p>The next major step came in 2017 from Natural Language Processing, with the introduction of the <strong>Transformer</strong> models. Transformers made it much easier to build models that could process long sequences and connect information across them.</p>
+<p>The result was the rise of <strong>Large Language Models (LLMs)</strong>: neural networks with enormous numbers of parameters trained on enormous corpora of text.</p>
+<p>GPT-3, released in 2020, became one of the best-known early examples. What had previously looked like a specialist technology started becoming a general-purpose interface to machine learning:</p>
 <ul>
-<li><a href="https://www.youtube.com/embed/NhxCg2PA3ZI?start=0">Skype demo</a></li>
-<li><a href="https://goo.gl/eAuPcS">Microsoft blog post</a></li>
+<li>grammar correction,</li>
+<li>translation,</li>
+<li>summarisation,</li>
+<li>question answering,</li>
+<li>code generation,</li>
+<li>and a rather impressive amount of homework cheating.</li>
 </ul>
-</div></div></section>
-<section id="game-playing" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="game-playing">Game Playing</h3>
-<p>Deep learning has also been successfully applied to <em>reinforcement learning</em>, enabling the solution of complex sequential decision-making problems. This has led to remarkable achievements, such as training agents to play Atari games, controlling real-world robots, and defeating human champions at the game of Go. In March 2016, the victory of DeepMind’s AlphaGo over the world’s top Go, Lee Sedol, was a landmark event in the history of A.I.</p>
+<p>The important transition here is that the model is no longer built for just one narrow task. We start to get a <strong>general-purpose model</strong> that can be prompted to perform many different tasks.</p>
+</section>
+<section id="multimedia-and-multimodal-models" class="level3">
+<h3 class="anchored" data-anchor-id="multimedia-and-multimodal-models">Multimedia and Multimodal Models</h3>
+<!-- Once you have strong models for images, language, speech and other signals, the -->
+<!-- obvious next question is: **why keep them separate?** -->
+<p>Deep learning has made it increasingly straightforward to combine information from different modalities. Image + language gives captioning and visual question answering. Speech + language gives transcription and conversational systems. Image + language + audio gives us increasingly rich multimodal systems.</p>
+<p>In a sense, this is where the story that started with image recognition starts to look like today’s AI again: the goal is not simply to classify one kind of data, but to build systems that can connect different forms of information.</p>
+</section>
+<section id="reinforcement-learning-and-game-playing" class="level3">
+<h3 class="anchored" data-anchor-id="reinforcement-learning-and-game-playing">Reinforcement Learning and Game Playing</h3>
+<p>Deep learning also had a major impact on reinforcement learning.</p>
+<p>Systems combining neural networks with reinforcement learning learned to play Atari games, control robots, and eventually defeat world-class human players at Go. AlphaGo’s victory over Lee Sedol in 2016 was a particularly memorable moment because it demonstrated that deep learning could be combined with search and sequential decision-making to tackle problems that had resisted previous approaches.</p>
 <div id="fig-intro-9" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -578,89 +672,166 @@ Figure&nbsp;9
 </figcaption>
 </figure>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
-<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
-<ul>
-<li><a href="https://goo.gl/cTcBJa">demo: Robots Learning how to walk</a></li>
-<li><a href="https://goo.gl/3TcCNA">DeepMind</a></li>
-</ul>
-</div></div></section>
+<p>The same basic pattern keeps coming back: <strong>take a framework that learns from data, give it more data and compute, and adapt it to a new problem.</strong></p>
 </section>
-<section id="reasons-for-success" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="reasons-for-success">Reasons for Success</h2>
-<p>Neural networks have been around for decades, but by 2013 that they started to surpass all other machine learning techniques. Deep learning has become a <em><strong>disruptive</strong></em> technology that has fundamentally changed the operations of technology companies worldwide. This is not an overstatement.</p>
-<blockquote class="blockquote">
-<p>``The revolution in deep nets has been very profound, it definitely surprised me, even though I was sitting right there.’’.</p>
-<p>— Sergey Brin, Google co-founder</p>
-</blockquote>
-<p>So, why then?</p>
-<p>The key reason is that <em>Deep Learning scales</em>.</p>
-<p>Neural networks are unique in their ability to improve their performance with increasing amounts of data. As illustrated in the now classic explanation diagram of <a href="#fig-intro-10" class="quarto-xref">Figure&nbsp;<span>10</span></a>, other machine learning techniques, which were popular before, do not scale as effectively.</p>
+</section>
+<section id="why-did-deep-learning-succeed" class="level2">
+<h2 class="anchored" data-anchor-id="why-did-deep-learning-succeed">Why did Deep Learning succeed?</h2>
+<p>Neural networks had been around for decades. In fact, if you had told somebody in 2005 that neural networks would eventually dominate machine learning, they probably would not have believed you. Deep learning methods were simply not that impressive at the time.</p>
+<section id="scale" class="level3">
+<h3 class="anchored" data-anchor-id="scale">Scale</h3>
+<p>Then things changed very quickly. The key to that change was simple:</p>
+<p><strong>Deep learning scales.</strong></p>
+<p>For many traditional machine-learning methods, performance improves quickly when you have more data and then reaches a plateau. Deep neural networks can continue to improve as you increase both the amount of training data and the amount of computation.</p>
 <div id="fig-intro-10" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/DLvsOthers.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/DLvsOthers.svg" class="img-fluid figure-img" style="width:22em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Classic illustration showing how Deep Learning surpassed other previous classic machine learning methods on large datasets.
+Figure&nbsp;10: The now-classic plot showing how deep learning continues improving as the amount of data increases, while more traditional methods plateau.
 </figcaption>
 </figure>
 </div>
-<p>The availability of <em>massive datasets</em> and the development of powerful, low-cost <em>computing hardware</em> (especially Graphics Processing Units, or GPUs) created the perfect conditions for deep learning to flourish. While other methods plateaued, deep learning models could continue to improve by training on billions of examples instead of just thousands.</p>
-<p>The tipping point for computer vision was in 2012, and for machine translation, it was around 2014.</p>
-<section id="global-reach" class="level3">
-<h3 class="anchored" data-anchor-id="global-reach">Global Reach</h3>
-<p>Since these early successes, deep learning has been successfully applied to a wide range of fields in research, industry, and society. Some examples include: self-driving cars, medical image analysis for cancer detection, speech recognition and synthesis, drug discovery and toxicology (see DeepMind’s <a href="https://www.deepmind.com/research/highlighted-research/alphafold">AlphaFold project</a>), customer relationship management, recommendation systems, bioinformatics, advertising, and even controlling lasers.</p>
+<p>Three ingredients contributed to that perfect storm:</p>
+<ol type="1">
+<li><strong>Large datasets.</strong> Research datasets became much larger, with ImageNet being a famous example of the new scale.</li>
+<li><strong>Cheap, powerful computation.</strong> Graphics Processing Units (GPUs), originally developed for rendering graphics, turned out to be extremely good at the kind of numerical operations used to train neural networks.</li>
+<li><strong>Better training techniques and architectures.</strong> With the renewed attention, researchers quickly worked out how to train deeper networks reliably and how to build architectures suited to particular kinds of data.</li>
+</ol>
+<p>Before this combination, training a very large network was mostly too difficult. Once the ingredients were available, the same basic idea could be trained on millions and eventually billions of examples.</p>
+<p>The tipping point was around <strong>2012 for computer vision</strong> and around <strong>2014 for machine translation</strong>.</p>
 </section>
-<section id="genericity-and-systematicity" class="level3">
-<h3 class="anchored" data-anchor-id="genericity-and-systematicity">Genericity and Systematicity</h3>
-<p>One of the most significant advantages of deep learning is its capacity to automatically learn features directly from data. This capability often allows it to surpass the performance of traditional, approaches that require extensive time and expert knowledge to create useful features from the data. In the early days of deep learning, it was common for even a simple master’s project to beat complex, state-of-the-art algorithms from teams of world experts on its first attempt. This made deep learning a powerful and generalisable approach for solving problems across a wide range of domains.</p>
+<section id="universality-one-recipe-many-problems" class="level3">
+<h3 class="anchored" data-anchor-id="universality-one-recipe-many-problems">Universality: one recipe, many problems</h3>
+<p>What was remarkable, too, was how astonishingly reusable the framework turned out to be.</p>
+<p>You can feed a neural network images, audio, text, sensor measurements, financial data or other numerical signals. The representation changes, the architecture changes, the loss function may change, but the basic recipe often remains surprisingly similar:</p>
+<blockquote class="blockquote">
+<p>define an objective → choose a model → optimise the parameters using data.</p>
+</blockquote>
+<p>As you will see, very different models can still be trained using remarkably similar machinery. The architecture and objective still matter, but the underlying frameworks and models are reusable across many problems. That makes deep learning less like a single algorithm and more like a <strong>general end-to-end programming framework for learning numerical functions from data</strong>.</p>
+<p>This also explains why breakthroughs spread so quickly between fields. A trick invented for images can probably work for speech. A training strategy discovered for speech can be reused for MRI data.</p>
+</section>
+<section id="feature-learning" class="level3">
+<h3 class="anchored" data-anchor-id="feature-learning">Feature learning</h3>
+<p>Traditional machine learning often relied heavily on what people now refer to as <strong>handcrafted features</strong>. I do not like this expression too much, because it can make us forget the mathematical and domain-specific knowledge on which these methods were built. However, it does correctly point out that a human expert needs to decide what information to extract from the raw signal before passing it to the classifier.</p>
+<p>Good feature engineering was often the result of a great deal of mathematical and domain-specific knowledge.</p>
+<p>Deep networks can bypass this domain expertise and direcly learn these representations from the raw input itself.</p>
+<p>This does not mean that feature engineering disappeared. It means that a large part of the feature-design problem became something we could <strong>learn from data</strong>.</p>
+<p>This shift is one of the reasons the same framework can be applied to so many very different domains.</p>
 </section>
 <section id="simplicity-and-democratisation" class="level3">
-<h3 class="anchored" data-anchor-id="simplicity-and-democratisation">Simplicity and Democratisation</h3>
-<p>Deep learning provides a relatively simple and flexible framework for defining and optimising a wide range of models. With modern deep learning libraries, programmers can train state-of-the-art neural networks without needing a decade of research experience in the field. Furthermore, modern AI toolchains, allow developers to build sophisticated software solutions using simple natural language prompts. In fact, coders might not be needed anymore, all you need to do is to write some text. This has created new opportunities for startups and has made A.I. a ubiquitous tool in the industry.</p>
+<h3 class="anchored" data-anchor-id="simplicity-and-democratisation">Simplicity and democratisation</h3>
+<p>It also means that people do not necessarily need to be domain experts to work on image or text processing. In fact, very early on, researchers trained in one application domain started applying deep-learning methods in completely different fields. Image researchers moved into language and audio; speech researchers moved into vision. Techniques started travelling surprisingly quickly between research communities.</p>
+<p>Also, because the framework is relatively simple and shared across many domains, modern libraries can let you define a neural network in a handful of lines and train it with a generic optimisation loop. You no longer need to implement every mathematical detail from scratch before you can run a serious experiment.</p>
+<p>The LLM revolution is now pushing this democratisation further. A sophisticated system can be built by describing what you want in plain English and letting an AI system generate part of the software for you. Domain expertise is not the barrier it used to be.</p>
 </section>
-<section id="impact" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="impact">Impact</h3>
-<p>The rapid progress of A.I. raises important questions about the future of work. How long will it be before your job can be automated by an algorithm? Even creative professions are no longer immune.</p>
-<p>For example, early deep learning models (2015) could already perform <em>style transfer</em>, applying the artistic style of one image to another:</p>
+</section>
+<section id="the-impact" class="level2">
+<h2 class="anchored" data-anchor-id="the-impact">The impact</h2>
+<p>At this point deep learning is everywhere. It is being used in research, industry and society for applications ranging from image recognition and medical imaging to speech, recommendation systems, drug discovery, robotics, autonomous driving and protein-structure prediction. AlphaFold is a famous example of what happens when these techniques are pushed into a scientific domain.</p>
+<p>And, naturally, this raises a few awkward questions.</p>
+<section id="what-happens-to-jobs" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-to-jobs">What happens to jobs?</h3>
+<p>A lot of the current excitement — and anxiety — is about automation.</p>
+<p>The interesting change is that this is no longer restricted to repetitive physical tasks. Systems can now produce text, images, software, music, and other forms of content that used to require substantial amounts of human expertise.</p>
+<p>Even creative professions are therefore part of the conversation.</p>
+<p>Already in 2015, neural style-transfer methods demonstrated that a network could do art:</p>
 <div id="fig-intro-11" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/styletransfer-2.jpeg" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Automatic style transfer, based on <span class="citation" data-cites="gatys2015neural">(<a href="references.html#ref-gatys2015neural" role="doc-biblioref">Gatys, Ecker, and Bethge 2015</a>)</span>
+Figure&nbsp;11: Automatic style transfer, based on <span class="citation" data-cites="gatys2015neural">(<a href="references.html#ref-gatys2015neural" role="doc-biblioref">Gatys, Ecker, and Bethge 2015</a>)</span>.
 </figcaption>
 </figure>
 </div>
-<p>Now large-scale models like DALL·E 2 <span class="citation" data-cites="dalle2">(<a href="references.html#ref-dalle2" role="doc-biblioref">Ramesh et al. 2022</a>)</span> can generate incredibly creative and high-quality images from text descriptions:</p>
+<p>And large generative models such as DALL·E 2 pushed the bar much further, showing that AI could produce images that, for some creative tasks, were difficult to distinguish from human-produced work:</p>
 <div id="fig-intro-12" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/dalle2-teddybears.jpg" class="img-fluid figure-img" style="width:90.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: OpenAI’s <a href="https://openai.com/dall-e-2/">DALL·E 2</a>’s picture creation from a text description: “Teddy bears mixing sparkling chemicals as mad scientists as a 1990s Saturday morning cartoon” (see <a href="https://openai.com/dall-e-2/">https://openai.com/dall-e-2/</a>)
+Figure&nbsp;12: Example of text-to-image generation with DALL·E 2 <span class="citation" data-cites="dalle2">(<a href="references.html#ref-dalle2" role="doc-biblioref">Ramesh et al. 2022</a>)</span>.
 </figcaption>
 </figure>
 </div>
-
-<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
-<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
-<ul>
-<li>A Neural Algorithm of Artistic Style. L. Gatys, A. Ecker, M. Bethge. 2015. <a href="https://arxiv.org/abs/1508.06576">paper</a></li>
-<li>Does an AI need to make love to Rembrandt’s girlfriend to make art? <a href="https://goo.gl/gi7rWE">read</a></li>
-<li>Intelligent Machines: AI art is taking on the experts. <a href="https://goo.gl/2kfyXd">read</a></li>
-</ul>
-</div></div><p>Concerns about job displacement are serious and time will tell how the disruption will truely impact our society.</p>
+<p>So the question is no longer simply “can AI do this task?”. In many cases the answer is already yes, at least sometimes. The harder questions are: <strong>how well, at what cost, and what happens to the people whose work changes as a result?</strong> We do not yet know the answers to those questions.</p>
+</section>
+<section id="the-energy-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-energy-problem">The energy problem</h3>
+<p>Large-scale AI requires large-scale computing infrastructure. Training and running models means building data centres, supplying them with electricity, cooling the hardware, connecting the machines with very fast networks, and manufacturing the hardware in the first place.</p>
+<p>So AI is not weightless software living somewhere in “the cloud”. There is a rather large physical machine behind the cloud.</p>
+<p>In Ireland, data centres now account for around 25% of electricity consumption. This has become a visible part of the national conversation. But this is not an isolated Irish problem. It is a global one.</p>
+<p>At some level, this is not even an engineering problem anymore. It is simply a problem of physics. Demand for computation is growing exponentially, while the physical infrastructure required to generate and deliver the necessary energy, build data centres, cool the hardware, and manufacture the chips can only grow linearly.</p>
+<p>Simply put: the current growth of AI compute is physically unsustainable.</p>
+<p>It also connects directly to something we will encounter throughout this module: <strong>efficiency matters</strong>. If you can make a model smaller, faster or cheaper, that is not just a minor advantage. At scale, it can make a very big difference.</p>
+</section>
+<section id="is-the-ai-revolution-going-to-continue" class="level3">
+<h3 class="anchored" data-anchor-id="is-the-ai-revolution-going-to-continue">Is the AI revolution going to continue?</h3>
+<p>One thing I have learned from following this field for the last ten years is that AI discussions tend to arrive in waves. One year the story is that AGI is just around the corner. The next year it is that language models have hit a plateau. Then the story changes again.</p>
+<p>The lecture slides for this module deliberately show this changing news cycle: you can find headlines announcing that the AI hype is ending, followed by headlines a year later asking whether an AI bubble is about to burst. <strong>The field is moving faster than our narratives about it</strong>.</p>
+<p>There are real limitations. Current models can be unreliable, can fail in ways that are hard to anticipate, chatbots can be frustrating to work with and can struggle when pushed outside the regimes in which they have been trained and evaluated.</p>
+<p>There are also serious questions about what we even mean when we say a system “understands” something, or whether impressive language behaviour should count as intelligence. These are fascinating questions, but they are not questions we can settle easily.</p>
+<p>And no, machines have not suddenly become self-aware … yet.</p>
+</section>
+</section>
+<section id="where-are-we-now-in-2026" class="level2">
+<h2 class="anchored" data-anchor-id="where-are-we-now-in-2026">Where are we now in 2026?</h2>
+<p>Two developments in particular have become increasingly visible over the last couple of years or so: <strong>agentic AI</strong> and <strong>context engineering</strong>.</p>
+<section id="agentic-ai" class="level3">
+<h3 class="anchored" data-anchor-id="agentic-ai">Agentic AI</h3>
+<p>An ordinary language model produces text. That is already useful, but it is still a fairly passive interface.</p>
+<p>Now wrap a language model in a small software system that can execute commands, call tools, inspect files, browse information, run programs, and feed the results back into the model.</p>
+<p>A model might reason for your MSc thesis:</p>
+<blockquote class="blockquote">
+<p>“I need this dataset. I should download it, inspect it, write the code, run the experiment, look at the result, try again, and now write a report.”</p>
+</blockquote>
+<p>The model has not necessarily become a fundamentally different kind of intelligence. The surrounding <strong>software workflow</strong> has changed.</p>
+</section>
+<section id="context-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="context-engineering">Context engineering</h3>
+<p>A second development is the realisation that <strong>what you give LLMs matters an enormous amount</strong>.</p>
+<p>So people increasingly design systems around the model: deciding what information to retrieve, what examples to provide, what instructions to include, what previous interactions matter, and how to structure the information so the model can make use of it.</p>
+<p>This is often called <strong>context engineering</strong>.</p>
+<p>And the stack gets increasingly meta: an LLM can write a prompt for another LLM, which controls an agent, which calls another tool, which feeds information back to the first model. Turtles all the way down.</p>
+<p>The important point is that these developments do not necessarily require a new kind of neural network. Much of the progress comes from <strong>better software around the models and better ways of using them</strong>. We are still in the catching-up phase, trying to figure out how best to use these new tools.</p>
+</section>
+</section>
+<section id="what-are-we-going-to-learn-in-this-module" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-we-going-to-learn-in-this-module">What are we going to learn in this module?</h2>
+<p>The module is deliberately structured from the ground up.</p>
+<section id="part-i-machine-learning-fundamentals" class="level3">
+<h3 class="anchored" data-anchor-id="part-i-machine-learning-fundamentals">Part I — Machine Learning Fundamentals</h3>
+<p>In the first four weeks we will cover:</p>
+<p><strong>Least Squares</strong> — the root of a lot of machine learning. We will use it to introduce feature mappings, over- and under-fitting, regularisation, and maximum likelihood.</p>
+<p><strong>Logistic Regression</strong> — your first neuron. We will use it to introduce linear classification, cross-entropy and gradient-based optimisation.</p>
+<p><strong>Classic Classifiers</strong> — including Support Vector Machines, decision trees, kernel methods and nearest neighbours.</p>
+<p><strong>Comparing Classifiers</strong> — because a classifier is only useful if you know how to measure what it is doing. We will look at confusion matrices, ROC curves and F1 scores.</p>
+<p>The point of this first section is not to make you an expert in classical machine learning. It is to give you the mathematical and conceptual building blocks that make the later neural-network material much easier to understand.</p>
+</section>
+<section id="part-ii-neural-network-fundamentals" class="level3">
+<h3 class="anchored" data-anchor-id="part-ii-neural-network-fundamentals">Part II — Neural Network Fundamentals</h3>
+<p>Then we start building the machinery that has driven the modern deep-learning revolution:</p>
+<p><strong>Feedforward Neural Networks</strong> — architecture, back-propagation, regularisation and vanishing gradients.</p>
+<p><strong>Convolutional Neural Networks</strong> — convolution, pooling, visualisation and transfer of learned representations.</p>
+<p><strong>Generative Models</strong> — including unsupervised learning, Variational Autoencoders and GANs.</p>
+<p><strong>Recurrent Neural Networks</strong> — LSTMs, word embeddings and sequence processing.</p>
+<p><strong>Transformers and Large Language Models</strong> — text processing and multimodal fusion.</p>
 </section>
 </section>
 <section id="in-summary" class="level2">
-<h2 class="anchored" data-anchor-id="in-summary">In Summary</h2>
-<p>While fully autonomous cars are not quite yet a reality and computers have not achieved consciousness, the deep learning revolution is well underway. It is profoundly changing how we approach research and engineering, and its impact is being felt across all sectors of society. The growing awareness of the societal and ethical implications of these technologies is a testament to the significance of this transformation.</p>
-<p>In the following chapters, we will explore the essential concepts of machine learning (Part I), delve into the fundamentals of neural networks (Part II), more recent advances in the field (Part III), and finish with an introduction to generative models (Part IV).</p>
+<h2 class="anchored" data-anchor-id="in-summary">In summary</h2>
+<p>So, where does that leave us?</p>
+<p>Deep learning is not a mysterious technology that suddenly appeared out of nowhere. Neural networks are old. Machine learning is old. Statistical modelling is old. The remarkable thing is what happened when <strong>data, computation, architectures and optimisation finally scaled together</strong>.</p>
+<p>That produced the sequence of breakthroughs we have just seen: image recognition, scene understanding, captioning, translation, reinforcement learning, Transformers, large language models and increasingly multimodal systems.</p>
+<p>And that, in turn, produced today’s much broader AI ecosystem.</p>
+<p>In this module, you will get deep in the fundamentals that underpin modern AI, and hopefully, by the end of it, new architectures and challenges will no longer look quite so mysterious.</p>
+<p>That is what we are going to spend the next few months doing.</p>
+<p>And yes: there will be a lot of data. You will be crunching numbers into GPUs, staring at loss curves, wondering if the model is overfitting, changing one line of code, and running it again.</p>
+<p>Welcome to deep learning.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
