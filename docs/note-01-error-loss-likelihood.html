@@ -367,43 +367,41 @@ window.Quarto = {
 <p>Recall that the linear model is: <span class="math display">\begin{equation}
   \mathbf {y} = \mathbf{X} \mathbf{w} + \boldsymbol{\varepsilon}
 \end{equation}</span></p>
-<p>The error <span class="math inline">\boldsymbol{\varepsilon}</span> is the random variable that embodies the uncertainty of the model and explains the differences between the prediction <span class="math inline">{\bf x}_i^{\top}{\bf w}</span> and the outcome <span class="math inline">y_i</span>.</p>
+<p>The error <span class="math inline">\boldsymbol{\varepsilon}</span> is the random variable that embodies the uncertainty of the model and explains the differences between the prediction <span class="math inline">\mathbf{x}_i^{\top}\mathbf{w}</span> and the outcome <span class="math inline">y_i</span>.</p>
 <p>Let’s assume that the error follows a Gaussian distribution, <em>i.e.</em> that <span class="math inline">\varepsilon_i \sim \mathcal{N}(0, \sigma^2)</span>. <span class="math display">\begin{equation}
 p({\varepsilon}_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{{\varepsilon_i}^2}{2\sigma^2}\right)
 \end{equation}</span></p>
 <div id="fig-note-01-gaussian" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-note-01-gaussian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/gaussianlaplace.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/gaussianlaplace.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-note-01-gaussian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;A.1: Propability Density Functions corresponding to a Gaussian and a Laplace error prediction distribution.
 </figcaption>
 </figure>
 </div>
-<p>We can measure the <em>likelihood</em> to have <span class="math inline">y_i</span> given <span class="math inline">{\bf x}_i</span>. It is given by: <span class="math display">\begin{equation}
-p(y_i|{\bf x}_i, {\bf w}) = p(\varepsilon_i =  {\bf x}_i^{\top}{\bf w}  - y_i) = \frac{1}{\sqrt{2\pi\sigma^2}}\mathrm{exp}\left(\frac{({\bf x}_i^{\top}{\bf w}  - y_i)^2}{2\sigma^2}\right)
-\end{equation}</span> Assuming independence of the error terms <span class="math inline">\epsilon_i</span>, the combined likelihood to have all outputs <span class="math inline">{\bf y}</span> given all data <span class="math inline">{\bf X}</span> is given by</p>
+<p>We can measure the <em>likelihood</em> to have <span class="math inline">y_i</span> given <span class="math inline">\mathbf{x}_i</span>. It is given by: <span class="math display">\begin{equation}
+p(y_i|\mathbf{x}_i, \mathbf{w}) = p(\varepsilon_i =  \mathbf{x}_i^{\top}\mathbf{w}  - y_i) = \frac{1}{\sqrt{2\pi\sigma^2}}\mathrm{exp}\left(\frac{(\mathbf{x}_i^{\top}\mathbf{w}  - y_i)^2}{2\sigma^2}\right)
+\end{equation}</span> Assuming independence of the error terms <span class="math inline">\epsilon_i</span>, the combined likelihood to have all outputs <span class="math inline">\mathbf{y}</span> given all data <span class="math inline">\mathbf{X}</span> is given by</p>
 <p><span class="math display">
 \begin{aligned}
-p({\bf y}|{\bf X}, {\bf w}) &amp;= \prod_{i=1}^n  p(\varepsilon_i)\\ %= \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \mathrm{exp}\left(-\frac{{\varepsilon}_i^2}{2\sigma^2}\right) \\
-&amp;=   \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n   \mathrm{exp}\left(-\sum_{i=1}^n\frac{ \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2}{2\sigma^2}\right)
+p(\mathbf{y}|\mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n  p(\varepsilon_i)\\ %= \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \mathrm{exp}\left(-\frac{{\varepsilon}_i^2}{2\sigma^2}\right) \\
+&amp;=   \left(\frac{1}{\sqrt{2\pi\sigma^2}}\right)^n   \mathrm{exp}\left(-\sum_{i=1}^n\frac{ \left(\mathbf{x}_i^{\top}\mathbf{w}  - y_i\right)^2}{2\sigma^2}\right)
 \end{aligned}
 </span></p>
-<p>The <em>maximum likelihood</em> estimate <span class="math inline">\boldsymbol{\hat{\textbf{w}}}_{ML}</span> is simply the weight vector <span class="math inline">{\bf w}</span> that maximises the likelihood <span class="math inline">p({\bf y}|{\bf
-  X}, {\bf w})</span>:</p>
+<p>The <em>maximum likelihood</em> estimate <span class="math inline">\boldsymbol{\hat{\textbf{w}}}_{ML}</span> is simply the weight vector <span class="math inline">\mathbf{w}</span> that maximises the likelihood <span class="math inline">p(\mathbf{y}|\mathbf{X}, \mathbf{w})</span>:</p>
 <p><span class="math display">\begin{equation}
-\boldsymbol{\hat{\textbf{w}}}_{ML} = \arg\max_{\bf w}
-p({\bf y}|{\bf X}, {\bf w})
+\boldsymbol{\hat{\textbf{w}}}_{ML} = \arg\max_{\mathbf{w}}
+p(\mathbf{y}|\mathbf{X}, \mathbf{w})
 \end{equation}</span></p>
 <p>A more practical, but equivalent, approach is to minimise the negative log likelihood:</p>
 <p><span class="math display">
 \begin{aligned}
-\boldsymbol{\hat{\textbf{w}}}_{ML} &amp;= \arg\min_{\bf w}
-- \mathrm{log}\left(p({\bf y}|{\bf X}, {\bf w})\right) \\
-&amp;= \arg\min_{\bf w}  \frac{1}{2\sigma^2} \sum_{i=1}^n \left({\bf
-    x}_i^{\top}{\bf w}  - y_i\right)^2  - n \mathrm{log}\left(\sqrt{2\pi\sigma^2}\right) \\
-&amp;= \arg\min_{\bf w}   \sum_{i=1}^n \left({\bf x}_i^{\top}{\bf w}  - y_i\right)^2
+\boldsymbol{\hat{\textbf{w}}}_{ML} &amp;= \arg\min_{\mathbf{w}}
+- \mathrm{log}\left(p(\mathbf{y}|\mathbf{X}, \mathbf{w})\right) \\
+&amp;= \arg\min_{\mathbf{w}}  \frac{1}{2\sigma^2} \sum_{i=1}^n \left(\mathbf{x}_i^{\top}\mathbf{w}  - y_i\right)^2  - n \mathrm{log}\left(\sqrt{2\pi\sigma^2}\right) \\
+&amp;= \arg\min_{\mathbf{w}}   \sum_{i=1}^n \left(\mathbf{x}_i^{\top}\mathbf{w}  - y_i\right)^2
 \end{aligned}
 </span></p>
 <p>Thus we’ve shown that the Least Square estimate is in fact the Maximum Likelihood solution if the error is assumed to be Gaussian.</p>
@@ -412,20 +410,18 @@ p({\bf y}|{\bf X}, {\bf w})
 p({\varepsilon}_i) = \frac{1}{2 \lambda}
 \exp\left(-\frac{ |{\varepsilon_i}| }{\lambda}\right)
 \end{equation}</span></p>
-<p>Assuming independence of the error terms <span class="math inline">\epsilon_i</span>, the combined likelihood to have all outputs <span class="math inline">{\bf y}</span> given all data <span class="math inline">{\bf X}</span> is this time given by</p>
+<p>Assuming independence of the error terms <span class="math inline">\epsilon_i</span>, the combined likelihood to have all outputs <span class="math inline">\mathbf{y}</span> given all data <span class="math inline">\mathbf{X}</span> is this time given by</p>
 <p><span class="math display">\begin{equation}
 \begin{aligned}
-p({\bf y}|{\bf X}, {\bf w}) &amp;= \prod_{i=1}^n  p(\varepsilon_i)\\
-&amp;=   \left(\frac{1}{2\lambda}\right)^n   \exp\left(-\frac{1}{\lambda}\sum_{i=1}^n | {\bf
-    x}_i^{\top}{\bf w}  - y_i | \right)
+p(\mathbf{y}|\mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n  p(\varepsilon_i)\\
+&amp;=   \left(\frac{1}{2\lambda}\right)^n   \exp\left(-\frac{1}{\lambda}\sum_{i=1}^n | \mathbf{x}_i^{\top}\mathbf{w}  - y_i | \right)
 \end{aligned}
 \end{equation}</span></p>
 <p>From which we can derive that minimising the Mean Absolute Error (MAE) loss is identical to finding the maximum likelihood solution, if the error follows a Laplace distribution.</p>
 <p>Note that solving for the MAE loss is typically tricky. Convex optimisation techniques have been developed in the 2000s to solve for these kind of problems. The mathematics involved are beyond the scope of this module.</p>
 <section id="takeaways" class="level2" data-number="A.1">
 <h2 data-number="A.1" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">A.1</span> Takeaways</h2>
-<p>The loss function is intimately related to the distribution of your errors. This can give us a way to check that we are using an appropriate loss function. Say you use Least Squares to find the Mean Square Error minimiser <span class="math inline">{\bf
-w}_{MSE}</span>. If you compute the prediction errors for <span class="math inline">{\bf w}_{MSE}</span>, you can then build a histogram of these errors and check that it is indeed close enough to a Gaussian distribution. If the error is far from Gaussian, it may be a good idea to use different loss function, or to go back to the dataset and remove any possible spurious outlier.</p>
+<p>The loss function is intimately related to the distribution of your errors. This can give us a way to check that we are using an appropriate loss function. Say you use Least Squares to find the Mean Square Error minimiser <span class="math inline">\mathbf{w}_{MSE}</span>. If you compute the prediction errors for <span class="math inline">\mathbf{w}_{MSE}</span>, you can then build a histogram of these errors and check that it is indeed close enough to a Gaussian distribution. If the error is far from Gaussian, it may be a good idea to use different loss function, or to go back to the dataset and remove any possible spurious outlier.</p>
 
 
 </section>

@@ -409,7 +409,7 @@ window.Quarto = {
 <div class="no-row-height column-margin column-container"><div id="fig-knn-illustration" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-knn-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-NN.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/drawing-NN.svg" class="img-fluid figure-img" style="width:15em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-knn-illustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.1: An illustration of <span class="math inline">k</span>-NN with <span class="math inline">k=3</span> and <span class="math inline">k=5</span>.
@@ -420,7 +420,7 @@ Figure&nbsp;3.1: An illustration of <span class="math inline">k</span>-NN with <
 <div id="fig-db-kNN" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/compare-classifiers-decision-boundary-NN.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/compare-classifiers-decision-boundary-NN.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-db-kNN-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN on three different classification problems. The intensity of the colour indicates the confidence of the prediction.
@@ -448,7 +448,7 @@ Figure&nbsp;3.2: Decision boundaries for <span class="math inline">k</span>-NN o
 <div id="fig-diag-decisiontree" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-DecisionTree.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/drawing-DecisionTree.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-decisiontree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.3: The principle of a decision tree.
@@ -462,7 +462,7 @@ Figure&nbsp;3.3: The principle of a decision tree.
 <div id="fig-db-decisiontrees" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-db-decisiontrees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/compare-classifiers-decision-boundary-Trees.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/compare-classifiers-decision-boundary-Trees.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-db-decisiontrees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.4: Decision boundaries for a single Decision Tree, AdaBoost, and Random Forest. The ensemble methods produce smoother boundaries and probabilistic predictions.
@@ -482,7 +482,7 @@ Figure&nbsp;3.4: Decision boundaries for a single Decision Tree, AdaBoost, and R
 <div id="fig-decisiontree-issue" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-decisiontree-issue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-DecisionTree-diagonal.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/drawing-DecisionTree-diagonal.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decisiontree-issue-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.5: Decision trees can only split the feature space along the axes, but it could be better to separate the dataset by an off-axis cut (e.g.&nbsp;by testing <span class="math inline">x_1 &lt; x_2</span>).
@@ -514,12 +514,13 @@ L_{SVM}( \mathbf{w}) = \frac{\lambda}{2} \|\mathbf{w}\|^2 + \sum_{i=1}^n \Big( [
 
 <div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card">
 <div class="marginnote-title"><i class="fa fa-info-circle"></i> NOTE</div>
-<p>In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in
-\{-1, +1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|\mathbf{w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i \mathbf{x}_i^{\top} \mathbf{w})</span>.</p>
+<p>In standard SVM literature, targets are conventionally encoded as <span class="math inline">y_i \in \{-1,
++1\}</span> rather than <span class="math inline">\{0, 1\}</span>, which simplifies the hinge loss to <span class="math inline">\frac{\lambda}{2} \|\mathbf{w}\|^2 + \sum_{i=1}^n \max(0, 1 - y_i
+\mathbf{x}_i^{\top} \mathbf{w})</span>.</p>
 </div></div><div id="fig-diag-svm" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/svm-unreg.svg" class="img-fluid figure-img" style="width:50.0%">
+<img src="figures/svm-unreg.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.6: SVM aims to find the hyperplane that maximises the margin between the two classes.
@@ -537,7 +538,7 @@ Figure&nbsp;3.6: SVM aims to find the hyperplane that maximises the margin betwe
 <div id="fig-no-free-lunch-theorem" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-no-free-lunch-theorem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/no-free-lunch-theorem.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/no-free-lunch-theorem.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-no-free-lunch-theorem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.7: Illustration of the No-Free-Lunch Theorem.
@@ -564,7 +565,7 @@ Figure&nbsp;3.7: Illustration of the No-Free-Lunch Theorem.
 <div id="fig-diag-mapping" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/drawing-mapping.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/drawing-mapping.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-mapping-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.8: Feature mapping transforms the input data into a new space where a linear classifier can be used.
@@ -672,11 +673,11 @@ E(\mathbf{\alpha}) = \sum_{i=1}^n e\left(\sum_{j=1}^n \alpha_j \kappa(\mathbf{x}
 
 <div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
 <div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
-<p>An approximate finite-dimensional representation of RBF mapping can be made using random Fourier features.</p>
-<p><span class="math display">
+<p>An approximate finite-dimensional representation of RBF mapping can be made using random Fourier features: <span class="math display">
 \begin{aligned}
-\phi (\mathbf{x})\approx &amp; {\frac {1}{\sqrt {D}}}[\cos ( \mathbf{w}_{1}^\top\mathbf{x}) ,\sin ( \mathbf{w}_{1}^\top\mathbf{x}),\\ &amp;\ldots ,\cos(\mathbf{w}_{D}^\top\mathbf{x}),
-\sin(\mathbf{w}_{D}^\top\mathbf{x}) ]^{\top}
+\phi (\mathbf{x}) &amp;\approx \frac{1}{\sqrt{D}} [ \\
+&amp;\quad \cos(\mathbf{w}_1^\top \mathbf{x}), \sin(\mathbf{w}_1^\top \mathbf{x}), \dots, \\
+&amp;\quad \cos(\mathbf{w}_D^\top \mathbf{x}), \sin(\mathbf{w}_D^\top \mathbf{x}) ]^\top
 \end{aligned}
 </span></p>
 <p>The random directions <span class="math inline">\mathbf{w}_{1},\ldots,\mathbf{w}_{D}</span> allow this finite-dimensional representation to approximate the RBF kernel.</p>
@@ -691,8 +692,7 @@ E(\mathbf{\alpha}) = \sum_{i=1}^n e\left(\sum_{j=1}^n \alpha_j \kappa(\mathbf{x}
 <p><span class="math display">
 \mathrm{score}(\mathbf{x}) = \sum_{i=1}^n \alpha_i \kappa(\mathbf{x}, \mathbf{x}_i)
 </span></p>
-<p>The kernel function <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) = e^{- \gamma \|\mathbf{u} - \mathbf{v}\|^2 }</span> acts as a measure of similarity between two data points. If <span class="math inline">\mathbf{u}</span> and <span class="math inline">{\bf
-v}</span> are close, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \approx 1</span>. If they are far apart, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \approx 0</span>. The parameter <span class="math inline">\gamma</span> controls the scale of this neighbourhood.</p>
+<p>The kernel function <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) = e^{- \gamma \|\mathbf{u} - \mathbf{v}\|^2 }</span> acts as a measure of similarity between two data points. If <span class="math inline">\mathbf{u}</span> and <span class="math inline">\mathbf{v}</span> are close, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \approx 1</span>. If they are far apart, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \approx 0</span>. The parameter <span class="math inline">\gamma</span> controls the scale of this neighbourhood.</p>
 <p>If we were to set <span class="math inline">\alpha_i = 1</span> for positive examples and <span class="math inline">\alpha_i = -1</span> for negative examples (which is a simplification of what SVM actually does), the score would be:</p>
 <p><span class="math display">
   \begin{aligned}
@@ -713,7 +713,7 @@ v}</span> are close, <span class="math inline">\kappa(\mathbf{u}, \mathbf{v}) \a
 <div id="fig-kernel-trick-alpha-rbf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kernel-trick-alpha-rbf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/kernel-trick-alpha-rbf.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/kernel-trick-alpha-rbf.svg" class="img-fluid figure-img" style="width:30em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kernel-trick-alpha-rbf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.9: An SVM with an RBF kernel. The support vectors are the data points with non-zero alpha values. Here they are highlighted with an outer circle, whose thickness is proportional to the magnitude of <span class="math inline">|\alpha_i|</span>.
@@ -724,7 +724,7 @@ Figure&nbsp;3.9: An SVM with an RBF kernel. The support vectors are the data poi
 <div id="fig-decision-boundary-SVM-poly" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-decision-boundary-SVM-poly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/compare-classifiers-decision-boundary-SVM-poly.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/compare-classifiers-decision-boundary-SVM-poly.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decision-boundary-SVM-poly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.10: Decision boundaries for SVMs with linear and polynomial kernels.
@@ -735,7 +735,7 @@ Figure&nbsp;3.10: Decision boundaries for SVMs with linear and polynomial kernel
 <div id="fig-decision-boundary-SVM-RBF" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-decision-boundary-SVM-RBF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/compare-classifiers-decision-boundary-SVM-RBF.svg" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/compare-classifiers-decision-boundary-SVM-RBF.svg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decision-boundary-SVM-RBF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma parameter controls the smoothness of the boundary.
@@ -757,7 +757,7 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 <h2 data-number="3.6" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">3.6</span> Takeaways</h2>
 <ul>
 <li><p>Random Forests and SVMs with an RBF kernel can be very effective when the dataset is relatively small (e.g.&nbsp;fewer than tens of thousands of observations).</p></li>
-<li><p>Different classifiers embody different <strong>inductive biases</strong>: (k)-NN relies on local similarity, decision trees rely on axis-aligned splits, and linear SVMs favour large-margin linear separators.</p></li>
+<li><p>Different classifiers embody different <strong>inductive biases</strong>: <span class="math inline">k</span>-NN relies on local similarity, decision trees rely on axis-aligned splits, and linear SVMs favour large-margin linear separators.</p></li>
 <li><p>Classical machine learning often relies on <strong>feature engineering</strong> to augment or transform the representation of the data.</p></li>
 <li><p>The <strong>kernel trick</strong> provides a way to engineer high-dimensional feature representations without explicitly constructing them, by instead defining a notion of similarity through a kernel function.</p></li>
 <li><p>As we will see, <strong>neural networks take this idea one step further</strong> by learning useful representations directly from data, rather than requiring us to design all the features by hand.</p></li>
@@ -776,7 +776,8 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 <div id="exr-03-feature-scaling-knn" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 3.1 (<span class="math inline">k</span>-NN)</strong></span> Consider a dataset with two features: <span class="math inline">x_1</span> representing age in years (eg. taking values in <span class="math inline">[20, 60]</span>) and <span class="math inline">x_2</span> representing annual salary in euros (eg. taking values in <span class="math inline">[20\,000, 120\,000]</span>).</p>
 <ol type="1">
-<li>Consider two training samples <span class="math inline">\mathbf{a} = (30, 50\,000)^\top</span> and <span class="math inline">\mathbf{b} = (35, 50\,000)^\top</span>, and a new test query <span class="math inline">\mathbf{q} = (30, 51\,000)^\top</span>. Which sample is identified as the nearest neighbour, and does this align with your practical intuition about which sample is more similar to (q)?</li>
+<li>Consider two training samples <span class="math inline">\mathbf{a} = (30, 50\,000)^\top</span> and <span class="math inline">\mathbf{b} = (35, 50\,000)^\top</span>, and a new test query <span class="math inline">\mathbf{q} = (30,
+51\,000)^\top</span>. Which sample is identified as the nearest neighbour, and does this align with your practical intuition about which sample is more similar to <span class="math inline">\mathbf{q}</span>?</li>
 <li>How could you pre-process the data to mitigate this issue?</li>
 </ol>
 </div>
@@ -794,7 +795,8 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 \kappa(\mathbf{u}, \mathbf{v}) = (\mathbf{u}^\top \mathbf{v} + 1)^2
 </span></p>
 <ol type="1">
-<li>Let <span class="math inline">\mathbf{u} = (u_1, u_2)^\top</span> and <span class="math inline">\mathbf{v} = (v_1, v_2)^\top</span> be two-dimensional vectors (<span class="math inline">p=2</span>). Expand the expression <span class="math inline">(\mathbf{u}^\top \mathbf{v} + 1)^2</span> algebraically and identify the corresponding monomial terms.</li>
+<li>Let <span class="math inline">\mathbf{u} = (u_1, u_2)^\top</span> and <span class="math inline">\mathbf{v} = (v_1, v_2)^\top</span> be two-dimensional vectors (<span class="math inline">p=2</span>). Expand the expression <span class="math inline">(\mathbf{u}^\top
+\mathbf{v} + 1)^2</span> algebraically and identify the corresponding monomial terms.</li>
 <li>Deduce an explicit feature mapping <span class="math inline">\phi(\mathbf{u}) \in \mathbb{R}^6</span> such that: <span class="math display">
 \kappa(\mathbf{u}, \mathbf{v}) = \phi(\mathbf{u})^\top \phi(\mathbf{v})
 </span></li>
@@ -807,7 +809,9 @@ Figure&nbsp;3.11: Decision boundaries for SVMs with RBF kernels. The gamma param
 \kappa(\mathbf{u}, \mathbf{v}) = \exp\left(-\gamma \|\mathbf{u} - \mathbf{v}\|^2\right), \quad \text{with } \gamma &gt; 0
 </span></p>
 <ol type="1">
-<li>Assume a dataset of <span class="math inline">n</span> distinct training observations <span class="math inline">\{\mathbf{x}_1, \ldots, \mathbf{x}_n\}</span> with labels <span class="math inline">y_i \in \{0, 1\}</span>. What does the Gram matrix <span class="math inline">\mathbf{K} \in \mathbb{R}^{n \times n}</span> (where <span class="math inline">K_{ij} = \kappa(\mathbf{x}_i, \mathbf{x}_j)</span>) tend towards as <span class="math inline">\gamma \to \infty</span>? What is the consequence for the ability of the kernel to distinguish individual training observations and for the risk of overfitting?</li>
+<li>Assume a dataset of <span class="math inline">n</span> distinct training observations <span class="math inline">\{\mathbf{x}_1,
+\ldots, \mathbf{x}_n\}</span> with labels <span class="math inline">y_i \in \{0, 1\}</span>. What does the Gram matrix <span class="math inline">\mathbf{K} \in \mathbb{R}^{n \times n}</span> (where <span class="math inline">K_{ij} =
+\kappa(\mathbf{x}_i, \mathbf{x}_j)</span>) tend towards as <span class="math inline">\gamma \to \infty</span>? What is the consequence for the ability of the kernel to distinguish individual training observations and for the risk of overfitting?</li>
 <li>Now examine the opposite limit, <span class="math inline">\gamma \to 0</span>. What does the Gram matrix tend towards, and what does this tell you about the information available to the kernel for distinguishing the training observations?</li>
 </ol>
 </div>

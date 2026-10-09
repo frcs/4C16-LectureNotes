@@ -391,11 +391,7 @@ window.Quarto = {
   <li><a href="#the-energy-problem" id="toc-the-energy-problem" class="nav-link" data-scroll-target="#the-energy-problem">The energy problem</a></li>
   <li><a href="#is-the-ai-revolution-going-to-continue" id="toc-is-the-ai-revolution-going-to-continue" class="nav-link" data-scroll-target="#is-the-ai-revolution-going-to-continue">Is the AI revolution going to continue?</a></li>
   </ul></li>
-  <li><a href="#where-are-we-now-in-2026" id="toc-where-are-we-now-in-2026" class="nav-link" data-scroll-target="#where-are-we-now-in-2026">Where are we now in 2026?</a>
-  <ul class="collapse">
-  <li><a href="#agentic-ai" id="toc-agentic-ai" class="nav-link" data-scroll-target="#agentic-ai">Agentic AI</a></li>
-  <li><a href="#context-engineering" id="toc-context-engineering" class="nav-link" data-scroll-target="#context-engineering">Context engineering</a></li>
-  </ul></li>
+  <li><a href="#where-are-we-now-in-2026" id="toc-where-are-we-now-in-2026" class="nav-link" data-scroll-target="#where-are-we-now-in-2026">Where are we now in 2026?</a></li>
   <li><a href="#what-are-we-going-to-learn-in-this-module" id="toc-what-are-we-going-to-learn-in-this-module" class="nav-link" data-scroll-target="#what-are-we-going-to-learn-in-this-module">What are we going to learn in this module?</a>
   <ul class="collapse">
   <li><a href="#part-i-machine-learning-fundamentals" id="toc-part-i-machine-learning-fundamentals" class="nav-link" data-scroll-target="#part-i-machine-learning-fundamentals">Part I — Machine Learning Fundamentals</a></li>
@@ -410,7 +406,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title"><span id="introduction" class="quarto-section-identifier">Introduction</span></h1>
 </div>
 
 
@@ -472,18 +468,18 @@ y = mx+b.
 <p>This is the workhorse of machine learning, and it is also the main type of problem we will study in the first part of this module.</p>
 <p>The basic setup is simple. You have a dataset containing inputs and the answers you want:</p>
 <p><span class="math display">
-\left({\bf x}_i,y_i\right)_{i=1,\ldots,n}.
+\left(\mathbf{x}_i,y_i\right)_{i=1,\ldots,n}.
 </span></p>
-<p>For example, <span class="math inline">{\bf x}_i</span> might be all the pixel values in an image and <span class="math inline">y_i</span> might be a label such as <code>cat</code> or <code>dog</code>.</p>
+<p>For example, <span class="math inline">\mathbf{x}_i</span> might be all the pixel values in an image and <span class="math inline">y_i</span> might be a label such as <code>cat</code> or <code>dog</code>.</p>
 <p>The task is to learn a function <span class="math inline">f</span> which maps the input to the desired output. In a parametric model we might write</p>
 <p><span class="math display">
-f({\bf x};{\bf w}) \approx y,
+f(\mathbf{x};\mathbf{w}) \approx y,
 </span></p>
-<p>where <span class="math inline">{\bf w}</span> contains the parameters of the model. The training problem is then to choose <span class="math inline">{\bf w}</span> so that the predictions are good on the training data, and — much more importantly — on new data that the model has not seen before.</p>
+<p>where <span class="math inline">\mathbf{w}</span> contains the parameters of the model. The training problem is then to choose <span class="math inline">\mathbf{w}</span> so that the predictions are good on the training data, and — much more importantly — on new data that the model has not seen before.</p>
 <div id="fig-intro-2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/dogcat.jpg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/dogcat.jpg" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Example of a supervised learning task: image classification.
@@ -496,7 +492,7 @@ Figure&nbsp;1: Example of a supervised learning task: image classification.
 <h3 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h3>
 <p>Now remove the labels. In unsupervised learning we are given a dataset:</p>
 <p><span class="math display">
-({\bf x}_i)_{i=1,\ldots,n}
+(\mathbf{x}_i)_{i=1,\ldots,n}
 </span></p>
 <p>and we ask: <strong>what can we learn about its structure just by looking at the data?</strong></p>
 <p>One classic example is <em>clustering</em>: perhaps the data naturally falls into a few groups, even though nobody told us in advance what the groups should be. For example, an online retailer might discover groups of customers with similar purchasing behaviour.</p>
@@ -504,7 +500,7 @@ Figure&nbsp;1: Example of a supervised learning task: image classification.
 <div id="fig-intro-3" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/unsupervised-learning.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/unsupervised-learning.png" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Example of an unsupervised learning task: clustering.
@@ -521,7 +517,7 @@ Figure&nbsp;2: Example of an unsupervised learning task: clustering.
 <div id="fig-intro-4" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/reinforcement-learning.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/reinforcement-learning.png" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Reinforcement learning.
@@ -536,15 +532,15 @@ Figure&nbsp;3: Reinforcement learning.
 <p><strong>Generative models</strong> try to learn how data is distributed so that we can then generate <em>new</em> samples from that distribution.</p>
 <p>In a simplified mathematical picture, we try to model the conditional distribution</p>
 <p><span class="math display">
-{\bf x} \sim p({\bf x}\mid y),
+\mathbf{x} \sim p(\mathbf{x}\mid y),
 </span></p>
-<p>where <span class="math inline">y</span> specifies what we want and <span class="math inline">{\bf x}</span> is a possible generated observation.</p>
+<p>where <span class="math inline">y</span> specifies what we want and <span class="math inline">\mathbf{x}</span> is a possible generated observation.</p>
 <p>For images, <span class="math inline">y</span> might describe a scene (eg. “it’s a dog”). For text, it might be a preceding sequence of words. For audio, it might describe a sound or another signal. The basic idea is the same: <strong>learn a probability model that allows us to generate new samples</strong>.</p>
 <p>This is the world of ChatGPT, image generators such as DALL·E and Midjourney, diffusion models, and many other generative systems.</p>
 <div id="fig-intro-5" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/dalle2-astronaut.jpg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/dalle2-astronaut.jpg" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Example of generative AI with DALL·E 2 (March 2022).
@@ -572,7 +568,7 @@ Figure&nbsp;4: Example of generative AI with DALL·E 2 (March 2022).
 <div id="fig-intro-6" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/imagenet-fig1.png" class="img-fluid figure-img" style="width:30em">
+<img src="figures/imagenet-fig1.png" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: The ImageNet image-classification challenge.
@@ -585,7 +581,7 @@ Figure&nbsp;5: The ImageNet image-classification challenge.
 <div id="fig-ImageNetErrorRates" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ImageNetErrorRates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/ImageNet.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/ImageNet.svg" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ImageNetErrorRates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Historical error rates at the ImageNet classification challenge. See the <a href="https://paperswithcode.com/sota/image-classification-on-imagenet">full leaderboard</a>.
@@ -601,7 +597,7 @@ Figure&nbsp;6: Historical error rates at the ImageNet classification challenge. 
 <div id="fig-intro-7" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/MaskRCNN.jpg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/MaskRCNN.jpg" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7: Results from Mask R-CNN <span class="citation" data-cites="maskrcnn">(<a href="references.html#ref-maskrcnn" role="doc-biblioref">He et al. 2017</a>)</span>.
@@ -627,7 +623,7 @@ Figure&nbsp;7: Results from Mask R-CNN <span class="citation" data-cites="maskrc
 <div id="fig-intro-8" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/captioning.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/captioning.png" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;8: Results of automated image captioning <span class="citation" data-cites="showandtell">(<a href="references.html#ref-showandtell" role="doc-biblioref">Vinyals et al. 2015</a>)</span>. See the <a href="https://goo.gl/U88bDQ">Google Research blog entry</a>.
@@ -653,8 +649,6 @@ Figure&nbsp;8: Results of automated image captioning <span class="citation" data
 </section>
 <section id="multimedia-and-multimodal-models" class="level3">
 <h3 class="anchored" data-anchor-id="multimedia-and-multimodal-models">Multimedia and Multimodal Models</h3>
-<!-- Once you have strong models for images, language, speech and other signals, the -->
-<!-- obvious next question is: **why keep them separate?** -->
 <p>Deep learning has made it increasingly straightforward to combine information from different modalities. Image + language gives captioning and visual question answering. Speech + language gives transcription and conversational systems. Image + language + audio gives us increasingly rich multimodal systems.</p>
 <p>In a sense, this is where the story that started with image recognition starts to look like today’s AI again: the goal is not simply to classify one kind of data, but to build systems that can connect different forms of information.</p>
 </section>
@@ -665,7 +659,7 @@ Figure&nbsp;8: Results of automated image captioning <span class="citation" data
 <div id="fig-intro-9" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/alphago.jpg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/alphago.jpg" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-intro-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9
@@ -740,7 +734,7 @@ Figure&nbsp;10: The now-classic plot showing how deep learning continues improvi
 <div id="fig-intro-11" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/styletransfer-2.jpeg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/styletransfer-2.jpeg" class="img-fluid figure-img" style="width:32em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;11: Automatic style transfer, based on <span class="citation" data-cites="gatys2015neural">(<a href="references.html#ref-gatys2015neural" role="doc-biblioref">Gatys, Ecker, and Bethge 2015</a>)</span>.
@@ -751,7 +745,7 @@ Figure&nbsp;11: Automatic style transfer, based on <span class="citation" data-c
 <div id="fig-intro-12" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-intro-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/dalle2-teddybears.jpg" class="img-fluid figure-img" style="width:90.0%">
+<img src="figures/dalle2-teddybears.jpg" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12: Example of text-to-image generation with DALL·E 2 <span class="citation" data-cites="dalle2">(<a href="references.html#ref-dalle2" role="doc-biblioref">Ramesh et al. 2022</a>)</span>.
@@ -763,10 +757,10 @@ Figure&nbsp;12: Example of text-to-image generation with DALL·E 2 <span class="
 <section id="the-energy-problem" class="level3">
 <h3 class="anchored" data-anchor-id="the-energy-problem">The energy problem</h3>
 <p>Large-scale AI requires large-scale computing infrastructure. Training and running models means building data centres, supplying them with electricity, cooling the hardware, connecting the machines with very fast networks, and manufacturing the hardware in the first place.</p>
-<p>So AI is not weightless software living somewhere in “the cloud”. There is a rather large physical machine behind the cloud.</p>
+<p>So AI is not weightless software living somewhere in “the cloud”. It is rather large physical machine.</p>
 <p>In Ireland, data centres now account for around 25% of electricity consumption. This has become a visible part of the national conversation. But this is not an isolated Irish problem. It is a global one.</p>
 <p>At some level, this is not even an engineering problem anymore. It is simply a problem of physics. Demand for computation is growing exponentially, while the physical infrastructure required to generate and deliver the necessary energy, build data centres, cool the hardware, and manufacture the chips can only grow linearly.</p>
-<p>Simply put: the current growth of AI compute is physically unsustainable.</p>
+<p>Simply put: <strong>the current growth of AI compute is physically unsustainable.</strong></p>
 <p>It also connects directly to something we will encounter throughout this module: <strong>efficiency matters</strong>. If you can make a model smaller, faster or cheaper, that is not just a minor advantage. At scale, it can make a very big difference.</p>
 </section>
 <section id="is-the-ai-revolution-going-to-continue" class="level3">
@@ -780,25 +774,13 @@ Figure&nbsp;12: Example of text-to-image generation with DALL·E 2 <span class="
 </section>
 <section id="where-are-we-now-in-2026" class="level2">
 <h2 class="anchored" data-anchor-id="where-are-we-now-in-2026">Where are we now in 2026?</h2>
-<p>Two developments in particular have become increasingly visible over the last couple of years or so: <strong>agentic AI</strong> and <strong>context engineering</strong>.</p>
-<section id="agentic-ai" class="level3">
-<h3 class="anchored" data-anchor-id="agentic-ai">Agentic AI</h3>
-<p>An ordinary language model produces text. That is already useful, but it is still a fairly passive interface.</p>
-<p>Now wrap a language model in a small software system that can execute commands, call tools, inspect files, browse information, run programs, and feed the results back into the model.</p>
-<p>A model might reason for your MSc thesis:</p>
-<blockquote class="blockquote">
-<p>“I need this dataset. I should download it, inspect it, write the code, run the experiment, look at the result, try again, and now write a report.”</p>
-</blockquote>
+<p>The progress has not stopped. Models continue to get larger, more capable, and better at a growing range of tasks. But some of the most interesting recent improvements have also come from improving how we use these models, rather than simply improving the models themselves. Two developments in particular have become increasingly visible over the last couple of years or so: agentic AI and context engineering.</p>
+<p><strong>Agentic AI</strong> is the idea to wrap a language model in a small software system that can execute commands, call tools, inspect files, browse information, run programs, and feed the results back into the model.</p>
+<p>A model might reason for your MSc thesis: “I need this dataset. I should download it, inspect it, write the code, run the experiment, look at the result, try again, and now write a report”.</p>
 <p>The model has not necessarily become a fundamentally different kind of intelligence. The surrounding <strong>software workflow</strong> has changed.</p>
-</section>
-<section id="context-engineering" class="level3">
-<h3 class="anchored" data-anchor-id="context-engineering">Context engineering</h3>
-<p>A second development is the realisation that <strong>what you give LLMs matters an enormous amount</strong>.</p>
-<p>So people increasingly design systems around the model: deciding what information to retrieve, what examples to provide, what instructions to include, what previous interactions matter, and how to structure the information so the model can make use of it.</p>
-<p>This is often called <strong>context engineering</strong>.</p>
+<p>A second development is <strong>context engineering</strong>. It stems from the realisation that what you give LLMs matters an enormous amount. People increasingly design systems around the model to decide what information to retrieve, what examples to provide, what instructions to include, what previous interactions matter, and how to structure the information so the model can make use of it.</p>
 <p>And the stack gets increasingly meta: an LLM can write a prompt for another LLM, which controls an agent, which calls another tool, which feeds information back to the first model. Turtles all the way down.</p>
-<p>The important point is that these developments do not necessarily require a new kind of neural network. Much of the progress comes from <strong>better software around the models and better ways of using them</strong>. We are still in the catching-up phase, trying to figure out how best to use these new tools.</p>
-</section>
+<p>The important point is that these developments do not require a new kind of neural network. Much of the progress comes from <strong>better software around the models and better ways of using them</strong>. We are still in the catching-up phase, trying to figure out how best to use these new tools.</p>
 </section>
 <section id="what-are-we-going-to-learn-in-this-module" class="level2">
 <h2 class="anchored" data-anchor-id="what-are-we-going-to-learn-in-this-module">What are we going to learn in this module?</h2>

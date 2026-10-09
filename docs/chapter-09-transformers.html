@@ -440,16 +440,28 @@ window.Quarto = {
 
 <p>The <strong>Attention Mechanism</strong> (2015) and the <strong>Transformer model</strong> (2017), which is built upon it, have revolutionised the field of Natural Language Processing (NLP). Their influence has been so profound that they have been widely adopted in almost all Deep Learning applications, from computer vision to speech recognition.</p>
 <p>In this chapter, we will look in detail at the Attention Mechanism and the Transformer model. As these architectures originated in the field of NLP, we will introduce them in the context of text processing, which provides a natural and intuitive setting for understanding their core concepts.</p>
-<section id="motivation" class="level2" data-number="9.1">
+<section id="motivation" class="level2 page-columns page-full" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">9.1</span> Motivation</h2>
 <p>To understand why Transformers and Attention have had such an impact, we first need to appreciate the limitations of the models that came before them, namely Recurrent Neural Networks (RNNs) and Convolutional Neural Networks (CNNs).</p>
-<section id="the-problem-with-cnns-and-rnns" class="level3" data-number="9.1.1">
+<section id="the-problem-with-cnns-and-rnns" class="level3 page-columns page-full" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="the-problem-with-cnns-and-rnns"><span class="header-section-number">9.1.1</span> The Problem with CNNs and RNNs</h3>
 <p>Recurrent Neural Networks (such as LSTMs and GRUs) were, for a long time, the model of choice for sequence processing tasks. Their recurrent nature makes them a natural fit for handling variable-length inputs like sentences. However, they have several drawbacks:</p>
-<ul>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION</div>
+<p><strong>The Sequential Bottleneck</strong>: In RNNs, computing <span class="math inline">h_t</span> strictly requires <span class="math inline">h_{t-1}</span>. This serial computation prevents parallel execution across time on GPUs, making training on modern billion-token corpora prohibitively slow.</p>
+</div></div><ul>
 <li>The sequential nature of RNNs prohibits parallelisation. Each step depends on the previous one, making them slow to train on long sequences.</li>
 <li>The context is computed from the past only, meaning the representation of a word only depends on the words that came before it. Bidirectional RNNs mitigate this, but they are even more computationally expensive.</li>
 <li>There is no explicit distinction between short-term and long-term dependencies; everything is handled by the same recurrent state, which can become a bottleneck.</li>
+</ul>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>Bahdanau et al.&nbsp;(2014): <a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a> — Introduced attention to overcome the RNN bottleneck of compressing sentences into a single vector.</li>
+</ul>
+</div></div><ul>
 <li>Training RNNs can be tricky due to vanishing and exploding gradient problems.</li>
 <li>It is not straightforward to apply transfer learning efficiently.</li>
 </ul>
@@ -458,70 +470,78 @@ window.Quarto = {
 <li>They can be massively parallelised, as the output at each position can be computed independently.</li>
 <li>They are excellent at exploiting local dependencies (within the kernel’s receptive field). Long-range dependencies can be captured by stacking multiple layers.</li>
 </ul>
-<p>However, CNNs also have their own limitations when it comes to text:</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION</div>
+<p><strong>CNNs for Sequences</strong>: 1D convolutions compute all time steps in parallel with complexity <span class="math inline">\mathcal{O}(L)</span>, but require <span class="math inline">\mathcal{O}(L/K)</span> stacked layers to achieve a global receptive field over sequence length <span class="math inline">L</span>.</p>
+</div></div><p>However, CNNs also have their own limitations when it comes to text:</p>
 <ul>
 <li>They are not designed to handle variable-sized inputs without padding or truncation, which can lead to a loss of information.</li>
 <li>The dependencies they capture are at fixed positions relative to the current word, which is a rigid assumption for language.</li>
 </ul>
 </section>
-<section id="the-problem-with-positional-dependencies" class="level3" data-number="9.1.2">
+<section id="the-problem-with-positional-dependencies" class="level3 page-columns page-full" data-number="9.1.2">
 <h3 data-number="9.1.2" class="anchored" data-anchor-id="the-problem-with-positional-dependencies"><span class="header-section-number">9.1.2</span> The Problem with Positional Dependencies</h3>
-<p>Let us examine the issue of fixed positional dependencies more closely. Consider a simple 1D convolution on a sequence of feature vectors <span class="math inline">{\bf x}_i</span> with a kernel size of 5. To simplify the argument, we will ignore cross-channel interactions:</p>
+<p>Let us examine the issue of fixed positional dependencies more closely. Consider a simple 1D convolution on a sequence of feature vectors <span class="math inline">\mathbf{x}_i</span> with a kernel size of 5. To simplify the argument, we will ignore cross-channel interactions:</p>
 <p><span class="math display">\begin{equation}
-  \text{output}_i = w_{-2} {\bf x}_{i-2} + w_{-1} {\bf x}_{i-1} + w_{0} {\bf x}_{i} + w_{1}
-  {\bf x}_{i+1} + w_{+2} {\bf x}_{i+2} + b,
+  \text{output}_i = w_{-2} \mathbf{x}_{i-2} + w_{-1} \mathbf{x}_{i-1} + w_{0} \mathbf{x}_{i} + w_{1}
+  \mathbf{x}_{i+1} + w_{+2} \mathbf{x}_{i+2} + b,
 \end{equation}</span></p>
 <p>The weight <span class="math inline">w_{-1}</span> is always associated with the dependency relationship between the current sample and the previous one (i.e., a distance of 1 in the past). This relationship is assumed to be the same across all sentences.</p>
 <p>Now, consider a dense (fully connected) layer, again ignoring cross-channel interactions:</p>
 <p><span class="math display">\begin{equation}
-  \text{output}_i = \sum_{j=1}^L w_{i,j} {\bf x}_{j} + b,
+  \text{output}_i = \sum_{j=1}^L w_{i,j} \mathbf{x}_{j} + b,
 \end{equation}</span></p>
 <p>Here, we face a similar issue: the relationships are defined according to fixed absolute positions. For example, the weight <span class="math inline">w_{1,3}</span> captures the relationship between the first and third words, and this is assumed to be the same for all sentences, regardless of their content.</p>
 <p>However, in natural language, dependencies are not so rigid. Look at the dependency graph for a typical sentence:</p>
 <div id="fig-sentence-dependency-graph" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sentence-dependency-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="tikz-figures/sentence-dependency-graph.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="tikz-figures/sentence-dependency-graph.svg" class="img-fluid figure-img" style="width:34em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sentence-dependency-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.1: Example of a Sentence Dependency Graph
 </figcaption>
 </figure>
 </div>
-<p>The distances between related words are not fixed. For instance, the verb is not always the word immediately following the subject. Convolutional and Dense layers are not well equipped to handle such flexible relationships.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Key Idea">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> KEY IDEA</div>
+<p><strong>Content-Dependent Routing</strong>: Instead of learning static weights <span class="math inline">w_{i,j}</span> tied to positions <span class="math inline">i</span> and <span class="math inline">j</span>, attention dynamically computes interaction weights as a function of the semantic content at <span class="math inline">\mathbf{x}_i</span> and <span class="math inline">\mathbf{x}_j</span>.</p>
+</div></div><p>The distances between related words are not fixed. For instance, the verb is not always the word immediately following the subject. Convolutional and Dense layers are not well equipped to handle such flexible relationships.</p>
 <p>So, what is the problem? Can we not just make the network bigger?</p>
 <p>Yes, the Universal Approximation Theorem tells us that we can always throw more filters or neurons at the problem. In theory, a large enough network could learn all possible dependency graphs. However, this is clearly not an optimal approach. It is inefficient and would require vast amounts of data.</p>
 <p>This is where the <strong>Attention Mechanism</strong> comes to the rescue. It provides a way to learn these dependencies dynamically.</p>
 </section>
 </section>
-<section id="the-attention-mechanism" class="level2" data-number="9.2">
+<section id="the-attention-mechanism" class="level2 page-columns page-full" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="the-attention-mechanism"><span class="header-section-number">9.2</span> The Attention Mechanism</h2>
 <p>The Attention Mechanism was originally introduced in the context of machine translation and image captioning, where it was used to align different parts of an image with words in a sentence <span class="citation" data-cites="pmlr-v37-xuc15">(<a href="references.html#ref-pmlr-v37-xuc15" role="doc-biblioref">Xu et al. 2015</a>)</span>. The idea was quickly adapted to model relationships between words within a single sentence <span class="citation" data-cites="BahdanauCB14">Luong, Pham, and Manning (<a href="references.html#ref-luong-etal-2015-effective" role="doc-biblioref">2015</a>)</span>.</p>
 <p>Since its inception, the Attention Mechanism has been iterated upon in many papers, leading to various forms (e.g., Bahdanau Attention, Luong Attention). Here, we will focus on the <em>Scaled Dot-Product Attention</em> used in the Transformer model, as it is arguably the most popular and influential.</p>
-<section id="core-mechanism-of-a-dot-product-attention-layer" class="level3" data-number="9.2.1">
+<section id="core-mechanism-of-a-dot-product-attention-layer" class="level3 page-columns page-full" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="core-mechanism-of-a-dot-product-attention-layer"><span class="header-section-number">9.2.1</span> Core Mechanism of a Dot-Product Attention Layer</h3>
 <p>Let us revisit the formulation of a Dense layer:</p>
 <p><span class="math display">\begin{equation}
-  \text{output}_i = \sum_{j=1}^L w_{i,j} {\bf x}_{j} + b,
+  \text{output}_i = \sum_{j=1}^L w_{i,j} \mathbf{x}_{j} + b,
 \end{equation}</span></p>
 <p>The core idea of Attention is that, instead of learning a fixed set of weights <span class="math inline">w_{i,j}</span>, we could devise a recipe to generate these weights on the fly, based on the input data itself. For instance, we could have something like this:</p>
 <p><span class="math display">\begin{equation}
-\text{output}_i = \sum_{j=1}^L f({\bf x}_{i},
-{\bf x}_{j}) {\bf x}_{j},
+\text{output}_i = \sum_{j=1}^L f(\mathbf{x}_{i},
+\mathbf{x}_{j}) \mathbf{x}_{j},
 \end{equation}</span></p>
 <p>where <span class="math inline">f</span> would be a function that computes the weights dynamically.</p>
-<p>Taking our previous NLP example, the word <code>is</code> is clearly a verb and <code>hearing</code> is a subject. We could therefore imagine that the weight <span class="math inline">w_{\text{is},\text{hearing}}</span> could be defined based purely on the semantics of <span class="math inline">{\bf x}_\text{is}</span> and <span class="math inline">{\bf x}_\text{hearing}</span>, regardless of their actual positions in the sentence:</p>
+<p>Taking our previous NLP example, the word <code>is</code> is clearly a verb and <code>hearing</code> is a subject. We could therefore imagine that the weight <span class="math inline">w_{\text{is},\text{hearing}}</span> could be defined based purely on the semantics of <span class="math inline">\mathbf{x}_\text{is}</span> and <span class="math inline">\mathbf{x}_\text{hearing}</span>, regardless of their actual positions in the sentence:</p>
 <p><span class="math display">\begin{equation}
-w_{\text{is},\text{hearing}} = f({\bf x}_\text{is},
-{\bf x}_\text{hearing}).
+w_{\text{is},\text{hearing}} = f(\mathbf{x}_\text{is},
+\mathbf{x}_\text{hearing}).
 \end{equation}</span></p>
 <p>This is the central idea behind Attention. Let us now see how it is implemented in practice.</p>
-<p>To make the explanation more generic, we will consider two sequences of vectors: a sequence of <strong>queries</strong>, <span class="math inline">{\bf q}_1, \dots, {\bf q}_{L_q}</span>, and a sequence of <strong>keys</strong>, <span class="math inline">{\bf k}_1, \dots, {\bf k}_{L_k}</span>. The terms keys and queries draw an analogy to a retrieval or database system (see later). In the following example, we will focus on computing the output for a single query, <span class="math inline">{\bf q}_3</span>:</p>
-<p>The Attention layer computes an alignment score, <span class="math inline">s</span>, between the query <span class="math inline">{\bf q}_{3}</span> and each of the keys, <span class="math inline">{\bf k}_{1}, \dots, {\bf k}_{4}</span>:</p>
+<p>To make the explanation more generic, we will consider two sequences of vectors: a sequence of <strong>queries</strong>, <span class="math inline">\mathbf{q}_1, \dots, \mathbf{q}_{L_q}</span>, and a sequence of <strong>keys</strong>, <span class="math inline">\mathbf{k}_1, \dots, \mathbf{k}_{L_k}</span>. The terms keys and queries draw an analogy to a retrieval or database system (see later). In the following example, we will focus on computing the output for a single query, <span class="math inline">\mathbf{q}_3</span>:</p>
+<p>The Attention layer computes an alignment score, <span class="math inline">s</span>, between the query <span class="math inline">\mathbf{q}_{3}</span> and each of the keys, <span class="math inline">\mathbf{k}_{1}, \dots, \mathbf{k}_{4}</span>:</p>
 <div id="fig-attention-mechanism-animation-03" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-attention-mechanism-animation-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/attention-mechanism-animation-03.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/attention-mechanism-animation-03.svg" class="img-fluid figure-img" style="width:30em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-attention-mechanism-animation-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.2
@@ -530,36 +550,37 @@ Figure&nbsp;9.2
 </div>
 <p>Many formulae for the alignment score exist. The formula used in the Transformer paper is based on the scaled dot product of the feature vectors:</p>
 <p><span class="math display">\begin{equation}
-     s_{i,j} = {\bf q}_{i}^{\top} {\bf k}_{j} / \sqrt{d_k}
+     s_{i,j} = \mathbf{q}_{i}^{\top} \mathbf{k}_{j} / \sqrt{d_k}
 \end{equation}</span></p>
-<p>(Note: the normalisation by the square root of the key dimension, <span class="math inline">d_k</span>, is an important detail that was found to help stabilise training).</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION</div>
+<p><strong>Why scale by <span class="math inline">1/\sqrt{d_k}</span>?</strong>: For independent zero-mean unit-variance components, <span class="math inline">\mathbf{q} \cdot \mathbf{k} = \sum_{m=1}^{d_k} q_m k_m</span> has variance <span class="math inline">d_k</span>. Large <span class="math inline">d_k</span> pushes dot products into regions of extreme softmax saturation where gradients vanish.</p>
+</div></div><p>(Note: the normalisation by the square root of the key dimension, <span class="math inline">d_k</span>, is an important detail that was found to help stabilise training).</p>
 <p>The scores, <span class="math inline">s</span>, are analogous to logits: a large score (<span class="math inline">+\infty</span>) means that the query and key are highly related. A softmax function can then be used to normalise these scores into a set of weights that sum to 1:</p>
 <p><span class="math display">\begin{equation}
   [w_{3,1}; w_{3,2}; w_{3,3}; w_{3,4}]
   = \mathrm{softmax}(  [s_{3,1} ; s_{3,2} ; s_{3,3} ; s_{3,4}])
 \end{equation}</span></p>
-<!-- ::: {#fig-attention-mechanism-animation-05} -->
-<!-- ![](figures/attention-mechanism-animation-05.svg){width="60%" } -->
-<!-- ::: -->
-<p>Instead of combining the keys, we use these weights to form a weighted sum of a third set of vectors, the <em>values</em>, <span class="math inline">{\bf v}_1, \dots, {\bf v}_{L_k}</span> (again, note the analogy to a retrieval system):</p>
+<p>Instead of combining the keys, we use these weights to form a weighted sum of a third set of vectors, the <em>values</em>, <span class="math inline">\mathbf{v}_1, \dots, \mathbf{v}_{L_k}</span> (again, note the analogy to a retrieval system):</p>
 <p><span class="math display">\begin{equation}
-  \mathrm{output}_3 = w_{3,1} {\bf v}_1 + w_{3,2} {\bf v}_2 + w_{3,3} {\bf v}_3 + w_{3,4} {\bf v}_4
+  \mathrm{output}_3 = w_{3,1} \mathbf{v}_1 + w_{3,2} \mathbf{v}_2 + w_{3,3} \mathbf{v}_3 + w_{3,4} \mathbf{v}_4
 \end{equation}</span></p>
 <div id="fig-attention-mechanism-animation-06" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-attention-mechanism-animation-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/attention-mechanism-animation-06.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/attention-mechanism-animation-06.svg" class="img-fluid figure-img" style="width:30em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-attention-mechanism-animation-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.3
 </figcaption>
 </figure>
 </div>
-<p>We can repeat this operation for all other query vectors, for example, for <span class="math inline">{\bf q}_5</span>:</p>
+<p>We can repeat this operation for all other query vectors, for example, for <span class="math inline">\mathbf{q}_5</span>:</p>
 <div id="fig-attention-mechanism-animation-08" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-attention-mechanism-animation-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/attention-mechanism-animation-08.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/attention-mechanism-animation-08.svg" class="img-fluid figure-img" style="width:30em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-attention-mechanism-animation-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.4
@@ -568,53 +589,61 @@ Figure&nbsp;9.4
 </div>
 <p>In summary, an Attention layer takes three tensors as input:</p>
 <ul>
-<li><p>A tensor of <em>queries</em>, <span class="math inline">{\bf Q}=[{\bf q_1}, \dots, {\bf q_{L_q}}]^{\top}</span>, of size <span class="math inline">L_q \times d_q</span>, where <span class="math inline">L_q</span> is the length of the query sequence and <span class="math inline">d_q</span> is the dimension of the query feature vectors.</p></li>
-<li><p>A tensor of <em>keys</em>, <span class="math inline">{\bf K}=[{\bf k_1}, \dots, {\bf k_{L_k}}]^{\top}</span>, of size <span class="math inline">L_k \times d_k</span>.</p></li>
-<li><p>A tensor of <em>values</em>, <span class="math inline">{\bf V} = [{\bf v_1}, \dots, {\bf v_{L_k}}]^{\top}</span>, of size <span class="math inline">L_k \times d_v</span>.</p></li>
+<li><p>A tensor of <em>queries</em>, <span class="math inline">\mathbf{Q}=[\mathbf{q}_{1}, \dots, \mathbf{q}_{L_q}]^{\top}</span>, of size <span class="math inline">L_q \times d_q</span>, where <span class="math inline">L_q</span> is the length of the query sequence and <span class="math inline">d_q</span> is the dimension of the query feature vectors.</p></li>
+<li><p>A tensor of <em>keys</em>, <span class="math inline">\mathbf{K}=[\mathbf{k}_{1}, \dots, \mathbf{k}_{L_k}]^{\top}</span>, of size <span class="math inline">L_k \times d_k</span>.</p></li>
+<li><p>A tensor of <em>values</em>, <span class="math inline">\mathbf{V} = [\mathbf{v}_{1}, \dots, \mathbf{v}_{L_k}]^{\top}</span>, of size <span class="math inline">L_k \times d_v</span>.</p></li>
 </ul>
 <p>Note that the key and query dimensions must be equal (<span class="math inline">d_k = d_q</span>), while the value dimension, <span class="math inline">d_v</span>, can be different.</p>
-<p>The <em>values</em> can be thought of as the context vectors associated with each word, similar to what we would have in an RNN. The <em>queries</em> and <em>keys</em> are different representations of the input words, used to determine how they relate to each other.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Dimension Check">
+<div class="marginnote-title"><i class="fa fa-calculator"></i> DIMENSION CHECK</div>
+<p><strong>Matrix Dimensions</strong>: <span class="math display">\mathbf{Q} \in \mathbb{R}^{L_q \times d_k}, \quad \mathbf{K} \in \mathbb{R}^{L_k \times d_k}</span> <span class="math display">\mathbf{Q}\mathbf{K}^\top \in \mathbb{R}^{L_q \times L_k}, \quad \mathbf{V} \in \mathbb{R}^{L_k \times d_v}</span> <span class="math display">\text{Output} \in \mathbb{R}^{L_q \times d_v}</span></p>
+</div></div><p>The <em>values</em> can be thought of as the context vectors associated with each word, similar to what we would have in an RNN. The <em>queries</em> and <em>keys</em> are different representations of the input words, used to determine how they relate to each other.</p>
 <p>Given these three tensors, the Attention layer returns a new tensor of size <span class="math inline">L_q \times d_v</span>, where each output vector is a weighted average of the <em>value</em> vectors:</p>
 <p><span class="math display">\begin{equation}
-     \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} {\bf v}_{j}
+     \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} \mathbf{v}_{j}
 \end{equation}</span></p>
-<p>On the face of it, this looks like a dense layer, as each output vector is a linear combination of the <em>value</em> vectors. The crucial difference is that the weights, <span class="math inline">w_{i,j}</span>, are computed <em>dynamically</em> as a function of how well the query <span class="math inline">{\bf q}_i</span> aligns with the key <span class="math inline">{\bf k}_j</span>.</p>
-<p>To summarise, for each query vector <span class="math inline">{\bf q}_i</span>:</p>
+<p>On the face of it, this looks like a dense layer, as each output vector is a linear combination of the <em>value</em> vectors. The crucial difference is that the weights, <span class="math inline">w_{i,j}</span>, are computed <em>dynamically</em> as a function of how well the query <span class="math inline">\mathbf{q}_i</span> aligns with the key <span class="math inline">\mathbf{k}_j</span>.</p>
+<p>To summarise, for each query vector <span class="math inline">\mathbf{q}_i</span>:</p>
 <ol type="1">
-<li><p>We evaluate the alignment/similarity between <span class="math inline">{\bf q}_i</span> and all the <em>keys</em> <span class="math inline">{\bf k}_j</span>:</p>
+<li><p>We evaluate the alignment/similarity between <span class="math inline">\mathbf{q}_i</span> and all the <em>keys</em> <span class="math inline">\mathbf{k}_j</span>:</p>
 <p><span class="math display">\begin{equation}
-s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
+s_{i,j} = \mathbf{q}_i^\top \mathbf{k}_j / \sqrt{d_k}
 \end{equation}</span></p></li>
 <li><p>The scores are then normalised across all keys using softmax to obtain the weights <span class="math inline">w_{i,j}</span>:</p>
 <p><span class="math display">\begin{equation}
      w_{i,j} = \frac{\exp(s_{i,j})}{\sum_{l=1}^{L_k} \exp(s_{i,l})}
 \end{equation}</span></p></li>
-<li><p>We compute the output vector as the weighted average of the <em>value</em> vectors <span class="math inline">{\bf v}_j</span>:</p>
+<li><p>We compute the output vector as the weighted average of the <em>value</em> vectors <span class="math inline">\mathbf{v}_j</span>:</p>
 <p><span class="math display">\begin{equation}
-    \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} {\bf v}_{j}
+    \text{output}_{i} = \sum_{j=1}^{L_k} w_{i,j} \mathbf{v}_{j}
 \end{equation}</span></p></li>
 </ol>
 </section>
-<section id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup" class="level3" data-number="9.2.2">
+<section id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup" class="level3 page-columns page-full" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="the-attention-mechanism-as-a-fuzzy-dictionary-lookup"><span class="header-section-number">9.2.2</span> The Attention Mechanism as a Fuzzy Dictionary Lookup</h3>
 <p>Now that the mechanic is understood, let’s revisit the retrieval analogy. The attention mechanism can be understood as a differentiable, “fuzzy” version of a key-value lookup, such as one performed with a Python dictionary.</p>
-<p>Consider a simple dictionary named <code>capital</code> that maps countries to their capital cities:</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Analogy">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> ANALOGY</div>
+<p><strong>Python Dict vs Attention</strong>: In Python, <code>d[query]</code> requires an exact hash match and returns a single value. Attention computes continuous cosine-like affinities to all keys and returns a soft, differentiable mixture of all values.</p>
+</div></div><p>Consider a simple dictionary named <code>capital</code> that maps countries to their capital cities:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>capital <span class="op">=</span> {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"France"</span>: <span class="st">"Paris"</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"UK"</span>: <span class="st">"London"</span>,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Germany"</span>: <span class="st">"Berlin"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the language of attention, we can represent these pairs as keys (<span class="math inline">{\bf k}</span>) and values (<span class="math inline">{\bf v}</span>):</p>
+<p>In the language of attention, we can represent these pairs as keys (<span class="math inline">\mathbf{k}</span>) and values (<span class="math inline">\mathbf{v}</span>):</p>
 <p><span class="math display">
 \begin{aligned}
-{\bf k}_1 &amp;\equiv \text{'France'}  &amp;; \quad   {\bf v}_1  &amp;\equiv \text{'Paris'} \\
-{\bf k}_2 &amp;\equiv \text{'UK'}        &amp;; \quad   {\bf v}_2  &amp;\equiv \text{'London'} \\
-{\bf k}_3 &amp;\equiv \text{'Germany'}  &amp;; \quad  {\bf v}_3  &amp;\equiv \text{'Berlin'}
+\mathbf{k}_1 &amp;\equiv \text{'France'}  &amp;; \quad   \mathbf{v}_1  &amp;\equiv \text{'Paris'} \\
+\mathbf{k}_2 &amp;\equiv \text{'UK'}        &amp;; \quad   \mathbf{v}_2  &amp;\equiv \text{'London'} \\
+\mathbf{k}_3 &amp;\equiv \text{'Germany'}  &amp;; \quad  \mathbf{v}_3  &amp;\equiv \text{'Berlin'}
 \end{aligned}
 </span></p>
-<p>A standard dictionary performs a “hard” lookup. If we provide the query <code>'France'</code>, it finds an exact match with key <span class="math inline">{\bf k}_1</span> and returns the single corresponding value <span class="math inline">{\bf v}_1</span>.</p>
+<p>A standard dictionary performs a “hard” lookup. If we provide the query <code>'France'</code>, it finds an exact match with key <span class="math inline">\mathbf{k}_1</span> and returns the single corresponding value <span class="math inline">\mathbf{v}_1</span>.</p>
 <p>We can model this hard lookup using an attention-like process. Imagine a hypothetical alignment score function that returns <span class="math inline">+\infty</span> if the query and key strings are identical, and <span class="math inline">-\infty</span> if they differ. When we apply the softmax function to these scores, the weights become either 1 for a perfect match or 0 otherwise.</p>
-<p>Let’s pose the query <span class="math inline">{\bf q}_1 \equiv \text{`France'}</span>. The alignment scores with our keys (<span class="math inline">{\bf k}_1, {\bf k}_2, {\bf k}_3</span>) would be <span class="math inline">(+\infty, -\infty, -\infty)</span>. Applying the softmax function to these scores yields the attention weights:</p>
+<p>Let’s pose the query <span class="math inline">\mathbf{q}_1 \equiv \text{`France'}</span>. The alignment scores with our keys (<span class="math inline">\mathbf{k}_1, \mathbf{k}_2, \mathbf{k}_3</span>) would be <span class="math inline">(+\infty, -\infty, -\infty)</span>. Applying the softmax function to these scores yields the attention weights:</p>
 <p><span class="math display">
 (w_{1,1}, w_{1,2}, w_{1,3}) = \text{softmax}(+\infty, -\infty, -\infty) = (1, 0,
 0)
@@ -622,54 +651,62 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <p>The output is then the weighted sum of the values:</p>
 <p><span class="math display">
 \begin{aligned}
-\text{output}_1 &amp;= \sum_{j=1}^{3} w_{1,j} {\bf v}_{j} \\
-&amp;= (1 \times {\bf v}_1) + (0 \times {\bf v}_2) + (0 \times {\bf v}_3) \\
+\text{output}_1 &amp;= \sum_{j=1}^{3} w_{1,j} \mathbf{v}_{j} \\
+&amp;= (1 \times \mathbf{v}_1) + (0 \times \mathbf{v}_2) + (0 \times \mathbf{v}_3) \\
 &amp;\equiv \text{`Paris'}
 \end{aligned}
 </span></p>
 <p>This perfectly mimics the dictionary lookup.</p>
 <p>The actual attention mechanism is a “soft” or “fuzzy” lookup. By using similarity measure (like our dot product) between vector representations, a query for <code>'French Republic'</code> might result in high, but not absolute, similarity to <code>'France'</code>, yielding attention weights like <span class="math inline">(0.95, 0.03, 0.02)</span>. The resulting output would be a blend of the values, heavily weighted towards <code>'Paris'</code>. This allows the model to relax the requirement to have a single exact match.</p>
 </section>
-<section id="no-trainable-parameters" class="level3" data-number="9.2.3">
+<section id="no-trainable-parameters" class="level3 page-columns page-full" data-number="9.2.3">
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="no-trainable-parameters"><span class="header-section-number">9.2.3</span> No Trainable Parameters</h3>
 <p>As we loop through the queries and keys, the number of similarity scores to compute is <span class="math inline">L_q \times L_k</span>. Each similarity calculation takes <span class="math inline">\mathcal{O}(d_k)</span> operations, so the overall computational complexity is <span class="math inline">\mathcal{O}(L_q \times L_k \times d_k)</span>. This is very similar in complexity to a dense layer (except that we do not try to have cross-channel weights).</p>
 <p>Importantly, because we have a formula to compute the weights, the <strong>Attention mechanism itself does not have any trainable parameters</strong>. This becomes apparent when we write down the full mathematical formula in matrix form:</p>
-<p><span class="math display">\begin{equation} \small \text{Attention}({\bf Q}, {\bf K}, {\bf V}) =
-  \mathrm{softmax}\left(\frac{{\bf Q} {\bf K}^\top}{\sqrt{d_k}} \right) {\bf V},
+<p><span class="math display">\begin{equation} \small \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) =
+  \mathrm{softmax}\left(\frac{\mathbf{Q} \mathbf{K}^\top}{\sqrt{d_k}} \right) \mathbf{V},
 \end{equation}</span></p>
 <p>where the <span class="math inline">\mathrm{softmax}</span> function is applied row-wise.</p>
-</section>
-<section id="self-attention" class="level3" data-number="9.2.4">
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Key Idea">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> KEY IDEA</div>
+<p><strong>Parameter-Free Attention</strong>: The attention routing operation <span class="math inline">\text{softmax}(\mathbf{Q}\mathbf{K}^\top / \sqrt{d_k})\mathbf{V}</span> introduces <strong>zero parameters</strong>. Trainable parameters only enter through the projection matrices <span class="math inline">\mathbf{W}_Q, \mathbf{W}_K, \mathbf{W}_V</span>.</p>
+</div></div></section>
+<section id="self-attention" class="level3 page-columns page-full" data-number="9.2.4">
 <h3 data-number="9.2.4" class="anchored" data-anchor-id="self-attention"><span class="header-section-number">9.2.4</span> Self-Attention</h3>
-<p>Self-Attention is a special case of the Attention mechanism where the queries, keys, and values are all derived from a single input tensor, <span class="math inline">{\bf X} = [{\bf x}_1, {\bf x}_2, \cdots, {\bf x}_L]^{\top}</span> of size <span class="math inline">L \times d</span>. This is achieved by using three separate linear transformations to project the input tensor into the query, key, and value spaces:</p>
+<p>Self-Attention is a special case of the Attention mechanism where the queries, keys, and values are all derived from a single input tensor, <span class="math inline">\mathbf{X} = [\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_L]^{\top}</span> of size <span class="math inline">L \times d</span>. This is achieved by using three separate linear transformations to project the input tensor into the query, key, and value spaces:</p>
 <p><span class="math display">\begin{equation}
-{\bf q}_i = {\bf W}_Q^{\top} {\bf x}_i,
+\mathbf{q}_i = \mathbf{W}_Q^{\top} \mathbf{x}_i,
 \end{equation}</span></p>
 <p><span class="math display">\begin{equation}
-{\bf k}_i = {\bf W}_K^{\top} {\bf x}_i,
+\mathbf{k}_i = \mathbf{W}_K^{\top} \mathbf{x}_i,
 \end{equation}</span></p>
 <p><span class="math display">\begin{equation}
-{\bf v}_i = {\bf W}_V^{\top} {\bf x}_i .
+\mathbf{v}_i = \mathbf{W}_V^{\top} \mathbf{x}_i .
 \end{equation}</span></p>
 <p>The Self-Attention output is therefore given by:</p>
 <p><span class="math display">\begin{equation}
 \begin{split}
-\text{Self-Attention}({\bf X}, {\bf W}_Q, {\bf W}_K, {\bf W}_V) = \\
-\text{Attention}({\bf X}{\bf W}_Q, {\bf X}{\bf W}_K, {\bf X}{\bf W}_V)
+\text{Self-Attention}(\mathbf{X}, \mathbf{W}_Q, \mathbf{W}_K, \mathbf{W}_V) = \\
+\text{Attention}(\mathbf{X}\mathbf{W}_Q, \mathbf{X}\mathbf{W}_K, \mathbf{X}\mathbf{W}_V)
 \end{split}
 \end{equation}</span></p>
 <p>If we substitute the definitions, we get the following all-in-one equation:</p>
 <p><span class="math display">\begin{equation}
-\text{Self-Attention}({\bf X}) = \mathrm{softmax}\left(\frac{({\bf X} {\bf W_Q})({\bf X} {\bf W_K})^\top }{\sqrt{d_k}} \right) ({{\bf X} {\bf W}_V})
+\text{Self-Attention}(\mathbf{X}) = \mathrm{softmax}\left(\frac{(\mathbf{X} \mathbf{W}_{Q})(\mathbf{X} \mathbf{W}_{K})^\top }{\sqrt{d_k}} \right) ({\mathbf{X} \mathbf{W}_V})
 \end{equation}</span></p>
-<p>In this formulation, the only trainable parameters are contained in the weight matrices <span class="math inline">{\bf W}_Q</span> (size <span class="math inline">d \times d_q</span>), <span class="math inline">{\bf W}_K</span> (size <span class="math inline">d \times d_k</span>), and <span class="math inline">{\bf W}_V</span> (size <span class="math inline">d \times d_v</span>). These are relatively small matrices, and crucially, they can operate on sequences of <em>any length</em>, since their dimensions do not depend on the sequence length <span class="math inline">L</span>.</p>
-<p>The code presented below is python/numpy implementation of how the attention vector for the first token/word in the sequence can be computed. This code would need to be also applied to all the other words in the sequence.</p>
+<p>In this formulation, the only trainable parameters are contained in the weight matrices <span class="math inline">\mathbf{W}_Q</span> (size <span class="math inline">d \times d_q</span>), <span class="math inline">\mathbf{W}_K</span> (size <span class="math inline">d \times d_k</span>), and <span class="math inline">\mathbf{W}_V</span> (size <span class="math inline">d \times d_v</span>). These are relatively small matrices, and crucially, they can operate on sequences of <em>any length</em>, since their dimensions do not depend on the sequence length <span class="math inline">L</span>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION</div>
+<p><strong>Sequence Length Independence</strong>: The weights <span class="math inline">\mathbf{W}_Q, \mathbf{W}_K, \mathbf{W}_V</span> have shapes <span class="math inline">(d \times d_k)</span> and <span class="math inline">(d \times d_v)</span>, completely independent of <span class="math inline">L</span>. The exact same trained model can process sequences of length 10 or 10,000!</p>
+</div></div><p>The code presented below is python/numpy implementation of how the attention vector for the first token/word in the sequence can be computed. This code would need to be also applied to all the other words in the sequence.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(x):</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(np.exp(x)<span class="op">/</span>np.exp(x).<span class="bu">sum</span>())</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># encoder representations of four different words</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>word_1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>])<span class="op">;</span> word_2 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>word_1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>])<span class="op">;</span> word_2 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>word_3 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>])<span class="op">;</span> word_4 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># initialisation of the weight matrices</span></span>
@@ -679,25 +716,24 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>W_V <span class="op">=</span> np.random.randn(<span class="dv">3</span>, <span class="dv">2</span>) <span class="co"># d=3, d_v=2</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># generating the queries, keys and values</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>query_1 <span class="op">=</span> word_1 <span class="op">@</span> W_Q<span class="op">;</span> key_1 <span class="op">=</span> word_1 <span class="op">@</span> W_K<span class="op">;</span> value_1 <span class="op">=</span> word_1 <span class="op">@</span> W_V</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>query_2 <span class="op">=</span> word_2 <span class="op">@</span> W_Q<span class="op">;</span> key_2 <span class="op">=</span> word_2 <span class="op">@</span> W_K<span class="op">;</span> value_2 <span class="op">=</span> word_2 <span class="op">@</span> W_V</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>query_3 <span class="op">=</span> word_3 <span class="op">@</span> W_Q<span class="op">;</span> key_3 <span class="op">=</span> word_3 <span class="op">@</span> W_K<span class="op">;</span> value_3 <span class="op">=</span> word_3 <span class="op">@</span> W_V</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>query_4 <span class="op">=</span> word_4 <span class="op">@</span> W_Q<span class="op">;</span> key_4 <span class="op">=</span> word_4 <span class="op">@</span> W_K<span class="op">;</span> value_4 <span class="op">=</span> word_4 <span class="op">@</span> W_V</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> [word_1, word_2, word_3, word_4]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>queries <span class="op">=</span> [w <span class="op">@</span> W_Q <span class="cf">for</span> w <span class="kw">in</span> words]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>keys    <span class="op">=</span> [w <span class="op">@</span> W_K <span class="cf">for</span> w <span class="kw">in</span> words]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>values  <span class="op">=</span> [w <span class="op">@</span> W_V <span class="cf">for</span> w <span class="kw">in</span> words]</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># scoring the first query vector against all key vectors</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>scores_1 <span class="op">=</span> np.array([np.dot(query_1, key_1), np.dot(query_1, key_2),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                     np.dot(query_1, key_3), np.dot(query_1, key_4)])</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>query_1 <span class="op">=</span> queries[<span class="dv">0</span>]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>scores_1 <span class="op">=</span> np.array([np.dot(query_1, k) <span class="cf">for</span> k <span class="kw">in</span> keys])</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># computing the weights by a softmax operation</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>weights_1 <span class="op">=</span> softmax(scores_1 <span class="op">/</span> np.sqrt(key_1.shape[<span class="dv">0</span>]))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>weights_1 <span class="op">=</span> softmax(scores_1 <span class="op">/</span> np.sqrt(keys[<span class="dv">0</span>].shape[<span class="dv">0</span>]))</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># computing the first attention vector</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>attention_1 <span class="op">=</span> (weights_1[<span class="dv">0</span>] <span class="op">*</span> value_1 <span class="op">+</span> weights_1[<span class="dv">1</span>] <span class="op">*</span> value_2 <span class="op">+</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>               weights_1[<span class="dv">2</span>] <span class="op">*</span> value_3 <span class="op">+</span> weights_1[<span class="dv">3</span>] <span class="op">*</span> value_4)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attention_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>attention_1 <span class="op">=</span> <span class="bu">sum</span>(w <span class="op">*</span> v <span class="cf">for</span> w, v <span class="kw">in</span> <span class="bu">zip</span>(weights_1, values))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attention_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="computational-complexity" class="level3" data-number="9.2.5">
+<section id="computational-complexity" class="level3 page-columns page-full" data-number="9.2.5">
 <h3 data-number="9.2.5" class="anchored" data-anchor-id="computational-complexity"><span class="header-section-number">9.2.5</span> Computational Complexity</h3>
 <p>Since each feature vector in the sequence is compared to all other feature vectors, the computational complexity is <strong>quadratic</strong> in the input sequence length, <span class="math inline">L</span>. This is similar to a dense layer.</p>
 <table class="caption-top table">
@@ -730,7 +766,11 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 </tr>
 </tbody>
 </table>
-<p>Note that we typically choose the key dimension, <span class="math inline">d_k</span>, to be much smaller than the input dimension, <span class="math inline">d</span> (e.g., <span class="math inline">d_k = d/8</span>). This reduces the computational cost, but it remains quadratic in the sequence length, <span class="math inline">L</span>. The idea is that each attention head only needs to look at one aspect of the relationship between words, for instance, the subject-verb relationship.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Caveat">
+<div class="marginnote-title"><i class="fa fa-exclamation-triangle"></i> CAVEAT</div>
+<p><strong>The Quadratic Wall</strong>: Storing the <span class="math inline">L \times L</span> attention matrix requires <span class="math inline">\mathcal{O}(L^2)</span> memory. For <span class="math inline">L=128\text{k}</span>, <span class="math inline">L^2 \approx 1.6 \times 10^{10}</span> entries per head per layer, motivating optimizations like FlashAttention (Dao et al., 2022).</p>
+</div></div><p>Note that we typically choose the key dimension, <span class="math inline">d_k</span>, to be much smaller than the input dimension, <span class="math inline">d</span> (e.g., <span class="math inline">d_k = d/8</span>). This reduces the computational cost, but it remains quadratic in the sequence length, <span class="math inline">L</span>. The idea is that each attention head only needs to look at one aspect of the relationship between words, for instance, the subject-verb relationship.</p>
 <p>Like Dense Layers and Convolutions, Attention can be easily parallelised. We could also restrict the attention mechanism to a local neighbourhood to reduce the complexity from <span class="math inline">\mathcal{O}(L^2)</span> to <span class="math inline">\mathcal{O}(L \cdot w)</span>, where <span class="math inline">w</span> is the window size.</p>
 <p>More than the computational complexity, however, the number of trainable parameters is what is particularly interesting. The number of parameters in Self-Attention does not depend on the sequence length, which is a significant advantage over RNNs and Dense Layers.</p>
 <table class="caption-top table">
@@ -764,44 +804,53 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 </tbody>
 </table>
 </section>
-<section id="a-perfect-tool-for-multi-modal-processing" class="level3" data-number="9.2.6">
+<section id="a-perfect-tool-for-multi-modal-processing" class="level3 page-columns page-full" data-number="9.2.6">
 <h3 data-number="9.2.6" class="anchored" data-anchor-id="a-perfect-tool-for-multi-modal-processing"><span class="header-section-number">9.2.6</span> A Perfect Tool for Multi-Modal Processing</h3>
-<p>Attention is a versatile tool that allows for great flexibility in the design of the input tensors <span class="math inline">{\bf Q}</span>, <span class="math inline">{\bf K}</span>, and <span class="math inline">{\bf V}</span>. For instance, if we have one tensor derived from text and another from audio, we can fuse them using <strong>Cross-Attention</strong>:</p>
+<p>Attention is a versatile tool that allows for great flexibility in the design of the input tensors <span class="math inline">\mathbf{Q}</span>, <span class="math inline">\mathbf{K}</span>, and <span class="math inline">\mathbf{V}</span>. For instance, if we have one tensor derived from text and another from audio, we can fuse them using <strong>Cross-Attention</strong>:</p>
 <p><span class="math display">\begin{equation}
-  {\bf V}_{\text{audio}/\text{text}} = \text{Attention}({\bf
-    Q}_{\text{audio}}, {\bf K}_{\text{text}},  {\bf V}_{\text{text}})
+  \mathbf{V}_{\text{audio}/\text{text}} = \text{Attention}(\mathbf{Q}_{\text{audio}}, \mathbf{K}_{\text{text}},  \mathbf{V}_{\text{text}})
 \end{equation}</span></p>
-<p>The sources do not need to be perfectly synchronised. That is, the text key and value vectors do not need to align perfectly with the audio query vectors (see exercise below). In fact, the sources do not even need to be of the same length (<span class="math inline">L_q \neq L_k</span>). For these reasons, Attention is very well suited for combining multi-modal inputs.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Key Idea">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> KEY IDEA</div>
+<p><strong>Cross-Attention vs Self-Attention</strong>: In Self-Attention, <span class="math inline">\mathbf{Q}, \mathbf{K}, \mathbf{V}</span> all come from the same sequence <span class="math inline">\mathbf{X}</span>. In Cross-Attention, <span class="math inline">\mathbf{Q}</span> comes from one modality or sequence (e.g.&nbsp;decoder targets), while <span class="math inline">\mathbf{K}</span> and <span class="math inline">\mathbf{V}</span> come from another (e.g.&nbsp;encoder source).</p>
+</div></div><p>The sources do not need to be perfectly synchronised. That is, the text key and value vectors do not need to align perfectly with the audio query vectors (see exercise below). In fact, the sources do not even need to be of the same length (<span class="math inline">L_q \neq L_k</span>). For these reasons, Attention is very well suited for combining multi-modal inputs.</p>
 <div id="exr-10-cross-attention" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 9.1</strong></span> Show that the output of the Attention layer is the same if the entries of the keys and values tensors are permuted in the same way, e.g.:</p>
 <p><span class="math display">\begin{equation}
 \begin{split}
 \text{Attention}(
-     [{\bf q}_1,\dots,{{\bf q}_{L_q}} ],
-     [{\bf k}_1,\dots,{{\bf k}_{L_k}} ],
-     [{\bf v}_1,\dots,{{\bf v}_{L_k}} ])
+     [\mathbf{q}_1,\dots,{\mathbf{q}_{L_q}} ],
+     [\mathbf{k}_1,\dots,{\mathbf{k}_{L_k}} ],
+     [\mathbf{v}_1,\dots,{\mathbf{v}_{L_k}} ])
       = \\
 \text{Attention}(
-     [{\bf q}_1,\dots,{{\bf q}_{L_q}} ],
-     [{\bf k}_{L_k}, {\bf k}_{{L_k}-1}, \dots,{{\bf k}_1} ],
-     [{\bf v}_{L_k}, {\bf v}_{{L_k}-1}, \dots,{{\bf v}_1} ])
+     [\mathbf{q}_1,\dots,{\mathbf{q}_{L_q}} ],
+     [\mathbf{k}_{L_k}, \mathbf{k}_{{L_k}-1}, \dots,{\mathbf{k}_1} ],
+     [\mathbf{v}_{L_k}, \mathbf{v}_{{L_k}-1}, \dots,{\mathbf{v}_1} ])
 \end{split}
 \end{equation}</span></p>
 </div>
 </section>
-<section id="the-multi-head-attention-layer" class="level3" data-number="9.2.7">
+<section id="the-multi-head-attention-layer" class="level3 page-columns page-full" data-number="9.2.7">
 <h3 data-number="9.2.7" class="anchored" data-anchor-id="the-multi-head-attention-layer"><span class="header-section-number">9.2.7</span> The Multi-Head Attention Layer</h3>
 <p>You can think of an Attention layer as a replacement for a convolution layer. Just as you can chain multiple convolutional layers, you can also chain multiple Attention layers.</p>
-<p>In Transformers, a set of <span class="math inline">\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)</span> matrices is called an <strong>attention head</strong>. A <strong>Multi-Head Attention</strong> layer is simply a layer that contains multiple attention heads. The outputs of these heads are concatenated and then linearly transformed back to the expected dimension.</p>
+<p>In Transformers, a set of <span class="math inline">\left(\mathbf{W}_{Q}, \mathbf{W}_{K}, \mathbf{W}_{V}\right)</span> matrices is called an <strong>attention head</strong>. A <strong>Multi-Head Attention</strong> layer is simply a layer that contains multiple attention heads. The outputs of these heads are concatenated and then linearly transformed back to the expected dimension.</p>
 <p>The number of heads is a hyperparameter, analogous to the number of filters in a convolutional layer. Each head can learn to focus on different types of relationships between words. For example, one head might learn to capture syntactic dependencies, while another might focus on semantic similarity.</p>
-<p>Below is an example in PyTorch of a self-attention layer with two heads:</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION</div>
+<p><strong>Heads as Feature Subspaces</strong>: With <span class="math inline">h</span> heads, each projection matrix reduces dimension to <span class="math inline">d_k = d_{model}/h</span>. Different heads specialize: one tracks immediate syntactic neighbors, another long-distance subject-verb links, and another punctuation.</p>
+</div></div><p>Below is an example in PyTorch of a self-attention layer with two heads:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>mha <span class="op">=</span> nn.MultiheadAttention(embed_dim<span class="op">=</span><span class="dv">4</span>, num_heads<span class="op">=</span><span class="dv">2</span>, batch_first<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>y, attn <span class="op">=</span> mha(query<span class="op">=</span>x, key<span class="op">=</span>x, value<span class="op">=</span>x)  <span class="co"># y: [B, T, 4]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>mha <span class="op">=</span> nn.MultiheadAttention(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    embed_dim<span class="op">=</span><span class="dv">4</span>, num_heads<span class="op">=</span><span class="dv">2</span>, batch_first<span class="op">=</span><span class="va">True</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y, attn <span class="op">=</span> mha(query<span class="op">=</span>x, key<span class="op">=</span>x, value<span class="op">=</span>x)  <span class="co"># y: [B, T, 4]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <!-- Here, we would define two sets of -->
-<!-- $\left({\bf W}_{Q}, {\bf W}_{K}, {\bf W}_{V}\right)$ matrices, with $d_k=2$ -->
+<!-- $\left(\mathbf{W}_{Q}, \mathbf{W}_{K}, \mathbf{W}_{V}\right)$ matrices, with $d_k=2$ -->
 <!-- and $d_v=3$ for each head. -->
 </section>
 <section id="takeaways-attention-mechanism" class="level3" data-number="9.2.8">
@@ -810,7 +859,7 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <li><p>RNNs do not parallelise well, and Convolutions assume fixed positional relationships, which is not ideal for text.</p></li>
 <li><p>The <strong>Attention Mechanism</strong> resolves these issues by defining a formula to dynamically compute the weights between any two positions, <span class="math inline">i</span> and <span class="math inline">j</span>, based on the alignment (dot-product) between a <em>query</em> vector for <span class="math inline">i</span> and a <em>key</em> vector for <span class="math inline">j</span>.</p></li>
 <li><p>With <strong>Self-Attention</strong>, linear transformation matrices are used to produce the <em>queries</em>, <em>keys</em>, and <em>value</em> vectors from a single input tensor.</p></li>
-<li><p>The computational complexity of Attention is quadratic in the input sequence length (as with Dense Layers). The Attention mechanism itself has no trainable parameters, but Self-Attention requires learning the projection matrices <span class="math inline">{\bf W}_Q</span>, <span class="math inline">{\bf W}_K</span>, and <span class="math inline">{\bf W}_V</span>.</p></li>
+<li><p>The computational complexity of Attention is quadratic in the input sequence length (as with Dense Layers). The Attention mechanism itself has no trainable parameters, but Self-Attention requires learning the projection matrices <span class="math inline">\mathbf{W}_Q</span>, <span class="math inline">\mathbf{W}_K</span>, and <span class="math inline">\mathbf{W}_V</span>.</p></li>
 <li><p>Self-Attention and Cross-Attention are well suited for text processing, as the semantics of the words can take precedence over their absolute or relative positions.</p></li>
 <li><p><strong>Cross-Attention</strong> is a powerful tool for working with <strong>multiple modalities</strong> (e.g., audio, video, images, text), as it is agnostic to the positions of the keys and values and can thus handle potential synchronisation issues.</p></li>
 </ul>
@@ -825,13 +874,13 @@ s_{i,j} = {\bf q}_i^\top {\bf k}_j / \sqrt{d_k}
 <p>A. Vaswani et al.&nbsp;Attention Is All You Need. In Advances in Neural Information Processing Systems, pages 5998–6008. (2017)</p>
 <p><a href="https://arxiv.org/abs/1706.03762">original paper</a></p>
 </div></div><p>The original publication has generated over 57,000 citations as of 2022 (for reference, a paper is considered highly successful if it has over 100 citations).</p>
-<section id="an-encoder-decoder-architecture" class="level3" data-number="9.3.1">
+<section id="an-encoder-decoder-architecture" class="level3 page-columns page-full" data-number="9.3.1">
 <h3 data-number="9.3.1" class="anchored" data-anchor-id="an-encoder-decoder-architecture"><span class="header-section-number">9.3.1</span> An Encoder-Decoder Architecture</h3>
 <p>The Transformer architecture, as described in the original paper, is an encoder-decoder model, as shown in <a href="#fig-transformers-annotate-architecture" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>.</p>
 <div id="fig-transformers-annotate-architecture" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-transformers-annotate-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/transformers-annotate-architecture.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/transformers-annotate-architecture.svg" class="img-fluid figure-img" style="width:24em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transformers-annotate-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;9.5: The Transformer architecture, as described in the original paper (with the encoder and decoder parts highlighted in magenta).
@@ -855,33 +904,54 @@ Figure&nbsp;9.5: The Transformer architecture, as described in the original pape
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ln2 <span class="op">=</span> nn.LayerNorm(d_model)</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.do <span class="op">=</span> nn.Dropout(p)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, attn_mask<span class="op">=</span><span class="va">None</span>, key_padding_mask<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        a, _ <span class="op">=</span> <span class="va">self</span>.attn(x, x, x,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                         attn_mask<span class="op">=</span>attn_mask,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                         key_padding_mask<span class="op">=</span>key_padding_mask,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                         need_weights<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.ln1(x <span class="op">+</span> <span class="va">self</span>.do(a))</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.ln2(x <span class="op">+</span> <span class="va">self</span>.ff(x))</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Encoder(nn.Module):</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Stacks multiple EncoderBlocks. Input/Output: (B, S, D)."""</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_layers, d_model, ff_dim, heads<span class="op">=</span><span class="dv">2</span>, p<span class="op">=</span><span class="fl">0.1</span>):</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_layers <span class="op">=</span> num_layers</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.blocks <span class="op">=</span> nn.ModuleList(</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            [EncoderBlock(d_model, ff_dim, heads, p) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_layers)]</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, attn_mask<span class="op">=</span><span class="va">None</span>, key_padding_mask<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> block <span class="kw">in</span> <span class="va">self</span>.blocks:</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> block(x, attn_mask<span class="op">=</span>attn_mask, key_padding_mask<span class="op">=</span>key_padding_mask)</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <strong>Decoder</strong>, also highlighted in magenta, is also made of a stack of blocks containing Multi-Head Attention layers. Its job is to take the encoder’s output and generate the target sequence.</p>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, x, attn_mask<span class="op">=</span><span class="va">None</span>, key_padding_mask<span class="op">=</span><span class="va">None</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        a, _ <span class="op">=</span> <span class="va">self</span>.attn(x, x, x,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                         attn_mask<span class="op">=</span>attn_mask,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                         key_padding_mask<span class="op">=</span>key_padding_mask,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                         need_weights<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.ln1(x <span class="op">+</span> <span class="va">self</span>.do(a))</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.ln2(x <span class="op">+</span> <span class="va">self</span>.ff(x))</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Encoder(nn.Module):</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Stacks multiple EncoderBlocks.</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">    Input/Output: (B, S, D).</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, num_layers, d_model, ff_dim, heads<span class="op">=</span><span class="dv">2</span>, p<span class="op">=</span><span class="fl">0.1</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_layers <span class="op">=</span> num_layers</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.blocks <span class="op">=</span> nn.ModuleList([</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            EncoderBlock(d_model, ff_dim, heads, p)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_layers)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        ])</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, x, attn_mask<span class="op">=</span><span class="va">None</span>, key_padding_mask<span class="op">=</span><span class="va">None</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> block <span class="kw">in</span> <span class="va">self</span>.blocks:</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> block(</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                x,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                attn_mask<span class="op">=</span>attn_mask,</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                key_padding_mask<span class="op">=</span>key_padding_mask,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Rule of Thumb">
+<div class="marginnote-title"><i class="fa fa-tools"></i> RULE OF THUMB</div>
+<p><strong>Pre-LN vs Post-LN</strong>: The original Transformer placed LayerNorm after residual additions (Post-LN), requiring warmup to avoid divergence. Modern Transformers (GPT, LLaMA) place LayerNorm <em>before</em> attention and MLP sub-layers (Pre-LN) for far more stable gradient propagation.</p>
+</div></div><p>The <strong>Decoder</strong>, also highlighted in magenta, is also made of a stack of blocks containing Multi-Head Attention layers. Its job is to take the encoder’s output and generate the target sequence.</p>
 </section>
-<section id="positional-encoding" class="level3" data-number="9.3.2">
+<section id="positional-encoding" class="level3 page-columns page-full" data-number="9.3.2">
 <h3 data-number="9.3.2" class="anchored" data-anchor-id="positional-encoding"><span class="header-section-number">9.3.2</span> Positional Encoding</h3>
 <p>Note the presence of a <em>Positional Encoding</em> layer at the input. As the Attention mechanism itself is permutation-invariant, it does not have any notion of word order. To remedy this, the Transformer architecture proposes to encode the position of each word as a vector and add it to the input embedding.</p>
-<p>The positional encoding is a function <span class="math inline">\phi: i \mapsto \phi(i)</span> that maps a position <span class="math inline">i</span> to a vector. This vector is then simply appended to the word embedding: <span class="math inline">{\bf x}'_i = [{\bf x}_i; \phi(i)]</span>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Key Idea">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> KEY IDEA</div>
+<p><strong>Permutation Equivariance</strong>: Without positional encodings, Self-Attention treats an input sequence as an unordered multiset: shuffling input tokens simply shuffles output representations identically. Positional encodings <span class="math inline">\phi(i)</span> are essential to break this symmetry.</p>
+</div></div><p>The positional encoding is a function <span class="math inline">\phi: i \mapsto \phi(i)</span> that maps a position <span class="math inline">i</span> to a vector. This vector is then simply appended to the word embedding: <span class="math inline">\mathbf{x}'_i = [\mathbf{x}_i; \phi(i)]</span>.</p>
 <p>Why do we need a special encoding for this? Why not simply use the index of the word as a feature, i.e., <span class="math inline">\phi(i) = i</span>?</p>
 <p>This is because the similarity measure needs to make sense. If we used the dot product, the similarity between positions <span class="math inline">i</span> and <span class="math inline">j</span> would simply be <span class="math inline">i \times j</span>. We would prefer the similarity to be high for nearby positions and low for distant ones. For example, we would like <span class="math inline">\phi(i)^\top \phi(j)</span> to be large if <span class="math inline">i \approx j</span> and small otherwise.</p>
 <p>A function that has this property is the Gaussian kernel: <span class="math display">\begin{equation}
@@ -899,8 +969,19 @@ i \mapsto \phi(i) = \begin{bmatrix}
   \cos(\omega_{d_{pos}/2} i)
 \end{bmatrix} \quad \text{where } \omega_k = 1/10000^{2k/d_{pos}}
 \end{equation}</span></p>
-<p>The advantage of using a positional encoding, as opposed to hard-coding positional relationships as in a CNN, is that the position is treated as just another piece of information. It can be transformed, combined with other features, or even ignored by the network. It is up to the training process to learn how to best use this information.</p>
-</section>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Formula">
+<div class="marginnote-title"><i class="fa fa-calculator"></i> FORMULA</div>
+<p><strong>Relative Position Property</strong>: Because <span class="math inline">\sin(\omega(i+k)) = \sin(\omega i)\cos(\omega k) + \cos(\omega i)\sin(\omega k)</span>, any relative offset <span class="math inline">\phi(i+k)</span> can be represented as a linear combination of <span class="math inline">\phi(i)</span>, allowing the model to learn relative position offsets.</p>
+</div></div><p>The advantage of using a positional encoding, as opposed to hard-coding positional relationships as in a CNN, is that the position is treated as just another piece of information. It can be transformed, combined with other features, or even ignored by the network. It is up to the training process to learn how to best use this information.</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>Jay Alammar: <a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a></li>
+<li>Harvard NLP: <a href="http://nlp.seas.harvard.edu/annotated-transformer/">The Annotated Transformer</a></li>
+</ul>
+</div></div></section>
 <section id="takeaways-transformers" class="level3" data-number="9.3.3">
 <h3 data-number="9.3.3" class="anchored" data-anchor-id="takeaways-transformers"><span class="header-section-number">9.3.3</span> Takeaways (Transformers)</h3>
 <p>There is obviously a lot more to know about Transformers, but we have covered the main ideas here.</p>

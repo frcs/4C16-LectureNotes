@@ -357,8 +357,7 @@ window.Quarto = {
 
 
 <p>The Universal approximation theorem (Hornik, 1991) says that ‘’a single hidden layer neural network with a linear output unit can approximate any continuous function arbitrarily well, given enough hidden units’’. The result applies for sigmoid, tanh and many other hidden layer activation functions.</p>
-<p>The aim of this note is to provide an indication of why this is the case. To make things easier, we are going to look at 1D functions <span class="math inline">x \mapsto f(x)</span>, and show that the theorem holds for binary neurons. Binary neurons are neuron units for which the activation is a simple threshold, i.e.&nbsp;<span class="math inline">[{\bf
-    x}^{\top}{\bf w} \geq 0]</span>. In our case with a 1D input:</p>
+<p>The aim of this note is to provide an indication of why this is the case. To make things easier, we are going to look at 1D functions <span class="math inline">x \mapsto f(x)</span>, and show that the theorem holds for binary neurons. Binary neurons are neuron units for which the activation is a simple threshold, i.e.&nbsp;<span class="math inline">[\mathbf{x}^{\top}\mathbf{w} \geq 0]</span>. In our case with a 1D input:</p>
 <p><span class="math display">\begin{equation}
   x \mapsto [ xw_1 + w_0 \geq 0] = \begin{cases} 1 &amp; \text{if } xw_1 + w_0 \geq
     0 \\ 0 &amp; \text{otherwise}
@@ -373,7 +372,7 @@ window.Quarto = {
 <div id="fig-uat-discretisation" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uat-discretisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/uat-discretisation.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/uat-discretisation.svg" class="img-fluid figure-img" style="width:22em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uat-discretisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;B.1: Discretisation of the function <span class="math inline">x \mapsto f(x)</span> over the interval <span class="math inline">[x_0, x_4]</span>.
@@ -387,7 +386,7 @@ Figure&nbsp;B.1: Discretisation of the function <span class="math inline">x \map
 <div id="fig-uat-pulse-nn" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uat-pulse-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="tikz-figures/uat-pulse-nn.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="tikz-figures/uat-pulse-nn.svg" class="img-fluid figure-img" style="width:35em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uat-pulse-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;B.2: Modelling a pulse with two binary neurons.
@@ -406,7 +405,7 @@ Figure&nbsp;B.2: Modelling a pulse with two binary neurons.
 <div id="fig-uat-discretisation-example-nn" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uat-discretisation-example-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="tikz-figures/uat-discretisation-example-nn.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="tikz-figures/uat-discretisation-example-nn.svg" class="img-fluid figure-img" style="width:35em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uat-discretisation-example-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;B.3: Neural Network for the discretisation of the function <span class="math inline">x \mapsto f(x)</span> over the interval <span class="math inline">[x_0, x_4]</span>.

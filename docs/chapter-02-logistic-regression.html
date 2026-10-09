@@ -415,7 +415,7 @@ window.Quarto = {
 <div id="fig-logistic-regression-1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogistiocRegressionToy-scatter-discrete.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogistiocRegressionToy-scatter-discrete.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.1: Collected data showing hours studied versus exam outcome (0=Fail, 1=Pass).
@@ -428,14 +428,15 @@ Figure&nbsp;2.1: Collected data showing hours studied versus exam outcome (0=Fai
 <h2 data-number="2.2" class="anchored" data-anchor-id="why-not-linear-regression"><span class="header-section-number">2.2</span> Why Not Linear Regression?</h2>
 <p>Our first instinct might be to apply linear regression. Although the output <span class="math inline">y</span> is binary (<span class="math inline">y \in \{0, 1\}</span>), we could still attempt to fit a linear model via least squares:</p>
 <p><span class="math display">
-h_{{\bf w}}({\bf x}) = {\bf x}^{\top}{\bf w} = w_0 + w_1 x_1 + \cdots + w_p x_p
+h_{\mathbf{w}}(\mathbf{x}) = \mathbf{x}^{\top}\mathbf{w} = w_0 + w_1 x_1 + \cdots + w_p x_p
 </span></p>
-<p>where <span class="math inline">h_{{\bf w}}({\bf x})</span> is the prediction given model parameters <span class="math inline">{\bf w}</span> and input features <span class="math inline">{\bf x}</span>. We adopt the augmented vector representation where <span class="math inline">x_0 = 1</span>, so <span class="math inline">{\bf x} = [1, x_1, \dots, x_p]^\top</span> and <span class="math inline">{\bf w} = [w_0, w_1, \dots, w_p]^\top</span>.</p>
+<p>where <span class="math inline">h_{\mathbf{w}}(\mathbf{x})</span> is the prediction given model parameters <span class="math inline">\mathbf{w}</span> and input features <span class="math inline">\mathbf{x}</span>. We adopt the augmented vector representation where <span class="math inline">x_0 = 1</span>, so <span class="math inline">\mathbf{x} = [1, x_1, \dots, x_p]^\top</span> and <span class="math inline">\mathbf{w} = [w_0, w_1,
+\dots, w_p]^\top</span>.</p>
 <p>For our 1D exam problem, the model simplifies to <span class="math inline">h_w(x) \approx 0.18 x + 0.08</span>.</p>
 <div id="fig-LR-example" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-LR-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogistiocRegressionToy-linear.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogistiocRegressionToy-linear.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LR-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.2: A linear regression fit to the binary classification data.
@@ -444,62 +445,65 @@ Figure&nbsp;2.2: A linear regression fit to the binary classification data.
 </div>
 <p>The line produces continuous values, not the discrete labels we require. We could apply a threshold at 0.5 to obtain a binary classification rule:</p>
 <p><span class="math display">
-\hat{y} = [ {\bf x}^{\top}{\bf w} &gt; 0.5 ] =
+\hat{y} = [ \mathbf{x}^{\top}\mathbf{w} &gt; 0.5 ] =
 \begin{cases}
-  0 &amp; \text{if } {\bf x}^{\top}{\bf w} \le 0.5 \\
-  1 &amp; \text{if } {\bf x}^{\top}{\bf w} &gt; 0.5
+  0 &amp; \text{if } \mathbf{x}^{\top}\mathbf{w} \le 0.5 \\
+  1 &amp; \text{if } \mathbf{x}^{\top}\mathbf{w} &gt; 0.5
 \end{cases}
 </span></p>
-<p>However, this approach has a fundamental flaw. Linear regression optimises the mean squared error (MSE), pulling the line to match target values <span class="math inline">y \in \{0, 1\}</span>:</p>
+<p>However, this approach has a fundamental flaw. Linear regression optimises the mean squared error (MSE), pulling the line to match target values <span class="math inline">y \in \{0,
+1\}</span>:</p>
 <p><span class="math display">
-\varepsilon^2 = (y - h_{\bf w}({\bf x}))^2
+\varepsilon^2 = (y - h_{\mathbf{w}}(\mathbf{x}))^2
 </span></p>
-<p>Consider a student who studies 100 hours and passes (<span class="math inline">y=1</span>). The model predicts <span class="math inline">h_w(100) = 18.08</span>. While this student is unambiguously classified as passing (<span class="math inline">18.08 &gt; 0.5</span>), the squared error penalty is enormous: <span class="math inline">(1 - 18.08)^2 \approx 17.1^2 \approx 292.4</span>. The optimiser will drastically tilt and shift the decision boundary just to reduce the penalty on this correctly classified point.</p>
+<p>Consider a student who studies 100 hours and passes (<span class="math inline">y=1</span>). The model predicts <span class="math inline">h_w(100) = 18.08</span>. While this student is unambiguously classified as passing (<span class="math inline">18.08 &gt; 0.5</span>), the squared error penalty is enormous: <span class="math inline">(1 - 18.08)^2 \approx
+17.1^2 \approx 292.4</span>. The optimiser will drastically tilt and shift the decision boundary just to reduce the penalty on this correctly classified point.</p>
 <div id="fig-logistic-regression-2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogistiocRegressionToy-linear2error.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogistiocRegressionToy-linear2error.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.3: Adding a clear-cut data point (6.2 hours, Pass) distorts the LS fit (dotted magenta) because the model tries to minimise the large error for this point.
 </figcaption>
 </figure>
 </div>
-<p>The core issue is that Least Squares optimises the output <span class="math inline">{\bf x}^\top {\bf w}</span> to match <span class="math inline">y \in \{0, 1\}</span>, whereas we should optimise our <strong>classification rule</strong> <span class="math inline">[{\bf x}^\top {\bf w} &gt; 0.5]</span> to match <span class="math inline">y</span>. We need a model designed specifically for probabilities.</p>
+<p>The core issue is that Least Squares optimises the output <span class="math inline">\mathbf{x}^\top \mathbf{w}</span> to match <span class="math inline">y \in \{0, 1\}</span>, whereas we should optimise our <strong>classification rule</strong> <span class="math inline">[\mathbf{x}^\top \mathbf{w} &gt; 0.5]</span> to match <span class="math inline">y</span>. We need a model designed specifically for probabilities.</p>
 </section>
 <section id="generalised-linear-models" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="generalised-linear-models"><span class="header-section-number">2.3</span> Generalised Linear Models</h2>
-<p>Let us reframe the problem using the framework of <strong>Generalised Linear Models (GLMs)</strong>. We seek a linear combination of the inputs, <span class="math inline">{\bf x}^{\top}{\bf w}</span>, such that its sign predicts the outcome <span class="math inline">y</span> in the presence of an error term <span class="math inline">\epsilon</span>:</p>
+<p>Let us reframe the problem using the framework of <strong>Generalised Linear Models (GLMs)</strong>. We seek a linear combination of the inputs, <span class="math inline">\mathbf{x}^{\top}\mathbf{w}</span>, such that its sign predicts the outcome <span class="math inline">y</span> in the presence of an error term <span class="math inline">\epsilon</span>:</p>
 <p><span class="math display">
-y = [ {\bf x}^{\top}{\bf w} + \epsilon &gt; 0 ]
+y = [ \mathbf{x}^{\top}\mathbf{w} + \epsilon &gt; 0 ]
 </span></p>
-<p>The scalar quantity <span class="math inline">{\bf x}^{\top}{\bf w}</span> is called the <strong>risk score</strong> (or <strong>logit</strong>). It performs dimensionality reduction by compressing multiple input features into a single certainty score:</p>
+<p>The scalar quantity <span class="math inline">\mathbf{x}^{\top}\mathbf{w}</span> is called the <strong>risk score</strong> (or <strong>logit</strong>). It performs dimensionality reduction by compressing multiple input features into a single certainty score:</p>
 <p><span class="math display">
 \begin{aligned}
-  {\bf x}^{\top}{\bf w} \gg 0 &amp;\implies y = 1 \\
-  {\bf x}^{\top}{\bf w} \ll 0 &amp;\implies y = 0 \\
-  {\bf x}^{\top}{\bf w} \approx 0 &amp;\implies \text{undecided}
+  \mathbf{x}^{\top}\mathbf{w} \gg 0 &amp;\implies y = 1 \\
+  \mathbf{x}^{\top}\mathbf{w} \ll 0 &amp;\implies y = 0 \\
+  \mathbf{x}^{\top}\mathbf{w} \approx 0 &amp;\implies \text{undecided}
 \end{aligned}
 </span></p>
 <p>The error term <span class="math inline">\epsilon</span> represents uncertainty on the score itself. Different assumptions about the distribution of <span class="math inline">\epsilon</span> yield different models:</p>
 <ul>
-<li>In <strong>logistic regression</strong>, <span class="math inline">\epsilon</span> follows a standard <strong>logistic distribution</strong>, and <span class="math inline">{\bf x}^\top {\bf w}</span> is called the <strong>logit</strong>.</li>
-<li>In <strong>probit regression</strong>, <span class="math inline">\epsilon</span> follows a standard <strong>normal distribution</strong>, and <span class="math inline">{\bf x}^\top {\bf w}</span> is called the <strong>probit</strong>.</li>
+<li>In <strong>logistic regression</strong>, <span class="math inline">\epsilon</span> follows a standard <strong>logistic distribution</strong>, and <span class="math inline">\mathbf{x}^\top \mathbf{w}</span> is called the <strong>logit</strong>.</li>
+<li>In <strong>probit regression</strong>, <span class="math inline">\epsilon</span> follows a standard <strong>normal distribution</strong>, and <span class="math inline">\mathbf{x}^\top \mathbf{w}</span> is called the <strong>probit</strong>.</li>
 </ul>
 <p>In practice, both models yield very similar decision boundaries. Logistic regression is preferred in machine learning because its cumulative distribution function and derivative are simpler and computationally more efficient.</p>
 </section>
 <section id="the-logistic-regression-model" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="the-logistic-regression-model"><span class="header-section-number">2.4</span> The Logistic Regression Model</h2>
-<p>Consider the conditional probability that the outcome is a success (<span class="math inline">y=1</span>) given input <span class="math inline">{\bf x}</span> and parameters <span class="math inline">{\bf w}</span>:</p>
+<p>Consider the conditional probability that the outcome is a success (<span class="math inline">y=1</span>) given input <span class="math inline">\mathbf{x}</span> and parameters <span class="math inline">\mathbf{w}</span>:</p>
 <p><span class="math display">
 \begin{aligned}
-  p(y=1 \mid {\bf x}, {\bf w}) &amp;= p({\bf x}^{\top}{\bf w} + \epsilon &gt; 0) \\
-  &amp;= p(\epsilon &gt; -{\bf x}^{\top}{\bf w})
+  p(y=1 \mid \mathbf{x}, \mathbf{w}) &amp;= p(\mathbf{x}^{\top}\mathbf{w} + \epsilon &gt; 0) \\
+  &amp;= p(\epsilon &gt; -\mathbf{x}^{\top}\mathbf{w})
 \end{aligned}
 </span></p>
-<p>Since the logistic distribution is symmetric about 0 (<span class="math inline">p(\epsilon &gt; -t) = p(\epsilon &lt; t)</span>), this becomes:</p>
+<p>Since the logistic distribution is symmetric about 0 (<span class="math inline">p(\epsilon &gt; -t) =
+p(\epsilon &lt; t)</span>), this becomes:</p>
 <p><span class="math display">
-p(y=1 \mid {\bf x}, {\bf w}) = p(\epsilon &lt; {\bf x}^{\top}{\bf w})
+p(y=1 \mid \mathbf{x}, \mathbf{w}) = p(\epsilon &lt; \mathbf{x}^{\top}\mathbf{w})
 </span></p>
 <p>The cumulative distribution function (c.d.f.) of the logistic distribution is the <strong>logistic function</strong> (or <strong>sigmoid</strong>), denoted <span class="math inline">f(t)</span> or <span class="math inline">\sigma(t)</span>:</p>
 <p><span class="math display">
@@ -508,41 +512,43 @@ f(t) = \frac{1}{1 + e^{-t}}
 <div id="fig-logistic-regression-5" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogisticFunction.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogisticFunction.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.4: The sigmoid function, mapping any real value <span class="math inline">t \in (-\infty, +\infty)</span> to <span class="math inline">(0, 1)</span>.
+Figure&nbsp;2.4: The sigmoid function, mapping any real value <span class="math inline">t \in (-\infty, +\infty)</span> to <span class="math inline">(0,
+1)</span>.
 </figcaption>
 </figure>
 </div>
 <p>This gives our parametric model for the probability of success:</p>
 <p><span class="math display">
-p(y=1 \mid {\bf x}, {\bf w}) = f({\bf x}^{\top}{\bf w}) = \frac{1}{1 + e^{-{\bf x}^{\top}{\bf w}}}
+p(y=1 \mid \mathbf{x}, \mathbf{w}) = f(\mathbf{x}^{\top}\mathbf{w}) = \frac{1}{1 + e^{-\mathbf{x}^{\top}\mathbf{w}}}
 </span></p>
 <p>and the corresponding probability of failure:</p>
 <p><span class="math display">
-p(y=0 \mid {\bf x}, {\bf w}) = 1 - p(y=1 \mid {\bf x}, {\bf w}) = \frac{1}{1 + e^{+{\bf x}^{\top}{\bf w}}}
+p(y=0 \mid \mathbf{x}, \mathbf{w}) = 1 - p(y=1 \mid \mathbf{x}, \mathbf{w}) = \frac{1}{1 + e^{+\mathbf{x}^{\top}\mathbf{w}}}
 </span></p>
 <div id="exr-02-inverse-logistic" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 2.1</strong></span> Using the augmented vector representation where <span class="math inline">{\bf x} = [1, x_1, \dots, x_p]^\top</span>, show that: <span class="math display">
-p(y=0 \mid {\bf x}, {\bf w}) = h_{\bf w}(-{\bf x})
-</span> where <span class="math inline">h_{\bf w}({\bf x}) = f({\bf x}^\top {\bf w})</span>.</p>
+<p><span class="theorem-title"><strong>Exercise 2.1</strong></span> Using the augmented vector representation where <span class="math inline">\mathbf{x} = [1, x_1, \dots,
+x_p]^\top</span>, show that: <span class="math display">
+p(y=0 \mid \mathbf{x}, \mathbf{w}) = h_{\mathbf{w}}(-\mathbf{x})
+</span> where <span class="math inline">h_{\mathbf{w}}(\mathbf{x}) = f(\mathbf{x}^\top \mathbf{w})</span>.</p>
 </div>
 <div id="fig-logistic-regression-6" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogistiocRegressionToy-fit.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogistiocRegressionToy-fit.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.5: The fitted logistic regression model showing the estimated probability of passing.
 </figcaption>
 </figure>
 </div>
-<p>Fitting this model to the student dataset shows that studying for 3 hours yields roughly a 60% probability of passing. Because <span class="math inline">f({\bf x}^\top {\bf w})</span> asymptotes smoothly to 1, distant positive points are not excessively penalised.</p>
+<p>Fitting this model to the student dataset shows that studying for 3 hours yields roughly a 60% probability of passing. Because <span class="math inline">f(\mathbf{x}^\top \mathbf{w})</span> asymptotes smoothly to 1, distant positive points are not excessively penalised.</p>
 <div id="fig-logistic-regression-7" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogistiocRegressionToy-fit2.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogistiocRegressionToy-fit2.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.6: The logistic model is robust: an outlier with high study hours does not distort the boundary.
@@ -552,67 +558,69 @@ Figure&nbsp;2.6: The logistic model is robust: an outlier with high study hours 
 <section id="linear-regression-vs.-logistic-regression" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="linear-regression-vs.-logistic-regression"><span class="header-section-number">2.4.1</span> Linear Regression vs.&nbsp;Logistic Regression</h3>
 <ul>
-<li><strong>Linear Regression:</strong> Predicts the expected numerical value of <span class="math inline">y</span> directly: <span class="math display">h_{\bf w}({\bf x}) = \hat{y} = \mathbb{E}[y \mid {\bf x}]</span></li>
-<li><strong>Logistic Regression:</strong> Predicts the probability of class membership: <span class="math display">h_{\bf w}({\bf x}) = p(y=1 \mid {\bf x}, {\bf w})</span></li>
+<li><strong>Linear Regression:</strong> Predicts the expected numerical value of <span class="math inline">y</span> directly: <span class="math display">h_{\mathbf{w}}(\mathbf{x}) = \hat{y} = \mathbb{E}[y \mid \mathbf{x}]</span></li>
+<li><strong>Logistic Regression:</strong> Predicts the probability of class membership: <span class="math display">h_{\mathbf{w}}(\mathbf{x}) = p(y=1 \mid \mathbf{x}, \mathbf{w})</span></li>
 </ul>
 </section>
 </section>
 <section id="training-maximum-likelihood-and-cross-entropy" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="training-maximum-likelihood-and-cross-entropy"><span class="header-section-number">2.5</span> Training: Maximum Likelihood and Cross-Entropy</h2>
-<p>To determine the optimal parameters <span class="math inline">{\bf w}</span>, we apply the principle of <strong>Maximum Likelihood Estimation (MLE)</strong>.</p>
-<p>For an observation <span class="math inline">({\bf x}_i, y_i)</span>, the probability of observing label <span class="math inline">y_i \in \{0, 1\}</span> is:</p>
+<p>To determine the optimal parameters <span class="math inline">\mathbf{w}</span>, we apply the principle of <strong>Maximum Likelihood Estimation (MLE)</strong>.</p>
+<p>For an observation <span class="math inline">(\mathbf{x}_i, y_i)</span>, the probability of observing label <span class="math inline">y_i
+\in \{0, 1\}</span> is:</p>
 <p><span class="math display">
-p(y=y_i \mid {\bf x}_i, {\bf w}) =
+p(y=y_i \mid \mathbf{x}_i, \mathbf{w}) =
 \begin{cases}
-  h_{\bf w}({\bf x}_i) &amp; \text{if } y_i = 1 \\
-  1 - h_{\bf w}({\bf x}_i) &amp; \text{if } y_i = 0
+  h_{\mathbf{w}}(\mathbf{x}_i) &amp; \text{if } y_i = 1 \\
+  1 - h_{\mathbf{w}}(\mathbf{x}_i) &amp; \text{if } y_i = 0
 \end{cases}
 </span></p>
 <p>This can be written compactly as:</p>
 <p><span class="math display">
-p(y=y_i \mid {\bf x}_i, {\bf w}) = h_{\bf w}({\bf x}_i)^{y_i} \left(1 - h_{\bf w}({\bf x}_i)\right)^{1 - y_i}
+p(y=y_i \mid \mathbf{x}_i, \mathbf{w}) = h_{\mathbf{w}}(\mathbf{x}_i)^{y_i} \left(1 - h_{\mathbf{w}}(\mathbf{x}_i)\right)^{1 - y_i}
 </span></p>
 <p>Assuming independent observations, the likelihood across the training set is:</p>
 <p><span class="math display">
-p({\bf y} \mid {\bf X}, {\bf w}) = \prod_{i=1}^n h_{\bf w}({\bf x}_i)^{y_i} \left(1 - h_{\bf w}({\bf x}_i)\right)^{1 - y_i}
+p(\mathbf{y} \mid \mathbf{X}, \mathbf{w}) = \prod_{i=1}^n h_{\mathbf{w}}(\mathbf{x}_i)^{y_i} \left(1 - h_{\mathbf{w}}(\mathbf{x}_i)\right)^{1 - y_i}
 </span></p>
-<p>Maximising this likelihood is equivalent to minimising the negative log-likelihood, which defines the <strong>cross-entropy loss</strong> <span class="math inline">E({\bf w})</span>:</p>
+<p>Maximising this likelihood is equivalent to minimising the negative log-likelihood, which defines the <strong>cross-entropy loss</strong> <span class="math inline">E(\mathbf{w})</span>:</p>
 <p><span class="math display">
 \begin{aligned}
-E({\bf w}) &amp;= -\ln\left(p({\bf y} \mid {\bf X}, {\bf w})\right) \\
-&amp;= \sum_{i=1}^n - y_i \ln\left(h_{\bf w}({\bf x}_i)\right) - (1 - y_i) \ln\left(1 - h_{\bf w}({\bf x}_i)\right)
+E(\mathbf{w}) &amp;= -\ln\left(p(\mathbf{y} \mid \mathbf{X}, \mathbf{w})\right) \\
+&amp;= \sum_{i=1}^n - y_i \ln\left(h_{\mathbf{w}}(\mathbf{x}_i)\right) - (1 - y_i) \ln\left(1 - h_{\mathbf{w}}(\mathbf{x}_i)\right)
 \end{aligned}
 </span></p>
 <p>We can also express this as the average cross-entropy by scaling by <span class="math inline">\frac{1}{n}</span>.</p>
 <section id="why-not-least-squares-on-the-sigmoid" class="level3" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="why-not-least-squares-on-the-sigmoid"><span class="header-section-number">2.5.1</span> Why Not Least Squares on the Sigmoid?</h3>
-<p>We could have considered minimising the sum of squared errors with the sigmoid: <span class="math inline">E_{LS}({\bf w}) = \sum_{i=1}^n (h_{\bf w}({\bf x}_i) - y_i)^2</span>. In fact, this is something the Deep Learning community made that mistake for a while in its early days.</p>
-<p>However, the non-linear nature of <span class="math inline">h_{\bf w}</span> makes <span class="math inline">E_{LS}</span> non-convex, introducing poor local minima and flat regions where gradients vanish. In contrast, cross-entropy coupled with the sigmoid is convex with respect to <span class="math inline">{\bf w}</span> and yields clean, well-scaled gradients.</p>
+<p>We could have considered minimising the sum of squared errors with the sigmoid: <span class="math inline">E_{LS}(\mathbf{w}) = \sum_{i=1}^n (h_{\mathbf{w}}(\mathbf{x}_i) - y_i)^2</span>. In fact, this is something the Deep Learning community made that mistake for a while in its early days.</p>
+<p>However, the non-linear nature of <span class="math inline">h_{\mathbf{w}}</span> makes <span class="math inline">E_{LS}</span> non-convex, introducing poor local minima and flat regions where gradients vanish. In contrast, cross-entropy coupled with the sigmoid is convex with respect to <span class="math inline">\mathbf{
+w}</span> and yields clean, well-scaled gradients.</p>
 <p>Also, using <span class="math inline">E_{LS}</span> does not give the maximum Likelihood estimate. Using the cross-entropy loss does. The deep learning community rapidly realised this and moved on to adopt the cross-entropy.</p>
 </section>
 </section>
 <section id="optimisation-gradient-descent" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="optimisation-gradient-descent"><span class="header-section-number">2.6</span> Optimisation: Gradient Descent</h2>
 <p>Cross-entropy lacks a closed-form minimum, so we optimise parameters using <strong>gradient descent</strong>.</p>
-<p>We start at <span class="math inline">{\bf w}^{(0)}</span> and take steps along a direction <span class="math inline">{\bf v}</span>:</p>
+<p>We start at <span class="math inline">\mathbf{w}^{(0)}</span> and take steps along a direction <span class="math inline">\mathbf{v}</span>:</p>
 <p><span class="math display">
-{\bf w}^{(t+1)} = {\bf w}^{(t)} + \eta {\bf v}^{(t)}
+\mathbf{w}^{(t+1)} = \mathbf{w}^{(t)} + \eta \mathbf{v}^{(t)}
 </span></p>
-<p>Setting <span class="math inline">{\bf v}</span> as a unit vector (<span class="math inline">\|{\bf v}\| = 1</span>), a first-order Taylor expansion gives:</p>
+<p>Setting <span class="math inline">\mathbf{v}</span> as a unit vector (<span class="math inline">\|\mathbf{v}\| = 1</span>), a first-order Taylor expansion gives:</p>
 <p><span class="math display">
-E({\bf w} + \eta {\bf v}) = E({\bf w}) + \eta \left(\frac{\partial E}{\partial {\bf w}}\right)^{\top} {\bf v} + \mathcal{O}(\eta^2)
+E(\mathbf{w} + \eta \mathbf{v}) = E(\mathbf{w}) + \eta \left(\frac{\partial E}{\partial \mathbf{w}}\right)^{\top} \mathbf{v} + \mathcal{O}(\eta^2)
 </span></p>
-<p>This expression decreases fastest when <span class="math inline">{\bf v}</span> aligns directly against the gradient:</p>
+<p>This expression decreases fastest when <span class="math inline">\mathbf{v}</span> aligns directly against the gradient:</p>
 <p><span class="math display">
-{\bf v} = - \frac{\frac{\partial E}{\partial {\bf w}}}{\left\| \frac{\partial E}{\partial {\bf w}} \right\|}
+\mathbf{v} = - \frac{\frac{\partial E}{\partial \mathbf{w}}}{\left\| \frac{\partial E}{\partial \mathbf{w}} \right\|}
 </span></p>
 <p>In practice, instead of taking fixed unit steps, we scale the step size directly by the gradient magnitude. Far from the minimum, the step is large; close to the minimum, the gradient naturally shrinks to zero. The standard update rule is:</p>
 <p><span class="math display">
-{\bf w}^{(t+1)} = {\bf w}^{(t)} - \eta \frac{\partial E}{\partial {\bf w}}
+\mathbf{w}^{(t+1)} = \mathbf{w}^{(t)} - \eta \frac{\partial E}{\partial \mathbf{w}}
 </span></p>
 <div id="exr-02-gradient-crossentropy" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 2.2</strong></span> Given that the sigmoid derivative is <span class="math inline">f'(t) = f(t)(1 - f(t))</span>, show that the gradient of the cross-entropy loss is: <span class="math display">
-\frac{\partial E}{\partial {\bf w}} = \sum_{i=1}^{n} \left(h_{\bf w}({\bf x}_i) - y_i \right) {\bf x}_i
+\frac{\partial E}{\partial \mathbf{w}} = \sum_{i=1}^{n} \left(h_{\mathbf{w}}(\mathbf{x}_i) - y_i \right) \mathbf{x}_i
 </span></p>
 </div>
 <div id="callout-LR-Alg" class="callout callout-style-default callout-note no-icon callout-titled">
@@ -626,14 +634,14 @@ Gradient Descent for Logistic Regression
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Initialise the weight vector <span class="math inline">{\bf w}^{(0)}</span>.</li>
+<li>Initialise the weight vector <span class="math inline">\mathbf{w}^{(0)}</span>.</li>
 <li>For iterations <span class="math inline">t = 0, 1, 2, \dots</span> until convergence:
 <ol type="a">
 <li>Compute the loss gradient: <span class="math display">
-\frac{\partial E}{\partial {\bf w}} = \sum_{i=1}^{n} \left(\frac{1}{1 + e^{-{\bf x}_i^{\top}{\bf w}^{(t)}}} - y_i \right) {\bf x}_i
+\frac{\partial E}{\partial \mathbf{w}} = \sum_{i=1}^{n} \left(\frac{1}{1 + e^{-\mathbf{x}_i^{\top}\mathbf{w}^{(t)}}} - y_i \right) \mathbf{x}_i
 </span></li>
 <li>Update the parameters: <span class="math display">
-{\bf w}^{(t+1)} = {\bf w}^{(t)} - \eta \frac{\partial E}{\partial {\bf w}}
+\mathbf{w}^{(t+1)} = \mathbf{w}^{(t)} - \eta \frac{\partial E}{\partial \mathbf{w}}
 </span></li>
 </ol></li>
 </ol>
@@ -642,19 +650,20 @@ Gradient Descent for Logistic Regression
 </section>
 <section id="visualising-the-decision-boundary" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="visualising-the-decision-boundary"><span class="header-section-number">2.7</span> Visualising the Decision Boundary</h2>
-<p>Consider a 2D classification problem with augmented features <span class="math inline">{\bf x} = [1, x_1, x_2]^\top</span> and weights <span class="math inline">{\bf w} = [w_0, w_1, w_2]^\top</span>. The probability estimate is:</p>
+<p>Consider a 2D classification problem with augmented features <span class="math inline">\mathbf{x} = [1, x_1,
+x_2]^\top</span> and weights <span class="math inline">\mathbf{w} = [w_0, w_1, w_2]^\top</span>. The probability estimate is:</p>
 <p><span class="math display">
-h_{\bf w}({\bf x}) = \frac{1}{1 + e^{-(w_0 + w_1 x_1 + w_2 x_2)}}
+h_{\mathbf{w}}(\mathbf{x}) = \frac{1}{1 + e^{-(w_0 + w_1 x_1 + w_2 x_2)}}
 </span></p>
 <p>Even though the sigmoid function is non-linear, logistic regression is a <strong>linear classifier</strong>. For instance, taking the decision threshold at <span class="math inline">p=0.5</span>:</p>
 <p><span class="math display">
-\frac{1}{1 + e^{-{\bf x}^{\top}{\bf w}}} = 0.5 \iff e^{-{\bf x}^{\top}{\bf w}} = 1 \iff {\bf x}^{\top}{\bf w} = 0
+\frac{1}{1 + e^{-\mathbf{x}^{\top}\mathbf{w}}} = 0.5 \iff e^{-\mathbf{x}^{\top}\mathbf{w}} = 1 \iff \mathbf{x}^{\top}\mathbf{w} = 0
 </span></p>
-<p>The decision boundary is the hyperplane defined by <span class="math inline">{\bf x}^{\top}{\bf w} = 0</span> (or <span class="math inline">w_0 + w_1 x_1 + w_2 x_2 = 0</span>).</p>
+<p>The decision boundary is the hyperplane defined by <span class="math inline">\mathbf{x}^{\top}\mathbf{w} = 0</span> (or <span class="math inline">w_0 + w_1 x_1 + w_2 x_2 = 0</span>).</p>
 <div id="fig-logistic-regression-9" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LogistiocRegression-2DToy-lines.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/LogistiocRegression-2DToy-lines.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.7: Decision boundary (<span class="math inline">p=0.5</span>) and equal-probability contours for 2D logistic regression.
@@ -665,58 +674,60 @@ Figure&nbsp;2.7: Decision boundary (<span class="math inline">p=0.5</span>) and 
 <section id="multiclass-classification-multinomial-logistic-regression" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="multiclass-classification-multinomial-logistic-regression"><span class="header-section-number">2.8</span> Multiclass Classification: Multinomial Logistic Regression</h2>
 <p>When classification involves <span class="math inline">K &gt; 2</span> classes, we use <strong>Multinomial Logistic Regression</strong> (also known as <strong>Softmax Regression</strong>).</p>
-<p>Instead of a single weight vector, we learn a parameter vector <span class="math inline">{\bf w}_k \in \mathbb{R}^{p+1}</span> for each class <span class="math inline">k \in \{1, \dots, K\}</span>. We organise these column vectors into a weight matrix:</p>
+<p>Instead of a single weight vector, we learn a parameter vector <span class="math inline">\mathbf{w}_k \in
+\mathbb{R}^{p+1}</span> for each class <span class="math inline">k \in \{1, \dots, K\}</span>. We organise these column vectors into a weight matrix:</p>
 <p><span class="math display">
-{\bf W} = [{\bf w}_1, \dots, {\bf w}_K] \in \mathbb{R}^{(p+1) \times K}
+\mathbf{W} = [\mathbf{w}_1, \dots, \mathbf{w}_K] \in \mathbb{R}^{(p+1) \times K}
 </span></p>
-<p>The probability that input <span class="math inline">{\bf x}</span> belongs to class <span class="math inline">C_k</span> is given by the <strong>softmax function</strong>:</p>
+<p>The probability that input <span class="math inline">\mathbf{x}</span> belongs to class <span class="math inline">C_k</span> is given by the <strong>softmax function</strong>:</p>
 <p><span class="math display">
-p(y=C_k \mid {\bf x}, {\bf W}) = \mathrm{softmax}({\bf W}^\top {\bf x})_k = \frac{\exp({\bf x}^\top {\bf w}_k)}{\sum_{j=1}^{K} \exp({\bf x}^\top {\bf w}_j)}
+p(y=C_k \mid \mathbf{x}, \mathbf{W}) = \mathrm{softmax}(\mathbf{W}^\top \mathbf{x})_k = \frac{\exp(\mathbf{x}^\top \mathbf{w}_k)}{\sum_{j=1}^{K} \exp(\mathbf{x}^\top \mathbf{w}_j)}
 </span></p>
 <p>where <span class="math inline">\mathrm{softmax}: \mathbb{R}^K \to \mathbb{R}^K</span> is defined as:</p>
 <p><span class="math display">
-\mathrm{softmax}({\bf t})_k = \frac{\exp(t_k)}{\sum_{j=1}^K \exp(t_j)}
+\mathrm{softmax}(\mathbf{t})_k = \frac{\exp(t_k)}{\sum_{j=1}^K \exp(t_j)}
 </span></p>
 <p>The softmax function takes the vector of linear logits and normalises them into a valid probability distribution summing to 1.</p>
 <section id="worked-example" class="level3" data-number="2.8.1">
 <h3 data-number="2.8.1" class="anchored" data-anchor-id="worked-example"><span class="header-section-number">2.8.1</span> Worked Example</h3>
-<p>For 3 classes <span class="math inline">\{A, B, C\}</span>, suppose an input <span class="math inline">{\bf x}</span> produces the scores: <span class="math inline">{\bf x}^\top {\bf w}_A = -1.2</span>, <span class="math inline">{\bf x}^\top {\bf w}_B = +3.1</span>, and <span class="math inline">{\bf x}^\top {\bf w}_C = -0.9</span>. Passing these logits through softmax yields:</p>
+<p>For 3 classes <span class="math inline">\{A, B, C\}</span>, suppose an input <span class="math inline">\mathbf{x}</span> produces the scores: <span class="math inline">\mathbf{x}^\top \mathbf{w}_A = -1.2</span>, <span class="math inline">\mathbf{x}^\top \mathbf{w}_B = +3.1</span>, and <span class="math inline">\mathbf{
+x}^\top \mathbf{w}_C = -0.9</span>. Passing these logits through softmax yields:</p>
 <p><span class="math display">
-{\bf x} \to
+\mathbf{x} \to
 \begin{bmatrix}
-  {\bf x}^{\top}{\bf w}_A = -1.2 \\
-  {\bf x}^{\top}{\bf w}_B  = +3.1 \\
-  {\bf x}^{\top}{\bf w}_C  = -0.9
+  \mathbf{x}^{\top}\mathbf{w}_A = -1.2 \\
+  \mathbf{x}^{\top}\mathbf{w}_B  = +3.1 \\
+  \mathbf{x}^{\top}\mathbf{w}_C  = -0.9
 \end{bmatrix}
 \xrightarrow{\text{softmax}}
 \begin{bmatrix}
-  p(A \mid {\bf x}) = \frac{e^{-1.2}}{e^{-1.2} + e^{3.1} + e^{-0.9}} = 0.0131 \\
-  p(B \mid {\bf x}) = \frac{e^{3.1}}{e^{-1.2} + e^{3.1} + e^{-0.9}} = 0.9691 \\
-  p(C \mid {\bf x}) = \frac{e^{-0.9}}{e^{-1.2} + e^{3.1} + e^{-0.9}} = 0.0177
+  p(A \mid \mathbf{x}) = \frac{e^{-1.2}}{e^{-1.2} + e^{3.1} + e^{-0.9}} = 0.0131 \\
+  p(B \mid \mathbf{x}) = \frac{e^{3.1}}{e^{-1.2} + e^{3.1} + e^{-0.9}} = 0.9691 \\
+  p(C \mid \mathbf{x}) = \frac{e^{-0.9}}{e^{-1.2} + e^{3.1} + e^{-0.9}} = 0.0177
 \end{bmatrix}
 </span></p>
-<p>Note that we have indeed <span class="math inline">p(A \mid {\bf x}) + p(B \mid {\bf x}) + p(C \mid {\bf x})=1</span>.</p>
+<p>Note that we have indeed <span class="math inline">p(A \mid \mathbf{x}) + p(B \mid \mathbf{x}) + p(C \mid \mathbf{x})=1</span>.</p>
 </section>
 <section id="visualising-multiclass-decision-boundaries" class="level3" data-number="2.8.2">
 <h3 data-number="2.8.2" class="anchored" data-anchor-id="visualising-multiclass-decision-boundaries"><span class="header-section-number">2.8.2</span> Visualising Multiclass Decision Boundaries</h3>
 <p>Just as in the two-class setting, multinomial logistic regression is a <strong>linear classifier</strong>. The decision boundary between any pair of classes <span class="math inline">C_i</span> and <span class="math inline">C_j</span> corresponds to the set of points where their predicted probabilities are equal:</p>
 <p><span class="math display">
-p(y=C_i \mid {\bf x}, {\bf W}) = p(y=C_j \mid {\bf x}, {\bf W})
+p(y=C_i \mid \mathbf{x}, \mathbf{W}) = p(y=C_j \mid \mathbf{x}, \mathbf{W})
 </span></p>
 <p>Substituting the softmax expressions:</p>
 <p><span class="math display">
-\frac{e^{{\bf x}^\top {\bf w}_i}}{\sum_k e^{{\bf x}^\top {\bf w}_k}} = \frac{e^{{\bf x}^\top {\bf w}_j}}{\sum_k e^{{\bf x}^\top {\bf w}_k}} \iff e^{{\bf x}^\top {\bf w}_i} = e^{{\bf x}^\top {\bf w}_j} \iff {\bf x}^\top ({\bf w}_i - {\bf w}_j) = 0
+\frac{e^{\mathbf{x}^\top \mathbf{w}_i}}{\sum_k e^{\mathbf{x}^\top \mathbf{w}_k}} = \frac{e^{\mathbf{x}^\top \mathbf{w}_j}}{\sum_k e^{\mathbf{x}^\top \mathbf{w}_k}} \iff e^{\mathbf{x}^\top \mathbf{w}_i} = e^{\mathbf{x}^\top \mathbf{w}_j} \iff \mathbf{x}^\top (\mathbf{w}_i - \mathbf{w}_j) = 0
 </span></p>
-<p>This equation defines a <strong>linear hyperplane</strong> perpendicular to <span class="math inline">({\bf w}_i - {\bf w}_j)</span>.</p>
+<p>This equation defines a <strong>linear hyperplane</strong> perpendicular to <span class="math inline">(\mathbf{w}_i - \mathbf{w}_j)</span>.</p>
 <p>In a 2D problem with <span class="math inline">K=3</span> classes (<a href="#fig-logistic-regression-10" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>), the pairwise decision boundaries form three linear rays (shown as solid yellow lines) that meet at a central <strong>triple point</strong> where all three classes have equal probability:</p>
 <p><span class="math display">
-p_0({\bf x}) = p_1({\bf x}) = p_2({\bf x}) = \frac{1}{3}
+p_0(\mathbf{x}) = p_1(\mathbf{x}) = p_2(\mathbf{x}) = \frac{1}{3}
 </span></p>
-<p>The dashed lines indicate the 95% probability contours for each class (<span class="math inline">p_k({\bf x}) = 0.95</span>), representing regions of high confidence where the competing classes each have probability under 5%.</p>
+<p>The dashed lines indicate the 95% probability contours for each class (<span class="math inline">p_k(\mathbf{x}) = 0.95</span>), representing regions of high confidence where the competing classes each have probability under 5%.</p>
 <div id="fig-logistic-regression-10" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-logistic-regression-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/MultinomialRegression-2DToy-lines.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/MultinomialRegression-2DToy-lines.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-regression-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.8: Decision boundaries (solid yellow) and 95% probability contours (dashed) for 3-class multinomial logistic regression in 2D. The boundaries are linear hyperplanes meeting at a triple point where <span class="math inline">p_0=p_1=p_2=\frac{1}{3}</span>.
@@ -728,18 +739,22 @@ Figure&nbsp;2.8: Decision boundaries (solid yellow) and 95% probability contours
 <h3 data-number="2.8.3" class="anchored" data-anchor-id="multinomial-cross-entropy-loss"><span class="header-section-number">2.8.3</span> Multinomial Cross-Entropy Loss</h3>
 <p>For a single observation, the likelihood across all classes is written using indicator exponents:</p>
 <p><span class="math display">
-p(y \mid {\bf x}, {\bf W}) = \prod_{k=1}^K p(y=C_k \mid {\bf x}, {\bf W})^{[y=C_k]}
+p(y \mid \mathbf{x}, \mathbf{W}) = \prod_{k=1}^K p(y=C_k \mid \mathbf{x}, \mathbf{W})^{[y=C_k]}
 </span></p>
 <p>where <span class="math inline">[y=C_k]</span> equals 1 if the true label is <span class="math inline">C_k</span> and 0 otherwise. For <span class="math inline">n</span> independent training examples, the total dataset likelihood is:</p>
 <p><span class="math display">
-p({\bf y} \mid {\bf X}, {\bf W}) = \prod_{i=1}^{n} \prod_{k=1}^{K} p(y_i=C_k \mid {\bf x}_i, {\bf W})^{[y_i=C_k]}
+p(\mathbf{y} \mid \mathbf{X}, \mathbf{W}) = \prod_{i=1}^{n} \prod_{k=1}^{K} p(y_i=C_k \mid \mathbf{x}_i, \mathbf{W})^{[y_i=C_k]}
 </span></p>
 <p>Taking the negative log-likelihood produces the <strong>multinomial cross-entropy</strong> (or <strong>categorical cross-entropy</strong>) loss function:</p>
 <p><span class="math display">
-E({\bf W}) = -\ln\left(p({\bf y} \mid {\bf X}, {\bf W})\right) = - \sum_{i=1}^{n} \sum_{k=1}^K [y_i=C_k] \ln\left(p(y_i=C_k \mid {\bf x}_i, {\bf W})\right)
+\begin{aligned}
+E(\mathbf{W}) &amp;= -\ln\left(p(\mathbf{y} \mid \mathbf{X}, \mathbf{W})\right) \\
+              &amp;= - \sum_{i=1}^{n} \sum_{k=1}^K [y_i=C_k] \ln\left(p(y_i=C_k \mid \mathbf{x}_i,
+\mathbf{W})\right)
+\end{aligned}
 </span></p>
 <p>Minimising this loss with gradient descent optimises the <span class="math inline">K</span> weight vectors jointly.</p>
-<p>Note that, although we use different terms—multinomial cross-entropy for multiple classes and binary cross-entropy for the two-class problem—both describe the exact same mathematical entity: the negative log-likelihood <span class="math inline">-\ln\left(p({\bf y} \mid {\bf X}, {\bf W})\right)</span>. For <span class="math inline">K=2</span>, the multinomial sum collapses algebraically into the binary formula. The distinction in terminology primarily reflects the representation of the target <span class="math inline">y</span>: a single scalar <span class="math inline">y_i \in \{0, 1\}</span> for binary classification, versus a one-hot indicator vector for multiple classes.</p>
+<p>Note that, although we use different terms—multinomial cross-entropy for multiple classes and binary cross-entropy for the two-class problem—both describe the exact same mathematical entity: the negative log-likelihood <span class="math inline">-\ln\left(p(\mathbf{y} \mid \mathbf{X}, \mathbf{W})\right)</span>. For <span class="math inline">K=2</span>, the multinomial sum collapses algebraically into the binary formula. The distinction in terminology primarily reflects the representation of the target <span class="math inline">y</span>: a single scalar <span class="math inline">y_i \in \{0, 1\}</span> for binary classification, versus a one-hot indicator vector for multiple classes.</p>
 </section>
 </section>
 <section id="takeaways" class="level2" data-number="2.9">

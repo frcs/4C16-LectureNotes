@@ -389,7 +389,7 @@ window.Quarto = {
 <div id="fig-moindres-carres" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-moindres-carres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/sur-la-methode-des-moindres-carres-crop.jpg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/sur-la-methode-des-moindres-carres-crop.jpg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moindres-carres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.1: Legendre (1805), <em>Nouvelles méthodes pour la détermination des orbites des comètes</em>.
@@ -402,7 +402,7 @@ Figure&nbsp;1.1: Legendre (1805), <em>Nouvelles méthodes pour la détermination
 <div id="fig-polyfit-regression" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/polyfit_weight_vs_height_regression.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/polyfit_weight_vs_height_regression.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.2: An example of collected data, showing a linear regression fit.
@@ -438,7 +438,8 @@ y = w_0 + w_1 x_{1} + w_2 x_{2} + w_3 x_{3} + \dots + w_p x_{p}
 <p>Our objective is to find the set of weights <span class="math inline">(w_0, w_1, \dots, w_p)</span> that makes the errors as small as possible. However, the errors <span class="math inline">(\varepsilon_1, \dots, \varepsilon_n)</span> form a vector, and we cannot directly minimise a vector. We need to aggregate these <span class="math inline">n</span> error values into a single scalar quantity that we can compare and use for optimisation.</p>
 <p>In Least Squares, this is achieved using the <strong>Mean Squared Error</strong> (MSE), which is the average of the squared errors:</p>
 <p><span class="math display">
-    E = \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right)^2
+    E = \frac{1}{n} \sum_{i=1}^{n} \varepsilon_i^2 =
+    \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right)^2
 </span></p>
 <p>The choice of the Mean Squared Error is the defining aspect of Least Squares. While other metrics are possible (such as the mean absolute difference), the MSE is mathematically convenient and, as we will see, has a deep probabilistic justification. In Machine Learning, the function that measures the model’s error is called the <strong>loss function</strong>. Our goal is to find the weights that minimise this loss function.</p>
 </section>
@@ -449,14 +450,18 @@ y = w_0 + w_1 x_{1} + w_2 x_{2} + w_3 x_{3} + \dots + w_p x_{p}
   \frac{\partial E}{\partial w_0} = \dots = \frac{\partial E}{\partial w_p} = 0
 </span></p>
 <p>Let us compute these partial derivatives for our MSE loss function: <span class="math display">
-  E(w_0, \dots, w_p) = \frac{1}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right)^2
+  E(w_0, \dots, w_p) = \frac{1}{n} \sum_{i=1}^{n}
+  \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right)^2
 </span></p>
 <p><span class="math display">
 \begin{aligned}
-    \frac{\partial E}{\partial w_0}(w_0, \dots, w_p) &amp;= \frac{2}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0 \\
-    \frac{\partial E}{\partial w_1}(w_0, \dots, w_p) &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{i1} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0 \\
+    \frac{\partial E}{\partial w_0}(w_0, \dots, w_p) &amp;=
+    \frac{2}{n} \sum_{i=1}^{n} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0 \\
+    \frac{\partial E}{\partial w_1}(w_0, \dots, w_p) &amp;=
+    \frac{2}{n} \sum_{i=1}^{n} x_{i1} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0 \\
     &amp;\;\;\vdots \\
-    \frac{\partial E}{\partial w_p}(w_0, \dots, w_p) &amp;= \frac{2}{n} \sum_{i=1}^{n} x_{ip} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0
+    \frac{\partial E}{\partial w_p}(w_0, \dots, w_p) &amp;=
+    \frac{2}{n} \sum_{i=1}^{n} x_{ip} \left( w_0 + w_1 x_{i1} + \dots + w_p x_{ip} - y_i \right) = 0
 \end{aligned}
 </span></p>
 <p>Rearranging these terms and dividing by <span class="math inline">2/n</span>, we obtain a system of <span class="math inline">p+1</span> linear equations in <span class="math inline">p+1</span> unknowns <span class="math inline">(w_0, \dots, w_p)</span>:</p>
@@ -644,7 +649,7 @@ y = w_0 + w_1 \cos(2\pi x) + w_2 \sin(2\pi x)
 <div id="fig-polyfit2-scatter" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit2-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/polyfit2_GT.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/polyfit2_GT.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit2-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.3: A scatter plot of a small dataset for polynomial fitting, where the ground truth (dotted line) is a quadratic model.
@@ -681,7 +686,7 @@ Figure&nbsp;1.3: A scatter plot of a small dataset for polynomial fitting, where
 <div id="fig-polyfit2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/polyfit2.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/polyfit2.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.4: Least Squares estimate for a polynomial fit of order 2.
@@ -696,7 +701,7 @@ Figure&nbsp;1.4: Least Squares estimate for a polynomial fit of order 2.
 <div id="fig-polyfit1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/polyfit1.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/polyfit1.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.5: An example of underfitting (MSE: 2.02e+02).
@@ -727,7 +732,7 @@ y = w_0 + w_1 x + \dots + w_9 x^9
 <div id="fig-polyfit9" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/polyfit9.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/polyfit9.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.6: An example of overfitting. The training error is near zero (MSE: 7.59e-06), but the model will not generalise well.
@@ -759,7 +764,7 @@ How do we detect overfitting?
 <div id="fig-polyfit9-denser" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-polyfit9-denser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/polyfit9-denser.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/polyfit9-denser.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polyfit9-denser-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.7: With dense data, higher-order models do not necessarily overfit: <span class="math inline">\hat{w}_9 = -1.83 \times 10^{-8}</span> (MSE: 7.18e-01).
@@ -800,7 +805,7 @@ p(\varepsilon) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{\varepsilon^2}{2
 <div id="fig-normal-pdf" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-normal-pdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/NormalPDF.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="figures/NormalPDF.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-pdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.8: The probability density function of the Normal distribution.
@@ -870,7 +875,7 @@ p(\mathbf{y} \mid \mathbf{X}, \mathbf{w}) &amp;= \prod_{i=1}^n p(y_i \mid \mathb
 <div id="fig-galtontoy" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-galtontoy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/GaltonToy-LS.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/GaltonToy-LS.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-galtontoy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.9: An example of Regression Towards the Mean. The dashed green line shows the true relationship (<span class="math inline">y=x</span>) without measurement noise. The solid red line is the attenuated LS estimate obtained under noisy inputs, which is biased towards zero.

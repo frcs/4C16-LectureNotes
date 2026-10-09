@@ -416,70 +416,65 @@ window.Quarto = {
 
 
 <p>Between 2012 and 2015, significant advances in network architectures emerged, addressing key challenges in deep neural networks, particularly the vanishing gradient problem that hinders the training of deeper models. This chapter highlights some of the pivotal developments and typical components of a modern architecture and training pipeline.</p>
-<section id="transfer-learning" class="level2" data-number="7.1">
+<section id="transfer-learning" class="level2 page-columns page-full" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="transfer-learning"><span class="header-section-number">7.1</span> Transfer Learning</h2>
-<section id="re-using-pre-trained-networks" class="level3" data-number="7.1.1">
+<section id="re-using-pre-trained-networks" class="level3 page-columns page-full" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="re-using-pre-trained-networks"><span class="header-section-number">7.1.1</span> Re-Using Pre-Trained Networks</h3>
 <p><strong>Transfer learning</strong> is a powerful technique that involves reusing knowledge gained from one task to improve performance on a related but different task.</p>
-<p>Imagine you are tasked with developing a deep learning application to recognise pelicans in images. Training a state-of-the-art Convolutional Neural Network (CNN) from scratch would require a massive dataset, potentially hundreds of thousands of images, and weeks of training time. If you only have access to a few thousand images, this approach is impractical.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION</div>
+<p><strong>Feature Reuse</strong>: Lower layers in visual CNNs learn generic, Gabor-like edge and texture filters that transfer universally across tasks, while higher layers encode task-specific semantics.</p>
+</div></div><p>Imagine you are tasked with developing a deep learning application to recognise pelicans in images. Training a state-of-the-art Convolutional Neural Network (CNN) from scratch would require a massive dataset, potentially hundreds of thousands of images, and weeks of training time. If you only have access to a few thousand images, this approach is impractical.</p>
 <p>This is where transfer learning offers a solution. Instead of starting from scratch, you can leverage existing, pre-trained networks. Consider the architecture of AlexNet, as shown in <a href="#fig-ch7-alexnet" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>.</p>
 <div id="fig-ch7-alexnet" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ch7-alexnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/alexnet-annotated.png" class="img-fluid figure-img">
+<img src="figures/alexnet-annotated.png" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch7-alexnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.1: AlexNet Architecture (2012).
 </figcaption>
 </figure>
 </div>
-<p>In broad terms, the convolutional layers (up to C5) are responsible for learning and extracting visual features from the input images. The final dense layers (FC6, FC7, and FC8) then use these features to perform classification.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Milestone">
+<div class="marginnote-title"><i class="fa fa-history"></i> MILESTONE</div>
+<p><strong>AlexNet (2012)</strong>: By training an 8-layer deep CNN on ImageNet with 2 GPUs, Krizhevsky et al.&nbsp;dropped top-5 classification error from 26% to 15.3%, sparking modern deep learning.</p>
+</div></div><p>In broad terms, the convolutional layers (up to C5) are responsible for learning and extracting visual features from the input images. The final dense layers (FC6, FC7, and FC8) then use these features to perform classification.</p>
 <p>Networks like AlexNet, VGG, ResNet, and GoogLeNet have been trained on vast datasets such as ImageNet, which contains millions of images across thousands of categories. As a result, the filters learned by their convolutional layers are highly generic and effective for a wide range of visual tasks. These features can be repurposed for your specific application.</p>
 <p>Instead of training a new network to learn visual features, you can reuse the ones from a pre-trained model. The process involves taking a pre-trained network, removing its final classification layers, and replacing them with your own, specialised layers designed for your specific task.</p>
 <p>Depending on the size of your training dataset, you might choose to redesign only the final layer (e.g., FC8) or several of the later layers (e.g., C5, FC6, FC7, FC8). Redesigning more layers requires a larger amount of training data.</p>
 <p>If you have a sufficient number of training samples, you can also <em>fine-tune</em> the imported layers by allowing backpropagation to update their weights. This adapts the pre-trained features to better suit your specific application. If your dataset is small, it is generally better to <em>freeze</em> the weights of the imported layers to prevent overfitting.</p>
-<p>In PyTorch, you can freeze the weights of a layer by instructing PyTorch not to update the weights during backprobagation. For instance, the following code freezes the all the weights in <code>layer3</code> of <code>model</code>:</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Rule of Thumb">
+<div class="marginnote-title"><i class="fa fa-tools"></i> RULE OF THUMB</div>
+<p><strong>Freeze vs Fine-Tune</strong>:</p>
+<ul>
+<li><strong>Small dataset</strong>: Freeze feature extractor, train only new classification head.</li>
+<li><strong>Large dataset</strong>: Train head first, then unfreeze backbone with a <span class="math inline">10\times</span> smaller learning rate.</li>
+</ul>
+</div></div><p>In PyTorch, you can freeze the weights of a layer by instructing PyTorch not to update the weights during backprobagation. For instance, the following code freezes the all the weights in <code>layer3</code> of <code>model</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Freeze weights in layer named `layer3`</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, layer <span class="kw">in</span> model.named_children():</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="kw">in</span> [<span class="st">'layer3'</span>]:</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> param <span class="kw">in</span> layer.parameters():</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            param.requires_grad <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<!-- The only task left is to design and train the classification part of -->
-<!-- the network (eg. the dense layers). -->
-<!-- Your application looks like this: copy/paste a pre-trained network, -->
-<!-- cut away the last few layers and replace them with your own -->
-<!-- specialised network. -->
-<!-- Depending on the amount of training data available to you, you may -->
-<!-- decide to only redesign the last layer (_ie._ FC8), or a handful of -->
-<!-- layers (_eg._ C5, FC6, FC7, FC8). Keep in mind that redesigning more -->
-<!-- layers will necessitate more training data. -->
-<!-- If you have enough samples, you might want to allow backpropagation to -->
-<!-- update some of the imported layers, so as to fine tune the features -->
-<!-- for your specific application. If you don't have enough data, you -->
-<!-- probably should freeze the values of the imported weights. -->
-<!-- In Keras you can freeze the update of parameters using the  `trainable=False` argument. For instance: -->
 <p>For most image-based applications, it is highly recommended to start by reusing an off-the-shelf network. Research has shown that these generic visual features provide a strong baseline and can achieve state-of-the-art performance in many applications.</p>
-<!-- In most image based applications you should first consider reusing -->
-<!-- off-the-shelf networks such as VGG, GoogLeNet or ResNet. It has been -->
-<!-- shown (see link below) that using such generic visual features yield -->
-<!-- state of the art performances in most applications. -->
-<blockquote class="blockquote">
-<p>Razavian et al.&nbsp;``CNN Features off-the-shelf: an Astounding Baseline for Recognition’’. 2014. https://arxiv.org/abs/1403.6382</p>
-</blockquote>
-</section>
-<section id="domain-adaptation-and-vanishing-gradients" class="level3" data-number="7.1.2">
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>Razavian et al.&nbsp;(2014): <a href="https://arxiv.org/abs/1403.6382">CNN Features Off-the-Shelf</a> — Demonstrates that pre-trained CNN features serve as an astounding baseline across diverse visual tasks.</li>
+</ul>
+</div></div></section>
+<section id="domain-adaptation-and-vanishing-gradients" class="level3 page-columns page-full" data-number="7.1.2">
 <h3 data-number="7.1.2" class="anchored" data-anchor-id="domain-adaptation-and-vanishing-gradients"><span class="header-section-number">7.1.2</span> Domain Adaptation and Vanishing Gradients</h3>
 <p>Reusing networks on new datasets can present challenges. Consider a single neuron with a <span class="math inline">\mathrm{tanh}</span> activation function, <span class="math inline">f(x_i, w) = \mathrm{tanh}(x_i+w)</span>. Suppose the original network was trained on images taken on sunny days. The input values, <span class="math inline">x_i</span> (red dots in <a href="#fig-transfer-learning-vg" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>), are centred around 0, and the learned weight is <span class="math inline">\hat{w}=0</span>.</p>
-<!-- Let's see why re-using networks on new training sets can be difficult. -->
-<!-- Consider a single neuron and assume a $\mathrm{tanh}$ activation -->
-<!-- function $f(x_i, w) = \mathrm{tanh}(x_i+w)$. The training samples -->
-<!-- shown in Fig.\@ref(fig:transfer-learning-vg) are images taken on a -->
-<!-- sunny day. The input values $x_i$ (red dots) are centred about $0$ and -->
-<!-- the estimated $w$ is $\hat{w}=0$. -->
 <div id="fig-transfer-learning-vg" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-transfer-learning-vg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/domain-shift-example.svg" class="img-fluid figure-img" style="width:70.0%">
+<img src="figures/domain-shift-example.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transfer-learning-vg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.2: Domain Shift Example.
@@ -487,33 +482,24 @@ Figure&nbsp;7.2: Domain Shift Example.
 </figure>
 </div>
 <p>Now, we want to fine-tune this network with new images taken on cloudy days. The input values for these new samples, <span class="math inline">x_i</span> (green crosses), are now centred around 5. In this input range, the derivative of the <span class="math inline">\mathrm{tanh}</span> function is close to zero, leading to the problem of vanishing gradients. This makes it extremely difficult to update the network weights effectively.</p>
-<!-- We want to fine tune the training with new images taken on cloudy -->
-<!-- days. The new samples values $x_i$ (green crosses) are centred around -->
-<!-- $5$. For that input range, the derivative of $\mathrm{tanh}$ is almost -->
-<!-- zero, which means we have a problem of vanishing gradients. It will be -->
-<!-- difficult to update the network weights. -->
-</section>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Intuition: Domain Shift">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> INTUITION: DOMAIN SHIFT</div>
+<p>When input distributions drift, activations easily shift into the flat saturation regions of <span class="math inline">\mathrm{tanh}</span> or sigmoid, causing local derivatives to collapse toward zero and stalling learning.</p>
+</div></div></section>
 <section id="normalisation-layers" class="level3" data-number="7.1.3">
 <h3 data-number="7.1.3" class="anchored" data-anchor-id="normalisation-layers"><span class="header-section-number">7.1.3</span> Normalisation Layers</h3>
 <p>To address this, it is crucial to ensure that the input data is within an appropriate value range. <strong>Normalisation Layers</strong> are used to scale the data according to the statistics of the training set, mitigating the effects of domain shift.</p>
 <p>The output <span class="math inline">x_i'</span> of a normalisation layer is given by:</p>
-<!-- It is thus critical for the input data to be in the correct value -->
-<!-- range. To cope with possible shifts of value range between datasets we -->
-<!-- can use a **Normalisation Layer**, whose purpose it to scale the data -->
-<!-- according to the training set statistics. -->
-<!-- Denoting $x_{i}$ an input value of the normalisation layer, the output -->
-<!-- $x_i'$ after normalisation is defined as follows: -->
 <p><span class="math display">
 x'_{i} = \frac{x_{i} - \mu_i}{\sigma_i}
 </span></p>
 <p>where <span class="math inline">\mu_i</span> and <span class="math inline">\sigma_i</span> are the mean and standard deviation of the input data, computed offline.</p>
-<!-- where $\mu_i$ and $\sigma_i$ are computed off-line based on the input -->
-<!-- data statistics. -->
 <p>After normalisation, the new samples are centred around 0, as shown in <a href="#fig-transfer-learning-vg-after-bn" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>, placing them in a region where the gradient of the activation function is large enough for effective learning.</p>
 <div id="fig-transfer-learning-vg-after-bn" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-transfer-learning-vg-after-bn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/domain-shift-example-after-BN.svg" class="img-fluid figure-img" style="width:70.0%">
+<img src="figures/domain-shift-example-after-BN.svg" class="img-fluid figure-img" style="width:26em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transfer-learning-vg-after-bn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.3: Domain Shift after Normalisation.
@@ -521,27 +507,34 @@ Figure&nbsp;7.3: Domain Shift after Normalisation.
 </figure>
 </div>
 </section>
-<section id="batch-normalisation" class="level3" data-number="7.1.4">
+<section id="batch-normalisation" class="level3 page-columns page-full" data-number="7.1.4">
 <h3 data-number="7.1.4" class="anchored" data-anchor-id="batch-normalisation"><span class="header-section-number">7.1.4</span> Batch Normalisation</h3>
 <p><strong>Batch Normalisation</strong> (BN) is a specific type of normalisation layer where the scaling parameters, <span class="math inline">\mu</span> and <span class="math inline">\sigma</span>, are determined as follows:</p>
 <ul>
 <li>During training, <span class="math inline">\mu_i</span> and <span class="math inline">\sigma_i</span> are the mean and standard deviation of the input <span class="math inline">x_i</span> over the current mini-batch. This ensures that the output <span class="math inline">x_i'</span> has a mean of 0 and a variance of 1.</li>
 <li>During evaluation, <span class="math inline">\mu_i</span> and <span class="math inline">\sigma_i</span> are the mean and standard deviation computed over the entire training set.</li>
 </ul>
-<p>Batch Normalisation allows for higher learning rates and makes the network less sensitive to initialisation and other optimisation choices, such as Dropout.</p>
-<blockquote class="blockquote">
-<p>Sergey Ioffe, Christian Szegedy. “Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift.” (2015) https://arxiv.org/abs/1502.03167</p>
-</blockquote>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Rule of Thumb: Train vs Eval Mode">
+<div class="marginnote-title"><i class="fa fa-tools"></i> RULE OF THUMB: TRAIN VS EVAL MODE</div>
+<p>Always call <code>model.eval()</code> before running inference. Batch Normalisation uses mini-batch statistics during training, but switches to accumulated population statistics at test time.</p>
+</div></div><p>Batch Normalisation allows for higher learning rates and makes the network less sensitive to initialisation and other optimisation choices, such as Dropout.</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card" data-offset="2.5cm">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>Ioffe &amp; Szegedy (2015): <a href="https://arxiv.org/abs/1502.03167">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></li>
+</ul>
+</div></div></section>
 </section>
-</section>
-<section id="going-deeper" class="level2" data-number="7.2">
+<section id="going-deeper" class="level2 page-columns page-full" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="going-deeper"><span class="header-section-number">7.2</span> Going Deeper</h2>
 <p>The realisation that deeper networks could generalise better sparked a race to build increasingly deep architectures after 2012. The primary obstacle was the vanishing gradient problem, which made it difficult to train sequential architectures like VGG beyond 14-16 layers.</p>
 <p>To better understand the key to mitaging this problem, consider the simple sequential network of <a href="#fig-vg-deeper-1" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>.</p>
 <div id="fig-vg-deeper-1" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-vg-deeper-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="tikz-figures/vg-inception-1.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="tikz-figures/vg-inception-1.svg" class="img-fluid figure-img" style="width:23em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vg-deeper-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.4: A simple sequential network.
@@ -562,10 +555,10 @@ Figure&nbsp;7.4: A simple sequential network.
 <div id="fig-vg-inception-3" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="tikz-figures/vg-inception-3.svg" class="img-fluid figure-img" style="width:60.0%">
+<img src="tikz-figures/vg-inception-3.svg" class="img-fluid figure-img" style="width:23em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vg-inception-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.5: The same sequential network, with parallel pathes.
+Figure&nbsp;7.5: The same sequential network, with parallel paths.
 </figcaption>
 </figure>
 </div>
@@ -574,18 +567,25 @@ Figure&nbsp;7.5: The same sequential network, with parallel pathes.
 \frac{\partial e}{\partial  w} = \frac{\partial e}{\partial  u_2} \frac{\partial u_2}{\partial  u_1}  \frac{\partial u_1}{\partial  w}  + \frac{\partial e}{\partial  u_4} \frac{\partial u_4}{\partial  u_1}  \frac{\partial u_1}{\partial  w} +  \frac{\partial e}{\partial  u_3} \frac{\partial u_3}{\partial  u_1}  \frac{\partial u_1}{\partial  w}
 </span></p>
 <p>With this architecture, it is much less likely that the overall gradient will vanish, as all three terms would need to be null simultaneously.</p>
-<p>This principle of introducing parallel paths is a key innovation in modern deep learning and was central to the designs of GoogLeNet (2014) and ResNet (2015).</p>
-<section id="googlenet-the-inception-module" class="level3" data-number="7.2.1">
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Key Idea: Additive Gradients">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> KEY IDEA: ADDITIVE GRADIENTS</div>
+<p>Parallel branches turn products of intermediate derivatives into a sum: <span class="math inline">\sum_k \frac{\partial u_k}{\partial w}</span>. The gradient only vanishes if every branch collapses simultaneously.</p>
+</div></div><p>This principle of introducing parallel paths is a key innovation in modern deep learning and was central to the designs of GoogLeNet (2014) and ResNet (2015).</p>
+<section id="googlenet-the-inception-module" class="level3 page-columns page-full" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="googlenet-the-inception-module"><span class="header-section-number">7.2.1</span> GoogLeNet: The Inception Module</h3>
 <p>GoogLeNet, the winner of the ILSVRC 2014 competition, achieved a top-5 error rate of 6.7%, which was close to human-level performance at the time. This 22-layer deep CNN introduced the <strong>Inception module</strong>, a sub-network that processes the input through multiple parallel convolutional pathways.</p>
-<blockquote class="blockquote">
-<p>Szegedy et al.&nbsp;“Going Deeper with Convolutions”, CVPR 2015 (<a href="https://goo.gl/QTCe66">paper link</a>)</p>
-</blockquote>
-<p>Instead of a simple sequence of convolutional layers, GoogLeNet uses a series of Inception modules (as highlighted by the green boxe in Figure below).</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>Szegedy et al.&nbsp;(2015): <a href="https://goo.gl/QTCe66">Going Deeper with Convolutions</a> — Introduces the multi-scale Inception architecture.</li>
+</ul>
+</div></div><p>Instead of a simple sequence of convolutional layers, GoogLeNet uses a series of Inception modules (as highlighted by the green boxe in Figure below).</p>
 <div id="fig-GoogLeNet2" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-GoogLeNet2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/GoogLeNet2.png" class="img-fluid figure-img" style="width:100.0%">
+<img src="figures/GoogLeNet2.png" class="img-fluid figure-img" style="width:40em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-GoogLeNet2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.6: GoogLeNet Architecture (2015). The network is made of a sequence of inception modules (first one being highlighted in green).
@@ -596,7 +596,7 @@ Figure&nbsp;7.6: GoogLeNet Architecture (2015). The network is made of a sequenc
 <div id="fig-inception-subnetwork" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-inception-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/inception-subnetwork.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/inception-subnetwork.png" class="img-fluid figure-img" style="width:33em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inception-subnetwork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.7: GoogLeNet Inception Sub-Network. Each module introduces 4 different parallel pathes.
@@ -605,17 +605,20 @@ Figure&nbsp;7.7: GoogLeNet Inception Sub-Network. Each module introduces 4 diffe
 </div>
 <p>The Inception module creates parallel paths that mitigate the vanishing gradient problem, allowing us to go a bit deeper.</p>
 </section>
-<section id="resnet-residual-connections" class="level3" data-number="7.2.2">
+<section id="resnet-residual-connections" class="level3 page-columns page-full" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="resnet-residual-connections"><span class="header-section-number">7.2.2</span> ResNet: Residual Connections</h3>
 <p>ResNet is a 152 (yes, 152!!) layer network architecture that won the ILSVRC 2015 competition with an error rate of just 3.6%, surpassing human performance.</p>
-<blockquote class="blockquote">
-<p>Kaiming He et al (2015). “Deep Residual Learning for Image Recognition”. (<a href="https://goo.gl/Zs6G6X">paper link</a>)</p>
-</blockquote>
-<p>Similar to GoogLeNet, ResNet introduces parallel connections, but in a much simpler way. It uses <strong>residual connections</strong>, or <em>skip connections</em>, which add the input of a block of layers to its output.</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>He et al.&nbsp;(2015): <a href="https://goo.gl/Zs6G6X">Deep Residual Learning for Image Recognition</a> — Demonstrates 152-layer networks using residual identity shortcuts.</li>
+</ul>
+</div></div><p>Similar to GoogLeNet, ResNet introduces parallel connections, but in a much simpler way. It uses <strong>residual connections</strong>, or <em>skip connections</em>, which add the input of a block of layers to its output.</p>
 <div id="fig-resnet-subnet" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-resnet-subnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/resnet-subnetwork.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/resnet-subnetwork.png" class="img-fluid figure-img" style="width:33em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resnet-subnet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.8: ResNet Sub-Network. A direct path between the input and the output is formed through a <strong>Residual Connection</strong>.
@@ -623,28 +626,43 @@ Figure&nbsp;7.8: ResNet Sub-Network. A direct path between the input and the out
 </figure>
 </div>
 <p>The idea is very simple but allows for a very deep and very efficient architecture. Skip connections can not only skip individual convolution blocks, but also entire parts of the network.</p>
-<p>The ResNet architecture has been highly influential, and many pre-trained variants, such as ResNet-18, ResNet-34, and ResNet-50, are still widely used today.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Formula: Residual Shortcut">
+<div class="marginnote-title"><i class="fa fa-calculator"></i> FORMULA: RESIDUAL SHORTCUT</div>
+<p>With <span class="math inline">y = x + \mathcal{F}(x)</span>, the backpropagated gradient is <span class="math inline">\frac{\partial \mathcal{L}}{\partial x} = \frac{\partial \mathcal{L}}{\partial y} \left( I + \frac{\partial \mathcal{F}}{\partial x} \right)</span>. Even if <span class="math inline">\frac{\partial \mathcal{F}}{\partial x} \to 0</span>, the identity term <span class="math inline">I</span> guarantees uninterrupted gradient flow.</p>
+</div></div><p>The ResNet architecture has been highly influential, and many pre-trained variants, such as ResNet-18, ResNet-34, and ResNet-50, are still widely used today.</p>
 </section>
 </section>
 <section id="a-modern-training-pipeline" class="level2 page-columns page-full" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="a-modern-training-pipeline"><span class="header-section-number">7.3</span> A Modern Training Pipeline</h2>
-<section id="data-augmentation" class="level3" data-number="7.3.1">
+<section id="data-augmentation" class="level3 page-columns page-full" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="data-augmentation"><span class="header-section-number">7.3.1</span> Data Augmentation</h3>
 <p>It is often possible to artificially expand your dataset by generating variations of your existing input data. For images, common augmentation techniques include cropping, flipping, rotating, zooming, and adjusting contrast. These operations should not change the class of the image, so they provide a free and effective way to increase the size and diversity of the training set.</p>
-<blockquote class="blockquote">
-<p>see <a href="https://docs.pytorch.org/vision/0.21/transforms.html">PyTorch documentation</a></p>
-</blockquote>
-<p>Similar techniques can be applied in other domains, such as adding noise, reverb, or compression to audio data.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Rule of Thumb: Label Invariance">
+<div class="marginnote-title"><i class="fa fa-tools"></i> RULE OF THUMB: LABEL INVARIANCE</div>
+<p>Data augmentations must preserve the semantic label. For instance, horizontal flips are safe for natural scenes, but flipping digits (6 vs 9) or direction indicators breaks label validity.</p>
+</div></div><p>Similar techniques can be applied in other domains, such as adding noise, reverb, or compression to audio data.</p>
 <p>Another approach is to synthesise data using simulation models, such as game engines. However, be aware that synthetic data is a simplified model of the real world and can lead to overfitting. It also tends to have different characteristics from real data, which can cause domain adaptation issues.</p>
-<p>Generative models, such as those discussed in later chapters, can also be used to create synthetic data. For example, you could use a large language model to generate text for a natural language processing task.</p>
+
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
+<ul>
+<li>PyTorch Docs: <a href="https://docs.pytorch.org/vision/0.21/transforms.html">Torchvision Transforms</a></li>
+</ul>
+</div></div><p>Generative models, such as those discussed in later chapters, can also be used to create synthetic data. For example, you could use a large language model to generate text for a natural language processing task.</p>
 </section>
 <section id="initialisation" class="level3 page-columns page-full" data-number="7.3.2">
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="initialisation"><span class="header-section-number">7.3.2</span> Initialisation</h3>
-<p>Initialisation needs to be considered carefully. Starting with all weights at zero is generally a bad idea, as it can lead to being stuck in a local minimum with zero gradients from the outset. A better approach is to initialise the weights randomly. We need, however to be careful, and control the output at each layer to avoid a situation where gradients would explode or vanish through the different layers.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Formula: Xavier vs He">
+<div class="marginnote-title"><i class="fa fa-calculator"></i> FORMULA: XAVIER VS HE</div>
+<p><strong>Xavier:</strong> <span class="math inline">\mathrm{Var}(w) = \frac{2}{n_{in} + n_{out}}</span> (for symmetric activations like <span class="math inline">\tanh</span>). <strong>He:</strong> <span class="math inline">\mathrm{Var}(w) = \frac{2}{n_{in}}</span> (accounts for ReLU zeroing half of activations).</p>
+</div></div><p>Initialisation needs to be considered carefully. Starting with all weights at zero is generally a bad idea, as it can lead to being stuck in a local minimum with zero gradients from the outset. A better approach is to initialise the weights randomly. We need, however to be careful, and control the output at each layer to avoid a situation where gradients would explode or vanish through the different layers.</p>
 <p>For networks using the ReLU activation function, <strong>He initialisation</strong> is a popular choice. For each layer <span class="math inline">l</span>, the bias <span class="math inline">b</span> and weights <span class="math inline">w</span> are initialised as <span class="math inline">b_l=0, w_l\sim \mathcal{N}(0,
 \sqrt{2/n_{l-1}})</span>, where <span class="math inline">n_{l-1}</span> is the number of neurons in the previous layer. This helps to maintain a stable gradient flow throughout the network, at least at the beginning of training.</p>
 
-<div class="no-row-height column-margin column-container"><div class="seealso seealso-card">
+<div class="no-row-height column-margin column-container"><div class="seealso seealso-card" data-offset="1.5cm">
 <div class="seealso-title"><i class="fa fa-book-open"></i> SEE ALSO</div>
 <ul>
 <li>see <a href="https://docs.pytorch.org/docs/stable/nn.init.html">PyTorch docs</a></li>
@@ -653,64 +671,72 @@ Figure&nbsp;7.8: ResNet Sub-Network. A direct path between the input and the out
 <li>A quick overview of how this works is presented in <a href="note-04-He-initialisation.html" class="quarto-xref"><span>Appendix D</span></a>.</li>
 </ul>
 </div></div></section>
-<section id="optimisation" class="level3" data-number="7.3.3">
+<section id="optimisation" class="level3 page-columns page-full" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="optimisation"><span class="header-section-number">7.3.3</span> Optimisation</h3>
 <p>As discussed in previous chapters, various optimisation techniques are available for training. Adam and SGD with momentum are two of the most common choices. While Adam often converges faster, SGD with momentum has been shown to find local minima that generalise better. An improved version of Adam, called AdamW, has been proposed to address some of Adam’s shortcomings.</p>
-<!-- As we have seen in previous chapters, a number of optimisation techniques are -->
-<!-- available to us for training. Papers in the literature tend to gravitate around -->
-<!-- Adam or SGD. Adam seems to be the fastest out of the box, but best-in-class -->
-<!-- models tend to be trained on SGD with momentum, as they find local minima that -->
-<!-- generalise better than the ones found by Adam. -->
-<!-- Since then, an improved version of Adam, AdamW, was proposed and seems to fix -->
-<!-- Adam's shortcomings. -->
-<p>Another important aspect of optimisation is the <strong>learning rate schedule</strong>. Another aspect of the optimisation is the scheduling of the learning rate. It is generally beneficial to decrease the learning rate as the training progresses and the model approaches a local minimum.</p>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Key Idea: AdamW vs L2">
+<div class="marginnote-title"><i class="fa fa-lightbulb"></i> KEY IDEA: ADAMW VS L2</div>
+<p>L2 regularization and weight decay are identical in standard SGD, but diverge in adaptive methods like Adam. AdamW decouples weight decay from gradient moment scaling.</p>
+</div></div><p>Another important aspect of optimisation is the <strong>learning rate schedule</strong>. Another aspect of the optimisation is the scheduling of the learning rate. It is generally beneficial to decrease the learning rate as the training progresses and the model approaches a local minimum.</p>
 <p>In 2017 was popularised the idea of warm restarts, which periodically raise the learning rate to temporary diverge and allow to hop over hills. A variant of this scheme is the <strong>cosine annealing</strong> schedule shown in <a href="#fig-ch7-cosineannealing" class="quarto-xref">Figure&nbsp;<span>7.9</span></a>.</p>
-<div id="fig-ch7-cosineannealing" class="quarto-float quarto-figure quarto-figure-left anchored">
+
+<div class="no-row-height column-margin column-container"><div id="fig-ch7-cosineannealing" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ch7-cosineannealing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/LR-cosine-annealing.svg" class="img-fluid figure-img" style="width:80.0%">
+<img src="figures/LR-cosine-annealing.svg" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ch7-cosineannealing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7.9: Learning rate schedule using cosine annealing (2017).
 </figcaption>
 </figure>
-</div>
-<p>An example of a reasonably modern optimiser setup in PyTorch might look like this:</p>
+</div></div><p>An example of a reasonably modern optimiser setup in PyTorch might look like this:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.optim.lr_scheduler <span class="im">import</span> CosineAnnealingLR</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have your model defined and initial_learning_rate and decay_steps</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For demonstration, let's assume some values</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>initial_learning_rate <span class="op">=</span> <span class="fl">1e-3</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>decay_steps <span class="op">=</span> <span class="dv">1000</span> </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define your model</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># model = MyModel(...)</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define the optimizer</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optim.AdamW(model.parameters(), lr<span class="op">=</span>initial_learning_rate)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Define the learning rate scheduler</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># T_max is the number of iterations for the first half of the cosine cycle.</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>scheduler <span class="op">=</span> CosineAnnealingLR(optimizer, T_max<span class="op">=</span>decay_steps, eta_min<span class="op">=</span><span class="dv">0</span>) </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Training loop (simplified)</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># for epoch in range(num_epochs):</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#     for batch in dataloader:</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.zero_grad()</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Forward pass, calculate loss</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#         loss.backward()</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.step()</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         scheduler.step() # Call scheduler.step() after optimizer.step()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming your model, initial_learning_rate, and</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># decay_steps are already defined</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For demonstration, let's assume some values</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>initial_learning_rate <span class="op">=</span> <span class="fl">1e-3</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>decay_steps <span class="op">=</span> <span class="dv">1000</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Define your model</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># model = MyModel(...)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Define the optimizer</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optim.AdamW(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    model.parameters(), lr<span class="op">=</span>initial_learning_rate</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Define the learning rate scheduler</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># T_max is the number of iterations for the first</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># half of the cosine cycle.</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>scheduler <span class="op">=</span> CosineAnnealingLR(</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    optimizer, T_max<span class="op">=</span>decay_steps, eta_min<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Training loop (simplified)</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># for epoch in range(num_epochs):</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">#     for batch in dataloader:</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.zero_grad()</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Forward pass, calculate loss</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#         loss.backward()</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co">#         optimizer.step()</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Call scheduler.step() after optimizer.step()</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#         scheduler.step()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 <!-- lr_scheduler.ReduceLROnPlateau : Reduce learning rate when a metric has stopped improving.
 
 lr_scheduler.StepLR
 Decays the learning rate of each parameter group by gamma every step_size epochs.
 
  -->
-</section>
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Rule of Thumb: Warmup and Schedule">
+<div class="marginnote-title"><i class="fa fa-tools"></i> RULE OF THUMB: WARMUP AND SCHEDULE</div>
+<p>Cosine decay is often paired with a 5-epoch linear warmup. Starting with a lower learning rate prevents aggressive early AdamW updates before moment estimates stabilize.</p>
+</div></div></section>
 <section id="takeaways" class="level3" data-number="7.3.4">
 <h3 data-number="7.3.4" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">7.3.4</span> Takeaways</h3>
 <p>Modern convolutional neural networks typically enhance the basic convolution-activation block with a combination of normalisation layers and residual connections. These additions make the networks more resilient to the vanishing gradient problem, enabling them to be much deeper and more effective for transfer learning.</p>
