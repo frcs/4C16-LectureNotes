@@ -297,6 +297,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-12-impact.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The Physical Limits of AI</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -930,11 +936,34 @@ Figure&nbsp;5.15: Derivatives of common activation functions: Sigmoid, tanh, ReL
 <p>Sampling mini-batches injects gradient noise. This stochastic jitter helps the optimizer escape sharp, brittle local minima and steers parameters toward broader, flatter basins that generalize better.</p>
 </div></div><p>In the extreme case where the batch size is 1, the gradient is estimated based on a single sample at a time. This method is known as <strong>Stochastic Gradient Descent (SGD)</strong> (see <code>torch.optim.SGD</code> in PyTorch).</p>
 <p>Smaller batch sizes allow for more frequent weight updates, which can speed up convergence. The gradient estimate is also “noisier” because it is based on fewer samples. This noise can be beneficial, as it can help the optimiser escape from sharp, poor local minima. However, it can also make the convergence path erratic and prevent the optimiser from settling into a good minimum.</p>
+<div id="fig-minibatch-gradient-cancellation" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-minibatch-gradient-cancellation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/minibatch-gradient-cancellation.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-minibatch-gradient-cancellation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.16: Illustration of mini-batch gradient diversity and directional cancellation on a 2D logistic regression problem without bias. In data space (a), each data point <span class="math inline">\mathbf{x}_i</span> contributes an update step <span class="math inline">-\nabla_{\mathbf{w}} e_i = (y_i - p_i)\mathbf{x}_i</span> whose magnitude is proportional to its classification error. The misclassified positive points in Mini-batch <span class="math inline">\mathcal{B}_2</span> produce large, urgent update vectors, whereas confident points in <span class="math inline">\mathcal{B}_1</span> and <span class="math inline">\mathcal{B}_3</span> produce smaller adjustments. In weight update space (b), individual mini-batch update vectors <span class="math inline">-\mathbf{g}_{\mathcal{B}_k}</span> pull parameters in conflicting directions. When averaged across the full dataset, the opposing lateral components cancel out, shrinking the global full-batch update <span class="math inline">-\mathbf{g}_{\mathrm{full}}</span> into a smaller vector that rotates <span class="math inline">\mathbf{w}</span> towards the theoretical optimum <span class="math inline">\hat{\mathbf{w}}</span>.
+</figcaption>
+</figure>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Feature Space vs. Parameter Space">
+<div class="marginnote-title"><i class="fa fa-info-circle"></i> FEATURE SPACE VS. PARAMETER SPACE</div>
+<p>In this 2D toy model without bias, parameter space and feature space happen to share the same two dimensions <span class="math inline">\mathbb{R}^2</span>, allowing individual sample updates to be drawn directly onto the data points in (a). In deep neural networks, parameter space has millions of dimensions and is fundamentally separate from the input space. However, the geometric principle is identical: different mini-batches pull network weights in disparate, conflicting directions. While an individual mini-batch produces a strong, exploratory update vector, averaging across the full dataset causes opposing components to cancel out, shrinking the global gradient.</p>
+</div></div><p>To see why individual mini-batches yield diverse, energetic updates while full-batch gradients shrink, consider a simple binary logistic regression classifier without bias: <span class="math display">
+  p_i = \sigma(\mathbf{w}^\top \mathbf{x}_i) = \frac{1}{1 + e^{-\mathbf{w}^\top \mathbf{x}_i}}
+</span> Under the binary cross-entropy loss <span class="math inline">e_i(\mathbf{w}) = -y_i \ln p_i - (1 - y_i)\ln(1 - p_i)</span>, the gradient with respect to <span class="math inline">\mathbf{w}</span> for an individual observation <span class="math inline">(\mathbf{x}_i, y_i)</span> is: <span class="math display">
+  \nabla_{\mathbf{w}} e_i = (p_i - y_i)\,\mathbf{x}_i \implies -\nabla_{\mathbf{w}} e_i = (y_i - p_i)\,\mathbf{x}_i
+</span> This update expression highlights two key geometric properties:</p>
+<ol type="1">
+<li><strong>Direction and Error Scaling</strong>: The update direction points along <span class="math inline">+\mathbf{x}_i</span> for positive samples (<span class="math inline">y_i = 1</span>) and along <span class="math inline">-\mathbf{x}_i</span> for negative samples (<span class="math inline">y_i = 0</span>). Its magnitude is proportional to the prediction error <span class="math inline">|y_i - p_i|</span>. Misclassified observations produce large, urgent parameter updates, whereas well-classified, confident points yield negligible adjustments.</li>
+<li><strong>Directional Diversity and Cancellation</strong>: As illustrated in <a href="#fig-minibatch-gradient-cancellation" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>, different clusters of data pull parameters in sharply conflicting directions. An individual mini-batch (such as <span class="math inline">\mathcal{B}_2</span>) composed of struggling or misclassified points produces a large gradient vector demanding an aggressive correction. Meanwhile, another mini-batch (<span class="math inline">\mathcal{B}_1</span>) pulls in the opposite lateral direction. When calculating the full-batch gradient over the entire dataset, these opposing lateral pulls cancel each other out. As a result, the global gradient <span class="math inline">-\mathbf{g}_{\mathrm{full}}</span> shrinks to a much smaller magnitude, dampening the effective step size unless the learning rate is scaled up.</li>
+</ol>
 <p>An <strong>epoch</strong> is defined as one full pass through the entire training dataset. For a dataset of size <span class="math inline">n</span> and a batch size of <span class="math inline">B</span>, one epoch consists of <span class="math inline">n/B</span> gradient descent steps (or iterations). It is standard practice to shuffle the training data at the beginning of every epoch to ensure that the mini-batches are different each time, preventing cyclical behaviour and improving convergence.</p>
 </section>
 <section id="more-advanced-gradient-descent-optimisers" class="level3 page-columns page-full" data-number="5.8.2">
 <h3 data-number="5.8.2" class="anchored" data-anchor-id="more-advanced-gradient-descent-optimisers"><span class="header-section-number">5.8.2</span> More Advanced Gradient Descent Optimisers</h3>
-<p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span>5.16</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
+<p>Vanilla gradient descent can be inefficient in certain common scenarios. For example, as illustrated in <a href="#fig-SGD-ravine" class="quarto-xref">Figure&nbsp;<span>5.17</span></a>, if the loss function landscape contains long, narrow ravines, the optimiser may oscillate back and forth across the steep walls of the ravine while making only slow progress along the bottom towards the minimum.</p>
 
 <div class="no-row-height column-margin column-container"><div id="fig-SGD-ravine" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -942,7 +971,7 @@ Figure&nbsp;5.15: Derivatives of common activation functions: Sigmoid, tanh, ReL
 <img src="figures/SGD-example.svg" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SGD-ravine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.16: Stochastic Gradient Descent oscillating across steep ravine walls while making slow longitudinal progress.
+Figure&nbsp;5.17: Stochastic Gradient Descent oscillating across steep ravine walls while making slow longitudinal progress.
 </figcaption>
 </figure>
 </div></div><p>As illustrated in the figure, the direction of steepest descent (the negative gradient) does not always point directly towards the minimum, leading to an inefficient, zig-zagging path.</p>
@@ -1009,18 +1038,18 @@ Figure&nbsp;5.16: Stochastic Gradient Descent oscillating across steep ravine wa
 <section id="monitoring-and-training-diagnostics" class="level2 page-columns page-full" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="monitoring-and-training-diagnostics"><span class="header-section-number">5.11</span> Monitoring and Training Diagnostics</h2>
 <p>Training a deep neural network can be a lengthy process, taking anywhere from hours to several days or even weeks. It is therefore essential to carefully monitor the process to ensure it is proceeding correctly. Tracking metrics like the loss function over time is crucial for diagnosing potential problems.</p>
-<p>As we saw with simpler models, the training loss curve can reveal a lot about the learning process. A rapidly fluctuating or increasing loss suggests that the learning rate is too high, causing the optimiser to overshoot minima or even diverge. Conversely, a very slowly decreasing loss indicates that the learning rate is too low, and the training will be impractically slow (see <a href="#fig-learning-rate-effect" class="quarto-xref">Figure&nbsp;<span>5.17</span></a>).</p>
+<p>As we saw with simpler models, the training loss curve can reveal a lot about the learning process. A rapidly fluctuating or increasing loss suggests that the learning rate is too high, causing the optimiser to overshoot minima or even diverge. Conversely, a very slowly decreasing loss indicates that the learning rate is too low, and the training will be impractically slow (see <a href="#fig-learning-rate-effect" class="quarto-xref">Figure&nbsp;<span>5.18</span></a>).</p>
 <div id="fig-learning-rate-effect" class="quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-learning-rate-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/learning_rate.svg" class="img-fluid figure-img" style="width:34em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-learning-rate-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.17: Possible effects of the Learning Rate on the training.
+Figure&nbsp;5.18: Possible effects of the Learning Rate on the training.
 </figcaption>
 </figure>
 </div>
-<p>Furthermore, it is vital to monitor performance on a separate validation set. A significant gap between the training performance and the validation performance is a clear indicator of <strong>overfitting</strong>: the model has learned the training data too well, including its noise, and has failed to generalise to new, unseen data. <a href="#fig-overfitting-accuracy" class="quarto-xref">Figure&nbsp;<span>5.18</span></a> illustrates this phenomenon.</p>
+<p>Furthermore, it is vital to monitor performance on a separate validation set. A significant gap between the training performance and the validation performance is a clear indicator of <strong>overfitting</strong>: the model has learned the training data too well, including its noise, and has failed to generalise to new, unseen data. <a href="#fig-overfitting-accuracy" class="quarto-xref">Figure&nbsp;<span>5.19</span></a> illustrates this phenomenon.</p>
 
 <div class="no-row-height column-margin column-container"><div class="marginnote marginnote-card" title="Rule of Thumb: Early Stopping">
 <div class="marginnote-title"><i class="fa fa-tools"></i> RULE OF THUMB: EARLY STOPPING</div>
@@ -1031,7 +1060,7 @@ Figure&nbsp;5.17: Possible effects of the Learning Rate on the training.
 <img src="figures/overfitting_accuracy.svg" class="img-fluid figure-img" style="width:34em">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overfitting-accuracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.18: Detecting Overfitting in Training.
+Figure&nbsp;5.19: Detecting Overfitting in Training.
 </figcaption>
 </figure>
 </div>

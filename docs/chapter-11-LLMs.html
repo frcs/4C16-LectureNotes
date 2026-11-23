@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./chapter-12-impact.html" rel="next">
 <link href="./chapter-10-generative-models.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -332,6 +332,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Large Language Models</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter-12-impact.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The Physical Limits of AI</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -415,10 +421,6 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#scaling-laws" id="toc-scaling-laws" class="nav-link" data-scroll-target="#scaling-laws"><span class="header-section-number">11.5.1</span> Scaling Laws</a></li>
   <li><a href="#artificial-general-intelligence" id="toc-artificial-general-intelligence" class="nav-link" data-scroll-target="#artificial-general-intelligence"><span class="header-section-number">11.5.2</span> Artificial General Intelligence</a></li>
-  <li><a href="#energy-consumption-and-physical-limits" id="toc-energy-consumption-and-physical-limits" class="nav-link" data-scroll-target="#energy-consumption-and-physical-limits"><span class="header-section-number">11.5.3</span> Energy Consumption and Physical Limits</a></li>
-  <li><a href="#ireland-as-a-real-world-example" id="toc-ireland-as-a-real-world-example" class="nav-link" data-scroll-target="#ireland-as-a-real-world-example"><span class="header-section-number">11.5.4</span> Ireland as a real-world example</a></li>
-  <li><a href="#can-the-energy-supply-follow" id="toc-can-the-energy-supply-follow" class="nav-link" data-scroll-target="#can-the-energy-supply-follow"><span class="header-section-number">11.5.5</span> Can the energy supply follow?</a></li>
-  <li><a href="#ireland-as-a-warning" id="toc-ireland-as-a-warning" class="nav-link" data-scroll-target="#ireland-as-a-warning"><span class="header-section-number">11.5.6</span> Ireland as a warning</a></li>
   </ul></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">11.6</span> Takeaways</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also"><span class="header-section-number">11.7</span> See Also</a></li>
@@ -894,133 +896,13 @@ Figure&nbsp;11.2: see https://arxiv.org/abs/2206.04615
 <p>There are good reason to believe that LLMs, maybe combined with some Reinforcement Learning (<em>eg.</em> the kind of AI used by Deep Mind in game simulations), could achieve some level of intelligence that surpasses most tasks that human can perform.</p>
 <p>There is, however, no universally agreed scientific test for AGI, and claims about whether a particular model has reached it depend strongly on the definition being used. Anyway, what is intelligence?</p>
 </section>
-<section id="energy-consumption-and-physical-limits" class="level3" data-number="11.5.3">
-<h3 data-number="11.5.3" class="anchored" data-anchor-id="energy-consumption-and-physical-limits"><span class="header-section-number">11.5.3</span> Energy Consumption and Physical Limits</h3>
-<p>Training a large model can require enormous amounts of energy, but the problems really start once a model is deployed. Every request requires computation, and the total computational load grows with the number of users, the amount of text processed, and the amount of computation used to produce each answer.</p>
-<p>The problem of precisely measuring energy consumption is complex. It is tempting to reduce this problem to a single number such as the energy used by one query or one token. This is useful for comparing systems, but obscures the bigger picture. We also need to consider the increasing scale of the user base, the increasing size of the models, the increasing size of the context windows, of reasoning, and the use of tools that call agents at scale.</p>
-<p>So, let us start at the beginning with <strong>energy efficiency</strong>. NVIDIA has reported a dramatic reduction in the energy required to generate tokens across its GPU generations. For a particular GPT-MoE-1.8T inference workload, the reported figure falls from approximately 42,000 J/token on Kepler hardware in 2014 to 0.4 J/token on Blackwell in 2024, and 0.2 J/token on Blackwell Ultra in 2025. These are vendor measurements for a particular workload, rather than universal constants for LLMs.</p>
-<div id="fig-nvidia-energy-per-token" class="quarto-float quarto-figure quarto-figure-left anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-nvidia-energy-per-token-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/nvidia-energy-per-token.svg" class="img-fluid figure-img" style="width:38em">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nvidia-energy-per-token-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.3: NVIDIA’s reported energy per token for a particular LLM inference workload across GPU generations. Note the logarithmic vertical axis. The numbers are vendor measurements for a particular workload, not a universal physical constant for an LLM. Source: <a href="https://images.nvidia.com/aem-dam/Solutions/documents/NVIDIA-Sustainability-Report-Fiscal-Year-2025.pdf">NVIDIA Sustainability Report FY2025</a> and <a href="https://developer.nvidia.com/blog/introducing-nvfp4-for-efficient-and-accurate-low-precision-inference/">NVIDIA, NVFP4</a>.
-</figcaption>
-</figure>
-</div>
-<p>Hardware and software have become vastly more efficient through specialised accelerators, quantisation, better memory systems, improved utilisation and model-level optimisation. More than speed or VRAM, the real metric of interest is often in terms of <strong>joules per token</strong>: ultimately, an AI system converts electricity into computation and useful output.</p>
-<p>But we have to distinguish <strong>efficiency</strong> and <strong>total consumption</strong>. Whilst the GPUs have become dramatically more efficient, the total amount of computation performed by all machines has continued to increase.</p>
-<p>In that respect, the advent of agentic AI has had a dramatic impact. While with your typical chatbot interface, a single user query triggers a single short answer with a single model invocation, agentic AI queries may result in many model calls, use several models, retrieve information, execute tools, generate and critique intermediate results, or run multiple agents in parallel. In other words, <strong>the number of computations has grown much faster than the number of users</strong>.</p>
-<p>At this point it is easy to get lost in estimates of the energy cost of an individual token. A better question is much more physical:</p>
-<p><strong>How large is the electricity bill of the whole system?</strong></p>
-<p>Ireland provides a good case study.</p>
-</section>
-<section id="ireland-as-a-real-world-example" class="level3" data-number="11.5.4">
-<h3 data-number="11.5.4" class="anchored" data-anchor-id="ireland-as-a-real-world-example"><span class="header-section-number">11.5.4</span> Ireland as a real-world example</h3>
-<p>Ireland has become one of the world’s major locations for data centres. The growth is visible directly in the country’s electricity statistics. According to the <a href="https://www.cso.ie/en/releasesandpublications/ep/p-dcmec/datacentresmeteredelectricityconsumption2025/">Central Statistics Office</a>, data-centre electricity consumption increased from <strong>1.24 TWh in 2015 to 7.66 TWh in 2025</strong>. Over the same period, total metered electricity consumption increased from 24.6 TWh to 33.0 TWh.</p>
-<p>The resulting growth rates are as follows:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th></th>
-<th style="text-align: right;">Electricity demand</th>
-<th style="text-align: right;">Data-centre electricity</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Ireland — historical 2015–25</strong></td>
-<td style="text-align: right;"><strong>+3.0%/yr</strong></td>
-<td style="text-align: right;"><strong>+20%/yr</strong></td>
-</tr>
-<tr class="even">
-<td><strong>EU — projected, Shift Project</strong></td>
-<td style="text-align: right;">~+2%/yr</td>
-<td style="text-align: right;">~+7%/yr</td>
-</tr>
-<tr class="odd">
-<td><strong>EU — projected, IEA</strong></td>
-<td style="text-align: right;">~+2.3%/yr</td>
-<td style="text-align: right;">~+9.2%/yr</td>
-</tr>
-<tr class="even">
-<td><strong>Global — projected, IEA</strong></td>
-<td style="text-align: right;">—</td>
-<td style="text-align: right;"><strong>+15%/yr</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The Irish figures are historical compound annual growth rates. The European and global figures are projections and are therefore much more uncertain. The Shift Project and IEA also use slightly different geographical definitions.</p>
-<p>The key observation is that <strong>data-centre electricity demand is growing much faster than electricity demand as a whole</strong>. The IEA estimates that global data-centre electricity consumption could rise from about 415 TWh in 2024 to around 945 TWh in 2030, an increase of roughly 15% per year. The IEA also stresses that data centres can be built in a few years, whereas the energy infrastructure required to supply them often takes much longer to plan and construct.</p>
-<p>Ireland is an early example of this phenomenon. By 2025, data centres accounted for <strong>23% of all metered electricity consumption</strong> in the country. The CRU reports that data centres accounted for <strong>85% of the overall growth in electricity demand between 2015 and 2023</strong>. This does show how dominant this new load has become in the national electricity balance.</p>
-</section>
-<section id="can-the-energy-supply-follow" class="level3" data-number="11.5.5">
-<h3 data-number="11.5.5" class="anchored" data-anchor-id="can-the-energy-supply-follow"><span class="header-section-number">11.5.5</span> Can the energy supply follow?</h3>
-<p>If data centres are consuming an additional 7.7 TWh per year in Ireland, where does that electricity come from?</p>
-<p>The answer is not simply “renewables” or “gas”. Ireland has an interconnected electricity system in which generation, storage, imports and exports continuously balance supply and demand.</p>
-<p>The latest CSO figures show a change in this balance. In 2025, Ireland’s main electricity generators produced <strong>29.3 TWh</strong>, almost unchanged from 2024. At the same time, net electricity imports reached <strong>6.13 TWh</strong>, compared with 3.28 TWh in 2023. Gross imports were 6.61 TWh and exports were 0.48 TWh.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>2025 electricity balance</th>
-<th style="text-align: right;">TWh</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Domestic generation</td>
-<td style="text-align: right;">29.34</td>
-</tr>
-<tr class="even">
-<td>Imports</td>
-<td style="text-align: right;">6.61</td>
-</tr>
-<tr class="odd">
-<td>Exports</td>
-<td style="text-align: right;">0.48</td>
-</tr>
-<tr class="even">
-<td><strong>Net imports</strong></td>
-<td style="text-align: right;"><strong>6.13</strong></td>
-</tr>
-<tr class="odd">
-<td>Storage discharge</td>
-<td style="text-align: right;">0.42</td>
-</tr>
-<tr class="even">
-<td>Grid supply</td>
-<td style="text-align: right;">35.88</td>
-</tr>
-<tr class="odd">
-<td>Data-centre metered consumption</td>
-<td style="text-align: right;"><strong>7.66</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Source: <a href="https://www.cso.ie/en/releasesandpublications/ep/p-ess/electricitysupplybysource2025/">CSO Electricity Supply by Source 2025</a> and <a href="https://www.cso.ie/en/releasesandpublications/ep/p-dcmec/datacentresmeteredelectricityconsumption2025/">CSO Data Centres Metered Electricity Consumption 2025</a>.</p>
-<p>There is a coincidence here: <strong>data centres consumed 7.7 TWh, while Ireland had 6.1 TWh of net electricity imports</strong>.</p>
-<p>Not all of the 6.1 TWh, however, went to the data centres. In 2025, wind provided about <strong>40% of domestic electricity generation</strong>. Wind and solar generation are variable. Across individual days in February 2025, the renewable share of generation ranged from 11% to 86%, largely because of changes in wind generation. Hence the need to import electricity is partly due to the transition to solar and wind.</p>
-<p>We can still make the scale of the problem evident with a simple counterfactual. If we subtract the 7.66 TWh of data-centre consumption from the 2025 total metered electricity demand, the remaining demand would be about <strong>25.3 TWh</strong>. This is below the 29.3 TWh of electricity generated by Ireland’s main electricity producers. There would be much more scope for domestic generation to cover demand and for electricity to be exported.</p>
-<p>Adding to this, it is important to note that data centers add considerable complexity to the grid management by requiring a large continuous power demand at every moment, when the grid is supplied at about 40% by variable wind and solar electricty.</p>
-<p>This is increasingly reflected in electricity policy. The CRU’s 2025 connection policy for new data centres requires new connections to provide generation and/or storage capacity matching their requested maximum import capacity, alongside requirements related to renewable electricity. The policy is effectively recognising that a large new computational load cannot simply be added to the grid without considering where the electricity and flexibility will come from.</p>
-</section>
-<section id="ireland-as-a-warning" class="level3" data-number="11.5.6">
-<h3 data-number="11.5.6" class="anchored" data-anchor-id="ireland-as-a-warning"><span class="header-section-number">11.5.6</span> Ireland as a warning</h3>
-<p>Ireland is not the only country facing this problem. It is an early and visible example of a broader transition.</p>
-<p>The IEA projects global data-centre electricity consumption to grow by around 15% per year between 2024 and 2030. In Europe, it expects data-centre consumption to increase by more than 45 TWh, or around 70%, over the same period. The overall electricity system is growing much more slowly. This does not mean that the trajectories can continue indefinitely at those rates: eventually physical, economic and grid constraints become binding.</p>
-<p>Ireland therefore provides a good example of things to come. The country has simultaneously pursued rapid growth in digital infrastructure and rapid transition to wind and solar electricity. The equation is complex at scale.</p>
-<p>The Irish example shows that, even if at the level of an individual GPU, energy efficiency has been improved by orders of magnitude, at the level of an entire country, the relevant quantity is not joules per token but terawatt-hours of electricity and the infrastructure required to supply them.</p>
-<p>And at the moment, <strong>simple maths and physics tell us that the current AI growth is simply not sustainable globally</strong>.</p>
-<p>And this is just for electricity! We would also need to discuss the mining of raw materials that goes with it.</p>
-</section>
 </section>
 <section id="takeaways" class="level2" data-number="11.6">
 <h2 data-number="11.6" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">11.6</span> Takeaways</h2>
 <p>LLMs are large-scale neural networks, usually based on Transformer architectures, trained on enormous collections of human-generated data. Their capabilities come from scaling mechanisms that we have already studied: representation learning, attention, autoregressive prediction and optimisation at very large scale.</p>
 <p>Building a useful assistant requires considerably more than pre-training. Modern systems combine pre-training with instruction tuning, preference optimisation, evaluation, safety mechanisms and increasingly sophisticated inference strategies.</p>
-<p>Two limits to scaling are particularly important. First, high-quality human data are finite: simply adding more storage does not create more information. Second, computation has a physical cost. Hardware has become vastly more energy efficient, but the total amount of computation can grow faster than the energy cost per computation falls.</p>
-<p>This field moves very fast. The numerical examples in this chapter will become outdated, but the underlying ideas—scaling, data efficiency, inference cost and the physical limits of computation—are likely to remain important.</p>
+<p>Two limits to scaling are particularly important. First, high-quality human data are finite: simply adding more storage does not create more information. Second, computation has a physical cost. Hardware has become vastly more energy efficient, but the total amount of computation can grow faster than the energy cost per computation falls (see the following chapter <a href="chapter-12-impact.html" class="quarto-xref"><span>Chapter 12</span></a>).</p>
+<p>This field moves very fast. The numerical examples in this chapter will become outdated, but the underlying ideas are likely to remain important.</p>
 </section>
 <section id="see-also" class="level2" data-number="11.7">
 <h2 data-number="11.7" class="anchored" data-anchor-id="see-also"><span class="header-section-number">11.7</span> See Also</h2>
@@ -1030,17 +912,10 @@ Figure&nbsp;11.3: NVIDIA’s reported energy per token for a particular LLM infe
 <div class="quarto-video"><iframe data-external="1" src="https://www.youtube.com/embed/zjkBMFhNj_g" width="480px" height="320px" title="Intro to Large Language Models - Andrej Karpathy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cern-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.4: Intro to Large Language Models - Andrej Karpathy
+Figure&nbsp;11.3: Intro to Large Language Models - Andrej Karpathy
 </figcaption>
 </figure>
 </div>
-<!-- ::: {#callout-GD-seealso .callout-note icon=false } -->
-<!--  -->
-<!-- ::: -->
-<!-- # ::: {#fig-video-karparthy} -->
-<!-- #  -->
-<!-- # Intro to Large Language Models - Andrej Karpathy -->
-<!-- # ::: -->
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1457,8 +1332,8 @@ Hoffmann, Jordan, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya, Trevor C
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chapter-12-impact.html" class="pagination-link" aria-label="The Physical Limits of AI">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The Physical Limits of AI</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
